@@ -1,7 +1,28 @@
 // V — season plan serializer: PlanEvent rows → timeline + NextSteps card payload.
 import type { SeasonPlan } from '@agrisense/shared';
 
-export function serializePlan(plan: SeasonPlan) {
-  // TODO: sort events; expose shift_reason + sources for the timeline/Why panel.
-  return plan;
+export function serializePlan(plan: SeasonPlan | null) {
+  if (!plan) return null;
+  return {
+    id: plan.id,
+    cropCycleId: plan.cropCycleId,
+    revision: plan.revision,
+    weatherSnapshot: plan.weatherSnapshot,
+    generatedAt: plan.generatedAt,
+    timeline: [...plan.events]
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((e) => ({
+        id: e.id,
+        stageKey: e.stageKey,
+        title: e.title,
+        action: e.action,
+        quantity: e.quantity,
+        unit: e.unit,
+        plannedDate: e.plannedDate,
+        actualDate: e.actualDate,
+        status: e.status,
+        shiftReason: e.shiftReason,
+        sources: e.sources,
+      })),
+  };
 }
