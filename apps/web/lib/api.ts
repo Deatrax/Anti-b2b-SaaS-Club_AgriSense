@@ -31,6 +31,21 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function apiPatch<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(await errorMessage(res));
+  return (await res.json()) as T;
+}
+
+async function apiDelete(path: string): Promise<void> {
+  const res = await fetch(`${BASE}${path}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await errorMessage(res));
+}
+
 // ---- Wire shapes — mirror what the controllers actually return today, not an idealized shape.
 
 export interface ApiUser {
@@ -141,8 +156,18 @@ export function listFarms(userId: string): Promise<{ farms: ApiFarm[] }> {
   return apiGet(`/farms?userId=${encodeURIComponent(userId)}`);
 }
 
-export function createFarm(userId: string, name: string, district: string): Promise<{ farm: ApiFarm }> {
-  return apiPost('/farms', { userId, name, district });
+export function createFarm(userId: string, name: string, district: string, userName?: string): Promise<{ farm: ApiFarm; user: ApiUser }> {
+  return apiPost('/farms', { userId, name, district, userName });
+}
+
+// ---- Account settings ---------------------------------------------------------------------
+
+export function updateUser(userId: string, patch: { name?: string; lang?: 'en' | 'bn' }): Promise<{ user: ApiUser }> {
+  return apiPatch(`/users/${encodeURIComponent(userId)}`, patch);
+}
+
+export function deleteUser(userId: string): Promise<void> {
+  return apiDelete(`/users/${encodeURIComponent(userId)}`);
 }
 
 export function listFields(farmId: string): Promise<{ fields: ApiField[] }> {

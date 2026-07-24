@@ -305,7 +305,7 @@
   "login_error_title": "Couldn't sign in",
   "farm_create_title": "Set up your farm",
   "farm_name_label": "Farm name",
-  "farm_name_placeholder": "e.g. Hasan's farm",
+  "farm_name_placeholder": "e.g. Your farm",
   "farm_district_label": "District",
   "farm_district_placeholder": "e.g. Mymensingh",
   "field_unnamed": "Unnamed field",
@@ -337,5 +337,17 @@
   "log_kind_observation": "Observation",
   "log_replan_summary": "Updated — {n} plan date(s) moved. Check chat for details.",
   "log_replan_none": "Logged — no change to the plan or cost was needed.",
-  "scenario_budget_cut_label": "Budget cut"
+  "scenario_budget_cut_label": "Budget cut",
+
+  "farm_create_desc": "Tell us a bit about you and your farm to get started.",
+  "farm_owner_name_label": "Your name",
+  "farm_owner_name_placeholder": "e.g. Karim Uddin",
+
+  "save": "Save",
+  "saved": "Saved",
+  "settings_delete_heading": "Delete account",
+  "settings_delete_desc": "Permanently delete your account and every farm, field, and season plan on it. This cannot be undone.",
+  "settings_delete_button": "Delete account",
+  "settings_delete_confirm_title": "Delete your account?",
+  "settings_delete_confirm_desc": "This permanently deletes your account, farms, fields, and all season data. This cannot be undone."
 }

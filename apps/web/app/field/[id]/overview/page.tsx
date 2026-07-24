@@ -52,7 +52,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const { id } = use(params);
   const router = useRouter();
   const { t, tf } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
@@ -67,6 +67,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -78,7 +79,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleComposerSubmit(value: string) {
     if (!value.trim()) return;
@@ -110,7 +111,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     ? [...financial.actual, ...financial.projected].reduce((sum, l) => sum + (l.kind === 'revenue' ? l.total : -l.total), 0)
     : null;
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   return (
     <AppShell

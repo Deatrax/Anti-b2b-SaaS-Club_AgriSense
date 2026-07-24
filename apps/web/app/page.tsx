@@ -25,7 +25,7 @@ type Step = 'phone' | 'otp';
 export default function LoginPage() {
   const router = useRouter();
   const { t } = useT();
-  const { session, setSession } = useSession();
+  const { session, isHydrated, setSession } = useSession();
 
   const [step, setStep] = useState<Step>('phone');
   const [phone, setPhone] = useState('');
@@ -35,8 +35,8 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (session) router.replace('/farm');
-  }, [session, router]);
+    if (isHydrated && session) router.replace('/farm');
+  }, [isHydrated, session, router]);
 
   async function handleSendCode() {
     if (phone.trim().length === 0) return;

@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import { validate } from '../middleware/validate.middleware';
 import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../controllers/auth.controller';
+import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.controller';
 import { listFarms, createFarm, createFarmSchema, listFields } from '../controllers/farm.controller';
 import { getField, getFieldPlan, createField, createFieldSchema } from '../controllers/field.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
@@ -13,6 +14,9 @@ export const router = Router();
 
 router.post('/auth/otp/request', validate(requestOtpSchema), requestOtp);
 router.post('/auth/otp/verify', validate(verifyOtpSchema), verifyOtp);
+
+router.patch('/users/:id', validate(updateUserSchema), updateUser);
+router.delete('/users/:id', deleteUser);
 
 router.get('/farms', listFarms);
 router.post('/farms', validate(createFarmSchema), createFarm);

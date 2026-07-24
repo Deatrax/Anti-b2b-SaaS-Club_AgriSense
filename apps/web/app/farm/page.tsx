@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppShell } from '@astryxdesign/core/AppShell';
 import { TopNav } from '@astryxdesign/core/TopNav';
+import { Center } from '@astryxdesign/core/Center';
 import { VStack, HStack } from '@astryxdesign/core/Stack';
 import { Text } from '@astryxdesign/core/Text';
 import { Grid } from '@astryxdesign/core/Grid';
@@ -27,15 +28,17 @@ import { listFields, createFarm, createField, type ApiField } from '../../lib/ap
 export default function FarmPage() {
   const router = useRouter();
   const { t } = useT();
-  const { session, setSession } = useSession();
+  const { session, isHydrated, setSession } = useSession();
   const [fields, setFields] = useState<ApiField[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [ownerName, setOwnerName] = useState('');
   const [newFarmName, setNewFarmName] = useState('');
   const [newFarmDistrict, setNewFarmDistrict] = useState('');
   const [isCreatingFarm, setIsCreatingFarm] = useState(false);
   const [isAddingField, setIsAddingField] = useState(false);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -44,15 +47,15 @@ export default function FarmPage() {
     listFields(session.farmId)
       .then((res) => setFields(res.fields))
       .catch((err) => setError(String(err)));
-  }, [session, router]);
+  }, [isHydrated, session, router]);
 
   async function handleCreateFarm() {
-    if (!session || newFarmName.trim().length === 0 || newFarmDistrict.trim().length === 0) return;
+    if (!session || ownerName.trim().length === 0 || newFarmName.trim().length === 0 || newFarmDistrict.trim().length === 0) return;
     setIsCreatingFarm(true);
     setError(null);
     try {
-      const { farm } = await createFarm(session.userId, newFarmName.trim(), newFarmDistrict.trim());
-      setSession({ ...session, farmId: farm.id, farmName: farm.name });
+      const { farm, user } = await createFarm(session.userId, newFarmName.trim(), newFarmDistrict.trim(), ownerName.trim());
+      setSession({ ...session, name: user.name, farmId: farm.id, farmName: farm.name });
     } catch (err) {
       setError(String(err));
     } finally {
@@ -73,20 +76,33 @@ export default function FarmPage() {
     }
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   if (!session.farmId) {
     return (
       <AppShell height="fill" contentPadding={4} topNav={<TopNav endContent={<ModeLangToggle />} />}>
-        <VStack gap={4} width={360}>
-          <Text type="display-3">{t('farm_create_title')}</Text>
-          {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
-          <FormLayout>
-            <TextInput label={t('farm_name_label')} value={newFarmName} onChange={setNewFarmName} placeholder={t('farm_name_placeholder')} />
-            <TextInput label={t('farm_district_label')} value={newFarmDistrict} onChange={setNewFarmDistrict} placeholder={t('farm_district_placeholder')} />
-          </FormLayout>
-          <Button label={t('continue')} variant="primary" isDisabled={isCreatingFarm} onClick={handleCreateFarm} />
-        </VStack>
+        <Center height="100%">
+          <VStack gap={4} width={360}>
+            <VStack gap={0}>
+              <Text type="display-3">{t('farm_create_title')}</Text>
+              <Text type="supporting" color="secondary">
+                {t('farm_create_desc')}
+              </Text>
+            </VStack>
+            {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
+            <FormLayout>
+              <TextInput label={t('farm_owner_name_label')} value={ownerName} onChange={setOwnerName} placeholder={t('farm_owner_name_placeholder')} />
+              <TextInput label={t('farm_name_label')} value={newFarmName} onChange={setNewFarmName} placeholder={t('farm_name_placeholder')} />
+              <TextInput label={t('farm_district_label')} value={newFarmDistrict} onChange={setNewFarmDistrict} placeholder={t('farm_district_placeholder')} />
+            </FormLayout>
+            <Button
+              label={t('continue')}
+              variant="primary"
+              isDisabled={isCreatingFarm || ownerName.trim().length === 0 || newFarmName.trim().length === 0 || newFarmDistrict.trim().length === 0}
+              onClick={handleCreateFarm}
+            />
+          </VStack>
+        </Center>
       </AppShell>
     );
   }

@@ -7,7 +7,7 @@
 import { usePathname } from 'next/navigation';
 import { SideNav, SideNavHeading, SideNavItem, SideNavSection } from '@astryxdesign/core/SideNav';
 import { StatusDot } from '@astryxdesign/core/StatusDot';
-import { Sprout, Home, MessageCircle, CalendarDays, Wallet, Plus } from 'lucide-react';
+import { Sprout, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings } from 'lucide-react';
 import { useT } from '../app/providers';
 import type { ApiField } from '../lib/api';
 
@@ -16,7 +16,11 @@ export function FieldRail({ farmName, fields, onAddField }: { farmName: string; 
   const pathname = usePathname() ?? '';
 
   return (
-    <SideNav header={<SideNavHeading heading={farmName} />} collapsible>
+    <SideNav
+      header={<SideNavHeading heading={farmName} />}
+      footer={<SideNavItem label={t('settings_title')} icon={Settings} isSelected={pathname === '/settings'} href="/settings" />}
+      collapsible
+    >
       <SideNavSection title={t('farm_fields_heading')}>
         {fields.map((f) => {
           const isActive = f.activeCycle != null;

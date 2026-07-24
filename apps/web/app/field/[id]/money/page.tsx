@@ -38,7 +38,7 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
   const { id } = use(params);
   const router = useRouter();
   const { t } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
@@ -51,6 +51,7 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
   const [scenarioError, setScenarioError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -62,7 +63,7 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleRunScenario() {
     if (budgetCutPct == null) return;
@@ -74,7 +75,7 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
       .finally(() => setIsRunningScenario(false));
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   const financial = planData?.financial;
   const lines: ApiLedgerLine[] = financial ? [...financial.actual, ...financial.projected] : [];

@@ -23,7 +23,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const { id } = use(params);
   const router = useRouter();
   const { t } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
@@ -33,6 +33,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -43,7 +44,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleComposerSubmit(value: string) {
     if (!value.trim()) return;
@@ -51,7 +52,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
     setComposerValue('');
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   return (
     <AppShell

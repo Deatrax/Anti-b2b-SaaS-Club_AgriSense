@@ -305,7 +305,7 @@
   "login_error_title": "সাইন-ইন করা যায়নি",
   "farm_create_title": "আপনার খামার তৈরি করুন",
   "farm_name_label": "খামারের নাম",
-  "farm_name_placeholder": "যেমন: হাসানের খামার",
+  "farm_name_placeholder": "যেমন: আপনার খামার",
   "farm_district_label": "জেলা",
   "farm_district_placeholder": "যেমন: ময়মনসিংহ",
   "field_unnamed": "নামহীন জমি",
@@ -337,5 +337,17 @@
   "log_kind_observation": "পর্যবেক্ষণ",
   "log_replan_summary": "হালনাগাদ হয়েছে — {n}টি পরিকল্পনার তারিখ পরিবর্তিত হয়েছে। বিস্তারিত জানতে চ্যাট দেখুন।",
   "log_replan_none": "লগ করা হয়েছে — পরিকল্পনা বা খরচে কোনো পরিবর্তনের প্রয়োজন হয়নি।",
-  "scenario_budget_cut_label": "বাজেট কর্তন"
+  "scenario_budget_cut_label": "বাজেট কর্তন",
+
+  "farm_create_desc": "শুরু করতে আপনার এবং আপনার খামার সম্পর্কে কিছু তথ্য দিন।",
+  "farm_owner_name_label": "আপনার নাম",
+  "farm_owner_name_placeholder": "যেমন: করিম উদ্দিন",
+
+  "save": "সংরক্ষণ করুন",
+  "saved": "সংরক্ষিত হয়েছে",
+  "settings_delete_heading": "অ্যাকাউন্ট মুছে ফেলুন",
+  "settings_delete_desc": "আপনার অ্যাকাউন্ট এবং এর সব খামার, জমি ও মৌসুম পরিকল্পনা স্থায়ীভাবে মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।",
+  "settings_delete_button": "অ্যাকাউন্ট মুছে ফেলুন",
+  "settings_delete_confirm_title": "আপনার অ্যাকাউন্ট মুছে ফেলবেন?",
+  "settings_delete_confirm_desc": "এতে আপনার অ্যাকাউন্ট, খামার, জমি এবং সব মৌসুমের তথ্য স্থায়ীভাবে মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।"
 }
