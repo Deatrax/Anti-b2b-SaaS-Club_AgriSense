@@ -6,6 +6,7 @@ import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.co
 import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats } from '../controllers/farm.controller';
 import { getField, getFieldPlan, getFieldChatHistory, createFieldConversation, createField, createFieldSchema } from '../controllers/field.controller';
 import { getConversation } from '../controllers/conversation.controller';
+import { markPlanEventDone } from '../controllers/planEvent.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
 import { postScenario, postScenarioSchema } from '../controllers/scenario.controller';
@@ -33,6 +34,8 @@ router.post('/fields/:id/log', validate(postLogSchema), postLog);
 router.post('/fields/:id/scenario', validate(postScenarioSchema), postScenario);
 
 router.get('/conversations/:id', getConversation);
+
+router.patch('/plan-events/:id/done', markPlanEventDone);
 
 router.post('/chat', validate(postChatSchema), postChat);
 

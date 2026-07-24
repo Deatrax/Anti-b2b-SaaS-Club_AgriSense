@@ -1,8 +1,6 @@
-// Season timeline — real horizontally scrollable row of cards, with a button to open an AI
-// chat panel on the right half. Per stakeholder feedback (screenshot review). The outer
-// scroll container uses a narrow, functional-only inline style (display/overflow/flex —
-// never a color or token value), same as the mock's version, since no Astryx primitive
-// provides horizontal-scrolling row layout.
+// Season timeline — a vertical dated list of stages (per the v2 desktop mockup's Plan tab),
+// each with status, quantities, a "Done" button, and a Why panel; a button opens an AI chat
+// panel on the right half for questions about the plan.
 'use client';
 
 import { use, useEffect, useState } from 'react';
@@ -15,6 +13,7 @@ import { Text } from '@astryxdesign/core/Text';
 import { Badge } from '@astryxdesign/core/Badge';
 import { StatusDot } from '@astryxdesign/core/StatusDot';
 import { Card } from '@astryxdesign/core/Card';
+import { Divider } from '@astryxdesign/core/Divider';
 import { Button } from '@astryxdesign/core/Button';
 import { Banner } from '@astryxdesign/core/Banner';
 import { Skeleton } from '@astryxdesign/core/Skeleton';
@@ -34,6 +33,7 @@ import {
   listFields,
   listRecentChats,
   getFieldPlan,
+  markPlanEventDone,
   type ApiField,
   type ApiFieldPlanResponse,
   type ApiPlanTimelineEntry,
@@ -61,6 +61,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [composerValue, setComposerValue] = useState('');
+  const [cycleJustCompleted, setCycleJustCompleted] = useState(false);
 
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
@@ -88,6 +89,15 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
     setComposerValue('');
   }
 
+  function handleMarkDone(eventId: string) {
+    markPlanEventDone(eventId)
+      .then(({ cycleCompleted }) => {
+        setCycleJustCompleted(cycleCompleted);
+        return getFieldPlan(id).then(setPlanData);
+      })
+      .catch((err) => setError(String(err)));
+  }
+
   if (!isHydrated || !session) return null;
 
   const timeline = planData?.plan?.timeline ?? [];
@@ -113,6 +123,8 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
         timeline={timeline}
         planLoaded={planData != null}
         error={error}
+        cycleJustCompleted={cycleJustCompleted}
+        onMarkDone={handleMarkDone}
         feed={feed}
         sendMessage={sendMessage}
         isStreaming={isStreaming}
@@ -129,6 +141,8 @@ function PlanBody({
   timeline,
   planLoaded,
   error,
+  cycleJustCompleted,
+  onMarkDone,
   feed,
   sendMessage,
   isStreaming,
@@ -140,6 +154,8 @@ function PlanBody({
   timeline: ApiPlanTimelineEntry[];
   planLoaded: boolean;
   error: string | null;
+  cycleJustCompleted: boolean;
+  onMarkDone: (eventId: string) => void;
   feed: FeedItem[];
   sendMessage: (message: string) => void;
   isStreaming: boolean;
@@ -163,6 +179,7 @@ function PlanBody({
       </HStack>
 
       {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
+      {cycleJustCompleted ? <Banner status="success" title={t('plan_cycle_complete')} /> : null}
 
       {!planLoaded ? (
         <Skeleton height={240} />
@@ -171,34 +188,42 @@ function PlanBody({
       ) : (
         <HStack gap={4} vAlign="start" wrap="wrap">
           <StackItem size="fill">
-            <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
-              {timeline.map((ev) => (
-                <div key={ev.id} style={{ flex: '0 0 260px', minWidth: 260 }}>
-                  <Card padding={3} height={220}>
-                    <VStack gap={2}>
-                      <HStack justify="between" vAlign="center">
-                        <StatusDot variant={STATUS_DOT_VARIANT[ev.status]} label={t(`plan_status_${ev.status}`)} />
-                        <Badge variant={ev.status === 'shifted' ? 'yellow' : 'neutral'} label={ev.plannedDate ?? t('not_set')} />
-                      </HStack>
-                      <Text type="label" weight="semibold">
-                        {ev.title}
-                      </Text>
-                      <Text type="supporting" color="secondary">
-                        {ev.quantity != null ? `${ev.quantity}${ev.unit ?? ''}` : ev.action ?? t(`plan_status_${ev.status}`)}
-                      </Text>
-                      {ev.shiftReason || ev.sources.length > 0 ? (
-                        <WhyPanel
-                          items={[
-                            ...(ev.shiftReason ? [{ toolClass: 'external' as const, label: t('why_label'), description: ev.shiftReason }] : []),
-                            ...ev.sources.map((s) => ({ toolClass: 'deterministic' as const, label: s.source, description: s.reference ?? undefined })),
-                          ]}
-                        />
+            <Card padding={3}>
+              <VStack gap={0}>
+                {timeline.map((ev, i) => (
+                  <VStack key={ev.id} gap={2}>
+                    {i > 0 ? <Divider /> : null}
+                    <HStack gap={3} vAlign="start" justify="between" wrap="wrap">
+                      <StackItem size="fill">
+                        <VStack gap={1.5}>
+                          <HStack gap={2} vAlign="center">
+                            <StatusDot variant={STATUS_DOT_VARIANT[ev.status]} label={t(`plan_status_${ev.status}`)} />
+                            <Badge variant={ev.status === 'shifted' ? 'yellow' : 'neutral'} label={ev.plannedDate ?? t('not_set')} />
+                          </HStack>
+                          <Text type="label" weight="semibold">
+                            {ev.title}
+                          </Text>
+                          <Text type="supporting" color="secondary">
+                            {ev.quantity != null ? `${ev.quantity}${ev.unit ?? ''}` : ev.action ?? t(`plan_status_${ev.status}`)}
+                          </Text>
+                          {ev.shiftReason || ev.sources.length > 0 ? (
+                            <WhyPanel
+                              items={[
+                                ...(ev.shiftReason ? [{ toolClass: 'external' as const, label: t('why_label'), description: ev.shiftReason }] : []),
+                                ...ev.sources.map((s) => ({ toolClass: 'deterministic' as const, label: s.source, description: s.reference ?? undefined })),
+                              ]}
+                            />
+                          ) : null}
+                        </VStack>
+                      </StackItem>
+                      {ev.status === 'pending' || ev.status === 'shifted' ? (
+                        <Button label={t('plan_mark_done')} variant="secondary" size="sm" onClick={() => onMarkDone(ev.id)} />
                       ) : null}
-                    </VStack>
-                  </Card>
-                </div>
-              ))}
-            </div>
+                    </HStack>
+                  </VStack>
+                ))}
+              </VStack>
+            </Card>
           </StackItem>
 
           {!isMobile && isChatOpen ? (

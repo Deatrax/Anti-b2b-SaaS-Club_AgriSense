@@ -1,11 +1,11 @@
-// orchestrator.test.ts — the hand-rolled tool loop (§C.2). generateText is mocked so each test
+// orchestrator.test.ts — the hand-rolled tool loop (§C.2). streamText is mocked so each test
 // scripts exactly what the model does across steps; the tool registry and trace wrapper are
 // real, so a tool call in these tests exercises the actual §C.7 trace-open/close path.
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { FieldState } from '@agrisense/shared';
 
-const generateText = vi.fn();
-vi.mock('ai', () => ({ generateText, tool: (t: unknown) => t }));
+const streamText = vi.fn();
+vi.mock('ai', () => ({ streamText, tool: (t: unknown) => t }));
 
 const getState = vi.fn();
 vi.mock('../src/models/field.model', () => ({ FieldModel: { getState } }));
@@ -52,20 +52,28 @@ function makeCtx() {
   };
 }
 
-function textOnlyResult(text: string) {
+/** Builds a mock streamText result: textStream yields the text once, the promise-shaped
+ * fields resolve to the scripted values — the shape orchestrator.ts actually consumes. */
+function streamResult(text: string, toolCalls: unknown[] = [], responseMessages?: unknown[]) {
   return {
-    text,
-    toolCalls: [],
-    response: { messages: text ? [{ id: 'm', role: 'assistant', content: text }] : [] },
+    textStream: (async function* () {
+      if (text) yield text;
+    })(),
+    toolCalls: Promise.resolve(toolCalls),
+    responseMessages: Promise.resolve(responseMessages ?? (text ? [{ id: 'm', role: 'assistant', content: text }] : [])),
   };
 }
 
-// generateText's `messages` argument is the SAME array the orchestrator keeps mutating in
+function textOnlyResult(text: string) {
+  return streamResult(text);
+}
+
+// streamText's `messages` argument is the SAME array the orchestrator keeps mutating in
 // place across steps — inspecting `mock.calls[n][0].messages` after the run completes sees
 // later mutations too. Snapshot it at call time instead via mockImplementationOnce.
 function snapshotMessagesOnCall(result: unknown) {
   const box: { messages: unknown[] } = { messages: [] };
-  const impl = async (opts: { messages: unknown[] }) => {
+  const impl = (opts: { messages: unknown[] }) => {
     box.messages = [...opts.messages];
     return result;
   };
@@ -82,7 +90,7 @@ beforeEach(() => {
 
 describe('runAgent — no tool calls', () => {
   it('persists both turns, streams the text, and ends the stream', async () => {
-    generateText.mockResolvedValueOnce(textOnlyResult('Hello farmer'));
+    streamText.mockReturnValueOnce(textOnlyResult('Hello farmer'));
     const ctx = makeCtx();
 
     await runAgent(ctx, 'hi');
@@ -91,7 +99,7 @@ describe('runAgent — no tool calls', () => {
     expect(addMessage).toHaveBeenNthCalledWith(2, 'conv-1', 'assistant', 'Hello farmer', undefined);
     expect(ctx.stream.text).toHaveBeenCalledWith('Hello farmer');
     expect(ctx.stream.done).toHaveBeenCalledOnce();
-    expect(generateText).toHaveBeenCalledTimes(1);
+    expect(streamText).toHaveBeenCalledTimes(1);
   });
 
   it('feeds prior user/assistant history into the messages array', async () => {
@@ -100,7 +108,7 @@ describe('runAgent — no tool calls', () => {
       { id: 'h2', conversationId: 'conv-1', role: 'assistant', content: 'earlier answer', toolCalls: null, isProactive: false, createdAt: '' },
     ]);
     const { impl, box } = snapshotMessagesOnCall(textOnlyResult('follow-up answer'));
-    generateText.mockImplementationOnce(impl);
+    streamText.mockImplementationOnce(impl);
 
     await runAgent(makeCtx(), 'follow-up question');
 
@@ -125,12 +133,12 @@ describe('runAgent — tool calling', () => {
     });
 
     const { impl, box } = snapshotMessagesOnCall(textOnlyResult('Here is your field state.'));
-    generateText
-      .mockResolvedValueOnce({
-        text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'get_field_state', input: {} }],
-        response: { messages: [{ id: 'm1', role: 'assistant', content: [{ type: 'tool-call', toolCallId: 'call-1', toolName: 'get_field_state', input: {} }] }] },
-      })
+    streamText
+      .mockReturnValueOnce(
+        streamResult('', [{ toolCallId: 'call-1', toolName: 'get_field_state', input: {} }], [
+          { id: 'm1', role: 'assistant', content: [{ type: 'tool-call', toolCallId: 'call-1', toolName: 'get_field_state', input: {} }] },
+        ]),
+      )
       .mockImplementationOnce(impl);
 
     const ctx = makeCtx();
@@ -139,7 +147,7 @@ describe('runAgent — tool calling', () => {
     expect(handler).toHaveBeenCalledWith({}, ctx);
     expect(ctx.stream.toolStart).toHaveBeenCalledOnce();
     expect(ctx.stream.toolEnd).toHaveBeenCalledOnce();
-    expect(generateText).toHaveBeenCalledTimes(2);
+    expect(streamText).toHaveBeenCalledTimes(2);
 
     const toolResultMessage = box.messages[box.messages.length - 1];
     expect(toolResultMessage).toEqual({
@@ -164,12 +172,8 @@ describe('runAgent — tool calling', () => {
 
   it('turns a hallucinated tool name into an error tool-result instead of crashing', async () => {
     const { impl, box } = snapshotMessagesOnCall(textOnlyResult('done'));
-    generateText
-      .mockResolvedValueOnce({
-        text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'does_not_exist', input: {} }],
-        response: { messages: [] },
-      })
+    streamText
+      .mockReturnValueOnce(streamResult('', [{ toolCallId: 'call-1', toolName: 'does_not_exist', input: {} }], []))
       .mockImplementationOnce(impl);
 
     await runAgent(makeCtx(), 'go');
@@ -190,12 +194,8 @@ describe('runAgent — tool calling', () => {
       },
     });
     const { impl, box } = snapshotMessagesOnCall(textOnlyResult('recovered'));
-    generateText
-      .mockResolvedValueOnce({
-        text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'boom_tool', input: {} }],
-        response: { messages: [] },
-      })
+    streamText
+      .mockReturnValueOnce(streamResult('', [{ toolCallId: 'call-1', toolName: 'boom_tool', input: {} }], []))
       .mockImplementationOnce(impl);
 
     await runAgent(makeCtx(), 'go');
@@ -215,28 +215,27 @@ describe('runAgent — resilience', () => {
       phases: ['MAINTAINING'],
       handler: async () => ({ data: null, provenance: [] }),
     });
-    generateText.mockResolvedValue({
-      text: '',
-      toolCalls: [{ toolCallId: 'call-x', toolName: 'looping_tool', input: {} }],
-      response: { messages: [] },
-    });
+    // a fresh streamResult per call — an async generator can only be consumed once
+    streamText.mockImplementation(() => streamResult('', [{ toolCallId: 'call-x', toolName: 'looping_tool', input: {} }], []));
 
     const ctx = makeCtx();
     await runAgent(ctx, 'keep going forever');
 
-    expect(generateText).toHaveBeenCalledTimes(10);
+    expect(streamText).toHaveBeenCalledTimes(10);
     expect(ctx.stream.notice).toHaveBeenCalledWith(expect.stringMatching(/step limit/));
     expect(ctx.stream.done).toHaveBeenCalledOnce();
   });
 
   it('degrades gracefully when the model call itself fails', async () => {
-    generateText.mockRejectedValueOnce(new Error('ECONNRESET'));
+    streamText.mockImplementationOnce(() => {
+      throw new Error('ECONNRESET');
+    });
     const ctx = makeCtx();
 
     await runAgent(ctx, 'hi');
 
     expect(ctx.stream.notice).toHaveBeenCalledWith(expect.stringMatching(/unavailable/));
     expect(ctx.stream.done).toHaveBeenCalledOnce();
-    expect(generateText).toHaveBeenCalledTimes(1);
+    expect(streamText).toHaveBeenCalledTimes(1);
   });
 });

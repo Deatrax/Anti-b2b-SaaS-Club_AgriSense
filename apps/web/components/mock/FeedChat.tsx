@@ -42,16 +42,28 @@ function TraceResultDetail({ trace }: { trace: TraceEntry }) {
   );
 }
 
+/** Claude-style activity labels: while a tool runs, the collapsed block reads
+ * "Checking the weather…" instead of the raw tool name. Keys live in locales as
+ * trace_running_<tool>; unknown tools fall back to the generic label. Once a call
+ * completes, the raw tool name returns — that's what a judge audits against. */
+function runningLabel(tool: string, t: (key: string) => string): string {
+  const key = `trace_running_${tool}`;
+  const label = t(key);
+  return label === key ? t('trace_running_generic') : label;
+}
+
 export function FeedTrace({ traces, isExpanded }: { traces: TraceEntry[]; isExpanded?: boolean }) {
+  const { t } = useT();
   return (
     <ChatToolCalls
       isExpanded={isExpanded}
+      defaultIsExpanded={false}
       calls={traces.map((tr) => ({
         key: tr.id,
-        name: tr.tool,
+        name: tr.status === 'running' ? runningLabel(tr.tool, t) : tr.tool,
         node: tr.toolClass,
         status: toolCallStatus(tr.status),
-        target: formatTarget(tr.params),
+        target: tr.status === 'running' ? undefined : formatTarget(tr.params),
         duration: tr.durationMs != null ? `${tr.durationMs}ms` : undefined,
         resultDetail: <TraceResultDetail trace={tr} />,
       }))}

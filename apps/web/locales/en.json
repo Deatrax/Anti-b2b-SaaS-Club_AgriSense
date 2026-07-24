@@ -366,5 +366,21 @@
 
   "recent_chats_heading": "Recent chats",
   "all_chats": "All chats",
-  "new_chat": "New chat"
+  "new_chat": "New chat",
+  "trace_running_generic": "Working…",
+  "trace_running_get_weather": "Checking the weather…",
+  "trace_running_search_knowledge_base": "Looking up agronomy references…",
+  "trace_running_rank_crops": "Ranking candidate crops…",
+  "trace_running_build_season_plan": "Building the season plan…",
+  "trace_running_compute_financials": "Computing costs and profit…",
+  "trace_running_update_field": "Saving your field details…",
+  "trace_running_get_field_state": "Reading the field record…",
+  "trace_running_get_crop_history": "Checking crop history…",
+  "trace_running_lookup_crop_rules": "Looking up crop rules…",
+  "trace_running_assess_pest_risk": "Assessing pest risk…",
+  "trace_running_log_field_event": "Logging your update…",
+  "trace_running_bdapps_query_balance": "Checking your balance…",
+  "trace_running_bdapps_direct_debit": "Processing the payment…",
+  "plan_mark_done": "Done",
+  "plan_cycle_complete": "Season complete! Open the chat to plan the next one."
 }

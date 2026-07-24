@@ -39,15 +39,20 @@ const SEASONS = ['boro', 'aus', 'aman', 'rabi', 'kharif_1', 'kharif_2'] as const
 
 // Mirrors packages/shared/src/types/field.ts's SoilType/WaterSource/Season unions — zod needs
 // the literal list at runtime, so keep these in sync if that file's unions ever change.
+// Every arg is NULLABLE with "null = the farmer didn't state it": OpenAI's strict tool mode
+// makes every schema key required, so a plain-optional schema forces the model to fill ALL
+// of them — which is exactly how gpt-4o was padding calls with invented soil/budget/season
+// values. Giving it a legal null to emit is the deterministic fix; the handler strips nulls.
+const ONLY_IF_STATED = 'ONLY if the farmer explicitly stated it in the conversation; null otherwise — NEVER guess.';
 const updateFieldSchema = z.object({
-  area_ha: z.number().positive().optional(),
-  soil_type: z.enum(SOIL_TYPES).optional(),
-  water_source: z.enum(WATER_SOURCES).optional(),
-  budget_bdt: z.number().positive().optional(),
-  target_season: z.enum(SEASONS).optional(),
-  district: z.string().optional().describe("District name to resolve into the field's location."),
-  lat: z.number().optional().describe('Use with lon for an exact location instead of district.'),
-  lon: z.number().optional(),
+  area_ha: z.number().positive().nullable().optional().describe(`Field area in hectares, ${ONLY_IF_STATED}`),
+  soil_type: z.enum(SOIL_TYPES).nullable().optional().describe(`Soil type, ${ONLY_IF_STATED}`),
+  water_source: z.enum(WATER_SOURCES).nullable().optional().describe(`Water source, ${ONLY_IF_STATED}`),
+  budget_bdt: z.number().positive().nullable().optional().describe(`Season budget in BDT, ${ONLY_IF_STATED}`),
+  target_season: z.enum(SEASONS).nullable().optional().describe(`Target season, ${ONLY_IF_STATED}`),
+  district: z.string().nullable().optional().describe("District name to resolve into the field's location, ONLY if the farmer named it; null otherwise."),
+  lat: z.number().nullable().optional().describe('Exact latitude the farmer gave — use with lon instead of district. null unless the farmer gave coordinates.'),
+  lon: z.number().nullable().optional(),
 });
 
 const logFieldEventSchema = z.object({
@@ -76,16 +81,28 @@ export function registerFieldTools(): void {
     name: 'update_field',
     description:
       'Patches one or more intake fields on the field record (area, soil type, water source, budget, ' +
-      'target season, location) and returns the updated record plus what is still missing.',
+      'target season, location) and returns the updated record plus what is still missing. ' +
+      'CRITICAL: include ONLY the keys the farmer explicitly stated — every omitted key stays unknown ' +
+      'and gets asked about later, which is correct. Example: farmer says "Gazipur, about 1.2 acres" → ' +
+      'call {"district":"Gazipur","area_ha":0.4856} with NO other keys. Inventing a soil type, budget, ' +
+      'water source, or season the farmer never said corrupts the farm record.',
     schema: updateFieldSchema,
     toolClass: 'field',
     phases: ['GATHERING', 'MAINTAINING'],
     handler: async (args, ctx): Promise<ToolResult<FieldState>> => {
-      const { district, target_season, lat, lon, ...rest } = args;
+      let { lat, lon } = args;
+      const { district, target_season, lat: _lat, lon: _lon, ...rest } = args;
       if ((lat == null) !== (lon == null)) {
         throw new Error('lat and lon must be provided together');
       }
+      // Models sometimes pad the call with lat:0, lon:0 — a point in the Atlantic, never a
+      // Bangladesh field. Treat it as absent so a real district lookup isn't clobbered.
+      if (lat === 0 && lon === 0) {
+        lat = undefined;
+        lon = undefined;
+      }
 
+      // null means "the farmer didn't state it" (see schema note) — never write it.
       const patch: Partial<{
         area_ha: number;
         soil_type: string;
@@ -93,7 +110,7 @@ export function registerFieldTools(): void {
         budget_bdt: number;
         lat: number;
         lon: number;
-      }> = { ...rest };
+      }> = Object.fromEntries(Object.entries(rest).filter(([, v]) => v != null));
 
       const provenance: Provenance[] = [{ source: 'AgriSense field record', method: 'table', retrievedAt: now() }];
 

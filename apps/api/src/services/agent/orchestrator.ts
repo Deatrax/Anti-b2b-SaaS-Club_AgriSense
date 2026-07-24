@@ -6,7 +6,7 @@
 // union ({type:'json'|'error-json', value}). Fixed 2026-07-25: the original hand-rolled
 // message construction was written against the pre-v5 shape and failed every turn with
 // AI_InvalidPromptError ("messages do not match the ModelMessage[] schema").
-import { generateText, tool, type ModelMessage, type LanguageModel, type ToolSet, type JSONValue } from 'ai';
+import { streamText, tool, type ModelMessage, type LanguageModel, type ToolSet, type JSONValue } from 'ai';
 import type { Phase } from '@agrisense/shared';
 import { getRegistry, type ToolCtx } from '../tools/registry';
 import { FieldModel } from '../../models/field.model';
@@ -48,15 +48,32 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
   const toolCallLog: Array<{ name: string; args: unknown }> = [];
 
   for (let step = 1; step <= MAX_STEPS; step++) {
-    let result: Awaited<ReturnType<typeof generateText>>;
+    // streamText, not generateText — text deltas reach the farmer's screen as the model
+    // produces them (real token streaming end-to-end over the SSE pipe), instead of one
+    // block per reasoning step. Errors surface while consuming textStream, so the whole
+    // consume-then-await sequence sits inside one try.
+    let stepText = '';
+    let stepToolCalls: Array<{ toolCallId: string; toolName: string; input: unknown }>;
+    let responseMessages: ModelMessage[];
     try {
-      result = await generateText({
+      const result = streamText({
         model: ctx.model,
         system,
         messages,
         tools,
         toolChoice: step === 1 && phase === 'PLANNING' ? 'required' : 'auto',
+        // 0, not the provider's 1.0 default: at temp 1 gpt-4o pads update_field with guessed
+        // soil/budget/season values the farmer never said — a direct no-invented-numbers
+        // violation. An advisory agent gets no benefit from sampling variety.
+        temperature: 0,
       });
+      for await (const delta of result.textStream) {
+        if (!delta) continue;
+        ctx.stream.text(delta);
+        stepText += delta;
+      }
+      stepToolCalls = (await result.toolCalls) as typeof stepToolCalls;
+      responseMessages = (await result.responseMessages) as ModelMessage[];
     } catch (err) {
       ctx.stream.notice(`⚠ The reasoning model is unavailable right now (${String(err)}) — please try again.`);
       await persist(ctx, textParts, toolCallLog);
@@ -64,19 +81,16 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
       return;
     }
 
-    if (result.text) {
-      ctx.stream.text(result.text);
-      textParts.push(result.text);
-    }
-    messages.push(...result.response.messages);
+    if (stepText) textParts.push(stepText);
+    messages.push(...responseMessages);
 
-    if (!result.toolCalls.length) {
+    if (!stepToolCalls.length) {
       await persist(ctx, textParts, toolCallLog);
       ctx.stream.done();
       return;
     }
 
-    for (const call of result.toolCalls) {
+    for (const call of stepToolCalls) {
       toolCallLog.push({ name: call.toolName, args: call.input });
       const def = getRegistry().get(call.toolName);
       let toolResult: unknown;

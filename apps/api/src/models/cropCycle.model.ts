@@ -68,4 +68,9 @@ export const CropCycleModel = {
     );
     return toCropCycleRow(row!);
   },
+
+  /** Harvest marked done → the cycle is over; the field re-enters PLANNING for next season. */
+  async complete(cycleId: string): Promise<void> {
+    await query("update crop_cycles set status = 'harvested' where id = $1", [cycleId]);
+  },
 };

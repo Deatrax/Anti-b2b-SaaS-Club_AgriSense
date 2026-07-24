@@ -29,6 +29,6 @@
     "diesel_pump_bdt_per_ha": { "value": 4000, "_verify": true }
   },
   "farmgate_prices_bdt_per_kg": {
-    "paddy_aman": { "value": 34, "source": "GoB Aman 2025-season paddy procurement price (raised from Tk 33) — The Business Standard 'Govt to procure 7 lakh tonnes of Aman paddy, rice from local sources at higher prices from 20 Nov'", "assumption": "government procurement price used as the practical farmgate-price proxy" }
+    "aman_rice": { "value": 34, "source": "GoB Aman 2025-season paddy procurement price (raised from Tk 33) — The Business Standard 'Govt to procure 7 lakh tonnes of Aman paddy, rice from local sources at higher prices from 20 Nov'", "assumption": "government procurement price used as the practical farmgate-price proxy" }
   }
 }

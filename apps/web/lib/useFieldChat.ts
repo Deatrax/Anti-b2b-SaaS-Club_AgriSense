@@ -73,16 +73,17 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
             ];
           });
         } else if (event.type === 'tool_start' || event.type === 'tool_end') {
+          // Consecutive tool calls collapse into ONE feed block (Claude-style "worked for…"
+          // summary) instead of one block per call; a text message in between starts a new
+          // block. tool_end replaces its tool_start entry in place by trace id.
           setFeed((f) => {
-            const key = `trace-${event.trace.id}`;
-            const idx = f.findIndex((item) => item.id === key);
-            const entry: FeedItem = { id: key, type: 'tool_trace', traces: [event.trace] };
-            if (idx >= 0) {
-              const copy = [...f];
-              copy[idx] = entry;
-              return copy;
+            const last = f[f.length - 1];
+            if (last && last.type === 'tool_trace') {
+              const idx = last.traces.findIndex((tr) => tr.id === event.trace.id);
+              const traces = idx >= 0 ? last.traces.map((tr, i) => (i === idx ? event.trace : tr)) : [...last.traces, event.trace];
+              return [...f.slice(0, -1), { ...last, traces }];
             }
-            return [...f, entry];
+            return [...f, { id: `trace-${event.trace.id}`, type: 'tool_trace', traces: [event.trace] }];
           });
         } else if (event.type === 'notice') {
           setFeed((f) => [

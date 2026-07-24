@@ -366,5 +366,21 @@
 
   "recent_chats_heading": "সাম্প্রতিক আলাপ",
   "all_chats": "সব আলাপ",
-  "new_chat": "নতুন আলাপ"
+  "new_chat": "নতুন আলাপ",
+  "trace_running_generic": "কাজ চলছে…",
+  "trace_running_get_weather": "আবহাওয়া দেখা হচ্ছে…",
+  "trace_running_search_knowledge_base": "কৃষি তথ্যভান্ডার খোঁজা হচ্ছে…",
+  "trace_running_rank_crops": "ফসল বাছাই করা হচ্ছে…",
+  "trace_running_build_season_plan": "মৌসুমের পরিকল্পনা তৈরি হচ্ছে…",
+  "trace_running_compute_financials": "খরচ ও লাভ হিসাব হচ্ছে…",
+  "trace_running_update_field": "জমির তথ্য সংরক্ষণ হচ্ছে…",
+  "trace_running_get_field_state": "জমির রেকর্ড পড়া হচ্ছে…",
+  "trace_running_get_crop_history": "ফসলের ইতিহাস দেখা হচ্ছে…",
+  "trace_running_lookup_crop_rules": "ফসলের নিয়ম খোঁজা হচ্ছে…",
+  "trace_running_assess_pest_risk": "পোকার ঝুঁকি যাচাই হচ্ছে…",
+  "trace_running_log_field_event": "আপনার আপডেট লেখা হচ্ছে…",
+  "trace_running_bdapps_query_balance": "ব্যালেন্স দেখা হচ্ছে…",
+  "trace_running_bdapps_direct_debit": "পেমেন্ট প্রক্রিয়া চলছে…",
+  "plan_mark_done": "সম্পন্ন",
+  "plan_cycle_complete": "মৌসুম শেষ! পরের মৌসুম পরিকল্পনা করতে আলাপ খুলুন।"
 }

@@ -187,7 +187,9 @@ export function listRecentChats(farmId: string, limit = 5, offset = 0): Promise<
   return apiGet(`/farms/${encodeURIComponent(farmId)}/chats?limit=${limit}&offset=${offset}`);
 }
 
-export function createField(farmId: string, name?: string): Promise<{ field: ApiFieldIdentity }> {
+/** Also seeds the field's first conversation with the agent's intake greeting, so the farmer
+ * lands in a chat the agent has already started (Tier 0 #1 conversational intake). */
+export function createField(farmId: string, name?: string): Promise<{ field: ApiFieldIdentity; conversationId: string }> {
   return apiPost('/fields', { farmId, name });
 }
 
@@ -233,6 +235,12 @@ export function getConversation(conversationId: string): Promise<ApiConversation
 
 export function getFieldPlan(fieldId: string): Promise<ApiFieldPlanResponse> {
   return apiGet(`/fields/${encodeURIComponent(fieldId)}/plan`);
+}
+
+/** Plan tab's "Done" button. Marking the harvest stage done completes the whole cycle —
+ * the field re-enters PLANNING and the agent proposes the next season in chat. */
+export function markPlanEventDone(eventId: string): Promise<{ event: ApiPlanTimelineEntry; cycleCompleted: boolean }> {
+  return apiPatch(`/plan-events/${encodeURIComponent(eventId)}/done`, {});
 }
 
 // ---- Phase 8: field log + scoped replan --------------------------------------------------

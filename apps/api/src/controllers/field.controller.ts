@@ -21,11 +21,22 @@ export const createFieldSchema = z.object({
   name: z.string().min(1).optional(),
 });
 
+/** The conversational-intake opener (Tier 0 #1) — a fixed template, not an LLM call: the
+ * greeting carries no numbers, and seeding it here means the farmer lands in a chat the
+ * agent has already started, instead of a blank composer. The agent takes over from the
+ * first reply (GATHERING phase asks for the remaining fields two at a time). */
+const INTAKE_GREETING =
+  "I'll set up this field and build you a full plan — crop, calendar and costs. " +
+  'First: which district is the land in?\n\n' +
+  'আমি এই জমির জন্য একটি সম্পূর্ণ পরিকল্পনা তৈরি করব — ফসল, সময়সূচি ও খরচ। প্রথমে বলুন, জমিটি কোন জেলায়?';
+
 export async function createField(req: Request, res: Response, next: NextFunction) {
   const { farmId, name } = req.body as z.infer<typeof createFieldSchema>;
   try {
     const identity = await FieldModel.create(farmId, name);
-    res.status(201).json({ field: identity });
+    const conversation = await ConversationModel.create(identity.id);
+    await ConversationModel.addMessage(conversation.id, 'assistant', INTAKE_GREETING);
+    res.status(201).json({ field: identity, conversationId: conversation.id });
   } catch (err) {
     next(err);
   }

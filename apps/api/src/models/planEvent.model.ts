@@ -81,4 +81,18 @@ export const PlanEventModel = {
       [eventId, newDate, shiftReason],
     );
   },
+
+  async get(eventId: string): Promise<PlanEvent | null> {
+    const [row] = await query<PlanEventRow>('select * from plan_events where id = $1', [eventId]);
+    return row ? toPlanEvent(row) : null;
+  },
+
+  /** Farmer taps "Done" on a plan card — records when it actually happened. */
+  async markDone(eventId: string): Promise<PlanEvent | null> {
+    const [row] = await query<PlanEventRow>(
+      `update plan_events set status = 'done', actual_date = current_date where id = $1 returning *`,
+      [eventId],
+    );
+    return row ? toPlanEvent(row) : null;
+  },
 };

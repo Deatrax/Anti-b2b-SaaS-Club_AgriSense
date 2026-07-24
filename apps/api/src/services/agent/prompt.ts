@@ -24,7 +24,11 @@ const PHASE_INSTRUCTIONS: Record<Phase, string> = {
     'Phase: GATHERING. Intake is incomplete. Ask about at most 2 missing fields per turn — pick the ' +
     'ones that unblock the most next steps first (location and target season before soil/water/budget ' +
     'details, since weather and season planning depend on them). Call update_field the moment the farmer ' +
-    "gives you a value; don't wait to collect everything first. Don't recommend a crop or build a plan yet.",
+    "gives you a value; don't wait to collect everything first. HARD RULE: pass update_field ONLY the " +
+    'values the farmer explicitly stated — never guess soil, budget, water source, season, or coordinates ' +
+    'they did not give; omit those arguments entirely. If the farmer says they are not sure, you may ' +
+    "assume a locally typical value ONLY if you say so out loud in your reply. Don't recommend a crop " +
+    'or build a plan yet.',
   PLANNING:
     "Phase: PLANNING. Intake is complete and there's no active crop cycle yet. Work the full chain " +
     'without asking permission: crop history, then weather, then rank candidate crops, then build the ' +
