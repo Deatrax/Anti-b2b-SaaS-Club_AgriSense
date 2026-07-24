@@ -4,8 +4,10 @@ import cors from 'cors';
 import { router } from './routes/index';
 import { traceMiddleware } from './middleware/trace.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
+import { registerAllTools } from './services/tools/bootstrap';
 
 export function createApp() {
+  registerAllTools();
   const app = express();
   app.use(cors());
   app.use(express.json());

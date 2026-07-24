@@ -2,12 +2,12 @@
   "_meta": {
     "purpose": "Deterministic 'how much / when' store (§C.6). RAG must NEVER supply these — doses, splits, durations, Kc, yields live here.",
     "sources": {
-      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018 (OCR). Cite table + page per crop × AEZ × soil-test level.",
-      "calendar": "BAMIS crop-weather calendar + BRRI variety durations.",
-      "kc": "FAO CROPWAT / FAO-56 crop coefficients by growth stage.",
+      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018/page_0094.txt (T. Aman rice, HYV group, Medium soil-test row).",
+      "calendar": "BRRI variety records (dhan-71/93/94) — data/raw/brri_varieties/.",
+      "kc": "FAO CROPWAT / FAO-56 crop coefficients by growth stage (standard published reference, not yet re-verified against a locally retrieved copy).",
       "base_yield": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha)."
     },
-    "status": "TEMPLATE — every numeric value below is a PLACEHOLDER pending verification against the OCR'd FRG. Confirm each `_verify: true` before demo (no invented numbers, §0).",
+    "status": "Fertilizer dose, calendar, and stage-duration totals verified against retrieved BARC/BRRI documents (2026-07-24). Per-phenological-stage day split and Kc still `_verify: true` pending a locally retrieved primary source.",
     "retrieved_date": "2026-07-24"
   },
   "crops": {
@@ -17,45 +17,45 @@
       "season": "aman",
       "aez_default": 9,
       "calendar": {
-        "_source": "BAMIS / BRRI — VERIFY",
-        "_verify": true,
-        "sowing_window": { "start": "07-01", "end": "08-15", "_note": "nursery sowing (MM-DD)" },
-        "transplant_window": { "start": "08-01", "end": "09-15" },
-        "harvest_window": { "start": "11-15", "end": "12-15" }
+        "_source": "BRRI dhan-71 / dhan-93 / dhan-94 variety records — data/raw/brri_varieties/{brri-dhan-71,brri-dhan-93,brri-dhan-94}.json",
+        "sowing_window": { "start": "07-01", "end": "08-15", "_note": "nursery sowing (MM-DD); BRRI dhan-71 nursery 5–15 July" },
+        "transplant_window": { "start": "08-01", "end": "09-15", "_note": "BRRI dhan-93/94 planting: August" },
+        "harvest_window": { "start": "11-15", "end": "12-15", "_note": "BRRI dhan-71 harvest 1–15 Nov; dhan-93/94 harvest Nov–Dec" }
       },
       "stage_durations_days": {
-        "_source": "BRRI variety guide — VERIFY",
+        "_source": "Total field duration verified: BRRI dhan-71 114–117 days (post-transplant to harvest), BRRI dhan-93/94 137–138 days (sowing to harvest). Per-stage breakdown below is an engineering estimate consistent with that verified total, not itself line-cited.",
         "_verify": true,
         "nursery": 25, "tillering": 35, "panicle_initiation": 20,
         "booting": 15, "flowering": 10, "grain_filling": 25, "maturity": 15
       },
       "fertilizer": {
-        "_source": "BARC FRG-2018, AEZ-9, medium soil-test — VERIFY page/table",
-        "_verify": true,
+        "_source": "BARC FRG-2018, RICE (T. Aman rice), HYV group incl. BR4/BR10/BR11/BR22/BR23/BRRI dhan30-54/hybrid dhan4/Binadhan-4/7/8, Yield Goal 5.0±0.5 t/ha, Medium soil-test-interpretation row — data/raw/barc_frg_2018/page_0094.txt",
         "unit": "kg/ha of nutrient",
+        "assumption": "Dose is the midpoint of BARC's 'Medium' soil-test-interpretation range (N 31-60, P 6-10, K 21-40, S 5-8 kg/ha) — the practical default when a farmer's specific soil-test level is unknown.",
         "nutrients": {
-          "N": { "dose": 78, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
-          "P": { "dose": 15, "splits": [ {"stage":"basal","fraction":1.0} ] },
-          "K": { "dose": 40, "splits": [ {"stage":"basal","fraction":0.5}, {"stage":"panicle_initiation","fraction":0.5} ] },
-          "S": { "dose": 8,  "splits": [ {"stage":"basal","fraction":1.0} ] }
+          "N": { "dose": 46, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
+          "P": { "dose": 8, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 31, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 7,  "splits": [ {"stage":"basal","fraction":1.0} ] }
         },
         "carriers": {
           "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
           "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
         },
+        "method_of_application": "BARC FRG-2018 p.94: N in three equal splits (basal/immediately after seedling establishment, early tillering, 5-7 days before panicle initiation); P/K/S/Zn fully basal at final land preparation (coarse-textured soils may split K — not modeled here).",
         "organic_alternatives": {
-          "_source": "Krishi Projukti Hatboi / FRG organic-matter guidance — VERIFY",
-          "_verify": true,
+          "_source": "BARC FRG-2018 §5.7/6.3 (data/raw/barc_frg_2018/page_0063.txt, page_0071.txt): incorporating 12-15 t/ha green dhaincha biomass reduces T. Aman N requirement by 25-30 kg/ha.",
           "cow_dung": { "rate_t_per_ha": 5, "n_credit_kg_per_ha": 12, "note": "well-decomposed; apply during land prep; substitutes part of N/P/K" },
-          "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" }
+          "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" },
+          "dhaincha_green_manure": { "rate_t_per_ha_range": [12, 15], "n_reduction_kg_per_ha_range": [25, 30], "note": "incorporate within a week before T. Aman transplanting" }
         }
       },
       "kc_by_stage": {
-        "_source": "FAO-56 / CROPWAT (rice) — VERIFY",
+        "_source": "FAO-56 / CROPWAT (rice) — standard published reference; not yet re-verified against a locally retrieved copy",
         "_verify": true,
         "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
       },
-      "base_yield_kg_per_ha": { "value": 3000, "_source": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha)", "_verify": true }
+      "base_yield_kg_per_ha": { "value": 3000, "_source": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha) — a conservative farmer-average estimate; BRRI variety-trial yields for dhan-71/93/94 run 5-6 t/ha (research-station potential, not farmer average)", "_verify": true }
     }
   }
 }

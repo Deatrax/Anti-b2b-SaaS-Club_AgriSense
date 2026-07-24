@@ -1,16 +1,16 @@
 {
   "_meta": {
     "purpose": "ECOCROP-style environmental min-opt-max per crop for deterministic suitability scoring (§C.9 ranking.engine).",
-    "source": "FAO ECOCROP — VERIFY per crop.",
-    "status": "TEMPLATE — placeholder ranges pending ECOCROP lookup.",
+    "source": "FAO ECOCROP (Oryza sativa) — data/raw/fao_ecocrop/rice.json (already retrieved, structured).",
+    "status": "aman_rice verified against the retrieved ECOCROP record. Other crops still pending.",
     "retrieved_date": "2026-07-24"
   },
   "crops": {
     "aman_rice": {
-      "_verify": true,
-      "temp_c":          { "min": 20, "opt_low": 25, "opt_high": 32, "max": 38 },
-      "rain_mm_season":  { "min": 700, "opt_low": 1200, "opt_high": 2000, "max": 3000 },
-      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 8.0 }
+      "_source": "FAO ECOCROP, Oryza sativa (EcoPortCode 1574) — data/raw/fao_ecocrop/rice.json",
+      "temp_c":          { "min": 10, "opt_low": 20, "opt_high": 30, "max": 36 },
+      "rain_mm_season":  { "min": 1000, "opt_low": 1500, "opt_high": 2000, "max": 4000 },
+      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 9.0 }
     }
   }
 }
