@@ -33,6 +33,10 @@ const schema = z.object({
   BDAPPS_BASE_URL: z.string().default('https://developer.bdapps.com'),
   BDAPPS_APPLICATION_ID: z.string().optional(),
   BDAPPS_PASSWORD: z.string().optional(),
+
+  // bdapps OTP (§6 of the API guide) — same app credentials as CaaS above, same
+  // simulated-by-default pattern (bdapps whitelists by IP; live needs a provisioned IP).
+  OTP_MODE: z.enum(['simulated', 'live']).default('simulated'),
 });
 
 export const env = schema.parse(process.env);

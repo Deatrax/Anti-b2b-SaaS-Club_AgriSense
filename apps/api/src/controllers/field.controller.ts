@@ -1,5 +1,6 @@
 // C — fields. Read the workspace state; the dashboard cards render from this.
 import type { Request, Response, NextFunction } from 'express';
+import { z } from 'zod';
 import { FieldModel } from '../models/field.model';
 import { PlanEventModel } from '../models/planEvent.model';
 import { SeasonPlanModel } from '../models/seasonPlan.model';
@@ -10,6 +11,21 @@ import { serializeFinancial } from '../views/financial.view';
 
 function isNotFound(err: unknown): err is Error {
   return err instanceof Error && err.message.includes('not found');
+}
+
+export const createFieldSchema = z.object({
+  farmId: z.string().min(1),
+  name: z.string().min(1).optional(),
+});
+
+export async function createField(req: Request, res: Response, next: NextFunction) {
+  const { farmId, name } = req.body as z.infer<typeof createFieldSchema>;
+  try {
+    const identity = await FieldModel.create(farmId, name);
+    res.status(201).json({ field: identity });
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function getField(req: Request, res: Response, next: NextFunction) {

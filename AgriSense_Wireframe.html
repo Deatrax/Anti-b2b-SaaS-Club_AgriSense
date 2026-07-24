@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSense — High-Fidelity Wireframe (PRD screens S1–S6 + /demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Brand */
+  --brand-lime:#E0FF20; --brand-yellow:#FFFF00; --brand-green:#6B8547;
+  --brand-deep-green:#294719; --brand-forest:#17310F; --status-orange:#EF8844;
+  /* Surfaces */
+  --surface-canvas:#F7F9F4; --surface-primary:#FFFFFF; --surface-secondary:#F1F5EC;
+  --surface-green-soft:#EBF3E1; --surface-lime-soft:#F7FFD2; --surface-warning-soft:#FFF2E8;
+  /* Text */
+  --text-primary:#182014; --text-secondary:#596452; --text-tertiary:#87907F; --text-disabled:#ABB2A5;
+  /* Borders */
+  --border-subtle:#E4E9DF; --border-strong:#CCD6C4; --divider:#E7EBE3;
+  /* Radius */
+  --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:18px; --r-pill:999px;
+  /* Shadow */
+  --shadow-sm:0 1px 2px rgba(23,49,15,.05);
+  --shadow-md:0 6px 18px rgba(23,49,15,.08);
+  --shadow-lg:0 16px 40px rgba(23,49,15,.12);
+  /* trace class colors */
+  --tc-memory:#6B8547; --tc-external:#2F7BC4; --tc-retrieval:#294719;
+  --tc-deterministic:#BA7517; --tc-side:#EF8844;
+  --cta:linear-gradient(90deg,#E0FF20 0%,#FFFF00 100%);
+  --font:"Overused Grotesk","Inter","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:#EDEFEA;color:var(--text-primary);
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;line-height:1.45;padding:32px 20px 80px}
+.page-head{max-width:1200px;margin:0 auto 8px}
+.page-head h1{font-size:26px;font-weight:600;color:var(--brand-deep-green);letter-spacing:-.02em}
+.page-head p{font-size:14px;color:var(--text-secondary);margin-top:6px;max-width:760px}
+.legend{max-width:1200px;margin:18px auto 28px;display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--text-secondary)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.grid{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start;justify-content:center}
+.screen{display:flex;flex-direction:column;align-items:center;gap:12px}
+.screen-label{font-size:12px;font-weight:600;color:var(--brand-deep-green);letter-spacing:.02em;text-align:center}
+.screen-label small{display:block;font-weight:400;color:var(--text-tertiary);margin-top:2px;letter-spacing:0}
+/* phone frame */
+.phone{width:390px;background:var(--surface-canvas);border-radius:34px;border:9px solid #1f2a19;
+  box-shadow:var(--shadow-lg);overflow:hidden;position:relative;height:800px;display:flex;flex-direction:column}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:24px;background:#1f2a19;
+  border-radius:0 0 16px 16px;z-index:40}
+.statusbar{height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;font-size:12px;font-weight:500;color:var(--text-primary)}
+.statusbar .r{display:flex;gap:5px;align-items:center}
+/* app header */
+.appbar{flex:0 0 auto;height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;background:var(--surface-primary);border-bottom:1px solid var(--border-subtle)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:16px;color:var(--brand-deep-green)}
+.brand .mark{width:22px;height:22px;display:grid;place-items:center}
+.appbar .acts{display:flex;gap:6px}
+.iconbtn{width:34px;height:34px;border-radius:var(--r-sm);border:1px solid var(--border-subtle);
+  background:var(--surface-primary);display:grid;place-items:center;color:var(--brand-deep-green)}
+.body{flex:1 1 auto;overflow:hidden;padding:12px;display:flex;flex-direction:column;gap:12px;background:var(--surface-canvas)}
+/* Farm at a glance */
+.glance{background:var(--surface-primary);border:1px solid var(--border-subtle);border-radius:var(--r-lg);
+  padding:12px 14px;box-shadow:var(--shadow-sm)}
+.glance .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.glance .top b{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--text-tertiary);text-transform:uppercase}
+.pill{font-size:11px;font-weight:500;padding:3px 9px;border-radius:var(--r-pill)}
+.pill.mem{background:var(--surface-green-soft);color:var(--brand-deep-green)}
+.glance .rows{display:flex;flex-direction:column;gap:5px;font-size:13px}
+.glance .rows .row{display:flex;justify-content:space-between}
+.glance .rows .k{color:var(--text-secondary)}
+.glance .rows .v{color:var(--text-primary);font-weight:500}
+.glance .rows .v.unknown{color:var(--text-disabled);font-weight:400}
+.glance .next{margin-top:9px;padding-top:9px;border-top:1px solid var(--divider);
+  display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--brand-deep-green)}
+.glance .next .tag{background:var(--surface-lime-soft);color:var(--brand-forest);font-weight:500;
+  padding:2px 8px;border-radius:var(--r-xs);font-size:11px}
+/* chat */
+.msg{max-width:84%;font-size:13.5px;line-height:1.5;padding:10px 13px;border-radius:14px}
+.msg.agent{align-self:flex-start;background:var(--surface-primary);border:1px solid var(--border-subtle);
+  color:var(--text-primary);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm)}
+.msg.user{align-self:flex-end;background:var(--brand-deep-green);color:#fff;border-bottom-right-radius:4px}
+.agent-row{display:flex;gap:8px;align-items:flex-start}
+.avatar{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--surface-lime-soft);
+  display:grid;place-items:center;color:var(--brand-forest);margin-top:2px}
+/* result card generic */
+.card{background:var(--surface-primary);border:1px solid var(--border-subtle);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);overflow:hidden}
+.card .hd{padding:11px 14px;border-bottom:1px solid var(--divider);display:flex;align-items:center;
+  justify-content:space-between}
+.card .hd .t{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-tertiary)}
+.card .bd{padding:12px 14px}
+.whychip{font-size:11px;font-weight:500;color:var(--brand-green);background:var(--surface-green-soft);
+  padding:3px 9px;border-radius:var(--r-pill);display:inline-flex;gap:4px;align-items:center}
+/* ranking */
+.rank{display:flex;flex-direction:column;gap:2px}
+.rank .opt{padding:11px 0;border-bottom:1px solid var(--divider)}
+.rank .opt:last-child{border-bottom:0}
+.rank .opt.top{background:var(--surface-green-soft);margin:0 -14px;padding:12px 14px;border:0;
+  border-left:3px solid var(--brand-green)}
+.rank .l1{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.rank .name{font-size:14.5px;font-weight:600;color:var(--text-primary)}
+.rank .name .rk{color:var(--brand-green);margin-right:5px}
+.rank .score{font-size:16px;font-weight:600;color:var(--brand-deep-green)}
+.rank .score small{font-size:11px;color:var(--text-tertiary);font-weight:400}
+.rank .meta{display:flex;gap:10px;margin-top:6px;font-size:11.5px;color:var(--text-secondary);flex-wrap:wrap}
+.rank .meta .net{color:var(--brand-deep-green);font-weight:600}
+.rank .subs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sub{font-size:10.5px;background:var(--surface-secondary);color:var(--text-secondary);
+  padding:2px 7px;border-radius:var(--r-xs);border:1px solid var(--border-subtle)}
+.sub b{color:var(--brand-deep-green);font-weight:600}
+.rank .actions{display:flex;gap:8px;margin-top:10px}
+.dim{opacity:.55}
+/* buttons */
+.btn{font-family:var(--font);font-size:13px;font-weight:500;border-radius:var(--r-sm);padding:9px 14px;
+  border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.btn.primary{background:var(--cta);color:var(--brand-forest);font-weight:600}
+.btn.secondary{background:var(--surface-primary);color:var(--brand-deep-green);border-color:var(--brand-green)}
+.btn.ghost{background:transparent;color:var(--brand-deep-green)}
+.btn.sm{padding:7px 12px;font-size:12px}
+.btn.block{width:100%}
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.tl .stage{display:flex;gap:12px;position:relative;padding-bottom:14px}
+.tl .stage:last-child{padding-bottom:0}
+.tl .rail{flex:0 0 20px;display:flex;flex-direction:column;align-items:center}
+.tl .node{width:16px;height:16px;border-radius:50%;border:2px solid var(--border-strong);
+  background:var(--surface-primary);z-index:2}
+.tl .node.done{background:var(--brand-green);border-color:var(--brand-green)}
+.tl .node.current{background:var(--brand-lime);border-color:var(--brand-green);box-shadow:0 0 0 4px var(--surface-lime-soft)}
+.tl .node.delay{background:var(--surface-warning-soft);border-color:var(--status-orange)}
+.tl .line{width:2px;flex:1;background:var(--divider);margin-top:2px}
+.tl .content{flex:1;padding-bottom:2px}
+.tl .stg-name{font-size:13px;font-weight:600;color:var(--text-primary)}
+.tl .stg-name.cur{color:var(--brand-deep-green)}
+.tl .stg-date{font-size:11.5px;color:var(--text-secondary);margin-top:1px}
+.tl .stg-tag{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:11px;font-weight:500;
+  background:var(--surface-warning-soft);color:#9a4d12;padding:2px 8px;border-radius:var(--r-xs);
+  border:1px solid #F3B58C}
+.tl .cur-badge{font-size:10px;font-weight:600;background:var(--brand-lime);color:var(--brand-forest);
+  padding:1px 7px;border-radius:var(--r-pill);margin-left:6px}
+/* finance */
+.fin .lines{font-size:12.5px}
+.fin .lines .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--divider)}
+.fin .lines .k{color:var(--text-secondary)}
+.fin .lines .k small{display:block;color:var(--text-tertiary);font-size:10.5px}
+.fin .lines .v{font-weight:500;color:var(--text-primary)}
+.fin .headline{background:var(--surface-green-soft);border-radius:var(--r-md);padding:12px 14px;margin-top:12px}
+.fin .headline .np-lbl{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--brand-green);text-transform:uppercase}
+.fin .headline .np{font-size:30px;font-weight:600;color:var(--brand-deep-green);letter-spacing:-.02em;margin-top:2px}
+.fin .ratios{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.fin .ratios .rr{background:var(--surface-primary);border:1px solid var(--border-subtle);border-radius:var(--r-sm);
+  padding:6px 10px;font-size:11px;color:var(--text-secondary)}
+.fin .ratios .rr b{display:block;font-size:15px;color:var(--brand-deep-green);font-weight:600}
+.fin .adjust{margin-top:12px}
+.fin .adjust label{font-size:11px;color:var(--text-secondary);display:flex;justify-content:space-between;margin-bottom:6px}
+.fin .adjust label b{color:var(--brand-deep-green)}
+.slider{-webkit-appearance:none;width:100%;height:5px;border-radius:var(--r-pill);
+  background:linear-gradient(90deg,var(--brand-green) 0 50%,var(--border-subtle) 50% 100%);outline:none}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:#fff;border:3px solid var(--brand-green);box-shadow:var(--shadow-sm);cursor:pointer}
+.fin .actions{display:flex;gap:8px;margin-top:12px}
+/* checkout / AI card */
+.aicard{background:var(--surface-lime-soft);border:1px solid #E4EFB0;border-radius:var(--r-lg);padding:13px 14px;box-shadow:var(--shadow-sm)}
+.aicard .t{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brand-green);
+  display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.propose{font-size:13.5px;color:var(--text-primary);line-height:1.5}
+.propose .amt{font-weight:600;color:var(--brand-deep-green)}
+.basket{margin:10px 0;background:var(--surface-primary);border:1px solid var(--border-subtle);
+  border-radius:var(--r-md);padding:4px 12px}
+.basket .li{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 0;border-bottom:1px solid var(--divider)}
+.basket .li:last-child{border-bottom:0}
+.basket .li .v{font-weight:500}
+.hitl{display:flex;gap:8px;margin-top:10px}
+.warn-hint{font-size:11px;color:#9a4d12;margin-top:8px;display:flex;gap:5px;align-items:center}
+/* receipt */
+.receipt .ok{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 12px}
+.receipt .ok .ring{width:46px;height:46px;border-radius:50%;background:var(--surface-green-soft);
+  display:grid;place-items:center;color:var(--brand-green)}
+.receipt .ok .amt{font-size:24px;font-weight:600;color:var(--brand-deep-green)}
+.receipt .ok .cap{font-size:12px;color:var(--text-secondary)}
+.receipt .kv{font-size:12px}
+.receipt .kv .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--divider)}
+.receipt .kv .row:last-child{border-bottom:0}
+.receipt .kv .k{color:var(--text-secondary)}
+.receipt .kv .v{font-weight:500;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}
+.badge-mode{font-size:10px;font-weight:600;background:var(--surface-green-soft);color:var(--brand-deep-green);
+  padding:2px 8px;border-radius:var(--r-pill)}
+/* chips + input dock */
+.chipbar{flex:0 0 auto;padding:9px 12px;background:var(--surface-primary);border-top:1px solid var(--border-subtle);
+  display:flex;gap:8px;overflow-x:auto}
+.chip{flex:0 0 auto;font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:var(--r-pill);
+  border:1px solid var(--border-strong);background:var(--surface-primary);color:var(--brand-deep-green);white-space:nowrap}
+.chip.sel{background:var(--surface-green-soft);border-color:var(--brand-green)}
+.chip.escape{color:var(--text-tertiary);border-style:dashed}
+.dock{flex:0 0 auto;height:56px;display:flex;align-items:center;gap:8px;padding:0 12px;
+  background:var(--surface-primary);border-top:1px solid var(--border-subtle)}
+.dock .field{flex:1;height:40px;border-radius:var(--r-pill);border:1px solid var(--border-strong);
+  background:var(--surface-canvas);display:flex;align-items:center;padding:0 14px;color:var(--text-tertiary);font-size:13px}
+.dock .mic,.dock .trace{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:0 0 40px}
+.dock .mic{background:var(--surface-secondary);color:var(--brand-deep-green)}
+.dock .trace{background:var(--brand-deep-green);color:#fff}
+/* trace panel */
+.trace{background:var(--surface-primary);height:100%;display:flex;flex-direction:column}
+.trace .thd{padding:12px 14px;border-bottom:1px solid var(--border-subtle);display:flex;
+  align-items:center;justify-content:space-between}
+.trace .thd .t{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-secondary)}
+.trace .thd .sum{font-size:11px;color:var(--text-tertiary)}
+.trace .rows{padding:6px 0;overflow:auto;flex:1}
+.trow{padding:9px 14px;border-bottom:1px solid var(--divider);border-left:3px solid transparent}
+.trow .l1{display:flex;align-items:center;gap:8px}
+.trow .cls{width:22px;height:22px;border-radius:var(--r-sm);display:grid;place-items:center;flex:0 0 22px;color:#fff;font-size:11px}
+.trow .tool{font-size:13px;font-weight:500;color:var(--text-primary);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.trow .dur{margin-left:auto;font-size:11px;color:var(--text-tertiary)}
+.trow .st{font-size:12px}
+.trow .st.ok{color:var(--brand-green)}
+.trow .st.run{color:var(--brand-green)}
+.trow .val{font-size:11.5px;color:var(--text-secondary);margin-top:4px;padding-left:30px;line-height:1.5}
+.trow .val .arrow{color:var(--text-tertiary)}
+.trow .src{font-size:10.5px;color:var(--text-tertiary);margin-top:2px;padding-left:30px;display:flex;
+  align-items:center;gap:8px}
+.trow .raw{font-size:10px;color:var(--brand-green);border:1px solid var(--border-subtle);border-radius:var(--r-xs);padding:1px 6px}
+.t-memory{border-left-color:var(--tc-memory)} .t-memory .cls{background:var(--tc-memory)}
+.t-external{border-left-color:var(--tc-external)} .t-external .cls{background:var(--tc-external)}
+.t-retrieval{border-left-color:var(--tc-retrieval)} .t-retrieval .cls{background:var(--tc-retrieval)}
+.t-deterministic{border-left-color:var(--tc-deterministic)} .t-deterministic .cls{background:var(--tc-deterministic)}
+.t-side{border-left-color:var(--tc-side)} .t-side .cls{background:var(--tc-side)}
+/* demo split */
+.demo{width:900px;max-width:100%;background:var(--brand-forest);border-radius:20px;padding:22px;
+  display:flex;gap:22px;align-items:stretch;box-shadow:var(--shadow-lg)}
+.demo .phone{height:660px;flex:0 0 330px;width:330px;transform:none}
+.demo .phone .body{gap:10px}
+.demo .side{flex:1;background:var(--surface-primary);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.demo .side .trace{height:660px}
+.demo-cap{color:#DDE9C9;font-size:12px;margin-top:2px}
+.mini{transform:scale(.86);transform-origin:top center}
+.section-title{max-width:1200px;margin:44px auto 4px;font-size:16px;font-weight:600;color:var(--brand-deep-green)}
+.section-sub{max-width:1200px;margin:0 auto 22px;font-size:13px;color:var(--text-secondary)}
+.small{font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>AgriSense — High-Fidelity Wireframe</h1>
+  <p>Mobile-first (390px) conversational agent. Screens map 1:1 to the PRD (S1–S6 + the /demo split view). Styling uses the FarmEsy design tokens only — brand lime/deep-green, Overused Grotesk, 8-pt spacing, tabular numerals. Content is the PRD's demo path (Karim · Gazipur · Boro rice).</p>
+</div>
+
+<div class="legend">
+  <span><i class="dot" style="background:var(--tc-memory)"></i>memory</span>
+  <span><i class="dot" style="background:var(--tc-external)"></i>external API</span>
+  <span><i class="dot" style="background:var(--tc-retrieval)"></i>retrieval / RAG</span>
+  <span><i class="dot" style="background:var(--tc-deterministic)"></i>deterministic</span>
+  <span><i class="dot" style="background:var(--tc-side)"></i>side-effect (payment)</span>
+  <span style="margin-left:auto"><i class="dot" style="background:var(--brand-lime)"></i>lime = AI / primary CTA</span>
+</div>
+
+<div class="grid">
+
+  <!-- S1 -->
+  <div class="screen">
+    <div class="screen-label">S1 · Home / Conversation<small>Intake &middot; gap detection &middot; visible memory</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar">
+        <div class="brand"><span class="mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg>
+        </span>AgriSense</div>
+        <div class="acts">
+          <div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg></div>
+          <div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.5H9.4l-.3 2.5a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.5h4.2l.3-2.5a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5c.1-.3.1-.7.1-1z"/></svg></div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="glance">
+          <div class="top"><b>Farm at a glance</b><span class="pill mem">memory &middot; live</span></div>
+          <div class="rows">
+            <div class="row"><span class="k">District</span><span class="v">Gazipur · AEZ 28</span></div>
+            <div class="row"><span class="k">Area</span><span class="v">1.2 bigha (0.16 ha)</span></div>
+            <div class="row"><span class="k">Soil</span><span class="v unknown">—</span></div>
+            <div class="row"><span class="k">Water</span><span class="v unknown">—</span></div>
+            <div class="row"><span class="k">Budget · Season</span><span class="v unknown">—</span></div>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="#17310F"><path d="M12 3l1 2 2-1-.5 2.2 2.1.4-1.5 1.5 1.5 1.5-2.1.4.5 2.2-2-1-1 2-1-2-2 1 .5-2.2-2.1-.4L8 9.5 6.5 8l2.1-.4L8 5.4l2 1z"/></svg></div>
+          <div class="msg agent">I can build you a full season plan. First — which district is your land in?</div>
+        </div>
+        <div class="msg user">I want to farm this season, what should I plant?</div>
+        <div class="agent-row">
+          <div class="avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="#17310F"><path d="M12 3l1 2 2-1-.5 2.2 2.1.4-1.5 1.5 1.5 1.5-2.1.4.5 2.2-2-1-1 2-1-2-2 1 .5-2.2-2.1-.4L8 9.5 6.5 8l2.1-.4L8 5.4l2 1z"/></svg></div>
+          <div class="msg agent">Got it — Gazipur, 1.2 bigha. What's your soil like, and how do you water the field?</div>
+        </div>
+      </div>
+      <div class="chipbar">
+        <div class="chip sel">Loam</div>
+        <div class="chip">Clay</div>
+        <div class="chip">Sandy</div>
+        <div class="chip escape">Not sure</div>
+      </div>
+      <div class="dock">
+        <div class="field">Type…</div>
+        <div class="mic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div>
+        <div class="trace"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="screen">
+    <div class="screen-label">S2 · Crop ranking card<small>Inline &middot; per-factor sub-scores &middot; weighted model</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:42</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div><div class="acts"><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div></div></div>
+      <div class="body">
+        <div class="agent-row">
+          <div class="avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="#17310F"><path d="M12 3l1 2 2-1-.5 2.2 2.1.4-1.5 1.5 1.5 1.5-2.1.4.5 2.2-2-1-1 2-1-2-2 1 .5-2.2-2.1-.4L8 9.5 6.5 8l2.1-.4L8 5.4l2 1z"/></svg></div>
+          <div class="msg agent">Based on this week's forecast and your farm, here are the three best fits.</div>
+        </div>
+        <div class="card">
+          <div class="hd"><span class="t">Recommended for your farm</span><span class="whychip">Why? ▾</span></div>
+          <div class="bd rank">
+            <div class="opt top">
+              <div class="l1"><div class="name"><span class="rk">①</span>Boro Rice <small style="color:var(--text-tertiary);font-weight:400">BRRI dhan89</small></div><div class="score">92<small>/100</small></div></div>
+              <div class="meta"><span>💧 High water</span><span>Low risk</span><span class="net">৳ ~48,000 net</span></div>
+              <div class="subs">
+                <span class="sub">season <b>1.00</b></span><span class="sub">rain <b>0.78</b></span>
+                <span class="sub">temp <b>0.95</b></span><span class="sub">soil <b>0.90</b></span>
+                <span class="sub">water <b>1.00</b></span>
+              </div>
+              <div class="actions"><button class="btn primary sm">Choose</button><button class="btn secondary sm">Why? ▾</button></div>
+            </div>
+            <div class="opt dim">
+              <div class="l1"><div class="name"><span class="rk">②</span>Potato <small style="color:var(--text-tertiary);font-weight:400">BARI Alu-7</small></div><div class="score">81<small>/100</small></div></div>
+              <div class="meta"><span>💧 Medium</span><span>Low risk</span></div>
+            </div>
+            <div class="opt dim">
+              <div class="l1"><div class="name"><span class="rk">③</span>Maize <small style="color:var(--text-tertiary);font-weight:400">Rabi</small></div><div class="score">74<small>/100</small></div></div>
+              <div class="meta"><span>💧 Low</span><span>Medium risk</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="small" style="text-align:center;color:var(--text-tertiary)">weights: season .30 · rain .25 · temp .20 · soil .15 · water .10</div>
+      </div>
+      <div class="chipbar">
+        <div class="chip">Choose Boro</div>
+        <div class="chip">Compare all 3</div>
+        <div class="chip escape">Ask something</div>
+      </div>
+      <div class="dock"><div class="field">Type…</div><div class="mic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div><div class="trace"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div></div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="screen">
+    <div class="screen-label">S3 · Season plan timeline<small>Dated stages &middot; weather-shifted date flagged</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:43</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div><div class="acts"><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div></div></div>
+      <div class="body">
+        <div class="card">
+          <div class="hd"><span class="t">Boro rice · season plan</span><span class="whychip">Why? ▾</span></div>
+          <div class="bd">
+            <div class="tl">
+              <div class="stage"><div class="rail"><div class="node done"></div><div class="line"></div></div><div class="content"><div class="stg-name">Land prep &amp; puddling</div><div class="stg-date">Dec 20 – Dec 28 · done</div></div></div>
+              <div class="stage"><div class="rail"><div class="node done"></div><div class="line"></div></div><div class="content"><div class="stg-name">Transplanting</div><div class="stg-date">Dec 29 – Jan 5 · done</div></div></div>
+              <div class="stage"><div class="rail"><div class="node done"></div><div class="line"></div></div><div class="content"><div class="stg-name">Basal fertilizer (TSP/MoP)</div><div class="stg-date">Jan 4 · done</div></div></div>
+              <div class="stage"><div class="rail"><div class="node current"></div><div class="line"></div></div><div class="content"><div class="stg-name cur">Tillering · N top-dress 1<span class="cur-badge">now · day 32</span></div><div class="stg-date">was Mar 24 → <b>Mar 28</b></div><div class="stg-tag">🌧 shifted +4d · 18mm rain forecast 23–25 Mar, runoff loss risk</div></div></div>
+              <div class="stage"><div class="rail"><div class="node"></div><div class="line"></div></div><div class="content"><div class="stg-name">N top-dress 2 · panicle</div><div class="stg-date">Apr 12 – Apr 15</div></div></div>
+              <div class="stage"><div class="rail"><div class="node"></div><div class="line"></div></div><div class="content"><div class="stg-name">Pest scouting checkpoint</div><div class="stg-date">Apr 20</div></div></div>
+              <div class="stage"><div class="rail"><div class="node"></div></div><div class="content"><div class="stg-name">Harvest</div><div class="stg-date">May 8 – May 18</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chipbar"><div class="chip">See costs</div><div class="chip">Buy inputs</div><div class="chip escape">Adjust plan</div></div>
+      <div class="dock"><div class="field">Type…</div><div class="mic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div><div class="trace"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div></div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="screen">
+    <div class="screen-label">S4 · Financial projection<small>Numbers as interface &middot; live [Adjust inputs]</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:44</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div><div class="acts"><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div></div></div>
+      <div class="body">
+        <div class="card fin">
+          <div class="hd"><span class="t">Will this leave me anything?</span><span class="whychip">Why? ▾</span></div>
+          <div class="bd">
+            <div class="lines">
+              <div class="row"><span class="k">Total cost</span><span class="v">৳ 42,300</span></div>
+              <div class="row"><span class="k">Expected yield<small>4.95 t/ha × 0.49 ha × 0.80 weather adj</small></span><span class="v">1.94 t</span></div>
+              <div class="row"><span class="k">Gross revenue<small>@ ৳36/kg govt procurement</small></span><span class="v">৳ 69,840</span></div>
+            </div>
+            <div class="headline">
+              <div class="np-lbl">Net profit</div>
+              <div class="np">৳ 27,540</div>
+              <div class="ratios">
+                <div class="rr">ROI<b>65%</b></div>
+                <div class="rr">BCR<b>1.65</b></div>
+                <div class="rr">Break-even<b>1.18 t</b></div>
+              </div>
+            </div>
+            <div class="adjust">
+              <label>Adjust area<b>0.49 ha</b></label>
+              <input type="range" class="slider" min="0" max="100" value="49">
+            </div>
+            <div class="actions"><button class="btn primary block">Buy inputs for this plan</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="chipbar"><div class="chip">What if budget drops 40%?</div><div class="chip escape">Change crop</div></div>
+      <div class="dock"><div class="field">Type…</div><div class="mic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div><div class="trace"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div></div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="screen">
+    <div class="screen-label">S5 · Input basket + checkout (HITL)<small>Proposal gate → receipt · bdapps CaaS</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:45</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div><div class="acts"><div class="iconbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div></div></div>
+      <div class="body">
+        <div class="aicard">
+          <div class="t"><svg width="13" height="13" viewBox="0 0 24 24" fill="#6B8547"><path d="M12 3l1 2 2-1-.5 2.2 2.1.4-1.5 1.5 1.5 1.5-2.1.4.5 2.2-2-1-1 2-1-2-2 1 .5-2.2-2.1-.4L8 9.5 6.5 8l2.1-.4L8 5.4l2 1z"/></svg> Agent proposes a charge</div>
+          <div class="propose">Charge <span class="amt">৳1,240</span> to 017XXXXXXXX for your fertilizer basket.</div>
+          <div class="basket">
+            <div class="li"><span>Urea · 45 kg @ ৳27</span><span class="v">৳ 1,215</span></div>
+            <div class="li"><span>TSP · 22 kg @ ৳27</span><span class="v">৳ 594</span></div>
+            <div class="li"><span>Subsidy applied</span><span class="v" style="color:var(--brand-green)">− ৳ 569</span></div>
+          </div>
+          <div class="hitl">
+            <button class="btn primary" style="flex:1">Approve</button>
+            <button class="btn secondary">Edit</button>
+            <button class="btn ghost">Cancel</button>
+          </div>
+          <div class="warn-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9a4d12" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2 18a2 2 0 001.7 3h16.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg> Approval fires before any charge — nothing is debited yet.</div>
+        </div>
+
+        <div class="card receipt">
+          <div class="hd"><span class="t">Receipt · after approve</span><span class="badge-mode">simulator mode</span></div>
+          <div class="bd">
+            <div class="ok">
+              <div class="ring"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B8547" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div class="amt">৳ 1,240</div>
+              <div class="cap">Debited · Mobile Account</div>
+            </div>
+            <div class="kv">
+              <div class="row"><span class="k">internalTrxId</span><span class="v">8f2a91c4…</span></div>
+              <div class="row"><span class="k">referenceId</span><span class="v">AGRI-1721…a1b2</span></div>
+              <div class="row"><span class="k">statusCode</span><span class="v" style="color:var(--brand-green)">S1000 · SUCCESS</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dock"><div class="field">Type…</div><div class="mic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></div><div class="trace"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div></div>
+    </div>
+  </div>
+
+  <!-- S6 -->
+  <div class="screen">
+    <div class="screen-label">S6 · Agent trace panel<small>Bottom-sheet drawer on mobile · raw JSON on expand</small></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:45</span><span class="r">5G &nbsp; 100%</span></div>
+      <div class="appbar"><div class="brand"><span class="mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div><div class="acts"><div class="iconbtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#294719" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div></div>
+      <div class="body" style="padding:0">
+        <div class="trace">
+          <div class="thd"><span class="t">Agent trace</span><span class="sum">7 steps · 4.2s</span></div>
+          <div class="rows">
+            <div class="trow t-memory"><div class="l1"><span class="cls">🧠</span><span class="tool">get_farm_profile</span><span class="dur">12ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> {} · missing: 6 fields</div></div>
+            <div class="trow t-memory"><div class="l1"><span class="cls">🧠</span><span class="tool">update_farm_profile</span><span class="dur">8ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> district: Gazipur → lat/lon + AEZ 28</div></div>
+            <div class="trow t-external"><div class="l1"><span class="cls">🌐</span><span class="tool">get_weather</span><span class="dur">412ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">←</span> lat 23.99, lon 90.42<br><span class="arrow">→</span> 41.2mm/14d · ET0 3.2mm/d · 18–29°C</div><div class="src">src: Open-Meteo (ECMWF) <span class="raw">raw JSON ▾</span></div></div>
+            <div class="trow t-retrieval"><div class="l1"><span class="cls">📚</span><span class="tool">search_knowledge_base</span><span class="dur">186ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> 4 chunks · BARC FRG-2018 p.47 (sim 0.84)</div></div>
+            <div class="trow t-deterministic"><div class="l1"><span class="cls">🧮</span><span class="tool">rank_crops</span><span class="dur">3ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> Boro 92 · Potato 81 · Maize 74</div></div>
+            <div class="trow t-deterministic"><div class="l1"><span class="cls">🧮</span><span class="tool">compute_financials</span><span class="dur">2ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> net ৳27,540 · ROI 65% · BCR 1.65</div></div>
+            <div class="trow t-side"><div class="l1"><span class="cls">💳</span><span class="tool">bdapps_direct_debit</span><span class="dur">640ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> internalTrxId 8f2a… · SUCCESS</div><div class="src">src: CaaS (simulator) <span class="raw">raw JSON ▾</span></div></div>
+          </div>
+          <div style="padding:10px 14px;border-top:1px solid var(--border-subtle)"><button class="btn secondary block sm">Close trace</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">/demo · projector split view (PRD §5.3)</div>
+<div class="section-sub">Phone product on the left, agent trace docked right — both visible at once, no window switching. Built at H18, ~30 min of layout.</div>
+<div class="grid">
+  <div class="demo">
+    <div style="display:flex;flex-direction:column">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="statusbar"><span>9:44</span><span class="r">5G 100%</span></div>
+        <div class="appbar"><div class="brand"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 3l1.2 2.4L15.7 4l-.6 2.7 2.6.4-1.9 1.9 1.9 1.9-2.6.4.6 2.7-2.5-1.4L12 19l-1.2-2.3L8.3 18l.6-2.7-2.6-.4L8.2 13 6.3 11.1l2.6-.4L8.3 8l2.5 1.4z" fill="#294719"/></svg></span>AgriSense</div></div>
+        <div class="body">
+          <div class="glance"><div class="top"><b>Farm at a glance</b><span class="pill mem">live</span></div><div class="rows"><div class="row"><span class="k">Gazipur · AEZ 28</span><span class="v">0.49 ha</span></div><div class="row"><span class="k">Boro · day 32</span><span class="v">Tillering</span></div></div></div>
+          <div class="card fin"><div class="hd"><span class="t">Net result</span><span class="whychip">Why?</span></div><div class="bd"><div class="headline" style="margin-top:0"><div class="np-lbl">Net profit</div><div class="np">৳ 27,540</div><div class="ratios"><div class="rr">ROI<b>65%</b></div><div class="rr">BCR<b>1.65</b></div></div></div></div></div>
+        </div>
+        <div class="dock"><div class="field">Type…</div><div class="trace"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h13"/></svg></div></div>
+      </div>
+      <div class="demo-cap">Mobile product</div>
+    </div>
+    <div class="side">
+      <div class="trace">
+        <div class="thd"><span class="t">Agent trace</span><span class="sum">7 steps · 4.2s</span></div>
+        <div class="rows">
+          <div class="trow t-memory"><div class="l1"><span class="cls">🧠</span><span class="tool">get_farm_profile</span><span class="dur">12ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> {} · missing: 6 fields</div></div>
+          <div class="trow t-external"><div class="l1"><span class="cls">🌐</span><span class="tool">get_weather</span><span class="dur">412ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> 41.2mm/14d · ET0 3.2mm/d · 18–29°C</div><div class="src">src: Open-Meteo (ECMWF) <span class="raw">raw JSON ▾</span></div></div>
+          <div class="trow t-retrieval"><div class="l1"><span class="cls">📚</span><span class="tool">search_knowledge_base</span><span class="dur">186ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> 4 chunks · BARC FRG-2018 p.47 (0.84)</div></div>
+          <div class="trow t-deterministic"><div class="l1"><span class="cls">🧮</span><span class="tool">rank_crops</span><span class="dur">3ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> rain_fit 0.78 ← 41mm forecast (coupling)</div></div>
+          <div class="trow t-deterministic"><div class="l1"><span class="cls">🧮</span><span class="tool">compute_financials</span><span class="dur">2ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> net ৳27,540 · ROI 65%</div></div>
+          <div class="trow t-side"><div class="l1"><span class="cls">💳</span><span class="tool">bdapps_direct_debit</span><span class="dur">640ms</span><span class="st ok">✓</span></div><div class="val"><span class="arrow">→</span> internalTrxId 8f2a… · SUCCESS</div><div class="src">src: CaaS (simulator) <span class="raw">raw JSON ▾</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

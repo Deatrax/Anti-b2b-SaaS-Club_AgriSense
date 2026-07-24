@@ -24,6 +24,10 @@ coverage/
 # ── Runtime cache (Open-Meteo disk-cache fallback, §C.11) ──
 .cache/
 
+.codex/
+.playwright-mcp/
+
+
 # ── Stray tsc output from apps/api's rootDir/packages-shared path-mapping issue ──
 # (apps/api tsconfig pulls in packages/shared/src via path mapping outside its rootDir;
 #  tsc emits .js next to the .ts source there instead of failing clean — see repo notes)

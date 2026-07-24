@@ -2,6 +2,8 @@
 import type { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { FarmModel } from '../models/farm.model';
+import { FieldModel } from '../models/field.model';
+import { serializeField } from '../views/field.view';
 
 export async function listFarms(req: Request, res: Response, next: NextFunction) {
   try {
@@ -33,6 +35,20 @@ export async function createFarm(req: Request, res: Response, next: NextFunction
       res.status(400).json({ error: err.message });
       return;
     }
+    next(err);
+  }
+}
+
+export async function listFields(req: Request, res: Response, next: NextFunction) {
+  const farmId = req.params.id;
+  if (!farmId) {
+    res.status(400).json({ error: 'farm id is required' });
+    return;
+  }
+  try {
+    const states = await FieldModel.listByFarm(farmId);
+    res.json({ fields: states.map(serializeField) });
+  } catch (err) {
     next(err);
   }
 }

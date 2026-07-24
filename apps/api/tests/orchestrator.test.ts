@@ -124,8 +124,8 @@ describe('runAgent — tool calling', () => {
     generateText
       .mockResolvedValueOnce({
         text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'get_field_state', args: {} }],
-        response: { messages: [{ id: 'm1', role: 'assistant', content: [{ type: 'tool-call', toolCallId: 'call-1', toolName: 'get_field_state', args: {} }] }] },
+        toolCalls: [{ toolCallId: 'call-1', toolName: 'get_field_state', input: {} }],
+        response: { messages: [{ id: 'm1', role: 'assistant', content: [{ type: 'tool-call', toolCallId: 'call-1', toolName: 'get_field_state', input: {} }] }] },
       })
       .mockImplementationOnce(impl);
 
@@ -140,7 +140,14 @@ describe('runAgent — tool calling', () => {
     const toolResultMessage = box.messages[box.messages.length - 1];
     expect(toolResultMessage).toEqual({
       role: 'tool',
-      content: [{ type: 'tool-result', toolCallId: 'call-1', toolName: 'get_field_state', result: { data: { ok: true }, provenance: expect.any(Array) }, isError: false }],
+      content: [
+        {
+          type: 'tool-result',
+          toolCallId: 'call-1',
+          toolName: 'get_field_state',
+          output: { type: 'json', value: { data: { ok: true }, provenance: expect.any(Array) } },
+        },
+      ],
     });
 
     expect(addMessage).toHaveBeenLastCalledWith(
@@ -156,7 +163,7 @@ describe('runAgent — tool calling', () => {
     generateText
       .mockResolvedValueOnce({
         text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'does_not_exist', args: {} }],
+        toolCalls: [{ toolCallId: 'call-1', toolName: 'does_not_exist', input: {} }],
         response: { messages: [] },
       })
       .mockImplementationOnce(impl);
@@ -164,7 +171,7 @@ describe('runAgent — tool calling', () => {
     await runAgent(makeCtx(), 'go');
 
     const toolResultMessage = box.messages[box.messages.length - 1] as { content: unknown[] };
-    expect(toolResultMessage.content[0]).toMatchObject({ isError: true, result: { error: expect.stringMatching(/unknown tool/) } });
+    expect(toolResultMessage.content[0]).toMatchObject({ output: { type: 'error-json', value: { error: expect.stringMatching(/unknown tool/) } } });
   });
 
   it('lets one tool handler throwing become an error result without crashing the turn', async () => {
@@ -182,7 +189,7 @@ describe('runAgent — tool calling', () => {
     generateText
       .mockResolvedValueOnce({
         text: '',
-        toolCalls: [{ toolCallId: 'call-1', toolName: 'boom_tool', args: {} }],
+        toolCalls: [{ toolCallId: 'call-1', toolName: 'boom_tool', input: {} }],
         response: { messages: [] },
       })
       .mockImplementationOnce(impl);
@@ -190,7 +197,7 @@ describe('runAgent — tool calling', () => {
     await runAgent(makeCtx(), 'go');
 
     const toolResultMessage = box.messages[box.messages.length - 1] as { content: unknown[] };
-    expect(toolResultMessage.content[0]).toMatchObject({ isError: true, result: { error: expect.stringMatching(/db unreachable/) } });
+    expect(toolResultMessage.content[0]).toMatchObject({ output: { type: 'error-json', value: { error: expect.stringMatching(/db unreachable/) } } });
   });
 });
 
@@ -206,7 +213,7 @@ describe('runAgent — resilience', () => {
     });
     generateText.mockResolvedValue({
       text: '',
-      toolCalls: [{ toolCallId: 'call-x', toolName: 'looping_tool', args: {} }],
+      toolCalls: [{ toolCallId: 'call-x', toolName: 'looping_tool', input: {} }],
       response: { messages: [] },
     });
 
