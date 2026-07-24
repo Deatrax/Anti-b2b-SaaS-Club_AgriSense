@@ -2,12 +2,12 @@
   "_meta": {
     "purpose": "Deterministic 'how much / when' store (§C.6). RAG must NEVER supply these — doses, splits, durations, Kc, yields live here.",
     "sources": {
-      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018 (OCR). Cite table + page per crop × AEZ × soil-test level.",
-      "calendar": "BAMIS crop-weather calendar + BRRI variety durations.",
-      "kc": "FAO CROPWAT / FAO-56 crop coefficients by growth stage.",
-      "base_yield": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha)."
+      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018 (OCR). aman_rice: page_0094.txt (soil-test-level table). boro_rice/aus_rice: page_0212.txt / printed page 202 per manifest.json (AEZ 9 'Old Brahmaputra Floodplain' general cropping-pattern table — zone-matched to aez_default: 9).",
+      "calendar": "BAMIS crop-weather calendar + BRRI variety durations (data/raw/brri_varieties).",
+      "kc": "FAO CROPWAT / FAO-56 crop coefficients by growth stage (standard published reference, not yet re-verified against a locally retrieved copy).",
+      "base_yield": "aman_rice: Chanda et al. 2019. boro_rice/aus_rice: BARC FRG-2018 page_0212.txt (printed page 202) cropping-pattern table yield-goal column."
     },
-    "status": "TEMPLATE — every numeric value below is a PLACEHOLDER pending verification against the OCR'd FRG. Confirm each `_verify: true` before demo (no invented numbers, §0).",
+    "status": "Correction history (2026-07-25), most recent first: (2) a first merge-resolution pass mistakenly read page_0202.txt (OCR index 202) as the boro_rice/aus_rice fertilizer source and 'corrected' Obidit's numbers (Boro S18→12, Aus K25/S9→20/6) plus mislabeled the zone as AEZ 2 — but page_0202.txt's OCR index is actually PRINTED page 192 (AEZ 2 'Active Tista Floodplain'), a different table entirely; this was an indexing error, not a real discrepancy, and has been reverted — Obidit's original N150/P20/K65/S18 (Boro) and N75/P10/K25/S9 (Aus) were correct all along, now cited to the right file (page_0212.txt, printed page 202, AEZ 9 — matching aez_default: 9 exactly). (1) the 'obidit' branch's original merge added boro_rice/aus_rice to close the Tier-0 '≥3 candidate crops' gap — a real, valuable fix, numbers now confirmed correct — but both crops kept the old basal+panicle-initiation 50/50 K split even though the cited split source (page_0065.txt: 'phosphorus, potassium, sulphur... applied as basal') says K is fully basal for rice generally; that K-split correction (still valid, independent of the AEZ mixup above) is kept. aman_rice's own data (page_0094.txt, medium soil-test row) was unaffected by either pass.",
     "retrieved_date": "2026-07-24"
   },
   "crops": {
@@ -17,45 +17,141 @@
       "season": "aman",
       "aez_default": 9,
       "calendar": {
-        "_source": "BAMIS / BRRI — VERIFY",
-        "_verify": true,
-        "sowing_window": { "start": "07-01", "end": "08-15", "_note": "nursery sowing (MM-DD)" },
-        "transplant_window": { "start": "08-01", "end": "09-15" },
-        "harvest_window": { "start": "11-15", "end": "12-15" }
+        "_source": "BRRI dhan-71 / dhan-93 / dhan-94 variety records — data/raw/brri_varieties/{brri-dhan-71,brri-dhan-93,brri-dhan-94}.json",
+        "sowing_window": { "start": "07-01", "end": "08-15", "_note": "nursery sowing (MM-DD); BRRI dhan-71 nursery 5–15 July" },
+        "transplant_window": { "start": "08-01", "end": "09-15", "_note": "BRRI dhan-93/94 planting: August" },
+        "harvest_window": { "start": "11-15", "end": "12-15", "_note": "BRRI dhan-71 harvest 1–15 Nov; dhan-93/94 harvest Nov–Dec" }
       },
       "stage_durations_days": {
-        "_source": "BRRI variety guide — VERIFY",
+        "_source": "Total field duration verified: BRRI dhan-71 114–117 days (post-transplant to harvest), BRRI dhan-93/94 137–138 days (sowing to harvest). Per-stage breakdown below is an engineering estimate consistent with that verified total, not itself line-cited.",
         "_verify": true,
         "nursery": 25, "tillering": 35, "panicle_initiation": 20,
         "booting": 15, "flowering": 10, "grain_filling": 25, "maturity": 15
       },
       "fertilizer": {
-        "_source": "BARC FRG-2018, AEZ-9, medium soil-test — VERIFY page/table",
-        "_verify": true,
+        "_source": "BARC FRG-2018, RICE (T. Aman rice), HYV group incl. BR4/BR10/BR11/BR22/BR23/BRRI dhan30-54/hybrid dhan4/Binadhan-4/7/8, Yield Goal 5.0±0.5 t/ha, Medium soil-test-interpretation row — data/raw/barc_frg_2018/page_0094.txt",
         "unit": "kg/ha of nutrient",
+        "assumption": "Dose is the midpoint of BARC's 'Medium' soil-test-interpretation range (N 31-60, P 6-10, K 21-40, S 5-8 kg/ha) — the practical default when a farmer's specific soil-test level is unknown.",
         "nutrients": {
-          "N": { "dose": 78, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
-          "P": { "dose": 15, "splits": [ {"stage":"basal","fraction":1.0} ] },
-          "K": { "dose": 40, "splits": [ {"stage":"basal","fraction":0.5}, {"stage":"panicle_initiation","fraction":0.5} ] },
-          "S": { "dose": 8,  "splits": [ {"stage":"basal","fraction":1.0} ] }
+          "N": { "dose": 46, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
+          "P": { "dose": 8, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 31, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 7,  "splits": [ {"stage":"basal","fraction":1.0} ] }
         },
         "carriers": {
           "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
           "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
         },
+        "method_of_application": "BARC FRG-2018 p.94: N in three equal splits (basal/immediately after seedling establishment, early tillering, 5-7 days before panicle initiation); P/K/S/Zn fully basal at final land preparation (coarse-textured soils may split K — not modeled here).",
         "organic_alternatives": {
-          "_source": "Krishi Projukti Hatboi / FRG organic-matter guidance — VERIFY",
+          "_source": "BARC FRG-2018 §5.7/6.3 (data/raw/barc_frg_2018/page_0063.txt, page_0071.txt): incorporating 12-15 t/ha green dhaincha biomass reduces T. Aman N requirement by 25-30 kg/ha.",
+          "cow_dung": { "rate_t_per_ha": 5, "n_credit_kg_per_ha": 12, "note": "well-decomposed; apply during land prep; substitutes part of N/P/K" },
+          "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" },
+          "dhaincha_green_manure": { "rate_t_per_ha_range": [12, 15], "n_reduction_kg_per_ha_range": [25, 30], "note": "incorporate within a week before T. Aman transplanting" }
+        }
+      },
+      "kc_by_stage": {
+        "_source": "FAO-56 / CROPWAT (rice) — standard published reference; not yet re-verified against a locally retrieved copy",
+        "_verify": true,
+        "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
+      },
+      "base_yield_kg_per_ha": { "value": 3000, "_source": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha) — a conservative farmer-average estimate; BRRI variety-trial yields for dhan-71/93/94 run 5-6 t/ha (research-station potential, not farmer average)", "_verify": true }
+    },
+    "boro_rice": {
+      "_added": "2026-07-25 — closes the '≥3 candidate crops' gap (Tier 0 #3).",
+      "label": "Boro rice (HYV)",
+      "label_bn": "বোরো ধান",
+      "season": "boro",
+      "aez_default": 9,
+      "calendar": {
+        "_source": "harvest window: BRRI dhan101/dhan102 variety pages (data/raw/brri_varieties, 'planting_time: January-February', 'harvest_time: May-June'). sowing_window (nursery): NOT from BRRI — estimated as a ~6-week cold-season nursery lead before transplanting (standard BD Boro practice), not independently verified.",
+        "_verify": true,
+        "sowing_window": { "start": "11-15", "end": "12-31", "_note": "nursery sowing (MM-DD) — estimated lead time, not BRRI-sourced" },
+        "transplant_window": { "start": "01-01", "end": "02-28" },
+        "harvest_window": { "start": "05-01", "end": "06-30" }
+      },
+      "stage_durations_days": {
+        "_source": "Estimated from BRRI dhan101 (142d)/dhan102 (150d) total crop duration, distributed across stages using aman_rice's stage proportions adjusted for Boro's longer cold-season nursery/tillering — NOT an independently sourced per-stage breakdown.",
+        "_verify": true,
+        "nursery": 35, "tillering": 30, "panicle_initiation": 18,
+        "booting": 14, "flowering": 8, "grain_filling": 25, "maturity": 15
+      },
+      "fertilizer": {
+        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202 per manifest.json) — 'AEZ 9: Old Brahmaputra Floodplain' general cropping-pattern table, 'Rabi Boro rice' row: N150 P20 K65 S18, yield 7.5±0.75 t/ha. Zone-matched to our aez_default of 9 (correction 2026-07-25: an earlier merge-resolution pass mistakenly read page_0202.txt — OCR index 202, actually printed page 192, AEZ 2 — as the source and 'corrected' these numbers to S12; page_0212.txt/printed-page-202 is the real AEZ-9 table and restores the original S18).",
+        "_verify": true,
+        "unit": "kg/ha of nutrient",
+        "nutrients": {
+          "N": { "dose": 150, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
+          "P": { "dose": 20, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 65, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 18, "splits": [ {"stage":"basal","fraction":1.0} ] }
+        },
+        "_split_source": "BARC FRG-2018 p.65 (data/raw/barc_frg_2018/page_0065.txt): 'In case of rice (except B. Aman rice), urea should be applied in three equal splits...' + 'The full dose of phosphorus, potassium, sulphur... should be applied as basal' — general rice practice, so K is fully basal here (not the 50/50 basal+PI split, which the source reserves for coarse-textured soils only).",
+        "carriers": {
+          "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
+          "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
+        },
+        "organic_alternatives": {
+          "_source": "Krishi Projukti Hatboi / FRG organic-matter guidance — VERIFY (same general guidance as aman_rice)",
           "_verify": true,
           "cow_dung": { "rate_t_per_ha": 5, "n_credit_kg_per_ha": 12, "note": "well-decomposed; apply during land prep; substitutes part of N/P/K" },
           "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" }
         }
       },
       "kc_by_stage": {
-        "_source": "FAO-56 / CROPWAT (rice) — VERIFY",
+        "_source": "FAO-56 / CROPWAT (rice) — same as aman_rice. Kc reflects rice physiology, not season, so it carries across Boro/Aus/Aman.",
         "_verify": true,
         "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
       },
-      "base_yield_kg_per_ha": { "value": 3000, "_source": "Chanda et al. 2019 (Aman HYV ~3.0 t/ha)", "_verify": true }
+      "base_yield_kg_per_ha": { "value": 7500, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — AEZ 9 cropping-pattern table, Boro rice row (7.5±0.75 t/ha)", "_verify": true }
+    },
+    "aus_rice": {
+      "_added": "2026-07-25 — closes the '≥3 candidate crops' gap (Tier 0 #3).",
+      "label": "T. Aus rice (HYV)",
+      "label_bn": "রোপা আউশ ধান",
+      "season": "aus",
+      "aez_default": 9,
+      "calendar": {
+        "_source": "harvest window: BRRI dhan85/dhan83 variety pages (data/raw/brri_varieties, harvest_time 'June-August'; planting_time only says 'Aus', no explicit month). sowing/transplant windows: NOT from BRRI — standard Bangladesh Kharif-1/Aus calendar convention (nursery Feb–Mar, transplant Mar–Apr), matching the BARC AEZ table's own 'Kharif 1' label for this crop.",
+        "_verify": true,
+        "sowing_window": { "start": "02-15", "end": "03-01", "_note": "nursery sowing (MM-DD) — standard Kharif-1 convention, not BRRI-sourced" },
+        "transplant_window": { "start": "03-15", "end": "04-15" },
+        "harvest_window": { "start": "06-01", "end": "08-31" }
+      },
+      "stage_durations_days": {
+        "_source": "Estimated from BRRI dhan85 (106-110d)/dhan83 (100-105d) total crop duration, distributed across stages using a shortened-cycle analogue of aman_rice's proportions — NOT an independently sourced per-stage breakdown.",
+        "_verify": true,
+        "nursery": 20, "tillering": 20, "panicle_initiation": 12,
+        "booting": 10, "flowering": 8, "grain_filling": 20, "maturity": 18
+      },
+      "fertilizer": {
+        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202 per manifest.json) — 'AEZ 9: Old Brahmaputra Floodplain' general cropping-pattern table, 'Kharif 1 T. Aus rice' row: N75 P10 K25 S9, yield 4.0±0.40 t/ha. Zone-matched to our aez_default of 9 (correction 2026-07-25: an earlier merge-resolution pass mistakenly read page_0202.txt — OCR index 202, actually printed page 192, AEZ 2 — as the source and 'corrected' these numbers to K20/S6; page_0212.txt/printed-page-202 is the real AEZ-9 table and restores the original K25/S9).",
+        "_verify": true,
+        "unit": "kg/ha of nutrient",
+        "nutrients": {
+          "N": { "dose": 75, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
+          "P": { "dose": 10, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 25, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 9, "splits": [ {"stage":"basal","fraction":1.0} ] }
+        },
+        "_split_source": "BARC FRG-2018 p.65 (data/raw/barc_frg_2018/page_0065.txt) — same general rice rule as boro_rice: K fully basal, not the 50/50 basal+PI split.",
+        "carriers": {
+          "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
+          "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
+        },
+        "organic_alternatives": {
+          "_source": "Krishi Projukti Hatboi / FRG organic-matter guidance — VERIFY (same general guidance as aman_rice)",
+          "_verify": true,
+          "cow_dung": { "rate_t_per_ha": 5, "n_credit_kg_per_ha": 12, "note": "well-decomposed; apply during land prep; substitutes part of N/P/K" },
+          "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" }
+        }
+      },
+      "kc_by_stage": {
+        "_source": "FAO-56 / CROPWAT (rice) — same as aman_rice.",
+        "_verify": true,
+        "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
+      },
+      "base_yield_kg_per_ha": { "value": 4000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — AEZ 9 cropping-pattern table, T. Aus rice row (4.0±0.40 t/ha)", "_verify": true }
     }
   }
 }

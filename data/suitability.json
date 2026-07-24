@@ -1,16 +1,28 @@
 {
   "_meta": {
     "purpose": "ECOCROP-style environmental min-opt-max per crop for deterministic suitability scoring (§C.9 ranking.engine).",
-    "source": "FAO ECOCROP — VERIFY per crop.",
-    "status": "TEMPLATE — placeholder ranges pending ECOCROP lookup.",
+    "source": "FAO ECOCROP (Oryza sativa, EcoPortCode 1574) — data/raw/fao_ecocrop/rice.json (already retrieved, structured).",
+    "status": "Merge-conflict correction (2026-07-25): the 'obidit' branch's aman_rice values were byte-identical to the pre-existing placeholder template, not actually derived from the retrieved fao_ecocrop/rice.json record it cited (TOPMN/TOPMX/TMIN/TMAX/ROPMN/ROPMX/RMIN/RMAX/PHOPMN/PHOPMX/PHMIN/PHMAX). Recomputed all three rice crops directly from that file's fields. His point that boro_rice/aus_rice should share aman_rice's range (ECOCROP is species-level, not season-level) is correct and kept — only the numbers were wrong.",
     "retrieved_date": "2026-07-24"
   },
   "crops": {
     "aman_rice": {
-      "_verify": true,
-      "temp_c":          { "min": 20, "opt_low": 25, "opt_high": 32, "max": 38 },
-      "rain_mm_season":  { "min": 700, "opt_low": 1200, "opt_high": 2000, "max": 3000 },
-      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 8.0 }
+      "_source": "FAO ECOCROP, Oryza sativa (EcoPortCode 1574) — data/raw/fao_ecocrop/rice.json: TMIN/TOPMN/TOPMX/TMAX, RMIN/ROPMN/ROPMX/RMAX, PHMIN/PHOPMN/PHOPMX/PHMAX",
+      "temp_c":          { "min": 10, "opt_low": 20, "opt_high": 30, "max": 36 },
+      "rain_mm_season":  { "min": 1000, "opt_low": 1500, "opt_high": 2000, "max": 4000 },
+      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 9.0 }
+    },
+    "boro_rice": {
+      "_note": "ECOCROP (data/raw/fao_ecocrop/rice.json) is a single species-level Oryza sativa record — it cannot distinguish Boro/Aus/Aman, so this is deliberately identical to aman_rice's range. Season differentiation happens via season_fit (crop_rules.json's `season` field), not here — a known FAO ECOCROP limitation, not an oversight.",
+      "temp_c":          { "min": 10, "opt_low": 20, "opt_high": 30, "max": 36 },
+      "rain_mm_season":  { "min": 1000, "opt_low": 1500, "opt_high": 2000, "max": 4000 },
+      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 9.0 }
+    },
+    "aus_rice": {
+      "_note": "Same species-level ECOCROP limitation as boro_rice above — identical range to aman_rice/boro_rice by construction, not an oversight.",
+      "temp_c":          { "min": 10, "opt_low": 20, "opt_high": 30, "max": 36 },
+      "rain_mm_season":  { "min": 1000, "opt_low": 1500, "opt_high": 2000, "max": 4000 },
+      "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 9.0 }
     }
   }
 }
