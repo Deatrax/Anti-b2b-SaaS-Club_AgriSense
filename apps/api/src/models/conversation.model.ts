@@ -11,6 +11,15 @@ export const ConversationModel = {
     return row ?? null;
   },
 
+  /** Tier 0 is one conversation per field (§3.4) — chat.controller get-or-creates via this. */
+  async create(fieldId: string, title?: string): Promise<{ id: string }> {
+    const [row] = await query<{ id: string }>(
+      'insert into conversations (field_id, title) values ($1, $2) returning id',
+      [fieldId, title ?? null],
+    );
+    return row!;
+  },
+
   async recentMessages(conversationId: string, limit = 20): Promise<Message[]> {
     const rows = await query<Message>(
       'select * from messages where conversation_id = $1 order by created_at desc limit $2',

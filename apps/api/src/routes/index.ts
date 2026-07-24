@@ -4,7 +4,7 @@ import { validate } from '../middleware/validate.middleware';
 import { login, loginSchema } from '../controllers/auth.controller';
 import { listFarms, createFarm, createFarmSchema } from '../controllers/farm.controller';
 import { getField, getFieldPlan } from '../controllers/field.controller';
-import { postChat } from '../controllers/chat.controller';
+import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog } from '../controllers/log.controller';
 import { postScenario } from '../controllers/scenario.controller';
 import { proposeBasket, approveAndDebit } from '../controllers/payment.controller';
@@ -21,7 +21,7 @@ router.get('/fields/:id/plan', getFieldPlan);
 router.post('/fields/:id/log', postLog);
 router.post('/fields/:id/scenario', postScenario);
 
-router.post('/chat', postChat);
+router.post('/chat', validate(postChatSchema), postChat);
 
 router.post('/payment/propose', proposeBasket);
 router.post('/payment/approve', approveAndDebit);
