@@ -7,7 +7,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { StreamEvent } from '@agrisense/shared';
 import { openChatStream } from './sse';
-import { getFieldChatHistory } from './api';
+import { getFieldChatHistory, getConversation } from './api';
 import { buildFeedFromHistory, type FeedItem } from './feed';
 
 const CONV_ID = 'live'; // display-only placeholder; the real conversation id lives server-side
@@ -20,7 +20,10 @@ function userMessage(content: string): FeedItem {
   };
 }
 
-export function useFieldChat(fieldId: string) {
+/** @param conversationId - a specific thread to open (a "recent chats" entry). Omit to use
+ * the field's default (most recently started) conversation, creating one on first send —
+ * what Overview/Plan's embedded panels and a plain Chat-tab visit want. */
+export function useFieldChat(fieldId: string, conversationId?: string) {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const closeRef = useRef<(() => void) | null>(null);
@@ -30,7 +33,8 @@ export function useFieldChat(fieldId: string) {
     let cancelled = false;
     setFeed([]);
     assistantIdRef.current = null;
-    getFieldChatHistory(fieldId)
+    const load = conversationId ? getConversation(conversationId) : getFieldChatHistory(fieldId);
+    load
       .then((history) => {
         if (!cancelled) setFeed(buildFeedFromHistory(history.messages, history.traces));
       })
@@ -38,7 +42,7 @@ export function useFieldChat(fieldId: string) {
     return () => {
       cancelled = true;
     };
-  }, [fieldId]);
+  }, [fieldId, conversationId]);
 
   const sendMessage = useCallback(
     (message: string) => {
@@ -47,7 +51,7 @@ export function useFieldChat(fieldId: string) {
       setIsStreaming(true);
       assistantIdRef.current = null;
 
-      const close = openChatStream({ fieldId, message }, (event: StreamEvent) => {
+      const close = openChatStream({ fieldId, message, conversationId }, (event: StreamEvent) => {
         if (event.type === 'text') {
           setFeed((f) => {
             if (assistantIdRef.current) {
@@ -95,7 +99,7 @@ export function useFieldChat(fieldId: string) {
       });
       closeRef.current = close;
     },
-    [fieldId, isStreaming],
+    [fieldId, conversationId, isStreaming],
   );
 
   return { feed, sendMessage, isStreaming };

@@ -49,8 +49,10 @@ export async function getField(req: Request, res: Response, next: NextFunction) 
   }
 }
 
-/** A field's chat history (Tier 0: one conversation per field, §3.4) — opening an existing
- * field's chat page needs this to show what was already said, not start blank. */
+/** A field's default chat history — its most recently started conversation — for callers
+ * that don't pick a specific thread (embedded Overview/Plan panels, the Chat tab's first
+ * load). Opening an existing field's chat needs this to show what was already said, not
+ * start blank. */
 export async function getFieldChatHistory(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
   if (!id) {
@@ -68,6 +70,22 @@ export async function getFieldChatHistory(req: Request, res: Response, next: Nex
       TraceModel.listByConversation(conversation.id),
     ]);
     res.json({ conversationId: conversation.id, messages, traces });
+  } catch (err) {
+    next(err);
+  }
+}
+
+/** "New chat" (§ multi-chat) — a field can hold many conversations; this explicitly starts
+ * a fresh one instead of reusing the most recent (that's what getForField is for). */
+export async function createFieldConversation(req: Request, res: Response, next: NextFunction) {
+  const fieldId = req.params.id;
+  if (!fieldId) {
+    res.status(400).json({ error: 'field id is required' });
+    return;
+  }
+  try {
+    const conversation = await ConversationModel.create(fieldId);
+    res.status(201).json({ conversation });
   } catch (err) {
     next(err);
   }

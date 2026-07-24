@@ -31,7 +31,10 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
   const phase = derivePhase(field); // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
 
   await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
-  const history = await ConversationModel.recentMessages(ctx.conversationId, 20);
+  const [history, priorMessages] = await Promise.all([
+    ConversationModel.recentMessages(ctx.conversationId, 20),
+    ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10),
+  ]);
   const messages: ModelMessage[] = [
     ...history
       .filter((m) => m.role === 'user' || m.role === 'assistant')
@@ -39,7 +42,7 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
     { role: 'user', content: userMessage },
   ];
 
-  const system = buildSystemPrompt(field, phase);
+  const system = buildSystemPrompt(field, phase, priorMessages);
   const tools = buildToolSet(toolsForPhase(phase));
   const textParts: string[] = [];
   const toolCallLog: Array<{ name: string; args: unknown }> = [];

@@ -181,7 +181,8 @@ export interface ApiRecentChat {
   lastMessage: { role: string; content: string; createdAt: string };
 }
 
-/** One entry per field (its single Tier-0 conversation, §3.4) — not separate chat threads. */
+/** Every conversation across the farm's fields (a field can have several, § multi-chat),
+ * newest last-message first. */
 export function listRecentChats(farmId: string, limit = 5, offset = 0): Promise<{ chats: ApiRecentChat[]; total: number }> {
   return apiGet(`/farms/${encodeURIComponent(farmId)}/chats?limit=${limit}&offset=${offset}`);
 }
@@ -200,10 +201,34 @@ export interface ApiFieldChatHistory {
   traces: TraceEntry[];
 }
 
-/** A field's existing conversation (Tier 0: one per field, §3.4), so opening its chat page
- * shows what was already said instead of a blank thread. */
+/** A field's default conversation — its most recently started one — for callers that don't
+ * pick a specific thread (embedded Overview/Plan panels, opening Chat with no `?c=`). */
 export function getFieldChatHistory(fieldId: string): Promise<ApiFieldChatHistory> {
   return apiGet(`/fields/${encodeURIComponent(fieldId)}/chat`);
+}
+
+export interface ApiConversation {
+  id: string;
+  fieldId: string;
+  title: string | null;
+  createdAt: string;
+}
+
+/** A field can have several conversations (§ multi-chat) — this starts a fresh one. */
+export function createFieldConversation(fieldId: string): Promise<{ conversation: ApiConversation }> {
+  return apiPost(`/fields/${encodeURIComponent(fieldId)}/conversations`, {});
+}
+
+export interface ApiConversationHistory {
+  conversation: ApiConversation;
+  messages: Message[];
+  traces: TraceEntry[];
+}
+
+/** One exact thread by id — what "recent chats" / "all chats" open, as opposed to
+ * getFieldChatHistory's "whichever is most recent" default. */
+export function getConversation(conversationId: string): Promise<ApiConversationHistory> {
+  return apiGet(`/conversations/${encodeURIComponent(conversationId)}`);
 }
 
 export function getFieldPlan(fieldId: string): Promise<ApiFieldPlanResponse> {

@@ -11,8 +11,11 @@ const getState = vi.fn();
 vi.mock('../src/models/field.model', () => ({ FieldModel: { getState } }));
 
 const recentMessages = vi.fn();
+const recentMessagesForFieldExcluding = vi.fn();
 const addMessage = vi.fn(async () => ({ id: 'msg-1' }));
-vi.mock('../src/models/conversation.model', () => ({ ConversationModel: { recentMessages, addMessage } }));
+vi.mock('../src/models/conversation.model', () => ({
+  ConversationModel: { recentMessages, recentMessagesForFieldExcluding, addMessage },
+}));
 
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
@@ -74,6 +77,7 @@ beforeEach(() => {
   getRegistry().clear();
   getState.mockResolvedValue(maintainingState);
   recentMessages.mockResolvedValue([]);
+  recentMessagesForFieldExcluding.mockResolvedValue([]);
 });
 
 describe('runAgent — no tool calls', () => {

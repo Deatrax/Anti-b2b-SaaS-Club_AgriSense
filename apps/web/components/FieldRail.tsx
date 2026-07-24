@@ -1,15 +1,15 @@
-// Live left rail: farm identity header, recent chats (one per field's Tier-0 conversation,
-// §3.4 — not separate threads), a field-picker dropdown driving the active field's 4
-// sub-pages, and account/purchases links below a divider.
+// Live left rail: farm identity header, recent chats (a field can have several conversations
+// — § multi-chat), a field-picker dropdown driving the active field's 4 sub-pages, and
+// account/purchases links below a divider.
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { SideNav, SideNavHeading, SideNavItem, SideNavSection } from '@astryxdesign/core/SideNav';
 import { Selector } from '@astryxdesign/core/Selector';
 import { Divider } from '@astryxdesign/core/Divider';
 import { Wheat, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
-import { useT, useSession } from '../app/providers';
-import { createField, type ApiField, type ApiRecentChat } from '../lib/api';
+import { useT } from '../app/providers';
+import { createFieldConversation, type ApiField, type ApiRecentChat } from '../lib/api';
 
 const SUB_PAGES = ['overview', 'chat', 'plan', 'money'] as const;
 
@@ -29,15 +29,16 @@ export function FieldRail({
   /** The field whose 4 sub-pages the dropdown should show. Defaults to the first field
    * when the current page isn't itself a field page (e.g. the farm list, settings). */
   activeFieldId?: string;
-  /** One entry per field's single conversation, most-recently-active first (already sorted
-   * and capped by the caller — this just renders up to 5). */
+  /** Recent conversations across the farm's fields, most-recently-active first (a field can
+   * have several — already sorted and capped by the caller; this just renders up to 5). */
   recentChats?: ApiRecentChat[];
   onAddField?: () => void;
 }) {
   const { t } = useT();
-  const { session } = useSession();
   const router = useRouter();
   const pathname = usePathname() ?? '';
+  const searchParams = useSearchParams();
+  const activeConversationId = searchParams.get('c');
 
   const subPageMatch = pathname.match(/^\/field\/[^/]+\/([a-z]+)/)?.[1];
   const subPage = (SUB_PAGES as readonly string[]).includes(subPageMatch ?? '') ? subPageMatch! : 'overview';
@@ -48,12 +49,12 @@ export function FieldRail({
     router.push(`/field/${fieldId}/${subPage}`);
   }
 
-  /** "New chat" = a fresh field, since Tier 0 is one conversation per field (§3.4) — there's
-   * no separate "chat thread" concept to create. */
+  /** A field can hold several conversations (§ multi-chat) — this starts a fresh one on
+   * whichever field is currently active, rather than reusing the latest. */
   function handleNewChat() {
-    if (!session?.farmId) return;
-    createField(session.farmId)
-      .then(({ field }) => router.push(`/field/${field.id}/chat`))
+    if (!selectedField) return;
+    createFieldConversation(selectedField.id)
+      .then(({ conversation }) => router.push(`/field/${conversation.fieldId}/chat?c=${conversation.id}`))
       .catch(() => {});
   }
 
@@ -76,8 +77,8 @@ export function FieldRail({
             key={c.conversationId}
             label={c.fieldName ?? t('field_unnamed')}
             icon={MessageCircle}
-            isSelected={pathname === `/field/${c.fieldId}/chat`}
-            href={`/field/${c.fieldId}/chat`}
+            isSelected={pathname === `/field/${c.fieldId}/chat` && activeConversationId === c.conversationId}
+            href={`/field/${c.fieldId}/chat?c=${c.conversationId}`}
           />
         ))}
         {recentChats && recentChats.length > 0 ? (

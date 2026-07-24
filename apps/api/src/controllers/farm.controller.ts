@@ -59,8 +59,8 @@ export async function listFields(req: Request, res: Response, next: NextFunction
   }
 }
 
-/** "Recent chats" for the sidebar: Tier 0 is one conversation per field (§3.4), so a "chat"
- * here is one field's conversation, not a separate thread — sorted by its own last message. */
+/** "Recent chats" for the sidebar — every conversation across the farm's fields (§ multi-chat:
+ * a field can have several), newest last-message first. */
 export async function listRecentChats(req: Request, res: Response, next: NextFunction) {
   const farmId = req.params.id;
   if (!farmId) {
@@ -70,26 +70,8 @@ export async function listRecentChats(req: Request, res: Response, next: NextFun
   const limit = Math.max(1, Number(req.query.limit) || 5);
   const offset = Math.max(0, Number(req.query.offset) || 0);
   try {
-    const fields = await FieldModel.listByFarm(farmId);
-    const withLastMessage = await Promise.all(
-      fields.map(async (f) => {
-        const conversation = await ConversationModel.getForField(f.identity.id);
-        if (!conversation) return null;
-        const [lastMessage] = await ConversationModel.recentMessages(conversation.id, 1);
-        if (!lastMessage) return null;
-        return {
-          fieldId: f.identity.id,
-          fieldName: f.identity.name,
-          conversationId: conversation.id,
-          lastMessage: { role: lastMessage.role, content: lastMessage.content, createdAt: lastMessage.createdAt },
-        };
-      }),
-    );
-    const chats = withLastMessage
-      .filter((c): c is NonNullable<typeof c> => c != null)
-      .sort((a, b) => b.lastMessage.createdAt.localeCompare(a.lastMessage.createdAt));
-
-    res.json({ chats: chats.slice(offset, offset + limit), total: chats.length });
+    const { chats, total } = await ConversationModel.listRecentForFarm(farmId, limit, offset);
+    res.json({ chats, total });
   } catch (err) {
     next(err);
   }

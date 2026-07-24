@@ -1,6 +1,6 @@
 // agent/prompt.ts — system prompt builder. Encodes the answer shape (§4.9):
 // cause → immediate action → prevention → source. "No invented numbers" is a HARD rule.
-import type { FieldState, Phase } from '@agrisense/shared';
+import type { FieldState, Message, Phase } from '@agrisense/shared';
 import { getRegistry } from '../tools/registry';
 
 const ROLE =
@@ -59,8 +59,26 @@ function describeField(field: FieldState): string {
   return summary;
 }
 
-export function buildSystemPrompt(field: FieldState, phase: Phase): string {
-  return [ROLE, NO_INVENTED_NUMBERS, describeField(field), PHASE_INSTRUCTIONS[phase], ANSWER_SHAPE].join('\n\n');
+/** Cross-conversation memory (§ multi-chat): a field can have several conversation threads,
+ * so a fresh one still needs what the farmer said in the others — background, not literal
+ * turn-taking history, hence its own labeled section rather than being spliced into `messages`. */
+function describePriorConversations(messages: Message[]): string | null {
+  if (messages.length === 0) return null;
+  const lines = messages.map((m) => `- ${m.role}: ${m.content}`);
+  return [
+    'MEMORY — earlier conversations with this farmer about this field, in a different chat thread. ' +
+      "Treat anything stated here as an established fact, exactly as if the farmer just told you in " +
+      "this thread: reuse it, reference it naturally, and never re-ask for something already given below.",
+    ...lines,
+  ].join('\n');
+}
+
+export function buildSystemPrompt(field: FieldState, phase: Phase, priorMessages: Message[] = []): string {
+  const parts = [ROLE];
+  const prior = describePriorConversations(priorMessages);
+  if (prior) parts.push(prior);
+  parts.push(NO_INVENTED_NUMBERS, describeField(field), PHASE_INSTRUCTIONS[phase], ANSWER_SHAPE);
+  return parts.join('\n\n');
 }
 
 /**

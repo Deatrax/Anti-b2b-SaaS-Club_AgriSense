@@ -4,7 +4,7 @@
 'use client';
 
 import { use, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AppShell } from '@astryxdesign/core/AppShell';
 import { TopNav } from '@astryxdesign/core/TopNav';
 import { VStack, StackItem } from '@astryxdesign/core/Stack';
@@ -22,6 +22,8 @@ import { getField, listFields, listRecentChats, type ApiField, type ApiRecentCha
 export default function FieldChatPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const conversationId = searchParams.get('c') ?? undefined;
   const { t } = useT();
   const { session, isHydrated } = useSession();
 
@@ -31,7 +33,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id);
+  const { feed, sendMessage, isStreaming } = useFieldChat(id, conversationId);
 
   useEffect(() => {
     if (!isHydrated) return;

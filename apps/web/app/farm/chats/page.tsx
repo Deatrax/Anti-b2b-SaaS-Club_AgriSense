@@ -1,5 +1,5 @@
-// All chats — every field's conversation (Tier 0: one conversation per field, §3.4),
-// paginated. Reachable from FieldRail's "All chats" link under Recent chats.
+// All chats — every conversation across the farm's fields (a field can have several,
+// § multi-chat), paginated. Reachable from FieldRail's "All chats" link under Recent chats.
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -87,7 +87,7 @@ export default function AllChatsPage() {
                   key={c.conversationId}
                   label={c.fieldName ?? t('field_unnamed')}
                   description={c.lastMessage.content}
-                  href={`/field/${c.fieldId}/chat`}
+                  href={`/field/${c.fieldId}/chat?c=${c.conversationId}`}
                   endContent={<Timestamp value={c.lastMessage.createdAt} format="relative" />}
                 />
               ))}

@@ -9,6 +9,38 @@ export interface TraceHandle {
   startedAt: number;
 }
 
+interface TraceRow {
+  id: string;
+  conversation_id: string;
+  message_id: string | null;
+  step: number;
+  tool: string;
+  tool_class: ToolClass;
+  params: unknown;
+  result: unknown;
+  source: string | null;
+  status: TraceStatus;
+  duration_ms: number | null;
+  created_at: string;
+}
+
+function toTraceEntry(r: TraceRow): TraceEntry {
+  return {
+    id: r.id,
+    conversationId: r.conversation_id,
+    messageId: r.message_id,
+    step: r.step,
+    tool: r.tool,
+    toolClass: r.tool_class,
+    params: r.params,
+    result: r.result,
+    source: r.source,
+    status: r.status,
+    durationMs: r.duration_ms,
+    createdAt: r.created_at,
+  };
+}
+
 export const TraceModel = {
   async begin(
     conversationId: string,
@@ -55,6 +87,7 @@ export const TraceModel = {
   },
 
   async listByConversation(conversationId: string): Promise<TraceEntry[]> {
-    return query<TraceEntry>('select * from traces where conversation_id = $1 order by step', [conversationId]);
+    const rows = await query<TraceRow>('select * from traces where conversation_id = $1 order by step', [conversationId]);
+    return rows.map(toTraceEntry);
   },
 };

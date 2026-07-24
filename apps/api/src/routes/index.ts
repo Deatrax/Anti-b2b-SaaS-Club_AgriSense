@@ -4,7 +4,8 @@ import { validate } from '../middleware/validate.middleware';
 import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../controllers/auth.controller';
 import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.controller';
 import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats } from '../controllers/farm.controller';
-import { getField, getFieldPlan, getFieldChatHistory, createField, createFieldSchema } from '../controllers/field.controller';
+import { getField, getFieldPlan, getFieldChatHistory, createFieldConversation, createField, createFieldSchema } from '../controllers/field.controller';
+import { getConversation } from '../controllers/conversation.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
 import { postScenario, postScenarioSchema } from '../controllers/scenario.controller';
@@ -27,8 +28,11 @@ router.post('/fields', validate(createFieldSchema), createField);
 router.get('/fields/:id', getField);
 router.get('/fields/:id/plan', getFieldPlan);
 router.get('/fields/:id/chat', getFieldChatHistory);
+router.post('/fields/:id/conversations', createFieldConversation);
 router.post('/fields/:id/log', validate(postLogSchema), postLog);
 router.post('/fields/:id/scenario', validate(postScenarioSchema), postScenario);
+
+router.get('/conversations/:id', getConversation);
 
 router.post('/chat', validate(postChatSchema), postChat);
 

@@ -11,6 +11,10 @@ import { primaryModel, failoverModel } from '../config/llm';
 export const postChatSchema = z.object({
   fieldId: z.string().min(1),
   message: z.string().min(1),
+  /** A field can have several conversations (§ multi-chat). Omit to continue/create the
+   * field's default (most recent) thread; pass the id from a "recent chats" entry to reply
+   * in that exact one instead. */
+  conversationId: z.string().min(1).optional(),
 });
 
 function selectModel(): LanguageModel {
@@ -24,7 +28,7 @@ function selectModel(): LanguageModel {
 }
 
 export async function postChat(req: Request, res: Response, next: NextFunction) {
-  const { fieldId, message } = req.body as z.infer<typeof postChatSchema>;
+  const { fieldId, message, conversationId } = req.body as z.infer<typeof postChatSchema>;
 
   let model: LanguageModel;
   try {
@@ -34,7 +38,17 @@ export async function postChat(req: Request, res: Response, next: NextFunction) 
     return;
   }
 
-  const conversation = (await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(fieldId));
+  let conversation: { id: string };
+  if (conversationId) {
+    const existing = await ConversationModel.getById(conversationId);
+    if (!existing || existing.fieldId !== fieldId) {
+      res.status(404).json({ error: 'conversation not found for this field' });
+      return;
+    }
+    conversation = existing;
+  } else {
+    conversation = (await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(fieldId));
+  }
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
