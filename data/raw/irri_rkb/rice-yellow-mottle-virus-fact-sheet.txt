@@ -1,0 +1,49 @@
+Rice Yellow Mottle Virus
+
+Why and where it occurs
+
+Rice Yellow Mottle Virus (RYMV) is endemic and largely restricted to the African continent, where it has been found in most of the rice-growing countries. The virus has also been reported in Turkey.
+
+The causal virus is a member of the genus Sobemovirus . It has a high genetic variability and thus can evolve rapidly, which means that it can overcome resistance genes in the rice plant.
+
+What it does
+
+RYMV infects cultivated and wild grasses belonging to Oryzae and Eragrostidae tribes. These include Oryza longistaminata , which is considered as the primary host, O. barthii , and O. glaberrima . The virus is transmitted by several species of beetles, most of which belong to the genus Chrysomelidae . It is assumed that transmission by these vectors is semi-persistent.
+
+It is also transmitted by grasshoppers, Conocephalus merumontanus and Oxya spp ., cows, rats, and donkeys. Insect vectors that feed on infected wild rice usually invade and infect newly established crops or seedlings in a nursery. Rice plants, alternate hosts, ratoon or stubbles that grow between cropping seasons, allow the continuous survival of the pathogen. RYMV can also be mechanically transmitted through inter-plant movement of sap (irrigation water, guttation water, and contact between infected and healthy plant tissues and crop residues).
+
+The virus can also been found on roots of infected plants and can infect plants through injured roots. Although the virus has been detected on seeds, studies show that it is not spread through seed transmission.
+
+Why it is important
+
+RYMV is an important constraint to rice production in irrigated areas in Sub-Saharan Africa. Yield losses vary widely, from 10 to 100% depending on the type of variety and period of infection. Early infection normally leads to higher losses.
+
+How to identify
+
+- RYMV symptoms initially appear as yellow-green oblong to linear spots on the base of the youngest leaves. These spots later expand parallel to the leaf veins and appear as yellow or orange streaks.
+
+- Leaves formed after infection are mottled and often twisted.
+
+- The disease also causes brown to dark-brown discoloration and poor panicle exsertion.
+
+- Severely infected plants are stunted, have reduced tillers, sterile spikelets, and eventually die.
+
+- Plants infected 20 to 50 days after transplanting may show yellow stripes and spots, produce flowers and seeds, but have stunted growth.
+
+How to manage
+
+The use of resistant varieties appears to be the most convenient control measure against RYMV. 1
+
+Two major resistance genes, RYMV1 and RYMV2 have so far been identified. The traditional African rice, O. glaberrima , has been found to have higher level of resistance to RYMV than O. sativa . Other sources of resistance genes and the use of pyramiding are being explored since the pathogen is capable of overcoming resistance genes. Contact your local agriculture office for up-to-date lists of varieties available.
+
+Other management options include:
+
+- employ the use of large-scale synchronous planting combined with fallow period to prevent the buildup of the virus and vectors,
+
+- plow under-infected crop residues, volunteer rice, infected ratoons, alternate hosts of the virus, and the vector immediately after harvest to reduce the primary inoculum in the field and prevent continuous survival of the virus and the vector,
+
+- establish the crop before the increase in the vector population,
+
+- roguing and burning infected plants, especially when infection is still low,
+
+- regular weeding during the cropping season and even after harvest to reduce sources of primary inoculum.
