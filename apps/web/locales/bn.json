@@ -349,5 +349,18 @@
   "settings_delete_desc": "আপনার অ্যাকাউন্ট এবং এর সব খামার, জমি ও মৌসুম পরিকল্পনা স্থায়ীভাবে মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।",
   "settings_delete_button": "অ্যাকাউন্ট মুছে ফেলুন",
   "settings_delete_confirm_title": "আপনার অ্যাকাউন্ট মুছে ফেলবেন?",
-  "settings_delete_confirm_desc": "এতে আপনার অ্যাকাউন্ট, খামার, জমি এবং সব মৌসুমের তথ্য স্থায়ীভাবে মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।"
+  "settings_delete_confirm_desc": "এতে আপনার অ্যাকাউন্ট, খামার, জমি এবং সব মৌসুমের তথ্য স্থায়ীভাবে মুছে যাবে। এটি ফিরিয়ে আনা যাবে না।",
+
+  "farm_profile_title": "খামার প্রোফাইল",
+  "farm_profile_farmer_heading": "কৃষক",
+  "farm_profile_subscriber_id_note": "এটি আপনার bdapps সাবস্ক্রাইবার আইডি হিসেবেও ব্যবহৃত হয়",
+  "farm_profile_farm_heading": "খামারের তথ্য",
+  "farm_profile_total_size_label": "মোট খামারের আয়তন",
+  "farm_profile_water_source_label": "প্রধান পানির উৎস",
+  "farm_profile_budget_label": "মৌসুমের বাজেট",
+  "farm_profile_varies_by_field": "জমিভেদে ভিন্ন",
+  "farm_profile_fields_heading": "জমিসমূহ",
+  "farm_profile_account_heading": "অ্যাকাউন্ট",
+  "edit_profile": "প্রোফাইল সম্পাদনা করুন",
+  "logout": "লগ আউট"
 }
