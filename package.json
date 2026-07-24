@@ -1,0 +1,22 @@
+{
+  "name": "antib2b-agrisense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AgriSense AI — agentic, weather-aware season-planning advisor for smallholder farmers (bdapps Agentic AI Hackathon, IUT 12th ICT Fest).",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:api & npm run dev:web",
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspace apps/api",
+    "migrate": "npm run migrate --workspace apps/api",
+    "ingest": "npm run ingest --workspace apps/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

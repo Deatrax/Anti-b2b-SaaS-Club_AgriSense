@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "purpose": "district → lat/lon centroid + AEZ. The JOIN KEY connecting farmer → weather → calendar → doses (§C.5).",
+    "source_latlon": "District-HQ coordinates (public geographic reference).",
+    "source_aez": "BARC Agro-Ecological Zones — VERIFY each against BAMIS AEZ maps (bamis.gov.bd/en/page/aezs-maps).",
+    "status": "TEMPLATE — 4 demo districts seeded; expand to 8–12 (§5.0). Do NOT attempt all 64 (§6.4).",
+    "retrieved_date": "2026-07-24"
+  },
+  "districts": [
+    { "name": "Mymensingh", "name_bn": "ময়মনসিংহ", "lat": 24.7471, "lon": 90.4203, "aez": 9, "aez_name": "Old Brahmaputra Floodplain", "_verify_aez": true },
+    { "name": "Dhaka", "name_bn": "ঢাকা", "lat": 23.8103, "lon": 90.4125, "aez": 8, "aez_name": "Young Brahmaputra and Jamuna Floodplain", "_verify_aez": true },
+    { "name": "Rangpur", "name_bn": "রংপুর", "lat": 25.7439, "lon": 89.2752, "aez": 3, "aez_name": "Tista Meander Floodplain", "_verify_aez": true },
+    { "name": "Bogura", "name_bn": "বগুড়া", "lat": 24.8465, "lon": 89.3773, "aez": 4, "aez_name": "Karatoya-Bangali Floodplain", "_verify_aez": true }
+  ]
+}

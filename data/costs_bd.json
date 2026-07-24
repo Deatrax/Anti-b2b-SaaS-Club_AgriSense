@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "purpose": "Deterministic cost/price layer for the financial engine (§C.9). Each line carries {value, source, assumption} so the trace can render provenance.",
+    "status": "TEMPLATE — verified anchors carry a real source; everything else is `_verify: true`.",
+    "retrieved_date": "2026-07-24"
+  },
+  "fertilizer_prices_bdt_per_kg": {
+    "_source": "Government subsidized farmer-level prices (Acquisition Map §1.2 [DOC]).",
+    "urea": { "value": 27, "source": "GoB subsidized (farmer level)" },
+    "tsp":  { "value": 27, "source": "GoB subsidized (farmer level)" },
+    "dap":  { "value": 21, "source": "GoB subsidized (farmer level)" },
+    "mop":  { "value": 20, "source": "GoB subsidized (farmer level)" },
+    "gypsum": { "value": 12, "source": "market estimate", "_verify": true }
+  },
+  "labor": {
+    "man_day_bdt": { "value": 500, "unit": "BDT/person-day", "source": "BBS/DAE region estimate", "assumption": "unskilled agricultural wage, Aman season", "_verify": true }
+  },
+  "operations_bdt_per_ha": {
+    "land_prep_tillage":   { "value": 6000, "source": "power-tiller custom-hire estimate", "_verify": true },
+    "transplanting_labor": { "value": 8000, "_verify": true },
+    "weeding":             { "value": 4000, "_verify": true },
+    "harvest_threshing":   { "value": 9000, "_verify": true }
+  },
+  "seed": {
+    "aman_rice": { "rate_kg_per_ha": 40, "price_bdt_per_kg": 60, "_verify": true }
+  },
+  "irrigation": {
+    "_note": "Aman is largely rainfed; supplemental only. Boro irrigation would be ~20–25% of cost (§1.6 [DOC]).",
+    "diesel_pump_bdt_per_ha": { "value": 4000, "_verify": true }
+  },
+  "farmgate_prices_bdt_per_kg": {
+    "paddy_aman": { "value": 36, "source": "USDA FAS Bangladesh Grain & Feed BG2025-0010 (govt procurement paddy ৳36/kg)", "_verify": true }
+  }
+}

@@ -1,2 +1,22 @@
+# ── Internal working docs & AI constitution (kept out of the public repo) ──
 .claude/
 Docs/
+
+# ── Node / build ──
+node_modules/
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# ── Env & secrets ──
+.env
+.env.local
+.env.*.local
+
+# ── Logs & OS ──
+*.log
+npm-debug.log*
+coverage/
+.DS_Store
