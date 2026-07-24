@@ -7,10 +7,10 @@ const schema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(4000),
 
-  // LLM (agent loop) — Anthropic primary, OpenAI failover
+  // LLM (agent loop) — OpenAI primary, Anthropic optional failover (§1.8 override)
   ANTHROPIC_API_KEY: z.string().optional(),
   OPENAI_API_KEY: z.string().optional(),
-  LLM_MODEL: z.string().default('claude-opus-4-8'),
+  LLM_MODEL: z.string().default('gpt-4o'),
   EMBEDDING_MODEL: z.string().default('text-embedding-3-small'),
 
   // Database — Supabase Postgres connection string
