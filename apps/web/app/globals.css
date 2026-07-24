@@ -136,17 +136,20 @@
    comment). Scoped the same way Astryx scopes its own theme tokens so these only
    apply inside the farmesy theme. Values from Docs/AgriSense_Wireframe.html. */
 [data-astryx-theme='farmesy'] {
+  /* light-dark() picks a side based on the color-scheme the <Theme mode> prop
+     sets (see theme/farmesy.theme.ts) — plain CSS custom properties don't go
+     through defineTheme's tuple compilation, so it's spelled out directly here. */
   --color-brand-lime: #e0ff20;
   --color-on-brand-lime: #17310f;
   --color-brand-yellow: #ffff00;
-  --color-text-tertiary: #87907f;
-  --color-surface-green-soft: #ebf3e1;
-  --color-surface-lime-soft: #f7ffd2;
+  --color-text-tertiary: light-dark(#87907f, #7a8370);
+  --color-surface-green-soft: light-dark(#ebf3e1, #1e2a16);
+  --color-surface-lime-soft: light-dark(#f7ffd2, #2e3312);
   /* Agent trace row colors, by tool class (§C.7) */
   --color-trace-memory: #6b8547;
-  --color-trace-external: #2f7bc4;
-  --color-trace-retrieval: #294719;
-  --color-trace-deterministic: #ba7517;
+  --color-trace-external: light-dark(#2f7bc4, #6badeb);
+  --color-trace-retrieval: light-dark(#294719, #8fb56b);
+  --color-trace-deterministic: light-dark(#ba7517, #e0a94a);
   --color-trace-side: #ef8844;
 }
 

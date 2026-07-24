@@ -21,14 +21,18 @@ import type {
   Provenance,
 } from '@agrisense/shared';
 
+const FARM_ID = 'farm-hasan-1';
 const FIELD_ID = 'field-uttor-1';
 const CYCLE_ID = 'cycle-aman-2026';
 const CONV_ID = 'conv-1';
 
+const SOUTH_FIELD_ID = 'field-dokkhin-1';
+const SOUTH_CYCLE_ID = 'cycle-boro-2026';
+
 export const fieldState: FieldState = {
   identity: {
     id: FIELD_ID,
-    farmId: 'farm-hasan-1',
+    farmId: FARM_ID,
     name: 'উত্তরের জমি',
     areaHa: 0.5,
     soilType: 'clay_loam',
@@ -54,6 +58,70 @@ export const fieldState: FieldState = {
 };
 
 export const cropCycle: CropCycle = fieldState.activeCycle as CropCycle;
+
+// ---- Farm + field list (farm/page.tsx) ----------------------------------------------------
+// One active field (Aman, in the ground — right for late July) + one seeded historical field,
+// read-only in the demo (§B.3 scope boundary). The historical field's last cycle is Boro,
+// harvested this past Rabi season (Dec–May), which is what would actually be true by July.
+
+export interface FarmSummary {
+  id: string;
+  name: string;
+  district: string;
+  aez: number;
+}
+
+export const farm: FarmSummary = {
+  id: FARM_ID,
+  name: 'হাসানের খামার',
+  district: 'ময়মনসিংহ',
+  aez: 8,
+};
+
+export interface FieldSummary {
+  id: string;
+  name: string;
+  areaHa: number;
+  crop: string | null;
+  stage: string | null;
+  status: 'active' | 'harvested';
+  isReadOnly: boolean;
+}
+
+export const southFieldCycle: CropCycle = {
+  id: SOUTH_CYCLE_ID,
+  fieldId: SOUTH_FIELD_ID,
+  crop: 'বোরো ধান',
+  variety: 'BRRI dhan89',
+  season: 'boro',
+  sowingDate: '2026-01-08',
+  expectedHarvest: '2026-05-02',
+  status: 'harvested',
+  stage: 'harvest',
+  dayIndex: 114,
+  actualYieldKg: 2410,
+};
+
+export const fieldList: FieldSummary[] = [
+  {
+    id: FIELD_ID,
+    name: fieldState.identity.name ?? '',
+    areaHa: fieldState.identity.areaHa ?? 0,
+    crop: cropCycle.crop,
+    stage: cropCycle.stage,
+    status: 'active',
+    isReadOnly: false,
+  },
+  {
+    id: SOUTH_FIELD_ID,
+    name: 'দক্ষিণের জমি',
+    areaHa: 0.32,
+    crop: southFieldCycle.crop,
+    stage: southFieldCycle.stage,
+    status: 'harvested',
+    isReadOnly: true,
+  },
+];
 
 // ---- Plan (season timeline) --------------------------------------------------------------
 
@@ -180,6 +248,143 @@ export const financials: FinancialResult = {
   breakEvenPrice: 30046 / 2300,
 };
 
+// ---- Scenario simulation (Tier-1 gap, ScenarioRun shape) -----------------------------------
+// Pure re-run of the same financial engine under a cash-budget constraint, diffed against the
+// live plan — never a fresh estimate. The land-rent convention line (l-11) doesn't flex with a
+// cash budget cut, so it's excluded from the reduction.
+
+export function scenarioFinancials(cutFraction = 0.4): FinancialResult {
+  const FIXED_ITEM_IDS = new Set(['l-11']);
+  const yieldFactor = 1 - cutFraction * 0.18;
+  const lineItems = financials.lineItems.map((l) => {
+    if (l.kind === 'revenue') return { ...l, total: Math.round(l.total * yieldFactor) };
+    if (FIXED_ITEM_IDS.has(l.id)) return l;
+    return { ...l, total: Math.round(l.total * (1 - cutFraction * 0.85)) };
+  });
+  const totalCost = lineItems.filter((l) => l.kind === 'cost').reduce((s, l) => s + l.total, 0);
+  const grossRevenue = lineItems.filter((l) => l.kind === 'revenue').reduce((s, l) => s + l.total, 0);
+  const expectedYieldKg = Math.round(financials.expectedYieldKg * yieldFactor);
+  const netProfit = grossRevenue - totalCost;
+  return {
+    lineItems,
+    totalCost,
+    expectedYieldKg,
+    grossRevenue,
+    netProfit,
+    roi: netProfit / totalCost,
+    bcr: grossRevenue / totalCost,
+    breakEvenYieldKg: totalCost / 28,
+    breakEvenPrice: totalCost / expectedYieldKg,
+  };
+}
+
+// ---- New-field onboarding + crop selection (field/new) --------------------------------------
+// Illustrative content for the intake → crop-selection chain. Scores/costs are plausible,
+// sourced-looking placeholders like the rest of this file — not numbers to defend in Q&A.
+
+export interface CropCandidate {
+  key: string;
+  name: string;
+  variety: string;
+  score: number;
+  water: 'Low' | 'Medium' | 'High';
+  risk: 'Low' | 'Medium' | 'High';
+  netProfitBdt: number;
+  totalCostBdt: number;
+  days: number;
+  note: string;
+}
+
+export const cropCandidates: CropCandidate[] = [
+  {
+    key: 'aman',
+    name: 'আমন ধান',
+    variety: 'BRRI dhan49',
+    score: 91,
+    water: 'Medium',
+    risk: 'Low',
+    netProfitBdt: 34354,
+    totalCostBdt: 30046,
+    days: 150,
+    note: 'Fits AEZ 8 and the current Kharif-2 rainfall almost perfectly — the standard choice for land already in Aman rotation.',
+  },
+  {
+    key: 'jute',
+    name: 'পাট',
+    variety: 'O-9897 (Bogi)',
+    score: 78,
+    water: 'Low',
+    risk: 'Medium',
+    netProfitBdt: 22400,
+    totalCostBdt: 18200,
+    days: 120,
+    note: 'Needs less standing water than rice and fetches a decent fibre price, but retting requires nearby water access at harvest.',
+  },
+  {
+    key: 'maize',
+    name: 'ভুট্টা',
+    variety: 'Off-season hybrid',
+    score: 61,
+    water: 'Low',
+    risk: 'Medium',
+    netProfitBdt: 19800,
+    totalCostBdt: 21400,
+    days: 110,
+    note: 'Lowest water need of the three, but July heat and humidity push disease risk up, and this is a shoulder-season planting for maize.',
+  },
+];
+
+// ---- bdapps CaaS (checkout simulation, §A.3) ------------------------------------------------
+// Placeholder request/response shapes only — no live calls in this mock frontend. The proposal
+// basket is built from the same pe-5 plan event the fertilizer card and timeline already read,
+// so the charge can never drift from the plan (§A.3 "the basket cannot drift from the plan").
+
+export function nextFertilizerEvent(): PlanEvent | null {
+  return planEvents.find((e) => e.action === 'top_dressing_urea' && e.status === 'pending') ?? null;
+}
+
+export interface CaasBasketItem {
+  item: string;
+  qty: number;
+  unit: string;
+  unitCostBdt: number;
+  totalBdt: number;
+}
+
+export function caasBasket(): { items: CaasBasketItem[]; totalBdt: number } {
+  const ev = nextFertilizerEvent();
+  const items: CaasBasketItem[] = ev
+    ? [{ item: 'ইউরিয়া', qty: ev.quantity ?? 0, unit: ev.unit ?? 'kg', unitCostBdt: 27, totalBdt: (ev.quantity ?? 0) * 27 }]
+    : [];
+  return { items, totalBdt: items.reduce((sum, i) => sum + i.totalBdt, 0) };
+}
+
+export interface CaasBalance {
+  accountType: 'Prepaid' | 'Postpaid';
+  accountStatus: string;
+  chargeableBalanceBdt: number;
+  msisdn: string;
+  statusCode: string;
+}
+
+export const caasBalance: CaasBalance = {
+  accountType: 'Prepaid',
+  accountStatus: 'Active',
+  chargeableBalanceBdt: 2450,
+  msisdn: 'tel:8801712345678',
+  statusCode: 'S1000',
+};
+
+// ---- Purchases (posted transaction history) --------------------------------------------------
+// Reuses ledgerEntries where isActual is true — a posted charge is exactly what "purchases"
+// means here, so this can never drift from the money tab's own ledger.
+
+export function postedTransactions(): LedgerEntry[] {
+  return ledgerEntries
+    .filter((l) => l.isActual && l.occurredOn)
+    .sort((a, b) => (b.occurredOn ?? '').localeCompare(a.occurredOn ?? ''));
+}
+
 // ---- Weather (mock external call shape) -----------------------------------------------------
 
 export interface WeatherSummary {
@@ -236,3 +441,74 @@ export const initialFeed: FeedItem[] = [
     message: msg('m-4', 'assistant', 'বর্তমান তাপমাত্রা ও আর্দ্রতায় বাদামি গাছ ফড়িংয়ের ঝুঁকি "মাঝারি থেকে বেশি" পর্যায়ে। জমিতে পানি না জমতে দিলে এবং প্রয়োজনের বেশি ইউরিয়া না দিলে এটি এড়ানো সহজ।', '2026-07-24T05:00:20Z', true),
   },
 ];
+
+// ---- Placeholder interaction responses -----------------------------------------------------
+// No live agent here — these are scripted feed items appended client-side when the farmer
+// edits a card, standing in for `POST /api/log` → scoped replan (services/replan/trigger.service.ts)
+// until apps/api is wired up. Shapes match what that endpoint will actually stream back.
+
+export function logIrrigationFeedItems(amountMm: number, idSuffix: string): FeedItem[] {
+  const now = new Date().toISOString();
+  return [
+    {
+      id: `log-trace-${idSuffix}`, type: 'tool_trace',
+      traces: [trace(`log-t-${idSuffix}`, 90, 'log_field_event', 'field', { kind: 'irrigation', amount_mm: amountMm }, { logged: true }, 41, null, now)],
+    },
+    {
+      id: `log-msg-${idSuffix}`, type: 'message',
+      message: msg(`log-m-${idSuffix}`, 'assistant', `লগ করা হলো — ${amountMm} মিমি সেচ। বাষ্পীভবন দৈনিক ৪.১ মিমি হিসেবে, পরবর্তী সেচ প্রায় ৫–৬ দিন পিছিয়ে যাবে। এই সপ্তাহের সেচ খরচ প্রায় ৳২৮০ কমেছে।`, now, true),
+    },
+  ];
+}
+
+export function logFertilizerFeedItems(amountKg: number, idSuffix: string): FeedItem[] {
+  const now = new Date().toISOString();
+  return [
+    {
+      id: `log-trace-${idSuffix}`, type: 'tool_trace',
+      traces: [trace(`log-t-${idSuffix}`, 90, 'log_field_event', 'field', { kind: 'fertilizer', amount_kg: amountKg }, { logged: true }, 33, null, now)],
+    },
+    {
+      id: `log-msg-${idSuffix}`, type: 'message',
+      message: msg(`log-m-${idSuffix}`, 'assistant', `লগ করা হলো — ${amountKg} কেজি ইউরিয়া প্রয়োগ। পরবর্তী ইউরিয়া ডোজের হিসাব ও খরচ আপডেট করা হয়েছে — মানি ট্যাবে দেখুন।`, now, true),
+    },
+  ];
+}
+
+export function userMessageFeedItem(content: string, idSuffix: string): FeedItem {
+  return { id: `user-${idSuffix}`, type: 'message', message: msg(`um-${idSuffix}`, 'user', content, new Date().toISOString()) };
+}
+
+export function genericAckFeedItems(idSuffix: string): FeedItem[] {
+  const now = new Date().toISOString();
+  return [
+    {
+      id: `ack-${idSuffix}`, type: 'message',
+      message: msg(
+        `ackm-${idSuffix}`,
+        'assistant',
+        'এই মুহূর্তে এটি একটি প্লেসহোল্ডার প্রতিক্রিয়া — আসল এজেন্ট (POST /api/chat, SSE) শীঘ্রই যুক্ত হবে। ততক্ষণে, নিচে থেকে সেচ বা সার লগ করে দেখুন কীভাবে এজেন্ট নিজে থেকে সাড়া দেয়।',
+        now,
+        false,
+      ),
+    },
+  ];
+}
+
+export function approveChargeFeedItems(idSuffix: string): FeedItem[] {
+  const now = new Date().toISOString();
+  const basket = caasBasket();
+  return [
+    {
+      id: `pay-trace-${idSuffix}`, type: 'tool_trace',
+      traces: [
+        trace(`pay-t1-${idSuffix}`, 91, 'bdapps_query_balance', 'external', { subscriberId: caasBalance.msisdn }, { chargeableBalance: caasBalance.chargeableBalanceBdt, statusCode: caasBalance.statusCode }, 318, 'bdapps CaaS (simulator)', now),
+        trace(`pay-t2-${idSuffix}`, 92, 'bdapps_direct_debit', 'gated', { amount: basket.totalBdt, subscriberId: caasBalance.msisdn }, { internalTrxId: `INT-${idSuffix}`, referenceId: `REF-${idSuffix}`, statusCode: 'S1000' }, 587, 'bdapps CaaS (simulator)', now),
+      ],
+    },
+    {
+      id: `pay-msg-${idSuffix}`, type: 'message',
+      message: msg(`pay-m-${idSuffix}`, 'assistant', `৳${basket.totalBdt} সফলভাবে কেটে নেওয়া হয়েছে ইউরিয়ার জন্য। রশিদ তৈরি হয়েছে, খরচ এখন হিসাবে "প্রকৃত" হিসেবে যোগ হলো।`, now, true),
+    },
+  ];
+}

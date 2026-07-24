@@ -10,17 +10,21 @@ import {defineTheme} from '@astryxdesign/core/theme';
 export default defineTheme({
   name: 'farmesy',
   tokens: {
-    // surfaces (page -> surface/card -> secondary)
-    '--color-background-body': '#F7F9F4',
-    '--color-background-surface': '#FFFFFF',
-    '--color-background-card': '#FFFFFF',
-    '--color-background-muted': '#F1F5EC',
+    // surfaces (page -> surface/card -> secondary). [light, dark] tuples compile
+    // to CSS light-dark(), resolved by the color-scheme the <Theme mode> prop
+    // sets — this is what makes the light/dark toggle actually repaint the UI.
+    '--color-background-body': ['#F7F9F4', '#12160D'],
+    '--color-background-surface': ['#FFFFFF', '#1B2114'],
+    '--color-background-card': ['#FFFFFF', '#1B2114'],
+    '--color-background-muted': ['#F1F5EC', '#232B1A'],
 
     // brand accent — deep-green is FarmEsy's dominant accent (icons, headers,
     // secondary borders). Primary CTA buttons override to the lime→yellow
     // gradient below (components.button); this token is what CTA text sits on
-    // wherever the gradient override doesn't apply (e.g. focus rings).
-    '--color-accent': '#294719',
+    // wherever the gradient override doesn't apply (e.g. focus rings). Lightened
+    // for dark mode — the light-mode forest green is too low-contrast as an
+    // icon color against the dark canvas above.
+    '--color-accent': ['#294719', '#8FB56B'],
     '--color-on-accent': '#FFFFFF',
 
     // secondary/positive brand green
@@ -29,40 +33,42 @@ export default defineTheme({
 
     // status warning
     '--color-warning': '#EF8844',
-    '--color-warning-muted': '#FFF2E8',
+    '--color-warning-muted': ['#FFF2E8', '#3A2415'],
     '--color-on-warning': '#182014',
 
     // text (3 of FarmEsy's 4 tiers map onto Astryx's 3 text-color slots;
     // tertiary is kept as a custom extra token in globals.css)
-    '--color-text-primary': '#182014',
-    '--color-text-secondary': '#596452',
-    '--color-text-disabled': '#ABB2A5',
+    '--color-text-primary': ['#182014', '#F1F5EC'],
+    '--color-text-secondary': ['#596452', '#AEB8A0'],
+    '--color-text-disabled': ['#ABB2A5', '#5B6350'],
 
     // borders (FarmEsy's `divider` is close enough to `subtle` to share it —
     // Astryx components don't expose a third border slot)
-    '--color-border': '#E4E9DF',
-    '--color-border-emphasized': '#CCD6C4',
+    '--color-border': ['#E4E9DF', '#2B3323'],
+    '--color-border-emphasized': ['#CCD6C4', '#3B4530'],
     '--shadow-inset-selected': 'inset 0px 0px 0px 2px rgba(107, 133, 71, 0.16)',
 
     // progress/slider track — FarmEsy's border-subtle, matching the wireframe's
     // slider/progress unfilled-track color exactly
-    '--color-track': '#E4E9DF',
+    '--color-track': ['#E4E9DF', '#2B3323'],
 
     // Card/Badge "green" variant, retinted from Astryx's default to FarmEsy's
     // soft-green surface + deep-green text (matches .pill.mem, .fin .headline,
     // .rank .opt.top in the wireframe)
-    '--color-background-green': '#EBF3E1',
+    '--color-background-green': ['#EBF3E1', '#1E2A16'],
     '--color-border-green': '#6B8547',
-    '--color-icon-green': '#294719',
-    '--color-text-green': '#294719',
+    '--color-icon-green': ['#294719', '#A8C98A'],
+    '--color-text-green': ['#294719', '#A8C98A'],
 
     // Card/Badge "yellow" variant, repurposed as FarmEsy's lime/AI-highlight
     // family: soft-lime surface + forest text (matches .aicard, .cur-badge,
-    // .glance .next .tag in the wireframe)
-    '--color-background-yellow': '#F7FFD2',
+    // .glance .next .tag in the wireframe). Dark mode keeps the same lime hue
+    // as the highlight color (on a dark olive tint) rather than inverting to
+    // forest text, since a dark-on-dark pairing would lose the "AI accent" read.
+    '--color-background-yellow': ['#F7FFD2', '#2E3312'],
     '--color-border-yellow': '#6B8547',
-    '--color-icon-yellow': '#17310F',
-    '--color-text-yellow': '#17310F',
+    '--color-icon-yellow': ['#17310F', '#E0FF20'],
+    '--color-text-yellow': ['#17310F', '#E0FF20'],
 
     // radius — Astryx's own defaults (inner 4 / element 8 / container 12) already
     // match FarmEsy's md/lg exactly; only the button radius (FarmEsy sm = 6px)
