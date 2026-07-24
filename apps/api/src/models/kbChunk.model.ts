@@ -35,7 +35,19 @@ export const KbChunkModel = {
     lang?: string;
     embedding: number[];
   }): Promise<void> {
-    // TODO: used by ingest.ts — inline the embedding as a `::vector` literal.
-    void chunk;
+    const vec = `[${chunk.embedding.join(',')}]`;
+    await query(
+      `insert into kb_chunks (content, source, reference, crop, section, lang, embedding)
+       values ($1,$2,$3,$4,$5,$6,$7::vector)`,
+      [
+        chunk.content,
+        chunk.source,
+        chunk.reference ?? null,
+        chunk.crop ?? null,
+        chunk.section ?? null,
+        chunk.lang ?? null,
+        vec,
+      ],
+    );
   },
 };

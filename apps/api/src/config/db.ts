@@ -26,3 +26,19 @@ export async function query<T = unknown>(text: string, params?: unknown[]): Prom
   const res = await getPool().query(text, params as unknown[]);
   return res.rows as T[];
 }
+
+/** Atomic multi-statement writes (e.g. replace-all-rows-for-cycle). BEGIN/COMMIT, ROLLBACK on throw. */
+export async function withTransaction<T>(fn: (client: pg.PoolClient) => Promise<T>): Promise<T> {
+  const client = await getPool().connect();
+  try {
+    await client.query('BEGIN');
+    const result = await fn(client);
+    await client.query('COMMIT');
+    return result;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
