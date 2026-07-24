@@ -3,6 +3,18 @@
 import type { FieldState } from '@agrisense/shared';
 
 export function serializeField(state: FieldState) {
-  // TODO: shape identity + activeCycle + missingFields into the workspace card payload.
-  return state;
+  const { identity, activeCycle, missingFields } = state;
+  return {
+    id: identity.id,
+    farmId: identity.farmId,
+    name: identity.name,
+    areaHa: identity.areaHa,
+    soilType: identity.soilType,
+    waterSource: identity.waterSource,
+    lat: identity.lat,
+    lon: identity.lon,
+    budgetBdt: identity.budgetBdt,
+    activeCycle,
+    missingFields,
+  };
 }

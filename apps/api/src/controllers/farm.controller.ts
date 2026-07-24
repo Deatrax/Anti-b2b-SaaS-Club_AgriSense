@@ -1,12 +1,38 @@
 // C — farms. List/create a farm (auto-named), list its fields.
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
+import { z } from 'zod';
+import { FarmModel } from '../models/farm.model';
 
-export async function listFarms(req: Request, res: Response) {
-  // TODO: FarmModel.listByUser(req.query.userId).
-  res.status(501).json({ error: 'not implemented' });
+export async function listFarms(req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = req.query.userId;
+    if (typeof userId !== 'string' || !userId) {
+      res.status(400).json({ error: 'userId query param is required' });
+      return;
+    }
+    const farms = await FarmModel.listByUser(userId);
+    res.json({ farms });
+  } catch (err) {
+    next(err);
+  }
 }
 
-export async function createFarm(req: Request, res: Response) {
-  // TODO: FarmModel.create — resolve district → lat/lon/aez from data/districts.json.
-  res.status(501).json({ error: 'not implemented' });
+export const createFarmSchema = z.object({
+  userId: z.string().min(1),
+  name: z.string().min(1),
+  district: z.string().min(1),
+});
+
+export async function createFarm(req: Request, res: Response, next: NextFunction) {
+  const { userId, name, district } = req.body as z.infer<typeof createFarmSchema>;
+  try {
+    const farm = await FarmModel.create(userId, { name, district });
+    res.status(201).json({ farm });
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith('unknown district')) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    next(err);
+  }
 }
