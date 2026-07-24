@@ -29,7 +29,16 @@ import { WhyPanel } from '../../../../components/mock/WhyPanel';
 import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
 import { MobileChatOverlay } from '../../../../components/MobileChatOverlay';
 import { useFieldChat } from '../../../../lib/useFieldChat';
-import { getField, listFields, getFieldPlan, type ApiField, type ApiFieldPlanResponse, type ApiPlanTimelineEntry } from '../../../../lib/api';
+import {
+  getField,
+  listFields,
+  listRecentChats,
+  getFieldPlan,
+  type ApiField,
+  type ApiFieldPlanResponse,
+  type ApiPlanTimelineEntry,
+  type ApiRecentChat,
+} from '../../../../lib/api';
 import type { FeedItem } from '../../../../lib/feed';
 
 const STATUS_DOT_VARIANT: Record<PlanEventStatus, 'success' | 'accent' | 'warning' | 'neutral'> = {
@@ -43,10 +52,11 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
   const { id } = use(params);
   const router = useRouter();
   const { t } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -55,6 +65,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -65,8 +76,11 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
+        .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleComposerSubmit(value: string) {
     if (!value.trim()) return;
@@ -74,7 +88,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
     setComposerValue('');
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   const timeline = planData?.plan?.timeline ?? [];
 
@@ -82,7 +96,16 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <PlanBody
@@ -179,8 +202,8 @@ function PlanBody({
           </StackItem>
 
           {!isMobile && isChatOpen ? (
-            <StackItem width={380}>
-              <Card height={480}>
+            <StackItem>
+              <Card width={380} height={480}>
                 <ChatLayout
                   composer={
                     <ChatComposer

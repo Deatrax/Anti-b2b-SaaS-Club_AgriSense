@@ -26,16 +26,26 @@ export interface Session {
   name: string | null;
   farmId: string | null;
   farmName: string | null;
+  farmDistrict: string | null;
+  farmAez: number | null;
 }
 
 interface SessionContextValue {
   session: Session | null;
+  /** False until the localStorage read in AppProviders' mount effect completes. `session`
+   * is `null` in BOTH the "not logged in" and "haven't checked yet" states — a page guard
+   * that redirects on `!session` before this is true will bounce a logged-in user through
+   * '/' before hydration finishes (it briefly reads as logged-out), which the login page's
+   * own "already logged in → /farm" redirect then sends to /farm regardless of what page
+   * was actually requested. Every protected page must wait for isHydrated before deciding. */
+  isHydrated: boolean;
   setSession: (session: Session | null) => void;
   setFarmId: (farmId: string | null) => void;
 }
 
 const SessionContext = createContext<SessionContextValue>({
   session: null,
+  isHydrated: false,
   setSession: () => {},
   setFarmId: () => {},
 });
@@ -88,6 +98,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('bn');
   const [mode, setMode] = useState<ThemeModePref>('light');
   const [session, setSessionState] = useState<Session | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     const storedLang = window.localStorage.getItem(LANG_STORAGE_KEY);
@@ -108,6 +119,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
         // ignore malformed stored session
       }
     }
+    setIsHydrated(true);
   }, []);
 
   function setSession(next: Session | null) {
@@ -143,7 +155,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <LangContext value={{ lang, setLang, toggleLang }}>
       <ThemeModeContext value={{ mode, toggleMode }}>
-        <SessionContext value={{ session, setSession, setFarmId }}>
+        <SessionContext value={{ session, isHydrated, setSession, setFarmId }}>
           <Theme theme={farmesyTheme} mode={mode}>
             <div className="app-canvas">{children}</div>
           </Theme>

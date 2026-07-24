@@ -26,7 +26,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
   const { id } = use(params);
   const router = useRouter();
   const { t, tf } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [step, setStep] = useState<Step>('loading');
   const [basket, setBasket] = useState<ApiBasketResponse | null>(null);
@@ -34,6 +34,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -47,7 +48,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
         setError(String(err));
         setStep(String(err).includes('no pending fertilizer') ? 'empty' : 'error');
       });
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleApprove() {
     if (!basket) return;
@@ -63,7 +64,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
       });
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   return (
     <AppShell height="fill" contentPadding={4} topNav={<TopNav endContent={<ModeLangToggle />} />}>

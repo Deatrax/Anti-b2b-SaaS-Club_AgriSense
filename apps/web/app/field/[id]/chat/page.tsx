@@ -17,22 +17,24 @@ import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
 import { useFieldChat } from '../../../../lib/useFieldChat';
-import { getField, listFields, type ApiField } from '../../../../lib/api';
+import { getField, listFields, listRecentChats, type ApiField, type ApiRecentChat } from '../../../../lib/api';
 
 export default function FieldChatPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
   const { t } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -42,8 +44,11 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
+        .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleComposerSubmit(value: string) {
     if (!value.trim()) return;
@@ -51,13 +56,22 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
     setComposerValue('');
   }
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   return (
     <AppShell
       height="fill"
       contentPadding={0}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack height="100%" gap={0}>

@@ -38,6 +38,7 @@ import { bdt, daysFromToday } from '../../../../lib/format';
 import {
   getField,
   listFields,
+  listRecentChats,
   getFieldPlan,
   postFieldLog,
   type ApiField,
@@ -45,6 +46,7 @@ import {
   type ApiPlanTimelineEntry,
   type ApiRiskWindow,
   type ApiReplanDiff,
+  type ApiRecentChat,
 } from '../../../../lib/api';
 import type { FeedItem } from '../../../../lib/feed';
 
@@ -52,10 +54,11 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const { id } = use(params);
   const router = useRouter();
   const { t, tf } = useT();
-  const { session } = useSession();
+  const { session, isHydrated } = useSession();
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
@@ -67,6 +70,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (!session) {
       router.push('/');
       return;
@@ -77,8 +81,11 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
+        .catch(() => {});
     }
-  }, [id, session, router]);
+  }, [id, isHydrated, session, router]);
 
   function handleComposerSubmit(value: string) {
     if (!value.trim()) return;
@@ -110,13 +117,22 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     ? [...financial.actual, ...financial.projected].reduce((sum, l) => sum + (l.kind === 'revenue' ? l.total : -l.total), 0)
     : null;
 
-  if (!session) return null;
+  if (!isHydrated || !session) return null;
 
   return (
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
@@ -216,8 +232,8 @@ function OverviewBody({
 
       <HStack gap={4} vAlign="start" wrap="wrap">
         {!isMobile ? (
-          <StackItem width={420}>
-            <Card height={520}>
+          <StackItem>
+            <Card width={420} height={520}>
               <ChatLayout
                 composer={
                   <VStack gap={2}>

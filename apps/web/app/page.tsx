@@ -25,7 +25,7 @@ type Step = 'phone' | 'otp';
 export default function LoginPage() {
   const router = useRouter();
   const { t } = useT();
-  const { session, setSession } = useSession();
+  const { session, isHydrated, setSession } = useSession();
 
   const [step, setStep] = useState<Step>('phone');
   const [phone, setPhone] = useState('');
@@ -35,8 +35,8 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (session) router.replace('/farm');
-  }, [session, router]);
+    if (isHydrated && session) router.replace('/farm');
+  }, [isHydrated, session, router]);
 
   async function handleSendCode() {
     if (phone.trim().length === 0) return;
@@ -60,7 +60,15 @@ export default function LoginPage() {
     setError(null);
     try {
       const { user, farms } = await verifyOtp(referenceNo, code.trim());
-      setSession({ userId: user.id, phone: user.phone, name: user.name, farmId: farms[0]?.id ?? null, farmName: farms[0]?.name ?? null });
+      setSession({
+        userId: user.id,
+        phone: user.phone,
+        name: user.name,
+        farmId: farms[0]?.id ?? null,
+        farmName: farms[0]?.name ?? null,
+        farmDistrict: farms[0]?.district ?? null,
+        farmAez: farms[0]?.aez ?? null,
+      });
       router.push('/farm');
     } catch (err) {
       setError(String(err));
