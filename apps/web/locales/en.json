@@ -226,6 +226,7 @@
   "login_title": "Welcome back",
   "login_subtitle": "Enter your phone number to continue.",
   "login_demo_note": "Demo only — no OTP is sent.",
+  "logout_action": "Log out",
 
   "farm_screen_desc": "Auto-created at sign-in from your phone number.",
   "farm_south_field_note": "Cycle complete — read-only.",
@@ -299,5 +300,34 @@
 
   "money_finance_desc": "Every figure here comes from the same calculation the season plan and comparisons use — one model, re-run, never a separate estimate.",
   "money_area_decrement": "Decrease area",
-  "money_area_increment": "Increase area"
+  "money_area_increment": "Increase area",
+
+  "login_error_title": "Couldn't sign in",
+  "farm_create_title": "Set up your farm",
+  "farm_name_label": "Farm name",
+  "farm_name_placeholder": "e.g. Hasan's farm",
+  "farm_district_label": "District",
+  "farm_district_placeholder": "e.g. Mymensingh",
+  "field_unnamed": "Unnamed field",
+  "field_status_new": "Just added",
+  "gathering_banner_title": "Still getting to know this field",
+  "gathering_banner_desc": "{n} details still missing — the agent will ask for them as you chat.",
+  "weather_rain_7d": "Rain (7d)",
+  "weather_stale": "showing a cached forecast",
+  "weather_not_checked": "Not checked yet this session.",
+  "weather_check": "Check weather",
+  "weather_check_prompt": "What does the weather forecast look like for this field?",
+  "weather_forecast_days": "Forecast days",
+  "fertilizer_next_dose_on_raw": "Next dose: {date}",
+  "plan_empty_title": "No season plan yet",
+  "plan_empty_desc": "Once a crop is chosen, the agent builds a dated calendar here.",
+  "money_empty_desc": "No costs or revenue recorded yet for this field.",
+
+  "otp_subtitle": "Enter the 6-digit code we sent to your phone.",
+  "otp_send": "Send code",
+  "otp_code_label": "Verification code",
+  "otp_code_placeholder": "123456",
+  "otp_verify": "Verify",
+  "otp_change_number": "Change number",
+  "otp_resend": "Resend code"
 }

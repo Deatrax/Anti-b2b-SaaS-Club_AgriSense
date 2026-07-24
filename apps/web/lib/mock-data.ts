@@ -20,6 +20,7 @@ import type {
   TraceEntry,
   Provenance,
 } from '@agrisense/shared';
+import type { FeedItem } from './feed';
 
 const FARM_ID = 'farm-hasan-1';
 const FIELD_ID = 'field-uttor-1';
@@ -409,9 +410,7 @@ export const weather: WeatherSummary = {
 
 // ---- Feed (unified chat + trace history) -----------------------------------------------------
 
-export type FeedItem =
-  | { id: string; type: 'message'; message: Message }
-  | { id: string; type: 'tool_trace'; traces: TraceEntry[] };
+export type { FeedItem };
 
 function msg(id: string, role: Message['role'], content: string, createdAt: string, isProactive = false): Message {
   return { id, conversationId: CONV_ID, role, content, toolCalls: null, isProactive, createdAt };

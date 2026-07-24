@@ -1,60 +1,153 @@
-// Farm / field list. Raw Astryx components only, no wrapper components — colors +
-// mockup data pass over the neutral scaffold. See Docs/inventory_import.md and
-// Docs/AgriSense_Wireframe.html.
+// Farm overview — real fields for the logged-in user's farm (GET /farms/:id/fields), a
+// 3-up card grid (screen matches the mock's farm-card pattern). If the user has no farm yet
+// (brand new phone number), prompts to create one first (POST /farms).
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AppShell } from '@astryxdesign/core/AppShell';
 import { TopNav } from '@astryxdesign/core/TopNav';
 import { VStack, HStack } from '@astryxdesign/core/Stack';
 import { Text } from '@astryxdesign/core/Text';
-import { List, ListItem } from '@astryxdesign/core/List';
-import { Button } from '@astryxdesign/core/Button';
-import { Divider } from '@astryxdesign/core/Divider';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Card } from '@astryxdesign/core/Card';
 import { Badge } from '@astryxdesign/core/Badge';
-import { useT } from '../providers';
+import { Button } from '@astryxdesign/core/Button';
+import { Icon } from '@astryxdesign/core/Icon';
+import { FormLayout } from '@astryxdesign/core/FormLayout';
+import { TextInput } from '@astryxdesign/core/TextInput';
+import { Skeleton } from '@astryxdesign/core/Skeleton';
+import { Banner } from '@astryxdesign/core/Banner';
+import { Plus } from 'lucide-react';
+import { useT, useSession } from '../providers';
 import { ModeLangToggle } from '../../components/ModeLangToggle';
-import { farm, fieldList } from '../../lib/mock-data';
+import { FieldRail } from '../../components/FieldRail';
+import { listFields, createFarm, createField, type ApiField } from '../../lib/api';
 
 export default function FarmPage() {
-  const { t } = useT();
   const router = useRouter();
+  const { t } = useT();
+  const { session, setSession } = useSession();
+  const [fields, setFields] = useState<ApiField[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [newFarmName, setNewFarmName] = useState('');
+  const [newFarmDistrict, setNewFarmDistrict] = useState('');
+  const [isCreatingFarm, setIsCreatingFarm] = useState(false);
+  const [isAddingField, setIsAddingField] = useState(false);
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+      return;
+    }
+    if (!session.farmId) return;
+    listFields(session.farmId)
+      .then((res) => setFields(res.fields))
+      .catch((err) => setError(String(err)));
+  }, [session, router]);
+
+  async function handleCreateFarm() {
+    if (!session || newFarmName.trim().length === 0 || newFarmDistrict.trim().length === 0) return;
+    setIsCreatingFarm(true);
+    setError(null);
+    try {
+      const { farm } = await createFarm(session.userId, newFarmName.trim(), newFarmDistrict.trim());
+      setSession({ ...session, farmId: farm.id, farmName: farm.name });
+    } catch (err) {
+      setError(String(err));
+    } finally {
+      setIsCreatingFarm(false);
+    }
+  }
+
+  async function handleAddField() {
+    if (!session?.farmId) return;
+    setIsAddingField(true);
+    setError(null);
+    try {
+      const { field } = await createField(session.farmId);
+      router.push(`/field/${field.id}/chat`);
+    } catch (err) {
+      setError(String(err));
+      setIsAddingField(false);
+    }
+  }
+
+  if (!session) return null;
+
+  if (!session.farmId) {
+    return (
+      <AppShell height="fill" contentPadding={4} topNav={<TopNav endContent={<ModeLangToggle />} />}>
+        <VStack gap={4} width={360}>
+          <Text type="display-3">{t('farm_create_title')}</Text>
+          {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
+          <FormLayout>
+            <TextInput label={t('farm_name_label')} value={newFarmName} onChange={setNewFarmName} placeholder={t('farm_name_placeholder')} />
+            <TextInput label={t('farm_district_label')} value={newFarmDistrict} onChange={setNewFarmDistrict} placeholder={t('farm_district_placeholder')} />
+          </FormLayout>
+          <Button label={t('continue')} variant="primary" isDisabled={isCreatingFarm} onClick={handleCreateFarm} />
+        </VStack>
+      </AppShell>
+    );
+  }
 
   return (
-    <AppShell height="fill" contentPadding={4} topNav={<TopNav endContent={<ModeLangToggle />} />}>
+    <AppShell
+      height="fill"
+      contentPadding={4}
+      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={fields ?? []} onAddField={handleAddField} />}
+      topNav={<TopNav endContent={<ModeLangToggle />} />}
+    >
       <VStack gap={4}>
-        <HStack justify="between" vAlign="center">
-          <VStack gap={0}>
-            <Text type="display-3">{farm.name}</Text>
-            <Text type="supporting" color="secondary">
-              {farm.district} · AEZ {farm.aez}
-            </Text>
-          </VStack>
-          <Button label={t('add_field')} variant="primary" onClick={() => router.push('/field/new')} />
-        </HStack>
-        <Divider />
-        <Text type="label" weight="semibold">
-          {t('farm_fields_heading')}
-        </Text>
-        <List hasDividers>
-          {fieldList.map((f) => (
-            <ListItem
-              key={f.id}
-              label={f.name}
-              description={`${f.areaHa} ${t('unit_hectare')} · ${f.crop ?? t('no_crop')}${f.stage ? ` · ${t(`stage_${f.stage}`)}` : ''}`}
-              href={`/field/${f.id}`}
-              endContent={
-                <HStack gap={1.5} vAlign="center">
-                  <Badge
-                    variant={f.status === 'active' ? 'green' : 'neutral'}
-                    label={f.status === 'active' ? t('field_status_active') : t('field_status_harvested')}
-                  />
-                  {f.isReadOnly ? <Badge variant="neutral" label={t('field_read_only')} /> : null}
-                </HStack>
-              }
-            />
-          ))}
-        </List>
+        <VStack gap={0}>
+          <Text type="display-3">{t('farm_fields_heading')}</Text>
+          <Text type="supporting" color="secondary">
+            {t('farm_screen_desc')}
+          </Text>
+        </VStack>
+
+        {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
+
+        {fields === null ? (
+          <Grid columns={{ minWidth: 260 }} gap={3}>
+            <Skeleton height={140} />
+            <Skeleton height={140} />
+          </Grid>
+        ) : (
+          <Grid columns={{ minWidth: 260 }} gap={3}>
+            {fields.map((f) => {
+              const isActive = f.activeCycle != null;
+              return (
+                <Card key={f.id}>
+                  <VStack gap={2}>
+                    <HStack justify="between" vAlign="center">
+                      <Text type="label" weight="semibold">
+                        {f.name ?? t('field_unnamed')}
+                      </Text>
+                      <Badge variant={isActive ? 'green' : 'neutral'} label={isActive ? t('field_status_active') : t('field_status_new')} />
+                    </HStack>
+                    <Text type="supporting" color="secondary">
+                      {f.areaHa != null ? `${f.areaHa} ${t('unit_hectare')} · ` : ''}
+                      {f.activeCycle?.crop ?? t('no_crop')}
+                      {f.activeCycle?.stage ? ` · ${t(`stage_${f.activeCycle.stage}`)}` : ''}
+                    </Text>
+                    <Button label={t('go_to_field')} variant="primary" href={`/field/${f.id}/overview`} />
+                  </VStack>
+                </Card>
+              );
+            })}
+
+            <Card variant="muted">
+              <VStack gap={2} hAlign="center">
+                <Icon icon={Plus} color="secondary" size="lg" />
+                <Text type="label" weight="semibold">
+                  {t('add_field')}
+                </Text>
+                <Button label={t('add_field')} variant="secondary" isDisabled={isAddingField} onClick={handleAddField} />
+              </VStack>
+            </Card>
+          </Grid>
+        )}
       </VStack>
     </AppShell>
   );

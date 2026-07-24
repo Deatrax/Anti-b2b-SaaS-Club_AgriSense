@@ -3,16 +3,25 @@
 // duplicating state — both live in app/providers.tsx.
 'use client';
 
-import { Sun, Moon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Sun, Moon, LogOut } from 'lucide-react';
 import { HStack } from '@astryxdesign/core/Stack';
 import { Button } from '@astryxdesign/core/Button';
 import { IconButton } from '@astryxdesign/core/IconButton';
 import { Icon } from '@astryxdesign/core/Icon';
-import { useLang, useThemeMode } from '../app/providers';
+import { useLang, useThemeMode, useSession, useT } from '../app/providers';
 
 export function ModeLangToggle() {
+  const router = useRouter();
+  const { t } = useT();
   const { lang, toggleLang } = useLang();
   const { mode, toggleMode } = useThemeMode();
+  const { session, setSession } = useSession();
+
+  function handleLogout() {
+    setSession(null);
+    router.push('/');
+  }
 
   return (
     <HStack gap={1.5} vAlign="center">
@@ -31,6 +40,16 @@ export function ModeLangToggle() {
         size="sm"
         onClick={toggleMode}
       />
+      {session ? (
+        <IconButton
+          icon={<Icon icon={LogOut} size="sm" />}
+          label={t('logout_action')}
+          tooltip={t('logout_action')}
+          variant="ghost"
+          size="sm"
+          onClick={handleLogout}
+        />
+      ) : null}
     </HStack>
   );
 }

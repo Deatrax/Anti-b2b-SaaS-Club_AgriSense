@@ -16,6 +16,33 @@ type ThemeModePref = 'light' | 'dark';
 
 const LANG_STORAGE_KEY = 'agrisense-lang';
 const THEME_STORAGE_KEY = 'agrisense-theme-mode';
+const SESSION_STORAGE_KEY = 'agrisense-session';
+
+/** No cookie/token system on the backend (phone as plain identifier, no OTP — §A.3) —
+ * the session is just "who is logged in" + "which farm is active," held client-side. */
+export interface Session {
+  userId: string;
+  phone: string;
+  name: string | null;
+  farmId: string | null;
+  farmName: string | null;
+}
+
+interface SessionContextValue {
+  session: Session | null;
+  setSession: (session: Session | null) => void;
+  setFarmId: (farmId: string | null) => void;
+}
+
+const SessionContext = createContext<SessionContextValue>({
+  session: null,
+  setSession: () => {},
+  setFarmId: () => {},
+});
+
+export function useSession(): SessionContextValue {
+  return use(SessionContext);
+}
 
 interface LangContextValue {
   lang: Lang;
@@ -60,6 +87,7 @@ export function useT(): { lang: Lang; t: (key: string) => string; tf: (key: stri
 export function AppProviders({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('bn');
   const [mode, setMode] = useState<ThemeModePref>('light');
+  const [session, setSessionState] = useState<Session | null>(null);
 
   useEffect(() => {
     const storedLang = window.localStorage.getItem(LANG_STORAGE_KEY);
@@ -71,7 +99,31 @@ export function AppProviders({ children }: { children: ReactNode }) {
     } else if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
       setMode('dark');
     }
+
+    const storedSession = window.localStorage.getItem(SESSION_STORAGE_KEY);
+    if (storedSession) {
+      try {
+        setSessionState(JSON.parse(storedSession) as Session);
+      } catch {
+        // ignore malformed stored session
+      }
+    }
   }, []);
+
+  function setSession(next: Session | null) {
+    setSessionState(next);
+    if (next) window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+    else window.localStorage.removeItem(SESSION_STORAGE_KEY);
+  }
+
+  function setFarmId(farmId: string | null) {
+    setSessionState((s) => {
+      if (!s) return s;
+      const next = { ...s, farmId };
+      window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }
 
   function setLang(next: Lang) {
     setLangState(next);
@@ -91,9 +143,11 @@ export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <LangContext value={{ lang, setLang, toggleLang }}>
       <ThemeModeContext value={{ mode, toggleMode }}>
-        <Theme theme={farmesyTheme} mode={mode}>
-          <div className="app-canvas">{children}</div>
-        </Theme>
+        <SessionContext value={{ session, setSession, setFarmId }}>
+          <Theme theme={farmesyTheme} mode={mode}>
+            <div className="app-canvas">{children}</div>
+          </Theme>
+        </SessionContext>
       </ThemeModeContext>
     </LangContext>
   );

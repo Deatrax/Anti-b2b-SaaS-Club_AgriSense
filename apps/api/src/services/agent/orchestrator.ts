@@ -1,6 +1,12 @@
 // agent/orchestrator.ts — the hand-rolled tool loop (§C.2). No framework: Vercel AI SDK
 // tool primitives + a bounded loop with a hard step cap and a GRACEFUL exit (not a throw).
-import { generateText, tool, type CoreMessage, type LanguageModel, type ToolSet } from 'ai';
+// Message/tool shapes target AI SDK v7 (package.json's "ai": "^7.0.37") — v5 renamed
+// CoreMessage → ModelMessage, tool.parameters → tool.inputSchema, tool-call.args → .input,
+// and tool-result content parts from {result, isError} to a typed `output` discriminated
+// union ({type:'json'|'error-json', value}). Fixed 2026-07-25: the original hand-rolled
+// message construction was written against the pre-v5 shape and failed every turn with
+// AI_InvalidPromptError ("messages do not match the ModelMessage[] schema").
+import { generateText, tool, type ModelMessage, type LanguageModel, type ToolSet, type JSONValue } from 'ai';
 import type { Phase } from '@agrisense/shared';
 import { getRegistry, type ToolCtx } from '../tools/registry';
 import { FieldModel } from '../../models/field.model';
@@ -26,10 +32,10 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
 
   await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
   const history = await ConversationModel.recentMessages(ctx.conversationId, 20);
-  const messages: CoreMessage[] = [
+  const messages: ModelMessage[] = [
     ...history
       .filter((m) => m.role === 'user' || m.role === 'assistant')
-      .map((m) => ({ role: m.role, content: m.content }) as CoreMessage),
+      .map((m) => ({ role: m.role, content: m.content }) as ModelMessage),
     { role: 'user', content: userMessage },
   ];
 
@@ -68,7 +74,7 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
     }
 
     for (const call of result.toolCalls) {
-      toolCallLog.push({ name: call.toolName, args: call.args });
+      toolCallLog.push({ name: call.toolName, args: call.input });
       const def = getRegistry().get(call.toolName);
       let toolResult: unknown;
       let isError = false;
@@ -80,7 +86,7 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
           // Already trace-wrapped by registry.ts's register() — this call alone opens/closes
           // the trace row and streams tool_start/tool_end. Caught here only so one tool's
           // failure (no fallback defined) doesn't crash the whole conversation turn.
-          toolResult = await def.handler(call.args, ctx);
+          toolResult = await def.handler(call.input, ctx);
         } catch (err) {
           toolResult = { error: String(err) };
           isError = true;
@@ -88,7 +94,15 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
       }
       messages.push({
         role: 'tool',
-        content: [{ type: 'tool-result', toolCallId: call.toolCallId, toolName: call.toolName, result: toolResult, isError }],
+        content: [
+          {
+            type: 'tool-result',
+            toolCallId: call.toolCallId,
+            toolName: call.toolName,
+            // Tool results are always JSON-serializable by design (registry.ts's ToolResult<R>).
+            output: isError ? { type: 'error-json', value: toolResult as JSONValue } : { type: 'json', value: toolResult as JSONValue },
+          },
+        ],
       });
     }
   }
@@ -103,7 +117,7 @@ function buildToolSet(names: string[]): ToolSet {
   for (const name of names) {
     const def = getRegistry().get(name);
     if (!def) continue;
-    toolSet[name] = tool({ description: def.description, parameters: def.schema });
+    toolSet[name] = tool({ description: def.description, inputSchema: def.schema });
   }
   return toolSet;
 }

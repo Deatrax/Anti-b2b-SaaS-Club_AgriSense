@@ -49,29 +49,49 @@ interface CycleRow {
   actual_yield_kg: string | null; // numeric column — raw from pg, coerced in toCycle()
 }
 
+/** Shared by getState() and listByFarm() — one field row → its full FieldState. */
+async function stateForField(field: FieldRow): Promise<FieldState> {
+  const [activeCycle] = await query<CycleRow>(
+    "select * from crop_cycles where field_id = $1 and status = 'active' limit 1",
+    [field.id],
+  );
+  // No active cycle exists yet during GATHERING — target_season lives on a 'planned' cycle
+  // created as soon as the farmer answers it, before any crop is chosen (§C.8).
+  const [plannedCycle] = activeCycle
+    ? []
+    : await query<CycleRow>(
+        "select * from crop_cycles where field_id = $1 and status = 'planned' order by created_at desc limit 1",
+        [field.id],
+      );
+  const targetSeason = activeCycle?.season ?? plannedCycle?.season ?? null;
+  return {
+    identity: toIdentity(field),
+    activeCycle: activeCycle ? toCycle(activeCycle) : null,
+    missingFields: computeMissing(field, targetSeason),
+  };
+}
+
 export const FieldModel = {
   async getState(fieldId: string): Promise<FieldState> {
     const [rawField] = await query<FieldRawRow>('select * from fields where id = $1', [fieldId]);
     if (!rawField) throw new Error(`field ${fieldId} not found`);
-    const field = toFieldRow(rawField);
-    const [activeCycle] = await query<CycleRow>(
-      "select * from crop_cycles where field_id = $1 and status = 'active' limit 1",
-      [fieldId],
+    return stateForField(toFieldRow(rawField));
+  },
+
+  /** Farm → its fields (active + read-only historical) — the seam the farm page reads (§B.3). */
+  async listByFarm(farmId: string): Promise<FieldState[]> {
+    const rawFields = await query<FieldRawRow>('select * from fields where farm_id = $1 order by created_at', [farmId]);
+    return Promise.all(rawFields.map(toFieldRow).map(stateForField));
+  },
+
+  /** Creates a bare, empty field row — starts with nothing filled in. The agent's
+   * update_field tool populates it through conversation, not a form (§B.3 "empty ground"). */
+  async create(farmId: string, name?: string): Promise<FieldIdentity> {
+    const [row] = await query<FieldRawRow>(
+      'insert into fields (farm_id, name) values ($1, $2) returning *',
+      [farmId, name ?? null],
     );
-    // No active cycle exists yet during GATHERING — target_season lives on a 'planned' cycle
-    // created as soon as the farmer answers it, before any crop is chosen (§C.8).
-    const [plannedCycle] = activeCycle
-      ? []
-      : await query<CycleRow>(
-          "select * from crop_cycles where field_id = $1 and status = 'planned' order by created_at desc limit 1",
-          [fieldId],
-        );
-    const targetSeason = activeCycle?.season ?? plannedCycle?.season ?? null;
-    return {
-      identity: toIdentity(field),
-      activeCycle: activeCycle ? toCycle(activeCycle) : null,
-      missingFields: computeMissing(field, targetSeason),
-    };
+    return toIdentity(toFieldRow(row!));
   },
 
   async update(fieldId: string, patch: Partial<FieldRow>): Promise<void> {

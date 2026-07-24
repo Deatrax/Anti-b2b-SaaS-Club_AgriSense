@@ -226,6 +226,7 @@
   "login_title": "স্বাগতম",
   "login_subtitle": "চালিয়ে যেতে আপনার ফোন নম্বর দিন।",
   "login_demo_note": "শুধুমাত্র ডেমো — কোনো ওটিপি পাঠানো হয় না।",
+  "logout_action": "লগ আউট",
 
   "farm_screen_desc": "সাইন ইনের সময় আপনার ফোন নম্বর থেকে স্বয়ংক্রিয়ভাবে তৈরি হয়েছে।",
   "farm_south_field_note": "চক্র সম্পন্ন — শুধু দেখার জন্য।",
@@ -299,5 +300,34 @@
 
   "money_finance_desc": "এখানকার প্রতিটি সংখ্যা একই গণনা থেকে এসেছে যা মৌসুম পরিকল্পনা ও তুলনাতেও ব্যবহৃত হয় — একটি মডেল, পুনরায় চালানো, আলাদা কোনো অনুমান নয়।",
   "money_area_decrement": "আয়তন কমান",
-  "money_area_increment": "আয়তন বাড়ান"
+  "money_area_increment": "আয়তন বাড়ান",
+
+  "login_error_title": "সাইন-ইন করা যায়নি",
+  "farm_create_title": "আপনার খামার তৈরি করুন",
+  "farm_name_label": "খামারের নাম",
+  "farm_name_placeholder": "যেমন: হাসানের খামার",
+  "farm_district_label": "জেলা",
+  "farm_district_placeholder": "যেমন: ময়মনসিংহ",
+  "field_unnamed": "নামহীন জমি",
+  "field_status_new": "নতুন যোগ হয়েছে",
+  "gathering_banner_title": "এই জমি সম্পর্কে এখনও জানার বাকি",
+  "gathering_banner_desc": "{n}টি তথ্য এখনও দেওয়া বাকি — কথোপকথনের সময় এজেন্ট জিজ্ঞাসা করবে।",
+  "weather_rain_7d": "বৃষ্টি (৭ দিন)",
+  "weather_stale": "ক্যাশ করা পূর্বাভাস দেখানো হচ্ছে",
+  "weather_not_checked": "এই সেশনে এখনও যাচাই করা হয়নি।",
+  "weather_check": "আবহাওয়া দেখুন",
+  "weather_check_prompt": "এই জমির জন্য আবহাওয়ার পূর্বাভাস কেমন?",
+  "weather_forecast_days": "পূর্বাভাসের দিন",
+  "fertilizer_next_dose_on_raw": "পরবর্তী ডোজ: {date}",
+  "plan_empty_title": "এখনও কোনো মৌসুম পরিকল্পনা নেই",
+  "plan_empty_desc": "একটি ফসল নির্বাচন করা হলে, এজেন্ট এখানে তারিখ-ভিত্তিক ক্যালেন্ডার তৈরি করবে।",
+  "money_empty_desc": "এই জমির জন্য এখনও কোনো খরচ বা আয় নথিভুক্ত হয়নি।",
+
+  "otp_subtitle": "আপনার ফোনে পাঠানো ৬-সংখ্যার কোডটি লিখুন।",
+  "otp_send": "কোড পাঠান",
+  "otp_code_label": "যাচাইকরণ কোড",
+  "otp_code_placeholder": "123456",
+  "otp_verify": "যাচাই করুন",
+  "otp_change_number": "নম্বর পরিবর্তন করুন",
+  "otp_resend": "আবার কোড পাঠান"
 }

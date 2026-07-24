@@ -18,3 +18,8 @@ export function daysUntil(iso: string, from = new Date('2026-07-24')): number {
   const target = new Date(iso);
   return Math.round((target.getTime() - from.getTime()) / (1000 * 60 * 60 * 24));
 }
+
+/** Same math as daysUntil, but against the real current date — for live-data pages. */
+export function daysFromToday(iso: string): number {
+  return daysUntil(iso, new Date());
+}
