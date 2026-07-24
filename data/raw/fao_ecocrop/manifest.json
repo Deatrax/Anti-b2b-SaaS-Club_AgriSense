@@ -1,0 +1,33 @@
+[
+  {
+    "slug": "rice",
+    "ecoport_code": "1574",
+    "scientific_name": "Oryza sativa",
+    "common_name": "rice, riso, riz, arroz, raisi, chawal, dhan, shali, rais, kumi, kome, ku, dao, tao, kao, cau, byeo, padi, paddy, vrihi, arishi, oruza, lúa, lúa gao, arishi Arruz, reis",
+    "source_org": "FAO (via OpenCLIM/ecocrop GitHub mirror of EcoCrop_DB.csv)",
+    "source_url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/master/EcoCrop_DB.csv",
+    "retrieved_at": "2026-07-24T00:00:00Z",
+    "status": "ok"
+  },
+  {
+    "slug": "potato",
+    "ecoport_code": "1971",
+    "scientific_name": "Solanum tuberosum",
+    "common_name": "potato, tuber, spud, Irish potato, white potato, Spanish potato, pomme de terre, patate, batata, batateira vulgar, papa, vateta, aartappel, katoffel, Kartoffel, peruna, potaati, potatis, patata",
+    "source_org": "FAO (via OpenCLIM/ecocrop GitHub mirror of EcoCrop_DB.csv)",
+    "source_url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/master/EcoCrop_DB.csv",
+    "retrieved_at": "2026-07-24T00:00:00Z",
+    "status": "ok"
+  },
+  {
+    "slug": "maize",
+    "ecoport_code": "238663",
+    "scientific_name": "Zea mays ssp. mays",
+    "common_name": "corn",
+    "source_org": "FAO (via OpenCLIM/ecocrop GitHub mirror of EcoCrop_DB.csv)",
+    "source_url": "https://raw.githubusercontent.com/OpenCLIM/ecocrop/master/EcoCrop_DB.csv",
+    "retrieved_at": "2026-07-24T00:00:00Z",
+    "status": "ok",
+    "note": "Uses EcoPortCode 238663 (most complete of 3 Zea mays entries, 46/55 fields, cereals-categorized) rather than the sparser 2175 (33/55); identical climate envelope. GMAX=365 reflects multi-use (forage/environmental) categorization in the source -- use GMIN=65 as the grain-maize duration floor."
+  }
+]
