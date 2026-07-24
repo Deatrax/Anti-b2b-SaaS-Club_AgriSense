@@ -24,6 +24,7 @@ function makeCtx(conversationId = 'conv-1'): ToolCtx {
   return {
     conversationId,
     messageId: null,
+    fieldId: 'field-1',
     stream: { text: vi.fn(), toolStart: vi.fn(), toolEnd: vi.fn(), notice: vi.fn(), done: vi.fn() },
   };
 }
