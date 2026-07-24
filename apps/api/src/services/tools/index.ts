@@ -1,20 +1,24 @@
-// tools/bootstrap.ts — calls every tool-registration function once at boot, so the registry
-// (an in-memory Map, registry.ts) is populated before the first chat request. Side-effect only:
-// register() is idempotent (Map.set on the tool name), so calling this more than once is safe.
+// tools/index.ts — the boot-time seam: nothing calls registerXTools() otherwise, so without
+// this the registry stays empty and the agent has zero tools regardless of what's registered
+// in each *.tools.ts file. Call registerAllTools() once at app startup (app.ts).
 import { registerWeatherTools } from './weather.tools';
 import { registerFieldTools } from './field.tools';
 import { registerPlanningTools } from './planning.tools';
 import { registerFinancialTools } from './financial.tools';
-import { registerRiskTools } from './risk.tools';
 import { registerKnowledgeTools } from './knowledge.tools';
 import { registerPaymentTools } from './payment.tools';
+import { registerRiskTools } from './risk.tools';
+
+let registered = false;
 
 export function registerAllTools(): void {
+  if (registered) return;
   registerWeatherTools();
   registerFieldTools();
   registerPlanningTools();
   registerFinancialTools();
-  registerRiskTools();
   registerKnowledgeTools();
   registerPaymentTools();
+  registerRiskTools();
+  registered = true;
 }
