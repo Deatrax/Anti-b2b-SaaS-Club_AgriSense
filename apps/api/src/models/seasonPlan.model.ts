@@ -26,4 +26,22 @@ export const SeasonPlanModel = {
       generatedAt: row.generated_at,
     };
   },
+
+  /** build_season_plan calls this alongside PlanEventModel.replaceForCycle — the weather
+   * snapshot is what makes a plan reproducible later (§B.3). Revision auto-increments. */
+  async create(cropCycleId: string, weatherSnapshot: unknown): Promise<Omit<SeasonPlan, 'events'>> {
+    const latest = await this.getLatestForCycle(cropCycleId);
+    const revision = (latest?.revision ?? 0) + 1;
+    const [row] = await query<SeasonPlanRow>(
+      'insert into season_plans (crop_cycle_id, revision, weather_snapshot) values ($1,$2,$3::jsonb) returning *',
+      [cropCycleId, revision, JSON.stringify(weatherSnapshot)],
+    );
+    return {
+      id: row!.id,
+      cropCycleId: row!.crop_cycle_id,
+      revision: row!.revision,
+      weatherSnapshot: row!.weather_snapshot,
+      generatedAt: row!.generated_at,
+    };
+  },
 };
