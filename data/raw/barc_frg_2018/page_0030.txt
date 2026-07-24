@@ -1,0 +1,52 @@
+AEZ 6: Lower Purnabhaba Floodplain
+
+This region occupies basins and bils separated by low floodplain ridges. Most of the
+region is moderately to deeply flooded in the rainy season. Soils are dark grey, mottled
+red, very strongly acid, heavy clays occupy both ridge and basin sites. Only one General
+Soil Type, Acid Basin Clays has been identified in the region. Organic matter status is low
+to medium with medium CEC. General fertility level is medium. The pH of the top soil
+ranges from very strongly acidic to slightly alkaline.
+
+Major Soil | Soil Nutrient status
+
+Land Type| pH |OM N P K S Ca |Mg| Zn B_ |Mo
+
+ov 4.8-8.1 |L-M|VL-L| L-M | M-Opt |M-Opt| Opt | Opt | M-Opt | M-Opt| Opt
+0
+
+AEZ 7: Active Brahmaputra-Jamuna Floodplain
+
+This region comprises the belt of unstable alluvial land along the Brahmaputra-Jamuna
+rivers where land is constantly being formed and eroded by shifting river channels. It has
+an irregular relief of broad and narrow ridges and depressions.
+
+The area is occupied by sandy and silty alluvium, rich in weatherable minerals with
+strongly acidic to slightly alkaline in reaction. Six General Soil Types occupy the area of
+which, only Non Calcareous Alluvium predominates. Organic matter status and fertility
+status is low to medium. Nitrogen is limiting whereas the K, S and Zn status is low to
+medium. Ca, Mg and B status is medium to optimum.
+
+Major . ;
+. Soil Nutrient status
+Land Soil pH OM
+
+Type N P K S Ca Mg | Zn B_ |Mo
+
+Medium
+Highland |4.5-8.0 |L-M|VL-L| L-M | L-M |L-M| M-Opt | M-Opt | L-M|M-Opt| M
+(37%)
+
+Medium
+Lowland |4.5-8.0 |L-M| VL-L| VL-L} L-M |L-M}| M-Opt | M-Opt | L-M|M-Opt} M
+(20%)
+
+AEZ 8: Young Brahmaputra and Jamuna Floodplain
+
+The region comprises the area of Brahmaputra sediments. It has a complex relief of broad
+and narrow ridges, inter-ridge depressions, partially in-filled cut-off channels and basins.
+
+This area is occupied by permeable silt loam to silty clay loam soils on the ridges and
+impermeable clays in the basins; neutral to slightly acid in reaction. General Soil Types
+include predominantly Grey Floodplain soils. Organic matter content is low to medium in
+ridges and basins. Soils are deficient in N, P, S and B, but the status of K and Zn is low to
+medium. Top soil pH ranges from strongly acidic to neutral.

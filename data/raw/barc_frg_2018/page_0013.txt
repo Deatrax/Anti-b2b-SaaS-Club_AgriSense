@@ -1,0 +1,30 @@
+2. PLANT NUTRIENTS
+
+2.1 Essential Nutrients
+
+Plant nutrients are of completely inorganic in nature. Plants require certain elements for
+their growth and development. But man and animals also require organic foodstuffs
+(carbohydrates, proteins, fats and vitamins) in addition to inorganic nutrients. Plants
+contain more than 90 elements, however only 16 elements are known to be essential for
+their normal growth and development. Criteria for essentiality of a nutrient are: (i) a plant
+can not complete its life cycle in the absence of the element, (ii) the function of the
+element can not be carried out by another element, and (iii) the element is directly
+involved in plant metabolism. The essential nutrients are of two types: macronutrients and
+micronutrients. Macronutrients are required relatively in larger quantities and
+micronutrients are required relatively in smaller quantities. Macronutrient content of plants
+is usually above 0.1 % (dry weight basis) and micronutrient content is usually below 100
+ug/g. Macronutrients are carbon, hydrogen, oxygen, nitrogen, phosphorus, potassium,
+calcium, magnesium and sulphur. Micronutrients include iron, manganese, zinc, copper,
+boron, molybdenum and chlorine. In addition, several other elements are beneficial to
+some plants but are not considered essential for completion of life cycle of a plant. These
+beneficial elements are nickel, cobalt, sodium, silicon, selentum and vanadium. Except
+carbon, hydrogen and oxygen, all the 13 elements are taken up by plants from soils and
+they are called mineral nutrients. Plants usually obtain carbon, hydrogen and oxygen from
+air and water.
+
+Macronutrients Micronutrients
+Air and water Soil Soil
+Carbon (C) Nitrogen (N) Calcium (Ca) Iron (Fe) Boron (B)
+Hydrogen (H) | Phosphorus (P) Magnesium (Mg) | Manganese (Mn) Molybdenum (Mo)
+Oxygen (O) Potassium (K) Sulphur (S) Zinc (Zn) Chlorine (Cl)
+Copper (Cu)

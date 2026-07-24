@@ -1,0 +1,29 @@
+q . Nutrient R dati M
+Groping aterm | viel utrient Recommendation tanure
+Season |Crop (t/ha) N |P|K | S |Mg| Zn | B | Mo CIs Poultry
+dung manure
+
+Rabi Maize 10.0+1.0] 255 75 80 52 10 30 1.5 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif2 T.Amanrice |5.0+0.50/ 90 10 30 12 - 10 - - - -
+Rabi Maize 10.041.0] 255 75 80 52 10 30 1.5 - - -
+Kharif 1 Jute (O) 4.540.45] 111 10 32 13 - - - = - -
+Kharif2 T.Amanrice |5.0+0.50/ 90 10 30 12 - 10 - - - -
+Rabi Onion 16.0+1.6] 90 45 80 30 - 30 15 - | 5.0 3.0
+Kharif 1 Jute (O) 4.540.45] 111 10 32 13 - - - = - -
+Kharif2 T.Amanrice |5.040.50/ 90 10 35 12 - 10 - - - -
+Rabi Radish/ 60.0+6.0 | 150 45 80 24 - 1.5 - - | 5.0 3.0
+
+Cabbage/ 9049.0 | 180 66 50 24 - 15 10 - | 5.0 3.0
+
+Cauliflower 30.043.0 | 120 60 76 21 - 15 10 - | 5.0 3.0
+Kharif 1 Okra/ 16.0416] 90 21 30 15 - 15 - = | 5.0 3.0
+
+Brinjal 60.0+6.0 | 120 25 40 15 - 1.5 - - | 5.0 3.0
+Kharif2 — Fallow - - - - - - - - - - -
+Round Sugarcane | 100410 165. 55120 30 2025-5 «== (| - .
+the year
+
+Sugarcane + 100410 | 165 55 120 30 20 2.5 - - - -
+Round
+the year Potato 1541.5 | 70 15 45 5 2 - - - - -

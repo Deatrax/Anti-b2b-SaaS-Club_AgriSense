@@ -1,0 +1,34 @@
+In principle, balanced fertilization (regardless of fertilizer sources) is indispensable to
+avoid crop yield decline on cultivated land and to supplement nutrient loss from the soil
+ecosystem. Balanced fertilization ensures high productivity in accordance with nutrient
+demand by individual crops and for individual nutrient elements without causing harm to
+the environment.
+
+Unbalanced fertilizer use at the expense of inherent soil fertility practices represent ‘soil
+mining’ as against ‘soil building’ that results from balanced fertilization. Only ‘soil
+building’ leads to a sustainable land use system in a world where most grains in food
+production must continue to come from existing agricultural land.
+
+5.4 Nutrient Use Efficiency (NUE)
+
+Farmers are concerned with the gross margin and benefit-cost ratio for their crop
+production using fertilizer and other inputs. A small part of the applied nutrient is taken up
+by plants. For example, crops uptake 15-25% of the applied phosphate fertilizer depending
+on the conditions. This can be explained as nutrient use efficiency. Crop and nutrient
+management practices have good influences on nutrient use efficiency (NUE).
+
+The NUE can be expressed as agronomic efficiency (AE), recovery efficiency (RE) and
+physiological efficiency (PE).
+
+Agronomic efficiency refers to the increase in crop yield per unit of an applied nutrient. It
+can be calculated as follows:
+
+Yna— Y
+AE = NA NO
+Nrn
+Where,
+AE _ : Agronomic efficiency
+
+Yna__: Yield (kg/ha) due to nutrient addition
+Yno _: Yield (kg/ha) due to nutrient omission
+Nen _ : Rate of nutrient addition (kg/ha)

@@ -1,0 +1,26 @@
+WHEAT (Triticum aestivum)
+(Rainfed)
+
+[(Var. Kanchan, Akbar, Protiva, Sourav (BARI Gom-19), Gourab (BARI Gom-20),
+Shatabdi (BARI Gom-21)]
+
+Yield Goal: 2.5+ 0.25 t/ha
+
+Soil Analysis Nutrient Recommendation (kg/ha)
+
+Interpretation N P K S Mg Zn B
+Optimum 0-15 0-5 0-12 0-2.5 — — —
+Medium 16-30 6-10 13-24 | 2.6-5.0 — — 0.0—0.4
+Low 31-45 | 11-15 | 25-36 | 5.1-7.5 0-3 0.0-1.0 | 0.5-0.8
+Very low 46-60 | 16-20 | 37-48 |7.6-10.0| 46 1.1-2.0 | 0.9-1.2
+
+Method of application:
+a) A\ll fertilizers should be applied as basal during final land preparation.
+
+b) One-third nitrogen (additional to basal) of the recommended rate for wheat cultivation
+under irrigated condition should be applied once if the crop gets a rain in between 17—
+40 DAS.
+
+c) Application of organic manure at the rate of 4 ton cowdung or 2.5 ton poultry manure
+per hectare is recommended. In that case the dose of N, P, K and S should be reduced
+based on the rate of application of organic manure as per Appendix-7.

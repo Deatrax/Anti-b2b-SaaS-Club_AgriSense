@@ -1,0 +1,49 @@
+2.5 Nutrient Balance
+
+Nutrient Balance is the sum of nutrient inputs minus the sum of nutrient outputs; the
+balance may be either positive or negative. Nutrient Balance may also be termed as
+Nutrient Budget or Nutrient Audit. Positive balance indicates nutrient accumulation and
+negative balance shows nutrient depletion (mining). To achieve sustainability, the quantity
+of nutrient inputs and outputs should be equal. Nutrient mining may eventually cause soil
+degradation and affect crop production. On the other hand, excess nutrient accumulation
+may lead to soil and water pollution.
+
+In calculating nutrient balance, the fertilizer, manure, BNF, deposition (rain),
+sedimentation (flood) and irrigation water can be regarded as the nutrient inputs, and the
+crop produce, crop residues, leaching, gaseous loss (volatilization and denitrification) and
+soil erosion as the nutrient outputs (Fig. 2). The most vital routes for nutrient inputs are
+fertilizer and manure, and those for nutrient outputs are crop produce and crop residues.
+Hence, the major inputs and outputs can be considered for calculating nutrient balance to
+understand partial or apparent nutrient balance. Nutrient balance values vary with
+locations, cropping systems and nutrient management practices.
+
+With the advancement of time, nutrient balance is becoming more negative (Fig. 3).
+Again, land use with higher cropping intensity may show higher negative balances (Fig. 4).
+On the other hand, the addition of organic manure may help reduce negative balances; the
+magnitude depends on the types and amount of manure. Any reduction of removal of crop
+residues would have positive influence on nutrient balance and this is especially important
+for K. Nutrient balance appears to be less negative (Figs. 5 & 6) in Barind areas (AEZs 25,
+26 & 27) in comparison with the Brahmaputra, Ganges and Meghna Floodplains (e.g.
+AEZs 9, 11, 12, 13 & 17). Incorporation of grain legume residues (e.g. mungbean) can
+reduce nutrient depletion to a considerable extent. Thus grain legume based patterns (e.g.
+Mustard- Mungbean-T. Aman rice, Wheat- Mungbean-T. Aman rice and Lentil-
+Mungbean-T. Aman rice ) are suggested for cultivatation at farm level.
+
+Although the nutrient balance value tells us a little about available nutrient status of a soil, it
+has important implications when considering the future long-term total status of a nutrient in
+soils. To minimize nutrient depletion, it is not justified to just increase the use of inorganic
+fertilizers, rather it is important to increase the use of organic sources of plant nutrients such
+as cowdung, poultry manure, compost etc.
+
+Deposition Leaching and
+(Rain) “yy gaseous loss
+Inorganic |__» Harvested products
+Fertilizer SOIL-PLANT [| Crop residues
+SYSTEM
+Organic _ > Soil erosion
+manure T
+
+Irrigation Sedimen- Leaching
+Water _ tation
+
+Fig. 2. Nutrient input-output system

@@ -1,0 +1,30 @@
+4.5 Diagnosis of Nutrient Deficiency Symptoms
+
+When a plant is deficient of a particular element, some characteristic symptoms appear.
+Nutrient deficiency symptom is related to some nutrient function in the plant. A nutrient
+may have several functions which makes it difficult to identify the reason for a particular
+deficiency symptom. For example, when N is limiting, chlorophyll production and leaf
+greenness are reduced, allowing yellow pigments (carotene and xanthophyll) to prevail.
+Deficiency symptoms of a nutrient may vary with crop species. Generally, deficiency
+symptoms are similar within a plant family since they have similar nutrient requirement.
+
+Nutrient deficiencies are relative and a deficiency of one element implies adequate or
+excessive quantities of another. Thus, plants exhibit external symptoms of starvation as a
+result of nutrient deficiency or imbalance. For example, Mn deficiency may be induced by
+excessive Fe in soils. Plants poorly supplied with P may have lower N needs compared to
+those with adequate P. Hence, the same supply of P may become sufficient or deficient
+depending on the level of N supply. It is difficult to distinguish among the deficiency
+symptoms in the field, because disease, insect, or herbicide damage may resemble certain
+micronutrient deficiencies.
+
+Nutrient deficiency symptoms appear when nutrient supply is so low that the plant can not
+function properly. In such cases, supplemental nutrients are needed before the symptoms
+appear. If the symptom is observed early, it is possible to correct it during the growing
+season with foliar spray or top dressing/side dressing. Nutrient deficiency symptoms
+appearing during early growth stage may disappear as the growing season progresses
+which is especially true for micronutrients.
+
+Recently, leaf color chart has been developed for efficient N management of irrigated rice.
+Crop N status is periodically assessed by comparing rice leaf color with four panels of
+critical colors in the chart. Farmers would be able to determine the best time of urea
+topdressing/sidedressing by using the leaf color chart.

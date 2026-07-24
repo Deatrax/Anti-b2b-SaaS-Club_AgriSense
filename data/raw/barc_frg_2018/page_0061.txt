@@ -1,0 +1,43 @@
+Recovery efficiency (RE) refers to the increase in nutrient uptake by plants per unit of an
+applied nutrient. It can be calculated as follows:
+
+NUna — NUno
+Nrn
+
+RE=
+
+Where,
+RE : Recovery efficiency
+NUna : Nutrient uptake (kg/ha) due to nutrient addition
+NUno : Nutrient uptake (kg/ha) due to nutrient omission
+Nern _ : Rate of nutrient addition (kg/ha)
+
+Physiological efficiency (PE) refers to the ability of a plant to transform a given amount of
+an acquired nutrient into grain yield. It refers to the grain yield per unit nutrient uptake. It
+can be calculated as follows:
+
+YNA — Yno
+
+PpE= —“__*
+NUwna — NUno
+
+Where,
+IPE, : Physiological efficiency
+Yna __ : Yield (kg/ha) due to nutrient addition
+Yno : Yield (kg/ha) due to nutrient omission
+NUna : Nutrient uptake (kg/ha) due to nutrient addition
+NUno : Nutrient uptake (kg/ha) due to nutrient omission
+
+5.5 Deep Placement of Urea
+
+Urea Super Granules (USG) and Urea Mega Granules (UMG) can be used to increase
+nitrogen use efficiency (NUE). Urea Super Granules (USG) are small sized granules, each
+weighing 0.9g and Urea Mega Granules (UMG) are large sized granules, each 1.8g or 2.7g
+pellets made of ordinary prilled/granular urea by compressing. The amount of USG or
+UMG should be adjusted to the recommended dose of N for different crops and soils. The
+granules (USG/UMG) need to be placed after 7-10 days of transplanting of rice at 7-10 cm
+soil depth at the centre of every four hills between rows | and 2, between rows 3 and 4, and so
+on.
+
+Recovery of N can be increased by placing the USG at lower depths and away from the
+plant. Nitrogen recovery from USG in wetland rice is greater than the N recovery from

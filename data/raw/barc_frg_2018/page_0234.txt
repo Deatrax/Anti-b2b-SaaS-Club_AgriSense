@@ -1,0 +1,35 @@
+AEZ 23: CHITTAGONG COASTAL PLAIN
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+Highland 17 Feni, Chittagong and Cox’s Bazar districts.
+Medium Highland 43
+
+Chagnine aie ve d Nutrient eh wha).
+Season Crop (vha) | N | P | K | S | Mg} Zn | B | Mo dune el
+Rabi Boro rice 7.540.75 | 150 20 66 12 - 13 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.550] 90 10 35 6 - 10 - - - -
+Rabi Fallow - - - - - - - - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.50/ 90 15 40 6 - 10 - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 15 10 O05 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.50/ 90 10 35 6 - 10 - - - -
+Rabi Cowpea 1440.14} 15 15 12 4 - 10 06 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.550] 90 15 35 6 - 10 - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 15 10 O05 - - -
+Kharif 1 T. Aus rice 4.040.40|} 75 10 25 4 - 06 - - - -
+Kharif 2 T. Amanrice | 5.040.50/ 90 10 35 6 - 10 - - - -
+Rabi Tomato 8040.80 | 135 45 50 10 - 10 O05 - 5 3
+Kharif 1 T. Aus rice 4.040.40|} 75 10 25 4 - 06 - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Tomato 8040.80 | 135 45 50 10 - 10 O05 - 5 3
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.550] 90 10 35 6 - 10 - - - -
+Rabi Tomato 8040.80 | 135 45 50 10 - 10 O05 - 5 3
+Kharif 1 Okra 1640.16 | 90 30 40 10 - 10 07 - 5 3
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Potato 3040.30 | 135 30 90 8 4 20 04 - 5 3
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.040.50/ 90 10 30 6 - 10 - - - -

@@ -1,0 +1,35 @@
+Appendix-9
+
+Interpretation of soil test values based on critical limits
+
+Nutrient element* Very Low Low Medium Optimum High Very high
+N (%) < 0,09 0.091-0.18 } 0.181-0.27 0.271-0.36 | 0.361-0.45}  >0.45
+P (ug/g soil) (Olsen method) <7.5 7.51-15.0 15.1-22.5 22.51-30 | 30.1-37.5 >37.5
+P (ug/g) (Bray & Kurtz method) | <5.25 | 5.25-10.5 | 10.51-15.75 | 15.76-21.0] 21.1-26.25| >26.25
+S (ug/g) soil <7.5 7.51-15.0 15.1-22.5 22.51-30 | 30.1-37.5 >37.5
+K (meq/100g) < 0.09 0.091-0.18 } 0.181-0.27 0.271-0.36 | 0.361-0.45}  >0.45
+Ca (meq/100g) <1.5 1.51-3.0 3.1-4.5 4.51-6.0 6.1-7.5 >7.5
+Mg (meq/100g) <0.375 | 0.376-0.75 | 0.751-1.125 | 1.126-1.5 | 1.51-1.875| >1.875
+Cu (ug/g) <0.15 0.151-0.3 0.31-0.45 0.451-0.6 | 0.61-0.75 >0.75
+Zn (ug/g) < 0.45 0.451-0.9 0.91-1.35 1.351-1.8 | 1.81-2.25 >2.25
+Fe (ug/g) <3.0 3.1-6.0 6.1-9.0 9.1-12.0 | 12.1-15.0 >15.0
+Mn (ug/g) <0.75 0.756-1.5 1.51-2.25 2.256-3.0 | 3.1-3.75 >3.75
+B (ug/g) <0.15 0.151-0.3 0.31-0.45 0.451-0.6 | 0.61-0.75 >0.75
+Mo (ug/g) <0.075 | 0.076-0.15 | 0.151-0.225 | 0.226-0.30 | 0.31-0.375| >0.375
+Nutrient Element* Critical limit Method of extraction
+N (%) 0.12 Kjeldahl method
+Organic C(%) C:N=10:1 Wet oxidation method
+P (ug/g) 10.0 Modified Olsen method (Neutral + Calcareous soils)
+P (ug/g) 7.0 Bray & Kurtz method (Acid soils)
+S (ug/g) 10.0 Calcium dihydrogen phosphate extraction
+K (meq/100g) 0.12 N NH,OAc extraction
+Ca (meq/100g) 2.0 N NH4OAc extraction
+Mg (meq/100g) 0.5 N NH,OAc extraction
+Zn (ug/g) 0.6 DTPA extraction
+Cu (ug/g) 0.2 DTPA extraction
+Fe (ug/g) 40 DTPA extraction
+Mn (ug/g) 1.0 DTPA extraction
+B (ug/g) 0.2 Calcium chloride extraction
+Mo (ug/g) 0.1 NH«-oxalate extraction
+
+*indicates total status for N and available status for others

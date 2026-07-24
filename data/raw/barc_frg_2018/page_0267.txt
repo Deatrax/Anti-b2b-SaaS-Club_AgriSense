@@ -1,0 +1,29 @@
+Appendix-11
+
+Example 1: Boro (MV)-Fallow-T.Aman (MV)
+
+Soil Analysis {Texture pH N P K N) Zn
+Interpretation % (ug/g) | (meq/100 g) | (ug/g) | (ug/g)
+Siltloam | 7.0 0.08 i 0.17 12 3.0
+Neutral | Very Low Low Medium Low | Very high
+Crops and Nutrient Recommendation (kg/ha)
+Boro (HYG)
+6.0+0.6 (t/ha) 18 18 38 uM 7
+Fallow - - - - -
+T.Aman (HYG)
+5.0+0.5 (t/ha) 105 7 a4 uM 7
+Example 2: Mustard (MV) - T.Aus (MV)- T.Aman (MV)
+Soil Analysis Texture pH N% P K NS) Zn B
+Interpretation (ug/g) | (meq/100) | (ug/g) | (ug/g) | (ug/g)
+Silt loam 7.0 |0.08 11 0.17 12 3.0 0.4
+Neutral Very|Low |Low: for | Low Very | Medium
+Low Upland high
+Crops
+Medium:
+for rice
+Nutrient Recommendation (kg/ha)
+Crop and Yield Goal
+N P K S Zn B
+Mustard (HYG) 2.0+0.2 (t/ha) 140 30 75 23 - 0.4
+T.Aus (HYG) 3.5+0.35 (t/ha) 60 6 15 8 - -
+T.Aman (HYG) 5.0+0.5 (t/ha) 105 7 24 11 - -

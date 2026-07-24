@@ -1,0 +1,20 @@
+Appendix-5
+
+Manure Moisture (%) (% ) (% ) % )
+Cowdung (decomposed) 3543.5 1.0+0.1 0.3+0..03 0.46+0.05
+Farmyard manure 67+6.7 1.6+0.16 0.83+0.08 1.740.17
+Poultry manure (decomposed) 3543.5 1.25+0.13 0.70+0.07 0.95+0.10
+Bio-slurry (Cowdung) 20+2.0 1.10+0.01 0.59+0.06 0.28+0.03
+Bio-slurry (Poultry manure) 20+2.0 1.48+0.01 0.69+0.07 0.36+0.04
+Compost (rural) 40+4.0 0.75+0.07 0.6+0.06 1.0+0.1
+Compost (urban) 40+4.0 1.5+0.15 0.6+0.06 1.5+0.5
+Compost (water hyacinth) 70+7.0 1.5+40.15 0.8+0.08 3.0 +0.3
+Mustard oilcake 15+1.5 5.0+0.5 1.8+0.18 1.2+0.12
+Linseed oilcake 15+1.5 5.5+0.55 1.4+0.14 1.240.12
+Sesame oilcake 15+1.5 6.2+0.62 2.0+0.2 1.2+0.12
+Pressmud 5545.5 1.85+0.18 0.13+0.02 0.54+0.05
+Bone meal (raw) 8+0.8 3,540.35 9+0.9 NA*
+Bone meal (steamed) 740.7 1.5+0.15 1041.0 NA
+Dried blood 10+1.0 1141.1 1.1+0.11 0.7+0.07
+Fishmeal 10+1.0 7+0.70 3.540.35 1.0+0.10
+*Not applicable

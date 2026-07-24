@@ -1,0 +1,38 @@
+AEZ 25: LEVEL BARIND TRACT
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+
+Highland 30 Dinajpur, Gaibandha, Joypurhat, Bogra,
+
+Medium Highland 55 Naogaon, Sirajganj, Rajshahi and Natore
+districts.
+
+Choneing pation ve a Nutrient all “hay.
+Season Crop (t/ha) N | P| K | S | Mg! Zn} B | Mo dune or er
+Rabi Boro rice 7.5+0.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Boro rice 7.5+0.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50|} 90 10 35 8 - 1.0 - - - -
+Rabi Boro rice 7.5+0.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 T. Aus rice 4.040.40 | 75 10 25 6 - 0.6 - - - -
+Kharif 2 T. Aman rice | 5.040.50|} 90 10 35 8 - 1.0 - - - -
+Rabi Boro rice 7.5+0.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 GM - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50| 65 10 35 8 - 1.0 - - - -
+Rabi Wheat 4.540.45 | 120 30 60 10 30 13 0.6 - - -
+Kharif 1 Jute (O) 4.5+0.45 | 111 10 42 9 - - - - - -
+Kharif 2 T. aman rice 5.040.50 | 90 10 35 8 - 1.0 - - - -
+Rabi Wheat 4.540.45 | 120 30 60 10 30 13 0.6 - - -
+Kharif 1 T. Aus rice 4.040.40 | 75 10 25 6 - 0.6 - - - -
+Kharif 2 T. aman rice 5.040.50| 90 10 35 8 - 1.0 - - - -
+Rabi Wheat 4.540.45 |} 120 30 60 10 30 13 0.6 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. aman rice 5.040.50 | 90 10 35 8 - 1.0 - - - -
+Rabi Potato 3043.00 | 135 30 90 10 - 2.0 0.8 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 30 8 - 1.0 - - - -
+Rabi Maize 10.0£1.0) 255 75 80 36 10 2.0 1.4 - - -
+Kharif 1 T. Aus 4.040.40 | 75 10 20 6 - 0.6 - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 30 8 - 1.0 - - - -

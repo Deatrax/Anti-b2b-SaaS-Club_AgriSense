@@ -1,0 +1,42 @@
+Yield Goal (Green biomass): 135.0 + 14.0 t/ha/year
+
+GERMAN GRASS
+(Echinocloa crusgalli)
+
+Soil Analysis Nutrient Recommendation (kg/ha/year)
+Interpretation N P K
+Optimum 0-35 0-10 0-11
+Medium 36-70 11-20 12-22
+
+Low 71-105 21-30 23-33
+
+Very low 106-140 31-40 34-44
+Method of application:
+a) Full rate of P and K and half of N should be applied as basal during final land
+
+preparation.
+
+b) The rest half of N should be top dressed after 25 days of sowing/planting.
+
+c) After each cut (at 30 — 40 days intervals), half of the recommended rate of N should be
+topdressed.
+
+DHAL GRASS
+(Hymenachne amplexicaulis)
+
+Yield Goal (Green biomass): 110.0 + 11.0 t/ha/year
+
+Soil Analysis Nutrient Recommendation (kg/ha/year)
+Interpretation N P K
+Optimum 0-50 0-10 0-11
+Medium 51-100 11-20 12-22
+Low 101-150 21-30 23-33
+Very low 151-200 31-40 34-44
+Method of application:
+a) Full rate of P and K and half of N should be applied as basal during final land
+preparation.
+
+b) The rest half of N should be top dressed after 25 days of sowing/planting.
+
+c) After each cut (at 30 — 40 days intervals), half of the recommended rate of N should be
+topdressed.

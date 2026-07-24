@@ -1,0 +1,60 @@
+Appendix-12
+
+Element Symbol Atomic Element Symbol Atomic
+Weight Weight
+Aluminium Al 26.98 Magnesium Mg 24.30
+Boron B 10.81 Manganese Mn 54.94
+Calcium Ca 40.08 Molybdenum Mo 95.94
+Carbon C 12.01 Nitrogen N 14.01
+Chlorine CI 35.453 Oxygen O 16.00
+Cobalt Co 58.94 Phosphorus P 30.98
+Copper Cu 63.55 Potassium K 39.102
+Fluorine F 19.00 Silicon Si 28.09
+Hydrogen H 1.008 Sodium Na 22.99
+Iodine I 126.92 Sulfur S) 32.06
+Iron Fe 55.85 Zinc Zn 65.38
+
+Appendix-13
+
+N x 1.22 = NH;
+P x 2.29 = P,Os
+P,O; x 0.44 =P
+K x 1.20=K,0
+K,0 x 0.83 =K
+
+Ca x 1.40 =
+
+CaO
+
+MgO x 0.60 = Mg
+S x 3.00 = SO,
+SO,* 0.33 =S
+
+HNO; x 0.22 =N
+H3PO, x 0.32 =P
+Ca3(PO,)2 x 0.20 = P
+KCI x 0.52=K
+K,S04 x 0.45 =K
+CaSO, x 0.29 = Ca
+MgCoO; x 0.28 = Mg
+H,SO, x 0.33 =S
+CaSO, x 0.24=S
+
+Some useful conversion factors
+
+1 sqm
+lke
+
+= 1x 10*ha
+= 2.2046 pounds
+
+Kg/ha x 0.892
+Pound/acre x 1.121
+
+258
+
+lha =10,000 sqm
+1Ib  =0.4535 kg
+
+= pound/acre
+= kg/ha

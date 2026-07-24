@@ -1,0 +1,29 @@
+AEZ 28: MADHUPUR TRACT
+
+MAJOR LAND TYPE | PERCENT LOCATION AND EXTENT
+Highland 56 Dhaka, Gazipur, Narshingdi. Narayanganj, Tangail, Dhaka
+Medium Highland 18 and Kishoreganj districts.
+
+Croppine pattern te a Nutrient (eh ‘hay,
+Season Crop (t/ha) N|P | K/ S | Mg} Zn} B | Mo dune ane
+Rabi Boro rice 7.540.75 | 150 20 65 12 - 130 = - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Boro rice 7.540.75 | 150 20 65 12 - 13 = - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50| 90 10 35 8 - 10 - - - -
+Rabi Wheat 4540.45 | 120 30 60 10 30 13 06 = - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50| 90 10 35 8 - 10 - - - -
+Rabi Maize 10.0+1.0 | 255 75 80 36 10 20 14 = - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50| 90 10 30 8 - 10 - - - -
+Rabi Maize 10.0+1.0 | 255 75 80 36 10 20 14 = - - -
+Kharif 1 GM - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50| 65 10 30 8 - 10 - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 25 10 06 - - -
+Kharif 1 Boro rice 7,540.75 | 150 12 55 12 - 1.3 - - - -
+Kharif 2 T. Aman rice | 5.040.50| 90 10 35 8 - 10 - - - -
+Rabi Boro rice 7,540.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 T. Aus rice 4,040.40 | 75 10 25 6 - 06 - - - -
+Kharif 2 T. Aman rice | 5.040.50| 90 10 35 8 - 10 - - - -

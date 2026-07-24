@@ -1,0 +1,26 @@
+AEZ 15: ARIAL BIL
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+
+Medium Lowland 13 Munshiganj and Dhaka districts.
+
+Lowland 73
+
+Cropping pattern ve d Nutrient whe ‘hay,
+Season Crop (t/ha) N | P|K| S |Mg| Zn] B | Mo dune ey
+Rabi Potato 3043.0 | 135 20 100 5 5 20 10 - 5 3
+Kharif 1 Jute (C) 3.540.35 | 75 8 27° 3 - - c c : -
+Kharif 2 Fallow - - - - = c c - - - -
+Rabi Potato 3043.0 | 135 20 100 5 5 20 10 - 5 3
+Kharif 1 T. Aus rice 4.0+0.40 | 75 6 21 3 - 10 - - - -
+Kharif 2 Fallow - - - - = c c - - - -
+Rabi Potato 3043.0 | 135 20 100 5 5 20 10 - 5 3
+Kharif B. Aman rice | 2.5+0.25 | 30 6 14 4 - - c c - -
+Rabi Potato 30.043.0 | 135 20 100 5 5 20 10 - 5 3
+Boro rice 7.540.75 | 150 14 50 6 - 1S - - - -
+
+Kharif 1 Fallow - - - - c c - - - -
+Kharif 2 Fallow - - - - = c c - - - -
+Rabi Boro rice 7.540.75 | 150 20 80 6 - 1S - - - -
+Kharif 1 Fallow - - - - = c c - - - -
+Kharif 2 Fallow - - - - = c c - - - -

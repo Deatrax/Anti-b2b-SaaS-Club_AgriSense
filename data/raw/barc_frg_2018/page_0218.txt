@@ -1,0 +1,16 @@
+Cropping pattern . Nutrient Recommendation Manure
+ping P ‘eval (kg/ha) (t/ha)
+Season Crop (/vha) | N | P | K | S | Mg| Zn | B | Mo Ds Poultry
+dung manure
+Rabi Radish/ 60+6.0 | 150 45 80 24 - 1.5 - - 5.0 3.0
+Cabbage/ 90+9.0 | 180 66 50 24 - 1.5 1.0 - 5.0 3.0
+Cauliflower 30.043.0 | 120 60 76 21 - 1.5 1.0 - 5.0 3.0
+Kharif 1 Okra/ 16.0416) 90 21 30 15 - 1.0 - - 5.0 3.0
+Brinjal 60.046.0 | 120 25 42 15 - 1.0 - - 5.0 3.0
+Kharif 2 Fallow - - = = = < = - - - -
+Rabi Radish/ 60+6.0 | 150 45 80 24 - 1.5 - - 5.0 3.0
+Cabbage/ 90+9.0 | 180 66 50 24 - 1.5 1.0 - 5.0 3.0
+Cauliflower 30.043.0 | 120 60 76 21 - 1.5 1.0 - 5.0 3.0
+Kharif 1 Fallow - - - - - - - - - - _
+Kharif2 = T.Amanrice |5.0+0.50} 90 10 30 12 - 10 - - = =
+a WO reemormne 100410 | 165 55 120 30 10 25 - - | - -

@@ -1,0 +1,15 @@
+Nutrient N P K N) Zn B
+Recommended dose (kg/ha) 135 30 90 10 2.0 1.0
+Supply from manure
+
+(Cowdung @ 5 t/ha) 2° q° IL» : :
+
+Supply from fertilizer 110 22.5 78.5 10 2.0 1.0
+Nutrient N P K N) Zn B
+Recommended dose (kg/ha) 75 10 20 6 1.0 -
+Supply from manure (None) - - - - - -
+Supply from fertilizer 75 10 20 6 1.0 -
+Nutrient N P K N) Zn B
+Recommended dose (kg/ha) 90 10 30 8 1.0 -
+Supply from manure (None) - - - - - -
+Supply from fertilizer 90 10 30 8 1.0 -

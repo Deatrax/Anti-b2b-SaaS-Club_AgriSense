@@ -1,0 +1,13 @@
+Appendix-8
+
+Crop Seed rate Inoculum rate
+(kg/ha) g/kg seed kg/ha
+
+Lentil 30 50 1.5
+Chickpea 50 40 2.0
+Mungbean 30 50 1.5
+Blackgram 30 50 1.5
+Cowpea 40 40 1.6
+Grasspea 50 40 2.0
+Groundnut (shelled) 72 30 2.2
+Soybean 60 20 1.2

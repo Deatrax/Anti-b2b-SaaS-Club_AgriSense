@@ -1,0 +1,29 @@
+GERBERA (Gerbera jamesonii)
+
+(Var. BARI Gerbera-1 and BARI Gerbera-2)
+
+Yield goal: 850,000 — 900,000 flower sticks/ha
+
+f c Manure*
+
+Soil Analysis Nutrient Recommendation (kg/ha) (t/ha) Cocodust
+Interpretation (kg/ha)
+
+N 1p K S CD or PM
+Optimum 0-45 0-20 0-30 0-8
+Medium 45-90 21-40 31-60 9-16
+
+5 3 100
+
+Low 91-135 41-60 61-90 17-24
+Very low 136-180 | 61-80 91-120 25-32
+
+*CD: Cowdung PM: Poultry manure
+
+Method of application:
+
+a) All of cowdung, cocodust, P and K should be applied as basal during final land
+preparation.
+
+b) Nitrogen 150 kg/ha should be applied in three equal installments of 30, 60 and 90
+days after planting.

@@ -1,0 +1,22 @@
+Chappe ain Yield Nutrient Recommendation Manure
+foal (kg/ha) (t/ha)
+Season Crop (t/ha) N | P| K |] S |Mg] Zn | B | Mo dune ae
+Rabi Maize 10.041.0 | 255 75 80 36 10 20 14 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 30 8 - 10 = =- - - -
+Rabi Onion 16.041.6} 90 45 80 20 - 20 14 - 3 2
+Kharif 1 T. Aus rice 4.040.40 | 75 10 20 6 - 06 - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 30° 8 - 10 = - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 25 10 06 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 30 8 - 10 = - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 25 10 06 - - -
+Kharif 1 Boro rice 7.540.75 | 150 12 55 12 - 13 - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 35 8 - 10 = =- - - -
+Rabi Cabbage/ 9049 180 66 50 16 - 15 10 - 5 3
+Tomato 8048.00 } 135 45 50 10 - 10 10 - 5 3
+Kharif 1 T. Aus rice 4.0+40.40 | 75 10 25 6 - 06 - - - -
+Kharif 2 T. Aman rice | 5.040.50} 90 10 35 8 - 10 = - - - -
+Round the — sugarcane 100410 | 165 55 120 30 20 25 - - | - -
+
+year

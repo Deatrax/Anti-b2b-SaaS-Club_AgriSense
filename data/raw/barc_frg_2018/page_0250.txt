@@ -1,0 +1,37 @@
+c i Nutrient Recommendation
+Land and soil _|Cropping pattern a (kg/ha) cD
+h teristi t/h
+eee eeeetseS | Season Crops (ha) | N | P| K|S |Mg| Zn| B (ha)
+Rainfed Kharff-II | Jute 1.0
+highland (seed)
+AEZ: 11a, 19 4 + 180 | 26 | 33 | 20} 0 0. 0 0.
+Radish 16.0
+Sowing time : Mid September
+Spacing (jute) : 30cm x 10cm
+Nutrient : 45 kg N at 20 DAE, 45 kg N at 35 DAE
+c i Nutrient Recommendation
+Land and soil |Cropping pattern er (kg/ha) cD
+h teristi t/h
+enemas Season Crops (t/ha); N| P| K| S | Mg*| Zn | B (t/ha)
+Medium Rabi Groundnut |1.60-
+highland (100%) /1.80
+AEZ: 3, 11, 13 + + 50 |30}50) 20} 10 | 2.0 |1.0) -
+Kaon (25%) |0.50-
+0.70
+*Meg for AEZ 3 only
+Sowing time : Mid February to Mid March
+Sowing method : Groundnut 25cm x 10cm (100%), broadcast Kaon (25%)
+Nutrient : As basal
+c i Nutrient Recommendation
+Land and soil |Cropping pattern a (kg/ha) CD
+h teristi t/h
+caannaeeanaiaai Season |Crops (t/ha)| N | P| K|S |Mg| Zn} B (tha)
+High & medium |Rabi —|Groundnut 1.4-
+Highland AEZ: (100%) 1.5
+12, 13, 26, 28 4° a 60 |45/50/30} - | 2.0] 1.0] -
+Onion/Garlic | 4.0
+(33%)
+Sowing time : November to December
+Sowing method : Groundnut spacing: 40cm x 10cm, in between 2 normal groundnut
+rows, two rows of onion/garlic (10cm x 5cm) can be planted
+Nutrient : All basal except 2/3rd N at 20 & 40 DAS

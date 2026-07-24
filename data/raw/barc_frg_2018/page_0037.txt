@@ -1,0 +1,58 @@
+Major Soil | Soil Nutrient status
+
+Fand | pH |OM) n | p | x | s [calm
+
+Type a g| Zn B Mo
+Medium
+
+Highland |4.5-7.8 |L-M| VL-L | VL-L|L-Opt| L-M | Opt | Opt | L-M | L-Opt | Opt
+(24%)
+
+Medium
+
+Lowland |5.4-7.6 |L-M| VL-L | VL-L|L-Opt| L-M | Opt | Opt | L-M | L-Opt | Opt
+(33%)
+
+Ot 5.6-6.7 |L-M| VL-L | VL-L|L-Opt| L-M | Opt | Opt | L-M | L-Opt | Opt
+
+AEZ 20: Eastern Surma-Kushiyara Floodplain
+
+This region occupies the relatively higher parts of the Surma-Kushiyara Floodplain formed
+on sediments of the rivers draining into the Meghna catchment area from the hills. The
+area is mainly smooth, broad ridges and basins.
+
+This area is occupied by grey, heavy silty clay loams on the ridges and clays in the basins.
+Non-calcareous Grey Floodplain soils are the only General Soil Types. Organic matter
+content of the soil is low to medium. Soil reaction ranges from very strongly acidic to
+neutral. Levels of CEC and Zn are medium. The status of N and P is very low to low and
+K and B are low to medium.
+
+Major Soil | Soil Nutrient status
+
+Land pH |OM
+
+Type N P K S Ca Mg Zn B Mo
+Medium
+
+Highland |4.4-7.1 | L-M| VL-L| VL-L|L-M|L-M|M-Opt|M-Opt| M |L-M| M
+(25%)
+
+Medium
+
+Lowland |4.7-6.1 | L-M| VL-L|VL-L|L-M|L-M|M-Opt|M-Opt] M |L-M| M
+(20%)
+
+re 4.2-7.7| L-M | VL-L| VL-L|L-M|L-M|M-Opt|M-Opt} M |L-M| M
+
+AEZ 21: Sylhet Basin
+
+The region occupies the lower, western side of the Surma-Kushiyara Floodplain. The area
+is mainly smooth, broad basins with narrow rims of higher land along rivers. Relief is
+locally irregular near the rivers. The difference in elevation between river banks and
+adjoining basin centers is 1 - 2 meter or more.
+
+Soils of the area are grey silty clay loams and clay loam in the higher parts that dry out
+seasonally and grey clays in the wet basins. Non-calcareous Grey Floodplain soils and
+Acid Basin Clays are the major components of the General Soil Types. The soils have
+medium level of organic matter and soil reaction is mainly slightly acidic in top soil.
+Fertility level is medium to high with very low to low N and P contents.

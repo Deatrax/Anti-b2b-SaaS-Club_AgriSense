@@ -1,0 +1,43 @@
+soil. This is called green leaf manure. Green manure adds substantial quantities of organic
+matter and nitrogen to soils.
+
+Any herbaceous plant may be used for green manuring, but plants of the leguminosae
+family are preferred because of the added advantage of getting fixed nitrogen. The
+common GM plants include dhaincha (Sesbania aculeata), African dhaincha (S. rostrata),
+sunhemp (Crotalaria juncea), cowpea, mungbean, blackgram etc. The crops should be
+ploughed down when the plants are 40-50 days old. Rhizobial inoculation would be useful
+to obtain higher biomass in a given period of time over uninoculated legumes. Dhaincha
+needs to be incorporated to soil within a week before T. Aman rice planting. A green
+manure crop may add 10 - 15 ton biomass (fresh weight) per hectare and 60-120 kg N/ha
+to the soil. Azolla (water fern) can also be used as a green manure in Boro rice field.
+
+6.3 Integrated Plant Nutrition System
+
+The basic concept of Integrated Plant Nutrition System (IPNS) is ‘the management of all
+available plant nutrient sources, organic and inorganic, to provide optimum and
+sustainable crop production conditions within the prevailing farming system”. Therefore
+the IPNS approach refers to an appropriate combination of mineral fertilizers, organic
+manures, crop residues, composts, N-fixing crops and bio-fertilizers taking into account of
+the local ecological conditions, land use systems and the individual farmer’s social and
+economic conditions. In the IPNS practice it is important to consider the cropping pattern,
+not the single crop. Manure or fertilizer alone can not sustain soil fertility and crop yield
+over time, their combination (i.e. IPNS) is essential for sustenance.
+
+The IPNS based fertilizer requirement can be calculated as follows:
+
+A=B-C
+Where,
+A = Amount of nutrient needed from fertilizer source
+B = Total need of a nutrient for a crop on soil test or AEZ basis
+C = Amount of nutrient supply from manure application
+
+Example: Nutrient recommendation in kg/ha (AEZ basis) for Potato-T. Aus -T. Aman rice
+cropping pattern
+
+AEZ 19: Land type: Medium High Land
+Rainfed/Irrigated: Irrigated
+
+Season | Crop ha) N P Kk N) Zn B
+Rabi Potato 30 135 30 90 10 2.0 1.5
+Kharif-1 | T. Aus rice 4 75 10 20 6 0.6 -
+Kharif-2 | T. Aman rice 5 90 10 30 8 1.0 -

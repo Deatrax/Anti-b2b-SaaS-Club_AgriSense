@@ -1,0 +1,47 @@
+AEZ 12: Low Ganges River Floodplain
+
+The region comprises the eastern half of the Ganges River Floodplain which is low-lying.
+The region has a typical meander floodplain landscape of broad ridges and basins.
+
+Soils of the region are silt loams and silty clay loams on the ridges and silty caly loam to
+heavy clays on lower sites. General Soil Types predominantly include Calcareous Dark
+Grey soils and Calcareous Brown Floodplain soils. Organic matter content is low in ridges
+and medium in the basins. Soils are calcareous in nature having neutral to alkaline in
+reaction. General fertility level is low to medium, CEC and K status is medium to
+optimum and the Zn status is low to medium.
+
+Major Soil | Soil Nutrient status
+
+Land H /OM
+
+Type p N P K S Ca Mg |Zn| B | Mo
+ae 6.6-8.2 |L-M| VL-L| VL-L| L-M | VL-L | M-Opt | M-Opt |L-M| VL-L | Opt
+Medium
+Highland |6.1-8.2 |L-M] VL-L| VL-L| M-Opt| VL-L | M-Opt | M-Opt |L-M| VL-L | Opt
+(29%)
+Medium
+Lowland |5.8-8.1 |L-M|VL-L| VL-L|M-Opt} L-M | M-Opt | M-Opt |L-M| VL-L | Opt
+(31%)
+a 5.9-7.6 | M | VL-L] VL-L|M-Opt] L-M | M-Opt) M-Opt |L-M| L-M | Opt
+
+AEZ 13: Ganges Tidal Floodplain
+
+This region occupies an extensive area of tidal floodplain land in the south-west of the
+country. The grater part of this region has smooth relief having large areas of salinity.
+
+There is a general pattern of grey, slightly calcareous, heavy soils on river banks and grey to
+dark grey, noncalcareous, heavy silty clays in the extensive basins. Non-calacreous Grey
+Floodplain soil is the major component of General Soil Types. Acid Sulphate soils also
+occupy significant part of the area where it is very strongly acidic during dry season. In
+general, most of the topsoils are acidic and subsoils are neutral to slightly alkaline. Soils of the
+Sundarban area are alkaline. General fertility level is high with low to medium organic matter
+content and very high CEC and K status. There are limitations of high exchangeable Na and
+low Ca/Mg ratio. The Zn status is low to medium and the B and S status is medium to optimum.
+
+Major Soil | Soil Nutrient status
+Land H |OM
+Type p N P K N) Ca Mg | Zn B_ | Mo
+Medium
+
+Highland |4.5-8.4 |L-M| L | VL-L|M-Opt| M-Opt |Opt-H| M-Opt |L-M|M-Opt| Opt
+(78%)

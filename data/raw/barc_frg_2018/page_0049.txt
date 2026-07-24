@@ -1,0 +1,47 @@
+Response of a crop to added nutrients depends on soil-crop-climatic variables and
+production practices. In general, most of the soils and crops are responsive to N fertilizers.
+Upland and rabi crops grown under strongly acidic and alkaline soil conditions are more
+responsive to P fertilizers. Oil seed crops and wetland rice are responsive to S fertilizers.
+Sugarcane and tuber crops are more responsive to K fertilizers. Crops grown on light
+textured soils respond more to K fertilizers. Crops grown on the calcareous and saline soils
+respond more to Zn fertilizers. Fertilizer response is more pronounced under irrigated than
+under rainfed conditions. Crops and crop varieties may differ markedly in their
+requirements of different nutrients. Again, soil moisture content may affect the response of
+a crop to fertilizers. Furthermore, fertilizer response of a crop depends on the kinds of
+fertilizers used, and also on the time and methods of fertilizer application.
+
+4.4 Plant Analysis
+
+Plant analysis refers to plant tissue test either in the field or in the laboratory. Plant
+analysis is based on the relationship between nutrients in a plant and nutrient availability
+in the soil. This analysis is done with the following objectives:
+
+e to determine shortage of a nutrient before it shows deficiency symptoms
+
+e to identify hidden hunger or verify the nutrient stress suspected from the visual
+deficiency symptom
+
+e to predict the nutrient supplying capacity of a soil
+
+e to study the relationship between plant nutrient status and crop performance
+
+Fresh tissue test directly in the field is important in diagnosing the nutrient needs of
+growing plants. The nutrient concentration in the cell sap can be a good indication of
+nutrient supply at the time of testing. Tissue tests are rapid and easy to conduct and
+interpret. Plant tissue test kits are inexpensive. The result of this testing kit is categorized
+into low, medium and high nutrient status. However, application of a nutrient to correct its
+deficiency with a tissue test may not be feasible as because (i) the deficiency has already
+caused yield loss, (ii) the crop may not respond to the applied nutrient at a specific growth
+stage, (ii1) climatic conditions may be unfavourable for the crop to get benefit from
+nutrient addition.
+
+Plant analysis in the laboratory is performed on the whole plant or specific plant parts (e.g.
+roots, stems, leaves). After sampling, the plant material is dried, ground, and the nutrient
+content is determined following wet digestion with concentrated acid or dry ashing in a
+high- temperature oven.
+
+Growth stage is important in plant analysis because nutrient status as well as demand vary
+with the stage of crop growth. Nutrient concentration in vegetative parts usually decreases
+with maturity. In most crops the two best sampling times coincide with peak periods of
+dry matter and plant nutrient accumulation. The first peak occurs during the maximum
+vegetative growth stage and the second peak during the reproductive stage. Generally, the

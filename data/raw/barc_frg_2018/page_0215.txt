@@ -1,0 +1,10 @@
+Nutrient Recommendation
+
+Manure
+
+Cropping pattern ve (kg/ha) (t/ha)
+Season {Crop (t/ha) N|]}P/}K | S | Mg} Zn | B | Mo Di Poultry
+dung manure
+Rabi Potato 30.043.00} 135 30 90 10 5 20 10 - 5.0 3.0
+Kharif1 Jute (O) 4540.45 | 111 10 32 9 - - - - -
+Kharif2 Fallow - - - - - - - - - - -
