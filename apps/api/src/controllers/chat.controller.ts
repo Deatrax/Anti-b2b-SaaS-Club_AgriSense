@@ -13,7 +13,7 @@ export const postChatSchema = z.object({
   message: z.string().min(1),
 });
 
-function selectModel(): LanguageModel {
+export function selectModel(): LanguageModel {
   try {
     return primaryModel();
   } catch (err) {

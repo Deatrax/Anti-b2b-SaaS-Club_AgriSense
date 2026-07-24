@@ -37,6 +37,11 @@ const schema = z.object({
   // bdapps OTP (§6 of the API guide) — same app credentials as CaaS above, same
   // simulated-by-default pattern (bdapps whitelists by IP; live needs a provisioned IP).
   OTP_MODE: z.enum(['simulated', 'live']).default('simulated'),
+
+  // SMS channel adapter (Plan B) — shared secret with the farmer-sms-webhook repo (Plan A).
+  // Same env var name on both sides by agreement; optional so the scaffold still boots
+  // without it, but /agent/sms rejects every request until it's set (fail closed).
+  AGENT_WEBHOOK_SECRET: z.string().optional(),
 });
 
 export const env = schema.parse(process.env);
