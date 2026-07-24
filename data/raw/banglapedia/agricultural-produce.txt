@@ -1,0 +1,690 @@
+Agricultural Produce
+Commodities produced through different farm operations including
+CROPs
+, Forests,
+FISHERIES
+, and
+LIVESTOCK
+. Bangladesh produces numerous agricultural crops such as-
+CEREALs
+,
+FIBREs
+,
+PULSEs
+, Oilseeds,
+SUGARCANE
+, Root and Tubers,
+SPICEs
+and Condiments, Narcotic crops, Fodder crops,
+V
+EGETABLEs
+,
+FRUITs
+, Sericulture crops etc. Agriculture represented a share of about 23 percent of the GDP out of which Crops represented 3.37, Livestock 2.95, Fisheries 5.00 and Forestry 1.68 percent during' 2005-2006. Important crops, livestock, fisheries, and forestry of the country will be discussed in the following paragraphs:
+
+ফসল | ১৯৭০-১৯৭১ | ১৯৮০-১৯৮১ | ১৯৯০-১৯৯১ | ২০০০-২০০১ | ২০০৫-২০০৬
+জমি | উৎপাদন | জমি | উৎপাদন | জমি | উৎপাদন | জমি | উৎপাদন | জমি | উৎপাদন
+আউশ (স্থানীয়) | ৩১৬০ | ২৭৫৭ | ২৬২৭ | ২২১৪ | ১৭৪৪ | ১৬৩০ | ৮৬০ | ৯৮১ | ৫১৮ | ৬৬৪
+আউশ (উফলী) | ৩২ | ১০৬ | ৪৮৬ | ১০৭৫ | ৩৬৮ | ৬৯৮ | ৪৬৬ | ৯৩৫ | ৫১৭ | ১০৮১
+আমন (স্থানীয়) | ৫৬৬২ | ৫৭০০ | ৫০৭৮ | ৫৯০৩ | ৩৮১২ | ৪৯২০ | ২৭৮৪ | ৪৩১১ | ২২৩৬ | ৩৩০৫
+আমন (উফলী) | ২৫৩ | ২১২ | ৯৬২ | ২০৬১ | ১৯৬৬ | ৪২৪৭ | ২৭৯৮ | ৬৯৩৮ | ৩১৯৫ | ৭৫০৫
+বোরো (স্থানীয়) | ৬৩৫ | ১০০৫ | ৪১৪ | ৬৪০ | ২৮২ | ৪০৭ | ২০২ | ৩৬৭ | ১৭৪ | ৩৪৭
+বোরো (উফলী) | ৩৪৭ | ১১৮৭ | ৭৪৭ | ১৯৯০ | ২২৬৭ | ৫৯৫০ | ৩৫৬২ | ১১৪১২ | ৩৮৯৪ | ১৩৬২৮
+ধান মোট | ১০০৮৯ | ১০৯৬৭ | ১০৩১৪ | ১৩৮৮৩ | ১০৪৩৯ | ১৭৮৫২ | ১০৬৭২ | ২৪৯৪৪ | ১০৫৩৪ | ২৬৫৩০
+গম | ৩১১ | ১১০ | ৫৯১ | ১০৭৫ | ৫৯৯ | ১০০৪ | ৭৭৩ | ১৬৭৩ | ৪৭৯ | ৭৩৫
+অপ্রধান দানাশস্য | ১৪৫ | ১০৭ | ১১২ | ৭৮ | ১১১ | ৮১ | ৫৬ | ৫০ | ১০০ | ৫২৪
+ডাল | ৩৭২ | ২৯৬ | ৩২৬ | ২১১ | ৭২৮ | ৫২৩ | ৪৭৪ | ৩৬৬ | ৩৩৭ | ২৭৯
+তৈলবীজ | ৩৩৪ | ২৭৪ | ২৬৩ | ১৬৬ | ৪৬১ | ৩১৮ | ৪২১ | ৩৮৫ | ৩০২ | ৫৯৫
+পাট | ৮৯১ | ১১৯১ | ৬৩৫ | ৮৯৭ | ৫৮৪ | ৯৬২ | ৪৪৮ | ৮২১ | ৪০২ | ৮৩৮
+তুলা | ৭ | ২ | ৮ | ২ | ১৯ | ৮ | ১৬ | ৬ | ১১ | ১৬
+আখ | ১৬৪ | ৭৫৯৮ | ১৪৯ | ৬৬০০ | ১৯১ | ৭৬৮২ | ১৬৯ | ৬৭৪২ | ১৫৩ | ৫৫১১
+মূল ও কন্দ | ১৬০ | ১৬৬৮ | ১৭০ | ১৬৭৬ | ১৭৪ | ১৭২০ | ২৮৮ | ৩৫৭৩ | ৩৩৫ | ৪৪৬৯
+মসলা/সুগন্ধি | ১৬৪ | ৩৭৭ | ১৪৪ | ২৪০ | ১৪৭ | ৩১৯ | ২৫৩ | ৩৯৪ | ৩২১ | ১১৮২
+তামাক | ৪৪ | ৩৯ | ৫১ | ৪৮ | ৩৮ | ৩৪ | ৩০ | ৩৭ | ৩২ | ৪৩
+চা | ৪৫ | ৩১ | ৪৫ | ৩৮ | ৪৮ | ৪৭ | ৪৯ | ৬৩ | ৫৩ | ৬৪
+শাকসবজি | ১৩১ | ৯৩১ | ১৩৬ | ৯৮৭ | ১৭৮ | ১০৫৫ | ৩১৭ | ৪৬৪৭ | ৪৫৫ | ৫৯৫২
+ফল | ১৩৫ | ১২০৬ | ১৮৭ | ১৪৪৮ | ২০৭ | ১৫০৯ | ১৯২ | ১৫৬০ | ২৪০ | ২৯৪৭
+
+উৎস
+বিবিএস, ১৯৭২, ১৯৮২, ১৯৯২, ২০০২ এবং ২০০৭।
+
+Cereal crops
+Of cereal crops, Rice covers about 80 percent of the cropped area with an annual production of 26.53 million m tons from 10.53 million ha of land, accounts for about 75 percent of the value of crop output. Rice constitutes about 95 percent of the total cereal grains produced in the country. From 1970-71 to 2005-06, rice production has increased by 142 percent due to introduction of high yielding varieties (HYV) and hybrid, consequently rice growing area also increased by about 6 percent. The expansion of HYV rice in Aus season was very slow and much less than Aman and Boro crops. Boro crop usually covers land for Aus crop and hence Aus crop area diminished. From a level of 6 percent area in 1970-71, HYV rice expanded to 21 percent in 1980-81 which further increased to 44 percent in 1990-91, 64 percent in 2000-01 and later increased to about 70 percent. This was possible because of the rapid expansion of the irrigated area. The yield potential of existing HYV's of rice is more than 4 mt ha-1, whereas, the average yield of most other varieties of rice is around 2.50. mt ha-1.
+
+rice
+is largely grown under different land situations varying from hill slopes to river beds. In some areas, only one rice crop is grown in any one field. Rice is grown largely in rotation with Jute, pulses, oilseeds, vegetables, wheat, barley etc. Sugarcane also follows rice in some places. There are three main types of rice crop grown which are seasonally and topographically classified as i. Aus, ii. Aman and iii. Boro.'
+
+i. Aus is cultivated in an area of 1.03 million ha and represents 6.58 percent of the total rice produced. It is usually sown in broadcast but in some limited areas. Aus is transplanted in April-May and harvested in July-August.
+
+ii. Aman represents 52 percent in area and about 41 percent in production of the total rice grown in the country. It has a life cycle of 120 to 270 days. Transplanted Aman is planted in July-August and harvested during November-January. Broadcast Aman is grown in low lying areas, where monsoon water stands more than 1.5 metres in height and may reach as high as 3.0-3.5 metres or higher. Seeds are sown during March-April and harvested during November-December.
+
+iii. Boro is grown over an area of about 4.07 million ha and represents about 53% percent of all rice grown. This crop is usually transplanted in very low lying areas like `haors', river beds, `beels', etc. Boro is also grown in places where irrigation facilities are available. Transplantation is done during November-December while the crop is harvested during March-April. Per hectare yield of boro crop is generally higher than other rice crops. Production largely depends on irrigation facilities.
+
+Table
+Area and production of major crops by decade.
+
+Crops
+
+1970-1971
+
+1980-1981
+
+1990-1991
+
+2000-2001
+
+2005-2006
+
+Area
+
+Production
+
+Area
+
+Production
+
+Area
+
+Production
+
+Area
+
+Production
+
+Area
+
+Production
+
+(‘000ha)
+
+(‘000 mt)
+
+(‘000ha)
+
+(‘000 mt)
+
+(‘000ha)
+
+(‘000 mt)
+
+(‘000ha)
+
+(‘000 mt)
+
+(‘000ha)
+
+(‘000 mt)
+
+Rice
+
+Aus (Local)
+
+3160
+
+2757
+
+2627
+
+2214
+
+1744
+
+1630
+
+860
+
+981
+
+518
+
+664
+
+Aus (HYV)
+
+32
+
+106
+
+486
+
+1075
+
+368
+
+698
+
+466
+
+935
+
+517
+
+1081
+
+Aman (Local)
+
+5662
+
+5700
+
+5078
+
+5903
+
+3812
+
+4920
+
+2784
+
+4311
+
+2236
+
+3305
+
+Aman (HYV)
+
+253
+
+212
+
+962
+
+2061
+
+1966
+
+4247
+
+2798
+
+6938
+
+3195
+
+7505
+
+Boro (Local)
+
+635
+
+1005
+
+414
+
+640
+
+282
+
+407
+
+202
+
+367
+
+174
+
+347
+
+Boro (HYV)
+
+347
+
+1187
+
+747
+
+1990
+
+2267
+
+5950
+
+3562
+
+11412
+
+3894
+
+13628
+
+Rice total
+
+10089
+
+10967
+
+10314
+
+13883
+
+10439
+
+17852
+
+10672
+
+24944
+
+10534
+
+26530
+
+Wheat
+
+311
+
+110
+
+591
+
+1075
+
+599
+
+1004
+
+773
+
+1673
+
+479
+
+735
+
+Minor cereals
+
+145
+
+107
+
+112
+
+78
+
+111
+
+81
+
+56
+
+50
+
+100
+
+524
+
+Pulses
+
+372
+
+296
+
+326
+
+211
+
+728
+
+523
+
+474
+
+366
+
+337
+
+279
+
+Oilseeds
+
+334
+
+274
+
+263
+
+166
+
+461
+
+318
+
+421
+
+385
+
+302
+
+595
+
+Jute
+
+891
+
+1191
+
+635
+
+897
+
+584
+
+962
+
+448
+
+821
+
+402
+
+838
+
+Cotton
+
+7
+
+2
+
+8
+
+2
+
+19
+
+8
+
+16
+
+6
+
+11
+
+6
+
+Sugarcane
+
+164
+
+7598
+
+149
+
+6600
+
+191
+
+7682
+
+169
+
+6742
+
+153
+
+5511
+
+Roots and tubers
+
+160
+
+1668
+
+170
+
+1676
+
+174
+
+1720
+
+288
+
+3573
+
+335
+
+4469
+
+Spices and condiments
+
+164
+
+377
+
+144
+
+240
+
+147
+
+319
+
+253
+
+394
+
+321
+
+1182
+
+Tobacco
+
+44
+
+39
+
+51
+
+48
+
+38
+
+34
+
+30
+
+37
+
+32
+
+43
+
+Tea
+
+45
+
+31
+
+45
+
+38
+
+48
+
+47
+
+49
+
+63
+
+53
+
+64
+
+Vegetables
+
+131
+
+931
+
+136
+
+987
+
+178
+
+1055
+
+317
+
+4647
+
+455
+
+5952
+
+Fruits
+
+135
+
+1206
+
+187
+
+1448
+
+207
+
+1509
+
+192
+
+1560
+
+240
+
+2947
+
+Source
+Bangladesh Bureau of Statistics, 1972, 1982, 1992, 2002 and 2007.
+
+Wheat
+(
+Triticum aestivum
+) is the second most important food crop of the country. The area and production of wheat has increased from 0.3 million ha in 1970-71 to 0.8 million ha in 2000-01, which further decreased to 0.5 million ha in 2005-2006. Present production is about 1.0 million m tons. Recently, the consumption of wheat has greatly increased due to multivarious use as well as shortage of rice.
+
+Maize and other cereals
+Maize (
+Zea mays
+) is now considered as a substitute for both rice and wheat since it can be grown in the country at any time of the year if irrigation is available in dry season and drainage facility can be provided during the rainy months. The present yield potential is about 5 mt ha-1. In addition to maize, other cereals such as Barley (
+Hordeum vulgare
+), Cheena (
+Panicum miliaceum
+), Kaon (
+Setaria italica
+), and Jowar (
+Sorghum vulgare
+) have considerable importance as supplementary food, cattle feed, poultry feed, and industrial raw material.
+
+Fibre crops
+Jute constitutes the principal fibre and the cash crop of the country. The area and production of jute was 0.90 million ha and 1.19 million m tons in 1970-71, which comes to 0.40 million ha and 0.84 million m tons in 2005-2006. Annually about' 16 percent of export earning come from row-Jute and Jute product. Bangladesh grows two different kinds of jute viz.
+Corchorus olitorius
+(tosa jute) and
+C. capsularis
+(white jute). Tosa jute is generally of light golden colour and white jute is generally white in colour. White jute is grown in low lands, sown in March-April and harvested in July-August and tosa jute is grown in medium lands, sown in April-May and harvested in August-September.
+
+Some fibre crops, Mesta (
+Hibiscus sabdariffa
+) and Kenaf (
+Hibiscus cannabinus
+) are also grown for fibre production. These crops do not require much attention for cultivation.
+
+Sunhemp (
+Crotolaria juncea
+) is cultivated for fibre as well as a green manure crop. It can be grown in both Rabi and Kharif seasons. Its fibre is stronger than that of jute and is used for making rope, fishing-net, canvas etc.
+
+Cotton (
+Gossypium
+species) is the second most important fibre crop of Bangladesh. The area and production of cotton has gone up from 7,000 ha and 2,000 m tons in 1970-71 to 16,000 ha and 6,000 m tons in 2000-01 and later on decreased to 11,000 ha and 6,000 m tons in 2005-06. The yield of seed cotton per hectare has reached a reasonably high level, yet the yield of cotton in the country is low compared to world standards. It can be cultivated both in rabi and kharif seasons. In kharif it requires 10 to 11 months while in Rabi, the period may be reduced to 6 to 7 months with slight decrease in yield. However, in winter number of short durated cotton verities are cultivated.'
+
+Pulse crops
+It constitutes the major source of protein of the common people of Bangladesh. The pulses of Bangladesh are Lentil (
+Lens esculenta
+), Khesari (
+Lathyrus sativus
+), Black Gram (
+Vigna radiata
+), Mungbean (
+Phaseolus aureus
+), Chickpea (
+Cicer aritienum
+), Pea (
+vigna radiata
+) and Pigeonpea (
+Cajanus cajan
+). Cowpea (
+Vigna unguiculata
+) grows well in the Chittagong area. Soybean (
+Glycin max
+) cultivation is very limited in the country, either as a pulse or as oilseed. Presently pulse are cultivated about 0.34 million hectares of land with a production of 0.28 million m tons.
+
+Oilseed crops
+Of the various oil seed crops grown in the country, Rapeseed- Mustard, Sesame, Groundnut, Sunflower, Safflower Niger and Coconut are edible, and Linseed and castor are nonedible. Coconut oil is not yet commercially used as edible oil in Bangladesh. Rapeseed and Mustard (
+Brassica
+species) are the principal oilseed crops; they are grown in winter and mature within 3 to 4 months. These crops occupy more than 0.22 million ha of land and constitute about 72 percent of the area under oilseed crops. Sesame or Til (
+Sesamum indicum
+) is grown in 0.031 million ha of land. About 0.04 million mt tons of sesame was produced in two seasons (summer and winter). Groundnut (
+Arachis hypogea
+) oil is more nutritious than rapeseed and mustard oil. Per hectare production of groundnut is higher than that of rapeseed and mustard. About 0.03 million ha are used for groundnut cultivation and the annual production is about 0.04 million m tons. The crop is grown in both Rabi and Kharif seasons. Sunflower (
+Helianthus annuus
+), Safflower (
+Carthamus tinctorius
+) and Niger (
+Guizotia abyssinica
+) are grown in a very small scale. These crops produce quality oil in comparison to rapeseed and mustard. Coconut (
+Cocos nucifere
+) is grown in 0.04 million ha of land with a production of 0.091 million m tons. The crop is treated as a homestead fruit crop and the fruits are extensively used as a drink in their green stage. Its use as edible oil is not at all popular. The oil is, however, largely used in various cosmetics. Linseed (
+Linum usitatissimum
+) and Castor (
+Ricinus communis
+) are grown for varnishing, lubricant and industrial purposes. These crops can be grown in both Rabi and Kharif seasons.
+
+Sugar crop
+Sugarcane (
+Saccharum officinarum
+) is an important cash as well as sugar-producing crop of the country. The country produces about 5.51 million m tons of sugarcane in an area of 0.15 million ha. Besides sugarcane, date palm (
+Phoenix sylvestris
+) and palmyra palm (
+Borossus flabellifer
+) are also grown in a very small scale in different parts of the country for molasses production.
+
+Narcotic crop
+Tobacco (
+Nicotiana
+species) grows well in sandy, well-aerated, well drained soils, and in cold weather. It is grown mainly in the greater Kushtia and Rangpur districts as Rabi crop. Tobacco producing area was 0.051 million ha in 1980-81, which has come down to 0.032 million ha in 2005-06. On the basis of uses, tobacco is grouped as i. 'Hooka' tobacco such as 'Motihari' and 'Bhangi', ii. 'Bidi' tobacco such as 'Neponi', iii. Cigarette tobacco such as 'Harisons', and iv. Cigar tobacco such as Sumatra, Manila, etc. Pan or betel leaf (Piper betel) vine and Betel nut (Areca catechu) are also cultivated in plenty as masticatory crops. Many people are addicted to chewing betel leaves along with betel nuts and lime (calcium carbonate).
+
+Beverage crop
+Tea (Camellia sinensis) is the most popular beverage in the country. The crop is grown mostly in Sylhet' district, the other districts having tea plantations are Chittagong, Chittagong Hill Tracts, Comilla and Panchaghar. It has been observed that in last few decades the tea growing area remaind almost static but in present decade the tea growing area in plain land is increasing slowly, subsequently production has been increased. With the introduction of high yielding varieties, quality plantation materials, timely application of inputs, and installation of modern machinery, tea has undergone further improvement. These developments have enabled Bangladesh to compete more effectively with other exporting countries of the world. Coffee (Coffea arabica) is not a popular drink in the country and it is not commercially cultivated. However, experiments have proved that this crop can be grown successfully in Bangladesh.'
+
+Root and tuber crops
+Potato (Solanum tuberosum), a security crop in times of rice0 shortage due to its high carbohydrate content, is also used as a popular vegetable. Since it is a short duration crop, its increased use can reduce the pressure on rice and wheat. The country produces 4.46 million m tons of potato every year. It is a winter crop, grown mostly in the greater Bogra, Rangpur, Mymensingh, Dinajpur, Rajshahi, Comilla, and Dhaka districts.
+
+Sweet potato (Ipomoea batatas) is' a perennial vine with adventitious roots that end in swollen tubers, and is grown mainly in winter in the sandy loam soils, especially by the bank of river. In 2005-06 this crop was grown in 0.034 million ha. It is mostly grown in the greater Rajshahi, Comilla, Sylhet, Dhaka, and Mymensingh districts. Several other kinds of root and tuber crops are also grown in Bangladesh such as cassava (Manihot utilissima) and 'Shak alu' (Pachyrrhizus erosus). Roots of lotus (Nelumbo nucifera) and shaluk (Nymphaea stellata) grown in standing water, are eaten in rural areas.
+
+Vegetable crops
+Vegetables, including greens, are almost unavoidable ingredients in the diet of the people of Bangladesh. In 2005-06 the country produced 5.95 million m tons of vegetables, through which only 20 percent of the requirements could be fulfilled. Vegetables can be broadly classified as winter and summer vegetables. A few vegetables are grown in both the seasons. Many fruits are used as vegetables particularly in their green stage such as Papaya (Carica papaya), banana (Musa paradisica), Jackfruit (Artocarpus heterophyllus) Chalta (Dillenia indica), Jalpai (Elaeocarpus robustus), Mango (Mangifera indica), Futi (Cucumis melo), Pineapple (Ananas sativus) etc. Some species such as Chilli (Capsicum annum), Onion (Allium cepa), Garlic (Allium sativum) etc. are sometimes used as vegetables.'
+
+Winter vegetables are grown in all districts but the important vegetable growing areas are greater Mymensingh, Dhaka, Rangpur, Dinajpur, Rajshahi, Bogra, Comilla, Jessore and Faridpur. In 2005-06, 0.164 million ha were used for their cultivation, and the production was 1.16 million m tons. Numerous vegetables are grown in the winter of which Brinjal (Solanum melongena), bottle gourd (Lagenaria siceraria), radish (Raphanus sativas), country bean (Dolichos lablab) are the most popular. Other popular vegetables are Cabbage (Brassica oleracea var. capitata), Cauliflower (B. oleracea var. gongylodes), Tomato (Lycopersicum esculentum), Knol-khol (B. oleracea var. botrytis), Carrot (Daucus carota), Lettuce (Lactusa sativa), Turnip (Brassica campestris), Spinach (Spinacea oleracea), Pea (Pisum sativam var sativum) etc.
+
+Summer vegetables are grown in small scale in all districts, mostly in homestead areas where no water logging exists. The important summer vegetables are Brinjal, Okra, Sweet gourd, Snake Gourd, Bitter Gourd, Jhinga, Cucumber, Barbati, several Amaranths, Lalshak (Amaranthus tricolor), and Puishak (Basella alba).
+
+Spices and condiments
+About 0.321 million ha of land are used for the cultivation of spices and condiments; annual production is 1.18 million m tons. Common spices used by the people are Chilli (Capsicum frutescens), Turmeric (Curcuma longa), Ginger (Zingiber officinale), Onion (Allium cepa), Garlic (Allium sativum), Coriander (Coriandrum sativum) and Tejpata (Cinnamomum tamala).
+
+Fruits
+About 2.95 million m tons of fruits are produced in 0.97 million ha of land. Banana, Papays, mango, Pineapple, Litchi, Jackfruit, watermelon, Guava, Kul (Zizyphus jujuba) and Bel (Aegle marmelos) are the most common fruits.
+
+Livestock
+Farm animals constitute the principal source of traction power for agricultural operations in Bangladesh. In addition, Livestock and poultry supply Meat, Milk, Eggs, Hides and Skins, Manure, etc. On the basis of a report prepared by `Livestock Services of Bangladesh', it can be stated that there were about 23 million cattle in 2007-08. The country has about 1.30 million buffaloes, 22 million goats, 2.80 million sheep, 210 million fowls and 40 million ducks. The present production of eggs is about 5650 million, meat and milk is about 1.04 and 2.50 million m tons respectively.'
+
+Fishery
+Bangladesh has vast inland water bodies and in this respect it is one of the richest zones in the sub-continent. The Ganges, the Brahmaputra, the Meghna, the Karnafuli etc. with their tributaries and branches, constitute the most important and productive fresh water fisheries in the country. There is also a large number of `beels', `jheels', haors', `dighis', ponds, etc. Extensive agricultural fields in low-lying areas become fish harbouring sites during the rainy season.
+
+The estimated area of the important fisheries of Bangladesh include: 225 km long coastal area of the Bay of Bengal and other water bodies covering nearly 4.58 million ha. Average annual production of fish is about 2.22 million m tons, these include inland, shrimp and marine fisheries. Annually, about 0.05 million m tons of fishes are exported, including Bagda Chingdi (Penaeus monodon), Hilsa (Tenualosa ilisha), tortoise, turtles, etc.
+
+Forestry
+Bangladesh has about 2.60 million ha of land under forest, of which 69.76, 27.41, 0.33, 0.93, 1.43 and 0.15 percent are under reserve forests, unclassed state forests, acquired forests, khasland forests, protected forests, and vested forests respectively. All classes of forestland of the country comprise about 17.50 percent of its total area. The forests are mostly controlled and managed by the government.
+
+Forests provide commercial timbers for building, furniture and general construction. Sal forests produce railway sleepers, posts, etc. The tidal forests are the main sources for supply of fire woods. Gewa of the Sundarbans is used as raw materials of newsprints. Chandraghona paper Mills use Bamboo as raw material. Government forests produce annually about 2.67 million cubic feet timber, 58 million bamboos, 7 million' cubic feet firewood and 0.55 million m tons of Golpata. [Md. Hazrat Ali]'

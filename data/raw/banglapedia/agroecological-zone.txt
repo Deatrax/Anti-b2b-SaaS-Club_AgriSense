@@ -1,0 +1,245 @@
+Agroecological Zone
+land areas recognised on the basis of hydrology,
+physiography
+, soil types, tidal activity, cropping patterns, and
+seasons
+. In fact an agroecological zone indicates an area characterised by homogeneous agricultural and ecological characteristics. This homogeneity is more prominent in the sub region and unit levels. The agroecological zones of Bangladesh have been identified on the basis of four elements such as physiography,
+soils
+, land levels in relation to flooding and agroclimatology. Bangladesh has been tentatively divided into 30 agroecological zones. These 30 zones have been subdivided into 88 agroecological sub-regions, which have been further subdivided into 535 agroecological units.
+
+Physiography forms the primary element in defining and delineating the agroecological regions in Bangladesh. Soils form the second element in defining and differentiating agroecological zones as soil conditions determine important properties for plant growth, moisture supply, root aeration and nutrient supply. The third factor is land level in relation to flooding. In this regard the country has been classified into four types of land level such as highland (land which is above normal flood-level), medium highland (land which normally is flooded up to about 90 cm deep during the
+flood
+season), medium lowland (land which normally is flooded up to between 90 cm and 180 cm deep during the flood season), lowland (land which normally is flooded up to between 180 cm and 300 cm deep during the flood season), very lowland (land which normally is flooded deeper than 300 cm during the flood season). An additional class, bottomland, is recognised for depression sites in any land level class which remains wet throughout the year. The depth limits between the depth of flooding classes are not rigid. Flood levels in an area may vary by as much as a metre or more between different years. They may also reach their peak levels for only a few days at a time during a particular year. These classes actually indicate the level of flooding which farmers expect when they decide which
+crops
+to grow in the kharif season on their different kinds of land, based on their long experience of cultivation on particular sites.
+
+Highland may be suitable for kharif or perennial
+dryland
+crops if the soils are permeable. Impermeable soils or soils which can be made impermeable by
+puddling
+may be suitable for transplanted aus and/or aman paddy if bunds are made to retain rainwater on fields. Medium highland is suitable for crops which can tolerate shallow flooding, such as broadcast or transplanted aus paddy,
+jute
+and transplanted aman paddy. Early kharif dryland crops which mature before flooding starts can be grown on permeable soils, and late kharif and early rabi dryland crops on soils which drain in September-October. Medium lowland is flooded too deeply for transplanted aus or transplanted aman paddy to be grown reliably. Mixed broadcast aus and deepwater aman is a common practice; or long aman seedlings may be transplanted as the floodwater recedes. Dryland rabi crops are widely grown on soils which drain in October or November. Lowland is flooded too deeply for broadcast aus or transplanted aman to be grown. Deepwater aman is typically grown on such land, although the cultivation of irrigated boro paddy on such land in the dry season now precludes the cultivation of deepwater aman over considerable areas of lowland. Dryland rabi crops can only be grown if flood water recedes before December. Very low land generally is too deeply flooded for even deepwater aman to be grown. Bottomland stays too wet for paddy to be sown broadcast. The traditional crop on such land is local boro paddy, either not irrigated or irrigated by traditional low-lift
+irrigation
+devices. In a few other areas where flooding normally does not exceed 1.5m, very long aman paddy seedlings are transplanted early in the
+monsoon
+season. The fourth element considered in identifying agroecological zones in Bangladesh comprises the four climatic zones of the country. The combined agroclimatic zones could be superimposed on the zones and sub-regions to create unique agroecological units.
+
+The Agroecological Zones (AEZ) database is unique and is being extensively used for national and local level production planning purposes. The agroecological resources are increasingly playing an important role in agricultural planning, technology transfer and specific bio-physical resource utilisation programme activities. The database on AEZ, however, needs updating as over time there have been some changes in the land types because of roads and other structural measures, variability in precipitation and
+temperature
+as well as innovation of modern crop cultivation which could survive under different environmental stress conditions. A brief description of 30 AEZ regions is given below:
+
+ID | Zones/Regions | Sub Regions
+1. | Old Himalayan Piedmont Plain | a) North-central; b) Northern; c) Southern
+2. | Active Tista Floodplain | Active Tista Floodplain
+3. | Tista Meander Floodplain | a) Central; b) Eastern; c) Lower Atrai Floodplain; d) Lower Little Jamuna Floodplain; e) North-eastern and Southern North-western; f) Upper Little Jamuna and Middle Atrai Floodplain
+4. | Karatoya-Bangali Floodplain | a) Northern and Central; b) South-western
+5. | Lower Atrai Basin | Lower Atrai Basin
+6. | Lower Punarbhaba Floodplain | Lower Punarbhaba Floodplain
+7. | Active Brahmaputra-Jamuna Floodplain | Active Brahmaputra-Jamuna Floodplain
+8. | Young Brahmaputra and Jamuna Floodplain | a) High Jamuna Floodplain; b) Upper Brahmaputra Floodplain; c) Upper Brahmaputra-Jamuna Floodplain
+9. | Old Brahmaputra Floodplain | a) Bansi Valley; b) High; c) Low; d) Medium High; e) Medium Low
+10. | Active Ganges Floodplain | Active Ganges Floodplain
+11. | High Ganges River Floodplain | a) Central and Southern; b) Ganges-Mahananda Floodplain; c) Northern
+12. | Low Ganges River Floodplain | a) Central; b) Eastern
+13. | Ganges Tidal Floodplain | a) Khulna Sundarban; b) Nonsaline, calcareous; c)Nonsaline, calcareous and non-calcareous; d) Nonsaline, noncalcareous; e) Saline, Acid Sulphate Soils; f) Saline, calcareous and noncalcareous; g) Saline, noncalcareous
+14. | Gopalganj-Khulna Beels | Beel centres
+15. | Arial Beel | Arial Beel
+16. | Middle Meghna River Floodplain | Middle Meghna River Floodplain
+17. | Lower Meghna River Floodplain | a) Calcareous, flood protected; b) Calcareous, unembanked; c) Noncalcareous, flood protected; d) Noncalcareous, unembanked
+18. | Young Meghna Estuarine Floodplain | a) Nonsaline: Central Bhola; b) Nonsaline: Meghna Estuary Charland; c) Nonsaline: North Bhola; d) Saline: Central Bhola; e) Saline: Noakhali, Hatiya and Meghna Estuary; f) Saline: Sandwip and South Bhola
+19. | Old Meghna Estuarine Floodplain | a) Dhaka-Narayanganj-Demra Project Area; b) High: Old Meghna Estuarine Floodplain; c) Low: Daudkandi-Habiganj; d) Low: Dhaka- Shariatpur-Barisal; e) Low: Eastern Kishoreganj; f) Low: Gopalganj Beels margins; g) Low: Habiganj-North Brahmanbaria; h) Low: Titas Floodplain; i) Medium Low; j) Very poorly drained: Laksham-Begumganj
+20. | Eastern Surma-Kushiyara Floodplain | Eastern Surma-Kushiyara Floodplain
+21. | Sylhet Basin a) | Central and Southern; b) Northern; c) Western
+22. | Northern and Eastern Piedmont Plain | a) Northern and Eastern Basins; b) Northern and Eastern Plains and Basins; c) North-western Plains and Basins; d) South Sylhet Piedmont Plains
+23. | Chittagong Coastal Plain | a) Beach Ridges, Mangrove Swamp and Mud Clay; b) Mangrove Tidal Floodplain; c) Piedmont Plains and River Floodplains; d) Young Tidal Floodplain
+24. | St Martin’s Coral Island | St. Martin’s Coral Island
+25. | Level Barind Tract | a) Highland and Medium Highland; b) Medium Lowland and Lowland
+26. | High Barind Tract | High Barind Tract
+27. | North-eastern Barind Tract | a) Mainly poorly drained; b) Mainly well drained; c) Mixed well drained and poorly drained
+28. | Madhupur Tract | a) Mainly poorly drained level terrace; b) Mainly well drained dissected terrace
+29. | Northern and Eastern Hills | a) Low hills and Piedmont Plains; b) Mainly high hill ranges; c) Mainly low hills
+30. | Akhaura Terrace | Akhaura Terrace
+
+Old Himalayan Piedmont Plain
+(4,008 sq km) this distinctive region is developed in an old Tista alluvial fan extending from the foot of the
+himalayas
+. It has a complex relief pattern. Deep, rapidly permeable sandy loams and sandy clay loams are predominant in this region. They are strongly acidic in
+topsoil
+and moderately acidic in
+subsoils
+; low in weatherable K minerals. Seven general soil types occur in the region, of which non-calcareous brown floodplain soils, black terai soils, and non-calcareous dark grey floodplain soils predominate. Organic matter contents are generally higher than in most
+floodplain
+soils of Bangladesh. The natural fertility of the soil is moderate but well sustained. Soil fertility problems include rapid leaching of N, K, S, Ca, Mg and B. Most of
+panchagarh
+and
+thakurgaon
+districts and the northwestern part of
+dinajpur
+district are included in this zone.
+
+Active Tista Floodplain
+(830 sq km) this region includes the active floodplains of the
+tista
+,
+dharla
+and
+dudhkumar
+rivers. It has complex patterns of low, generally smooth ridges, inter-ridge depressions, river channels and cut-off channels. The area has irregular patterns of grey stratified
+sands
+and
+silts
+. They are moderately acidic throughout and parent alluvium is medium in weatherable K minerals. Four general soil types occur in the region, and of them, non-calcareous alluvium predominates. Organic matter contents and
+soil fertility
+level are low to medium.
+
+Tista Meander Floodplain
+(9,468 sq km) this region occupies the major part of the Tista floodplain as well as the floodplain of the
+atrai
+,
+little jamuna
+,
+karatoya
+, Dharla and Dudhkumar rivers. Most areas have broad floodplain ridges and almost level basins. There is an overall pattern of olive brown, rapidly permeable, loamy soils on the floodplain ridges, and grey or dark grey, slowly permeable, heavy silt loam or silty clay loam soils on the lower land and
+parent materials
+medium in weatherable K minerals. Eight general soil types occur in the region, moderately acidic throughout, low in organic matter content on the higher land, but moderate in the lower parts. Fertility level is low to medium. Soils, in general, have good moisture holding capacity.
+
+Karatoya-Bangali Floodplain
+(2,577 sq km) this region is very similar to the Tista Meander Floodplain in physiography and soil, and comprises a mixture of Tista and
+brahmaputra
+sediments. Most areas have smooth, broad, floodplain ridges and almost level basins. The soils are grey silt loams and silty clay loams on ridges and grey or dark grey clays in basins. Five general soil types occur in the region, of which non-calcareous grey floodplain and non-calcareous dark grey floodplain soils predominate. The soil is moderately acidic throughout. Organic matter contents are generally low in the cultivated layer of ridge soils and moderate in basins. General fertility is medium. The eastern half of
+bogra
+and most of
+sirajganj
+districts are included in this zone.
+
+Lower Atrai Basin
+(851 sq km) this region comprises the low lying area between the
+barind tract
+and the Ganges river floodplain. It includes the
+chalan beel
+area. Dark grey, heavy, acidic clays are predominate in this smooth low-lying basin land. Seven general soil types occur in the region. Organic matter, and status of other essential nutrients are medium, while level of available K (potassium) is high. Fertility status of soils is moderate.
+
+Lower Punarbhaba Floodplain
+(129 sq km) this small region occupies basins and
+beels
+separated by low floodplain ridges. In this area, dark grey, mottled red, very strongly acid, heavy
+clays
+occupy both ridge and basin sites. Organic matter status is medium to high. General fertility level is medium with high K-bearing minerals. The western part of
+naogaon
+and the northern part of
+nawabganj
+districts are included in this AEZ.
+
+Active Brahmaputra-Jamuna Floodplain
+(3,190 sq km) this region comprises the belt of unstable alluvial land along the Brahmaputra-Jamuna rivers where land is constantly being formed and eroded by shifting river channels. It has an irregular relief of broad and narrow ridges and depressions. The area is occupied by sandy and silty alluvium, rich in weatherable K minerals that are slightly alkaline in reaction. Six general soil types occupy the area. Organic matter status is low and fertility status is low to medium.
+
+Young Brahmaputra and Jamuna Floodplain
+(5,924 sq km) the region comprises the area of Brahmaputra sediments. It has a complex relief of broad and narrow ridges, inter-ridge depressions, partially in filled cut-off channels and basin. This area is occupied by permeable silt loam to silty clay loam soils on the ridges and impermeable clays in the basins, neutral to slightly acid in reaction. General soil types include predominantly grey floodplain soils. Organic matter content is low in ridges and moderate in basins. Soils are deficient in N, P, and S but the status of K and Zn are reasonable.
+
+Old Brahmaputra Floodplain
+(7,230 sq km) this region occupies a large area of Brahmaputra sediments before the river shifted to its present
+jamuna
+channel about 200 years ago. The region has broad ridges and basins. Relief is irregular, especially near the old and present river channels. Soils of the area are predominantly silt loams to silty clay loams on the ridges and clay in the basins. Organic matter content is low on the ridges and moderate in the basins, topsoils moderately acidic but subsoils neutral in reaction. General fertility level is low.
+
+Active Ganges Floodplain
+(3,334 sq km) this region occupies unstable alluvial land within and adjoining
+ganges
+river. It has irregular relief of broad and narrow ridges and depressions interrupted by cut-off channels and active channels. The area has complex mixtures of calcareous sandy, silty and clayey alluvium. The general soil types, predominantly include, calcareous, alluvium and calcareous brown floodplain soils. Soils are low in organic matter and mildly alkaline in reaction. General fertility level is medium but deficient in N.
+
+High Ganges River Floodplain
+(13,205 sq km) this region includes the western part of the Ganges river floodplain which is predominantly highland and medium highland. Most areas have a complex relief of broad and narrow ridges and inter-ridge depressions. The upper parts of high ridges stand above normal flood level. Lower parts of ridges and basin margins are seasonally shallowly flooded. General soil types predominantly include calcareous dark grey floodplain soils and calcareous brown floodplain soils. Organic matter content in the brown ridge soils is low but higher in the dark grey soils. Soils are slightly alkaline in reaction. General fertility level is low.
+
+Lower Ganges River Floodplain
+(7,968 sq km) the region comprises the eastern half of the Ganges river floodplain which is low-lying. The area has a typical meander floodplain landscape of broad ridges and basins. Soils of this region are silt loams and silty clay loams on the ridges and silty clay loam to heavy clays on lower sites. General soil types predominantly include calcareous dark grey and calcareous brown floodplain soils. Organic matter content is low in ridges and moderate in the basins. General fertility level is medium.
+
+Ganges Tidal Floodplain
+(17,066 sq km) this region occupies an extensive area of tidal floodplain land in the southwest of the country. The greater part of this region has smooth relief having large areas of salinity. Riverbanks generally stand about a metre or less above the level of adjoining basins. Non-calcareous grey floodplain soil is the major component of general soil types.
+acid sulphate soil
+also occupies a significant part of the area, where it is extremely acidic during the dry season. Most of the topsoils are acidic and subsoils are neutral to mildly alkaline. Soils of the
+sundarbans
+area are alkaline. General fertility level is high, with medium to high organic matter content.
+
+Gopalganj-Khulna Beels
+(2,247 sq km) the region occupies extensive low-lying areas between the Ganges river floodplain and the Ganges tidal floodplain. Soils of the area are grey, and dark grey, acidic, heavy clays overlay
+peat
+or muck at 25-100 cm. General soil types include mainly peat and non-calcareous dark grey floodplain soils. Organic matter content is medium to high. Fertility level is medium.
+
+Arial Beel
+(144 km) this region occupies a low-lying basin between the Ganges and dhaleshwari rivers in the south of the former greater
+dhaka
+district. It has much in common with the lower Atrai Basin and the Gopalganj-Khulna Beels. The soils of this area are dark grey, acidic heavy clays. Non-calcareous dark grey floodplain soil is the chief general soil type. Organic matter content generally exceeds two percent in the top subsoil. Available moisture holding capacity is inherently low. General fertility level is medium to high.
+
+Middle Meghna River Floodplain
+(1,555 sq km) this region occupies an abandoned channel of the Brahmaputra river on the border between the greater Dhaka and
+comilla
+districts. The region includes areas of old Brahmaputra chars within the
+meghna
+river as well as adjoining parts of the mainland. Soils of the area are grey loam on the ridges and grey to dark grey clays in the basins. The dominant general soil type is non-calcareous grey floodplain soil. Topsoils are strongly acidic and subsoils slightly acidic to slightly alkaline. General fertility level is medium with low N and organic matter.
+
+Lower Meghna River Floodplain
+(909 sq km) this area occupies the transitional area between the middle Meghna river floodplain and the young Meghna estuarine floodplain. Soils of this area are relatively uniform, silt loams occupy relatively higher areas and silty clay loams occupy the depressions. Non-calcareous dark grey floodplain and calcareous grey floodplain soils are major components of general soil types. Topsoils are moderately acidic and subsoils neutral in reaction. General fertility level is medium to high with low to medium organic matter status and K-bearing minerals.
+
+Young Meghna Estuarine Floodplain
+(9,269 sq km) this region occupies young alluvial land in and adjoining the Meghna estuary. The major soils are grey to olive, deep calcareous silt loam and silty clay loams, and are stratified either throughout or at shallow depth. Calcareous alluvium and non-calcareous grey floodplain soils are the dominant general soil types. Topsoils and subsoils of the area are mildly alkaline. General fertility is medium but low in N and organic matter.
+
+Old Meghna Estuarine Floodplain
+(7,740 sq km) this region occupies a large area, mainly low-lying land between the south of the Surma-Kushiyara floodplain and the northern edge of the young Meghna estuarine floodplain. Silt loam soils predominate on highlands and silty clay to clay on lowlands. Organic matter content of the soils are moderate. Topsoils are moderately acidic, but subsoils neutral in reaction. General fertility level is medium.
+
+Eastern Surma-Kushiyara Floodplain
+(4,622 sq km) this region occupies the relatively higher parts of the Surma-Kushiyara floodplain formed on
+sediments
+of the rivers draining into the Meghna catchment area from the hills. This area is occupied by grey, heavy silty clay loams on the ridges and clays in the basins. Organic matter content of the soil is moderate. Soil reaction ranges from strongly acidic to neutral.
+
+Sylhet Basin
+(4,573 sq km) the region occupies the lower, western side of the Surma-Kushiyara floodplain. Relief is locally irregular near rivers. Soils of the area are grey silty clay loams and clay loam on the higher parts that dry out seasonally and grey clays in the wet basins. The soils have a moderate content of organic matter and soil reaction is mainly acidic. Fertility level is medium to high.
+
+Northern and Western Piedmont Plains
+(4,038 sq km) this is a discontinuous region occurring as a narrow strip of land at the foot of the northern and eastern hills. The region comprises merging alluvial fans which slope gently outward from the foot of the northern and eastern hills into smooth, low-lying basins. Grey piedmont soils and non-calcareous grey floodplain soils are the major general soil types of the area. Soils of the area are loams to clays, slightly acidic to strongly acidic in reaction. General fertility level is low to medium.
+
+Chittagong Coastal Plain
+(3,720 sq km) this region occupies the plain land in greater
+chittagong
+district and the eastern part of
+feni
+district. It is a compound unit of piedmont, river, tidal and estuarine floodplain landscapes. The major problem in these soils is high salinity during the dry season (October to May). Grey silt loams and silty clay loam soils are predominant. Acid sulphate soils occur in mangrove tidal floodplains. General fertility level of the soils is medium, but N and K are limiting. Organic matter content is low to moderate.
+
+St Martin's Island
+(8 sq km) this small but distinctive region occupies the whole of
+st martin's island
+in the extreme south of the country. The area has very gently undulating old beach ridges and inter-ridge depressions, surrounded by sandy beaches. The soils are developed entirely on old and young
+coral
+beach sands. Calcareous alluvium is the only general soil type of the area. General fertility level is low with poor moisture holding capacity.
+
+Level Barind Tract
+(8 sq km) this region is developed over
+madhupur clay
+. The landscape is almost level. The predominant soils have a grey, silty, puddled topsoil with ploughpan. Shallow grey terrace soil and deep grey terrace soils are the major components of general soil types of the area. The soils are low in available moisture holding capacity and slightly acidic to acidic in reaction. Organic matter status is very low and most of the available nutrients are limiting.
+
+High Barind Tract
+(16 sq km) it includes the southwestern part of the Barind Tract where the underlying Madhupur Clay had been uplifted and cut into by deep valleys. The soils include puddled silt loam to silty clay loam in the topsoils and porous silt with mottled plastic clay at varying depth. Deep grey terrace soils and grey valley soils are major components of the general soil types of the area. General fertility status is low, having low status of organic matter.
+
+North Eastern Barind Tract
+(1,079 sq km) this region occupies several discontinuous areas on the north-eastern margins of the Barind Tract. It has silty or loamy topsoil and clay loams to clay subsoil. The soils are strongly acidic in reaction. Organic matter in the soils is low. General fertility is poor.
+
+Madhupur Tract
+(4,244 sq km) this is a region of complex relief and soils developed over the Madhupur Clay. The landscape comprises level upland, closely or broadly dissected
+terraces
+associated with either shallow or broad, deep valleys. Eleven general soil types exist in the area of which deep red brown terrace, shallow red brown terrace soils and
+acid basin clays
+are the major ones. Soils in the valleys are dark grey heavy clays. They are strongly acidic in reaction with low status of organic matter, low moisture holding capacity and low fertility level.
+
+Northern and Eastern Hills
+(18,171 sq km) this region includes the country's hill areas. Relief is complex. Hills have been dissected to different degrees over different rocks. In general, slopes are very steep and few low hills have flat summits.
+brown hill soils
+is the predominant general soil type of the area. Organic matter content and general fertility level are low.
+
+Akhaura Terrace
+(113 sq km) this small region occupies the eastern border of
+brahmanbaria
+and the southwest corner of
+habiganj
+district. The main soils in the uplands have strong brown clay. The valley soils range from silty clay to clays. Deep red brown terrace soils, grey piedmont soils and acid basin clays are the major components of the general soil types of the area. The general fertility including organic matter status is low. The soils are strongly acidic in reaction. [M Shahidul Islam and Mamunul Haque Khan]
+
+Bibliography
+FAO/UNDP, Land Resources Appraisal of Bangladesh for Agricultural Development Report 2: Agroecological Regions of Bangladesh, FAO/UNDP, 1988; Bangladesh Bureau of Statistics, 1998 Yearbook of Agricultural Statistics, BBS, Dhaka, 1999.

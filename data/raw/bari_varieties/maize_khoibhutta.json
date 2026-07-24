@@ -1,0 +1,17 @@
+{
+  "variety": "Khoibhutta",
+  "crop": "maize",
+  "developer": "Bangladesh Agriculture Research Institute(BARI), Gazipur, Bangladesh",
+  "year_of_release": "1986",
+  "crop_duration_days": null,
+  "season": "Rabi",
+  "planting_time": "Rabi: Mid November to mid December",
+  "harvest_time": "Ripening time require in rabi season 125-130 days and 90-100 days in karif season",
+  "yield_t_ha": "Yeld in rabi season 3.5-4 t/ha and 2.5-3.5 t/ha in karif season",
+  "resistance_notes": null,
+  "main_characteristics": "It is a composite variety of popcorn.  There is a presence of deep anthocyanin and 1 st leaf sheath and medium pigmentation in leaf sheath at 2-leaf stage.Plant height is medium (165-180cm) and ear height 70-80cm. Kernels are small size, 1000 grain weight 140-150 g, kernels are yellow flint type.  Upper portion of leaf is smaller than lower portion,  high poping quality (95%). Intermediate maturing.",
+  "source_url": "https://dhcrop.bsmrau.net/khobhutta-2/",
+  "source_org": "BARI, via BSMRAU Digital Herbarium of Crop Plants",
+  "retrieved_at": "2026-07-24T00:00:00Z",
+  "status": "ok"
+}
