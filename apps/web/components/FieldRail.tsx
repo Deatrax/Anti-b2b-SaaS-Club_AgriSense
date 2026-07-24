@@ -8,8 +8,8 @@ import { SideNav, SideNavHeading, SideNavItem, SideNavSection } from '@astryxdes
 import { Selector } from '@astryxdesign/core/Selector';
 import { Divider } from '@astryxdesign/core/Divider';
 import { Wheat, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
-import { useT } from '../app/providers';
-import type { ApiField, ApiRecentChat } from '../lib/api';
+import { useT, useSession } from '../app/providers';
+import { createField, type ApiField, type ApiRecentChat } from '../lib/api';
 
 const SUB_PAGES = ['overview', 'chat', 'plan', 'money'] as const;
 
@@ -35,6 +35,7 @@ export function FieldRail({
   onAddField?: () => void;
 }) {
   const { t } = useT();
+  const { session } = useSession();
   const router = useRouter();
   const pathname = usePathname() ?? '';
 
@@ -45,6 +46,15 @@ export function FieldRail({
 
   function handleFieldChange(fieldId: string) {
     router.push(`/field/${fieldId}/${subPage}`);
+  }
+
+  /** "New chat" = a fresh field, since Tier 0 is one conversation per field (§3.4) — there's
+   * no separate "chat thread" concept to create. */
+  function handleNewChat() {
+    if (!session?.farmId) return;
+    createField(session.farmId)
+      .then(({ field }) => router.push(`/field/${field.id}/chat`))
+      .catch(() => {});
   }
 
   const subheading = farmDistrict ? [farmDistrict, farmAez != null ? `AEZ ${farmAez}` : null].filter(Boolean).join(' · ') : undefined;
@@ -59,20 +69,21 @@ export function FieldRail({
         <SideNavItem label={t('farm_profile_title')} icon={Building2} isSelected={pathname === '/farm/profile'} href="/farm/profile" />
       </SideNavSection>
 
-      {recentChats && recentChats.length > 0 ? (
-        <SideNavSection title={t('recent_chats_heading')}>
-          {recentChats.slice(0, 5).map((c) => (
-            <SideNavItem
-              key={c.conversationId}
-              label={c.fieldName ?? t('field_unnamed')}
-              icon={MessageCircle}
-              isSelected={pathname === `/field/${c.fieldId}/chat`}
-              href={`/field/${c.fieldId}/chat`}
-            />
-          ))}
+      <SideNavSection title={t('recent_chats_heading')}>
+        <SideNavItem label={t('new_chat')} icon={Plus} onClick={handleNewChat} />
+        {(recentChats ?? []).slice(0, 5).map((c) => (
+          <SideNavItem
+            key={c.conversationId}
+            label={c.fieldName ?? t('field_unnamed')}
+            icon={MessageCircle}
+            isSelected={pathname === `/field/${c.fieldId}/chat`}
+            href={`/field/${c.fieldId}/chat`}
+          />
+        ))}
+        {recentChats && recentChats.length > 0 ? (
           <SideNavItem label={t('all_chats')} icon={MessagesSquare} isSelected={pathname === '/farm/chats'} href="/farm/chats" />
-        </SideNavSection>
-      ) : null}
+        ) : null}
+      </SideNavSection>
 
       <SideNavSection title={t('farm_fields_heading')}>
         {selectedField ? (

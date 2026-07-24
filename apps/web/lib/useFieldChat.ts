@@ -4,10 +4,11 @@
 // sent from any of them behaves identically.
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { StreamEvent } from '@agrisense/shared';
 import { openChatStream } from './sse';
-import type { FeedItem } from './feed';
+import { getFieldChatHistory } from './api';
+import { buildFeedFromHistory, type FeedItem } from './feed';
 
 const CONV_ID = 'live'; // display-only placeholder; the real conversation id lives server-side
 
@@ -24,6 +25,20 @@ export function useFieldChat(fieldId: string) {
   const [isStreaming, setIsStreaming] = useState(false);
   const closeRef = useRef<(() => void) | null>(null);
   const assistantIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setFeed([]);
+    assistantIdRef.current = null;
+    getFieldChatHistory(fieldId)
+      .then((history) => {
+        if (!cancelled) setFeed(buildFeedFromHistory(history.messages, history.traces));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [fieldId]);
 
   const sendMessage = useCallback(
     (message: string) => {

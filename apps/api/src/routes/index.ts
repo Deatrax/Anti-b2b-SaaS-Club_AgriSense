@@ -4,7 +4,7 @@ import { validate } from '../middleware/validate.middleware';
 import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../controllers/auth.controller';
 import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.controller';
 import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats } from '../controllers/farm.controller';
-import { getField, getFieldPlan, createField, createFieldSchema } from '../controllers/field.controller';
+import { getField, getFieldPlan, getFieldChatHistory, createField, createFieldSchema } from '../controllers/field.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
 import { postScenario, postScenarioSchema } from '../controllers/scenario.controller';
@@ -26,6 +26,7 @@ router.get('/farms/:id/chats', listRecentChats);
 router.post('/fields', validate(createFieldSchema), createField);
 router.get('/fields/:id', getField);
 router.get('/fields/:id/plan', getFieldPlan);
+router.get('/fields/:id/chat', getFieldChatHistory);
 router.post('/fields/:id/log', validate(postLogSchema), postLog);
 router.post('/fields/:id/scenario', validate(postScenarioSchema), postScenario);
 

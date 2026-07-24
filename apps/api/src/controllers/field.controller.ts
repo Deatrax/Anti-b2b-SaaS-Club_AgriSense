@@ -6,6 +6,8 @@ import { PlanEventModel } from '../models/planEvent.model';
 import { SeasonPlanModel } from '../models/seasonPlan.model';
 import { LedgerModel } from '../models/ledger.model';
 import { RiskWindowModel } from '../models/riskWindow.model';
+import { ConversationModel } from '../models/conversation.model';
+import { TraceModel } from '../models/trace.model';
 import { serializeField } from '../views/field.view';
 import { serializePlan } from '../views/plan.view';
 import { serializeFinancial } from '../views/financial.view';
@@ -43,6 +45,30 @@ export async function getField(req: Request, res: Response, next: NextFunction) 
       res.status(404).json({ error: err.message });
       return;
     }
+    next(err);
+  }
+}
+
+/** A field's chat history (Tier 0: one conversation per field, §3.4) — opening an existing
+ * field's chat page needs this to show what was already said, not start blank. */
+export async function getFieldChatHistory(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).json({ error: 'field id is required' });
+    return;
+  }
+  try {
+    const conversation = await ConversationModel.getForField(id);
+    if (!conversation) {
+      res.json({ conversationId: null, messages: [], traces: [] });
+      return;
+    }
+    const [messages, traces] = await Promise.all([
+      ConversationModel.recentMessages(conversation.id, 200),
+      TraceModel.listByConversation(conversation.id),
+    ]);
+    res.json({ conversationId: conversation.id, messages, traces });
+  } catch (err) {
     next(err);
   }
 }

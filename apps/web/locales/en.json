@@ -365,5 +365,6 @@
   "logout": "Log out",
 
   "recent_chats_heading": "Recent chats",
-  "all_chats": "All chats"
+  "all_chats": "All chats",
+  "new_chat": "New chat"
 }

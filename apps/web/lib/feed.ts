@@ -4,3 +4,15 @@
 import type { Message, TraceEntry } from '@agrisense/shared';
 
 export type FeedItem = { id: string; type: 'message'; message: Message } | { id: string; type: 'tool_trace'; traces: TraceEntry[] };
+
+/** Reconstructs a feed from persisted history (GET /fields/:id/chat) in the same shape
+ * useFieldChat builds live from SSE events — one FeedItem per message, one per trace,
+ * interleaved chronologically. */
+export function buildFeedFromHistory(messages: Message[], traces: TraceEntry[]): FeedItem[] {
+  const items: Array<FeedItem & { createdAt: string }> = [
+    ...messages.map((m) => ({ id: m.id, type: 'message' as const, message: m, createdAt: m.createdAt })),
+    ...traces.map((tr) => ({ id: `trace-${tr.id}`, type: 'tool_trace' as const, traces: [tr], createdAt: tr.createdAt })),
+  ];
+  items.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  return items.map(({ createdAt: _createdAt, ...item }) => item);
+}

@@ -1,5 +1,5 @@
 // lib/api.ts — thin typed fetch wrapper to the Express API via the Next /api proxy (§C.1).
-import type { FieldState, SeasonPlan, LedgerEntry, IntakeField, PlanEventStatus } from '@agrisense/shared';
+import type { FieldState, SeasonPlan, LedgerEntry, IntakeField, PlanEventStatus, Message, TraceEntry } from '@agrisense/shared';
 
 const BASE = '/api';
 
@@ -192,6 +192,18 @@ export function createField(farmId: string, name?: string): Promise<{ field: Api
 
 export function getField(fieldId: string): Promise<ApiField> {
   return apiGet(`/fields/${encodeURIComponent(fieldId)}`);
+}
+
+export interface ApiFieldChatHistory {
+  conversationId: string | null;
+  messages: Message[];
+  traces: TraceEntry[];
+}
+
+/** A field's existing conversation (Tier 0: one per field, §3.4), so opening its chat page
+ * shows what was already said instead of a blank thread. */
+export function getFieldChatHistory(fieldId: string): Promise<ApiFieldChatHistory> {
+  return apiGet(`/fields/${encodeURIComponent(fieldId)}/chat`);
 }
 
 export function getFieldPlan(fieldId: string): Promise<ApiFieldPlanResponse> {
