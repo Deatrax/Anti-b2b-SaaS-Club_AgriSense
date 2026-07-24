@@ -174,6 +174,18 @@ export function listFields(farmId: string): Promise<{ fields: ApiField[] }> {
   return apiGet(`/farms/${encodeURIComponent(farmId)}/fields`);
 }
 
+export interface ApiRecentChat {
+  fieldId: string;
+  fieldName: string | null;
+  conversationId: string;
+  lastMessage: { role: string; content: string; createdAt: string };
+}
+
+/** One entry per field (its single Tier-0 conversation, §3.4) — not separate chat threads. */
+export function listRecentChats(farmId: string, limit = 5, offset = 0): Promise<{ chats: ApiRecentChat[]; total: number }> {
+  return apiGet(`/farms/${encodeURIComponent(farmId)}/chats?limit=${limit}&offset=${offset}`);
+}
+
 export function createField(farmId: string, name?: string): Promise<{ field: ApiFieldIdentity }> {
   return apiPost('/fields', { farmId, name });
 }

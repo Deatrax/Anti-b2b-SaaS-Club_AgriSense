@@ -60,7 +60,15 @@ export default function LoginPage() {
     setError(null);
     try {
       const { user, farms } = await verifyOtp(referenceNo, code.trim());
-      setSession({ userId: user.id, phone: user.phone, name: user.name, farmId: farms[0]?.id ?? null, farmName: farms[0]?.name ?? null });
+      setSession({
+        userId: user.id,
+        phone: user.phone,
+        name: user.name,
+        farmId: farms[0]?.id ?? null,
+        farmName: farms[0]?.name ?? null,
+        farmDistrict: farms[0]?.district ?? null,
+        farmAez: farms[0]?.aez ?? null,
+      });
       router.push('/farm');
     } catch (err) {
       setError(String(err));

@@ -26,6 +26,8 @@ export interface Session {
   name: string | null;
   farmId: string | null;
   farmName: string | null;
+  farmDistrict: string | null;
+  farmAez: number | null;
 }
 
 interface SessionContextValue {

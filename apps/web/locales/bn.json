@@ -362,5 +362,8 @@
   "farm_profile_fields_heading": "জমিসমূহ",
   "farm_profile_account_heading": "অ্যাকাউন্ট",
   "edit_profile": "প্রোফাইল সম্পাদনা করুন",
-  "logout": "লগ আউট"
+  "logout": "লগ আউট",
+
+  "recent_chats_heading": "সাম্প্রতিক আলাপ",
+  "all_chats": "সব আলাপ"
 }

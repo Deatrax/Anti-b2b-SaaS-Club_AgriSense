@@ -26,12 +26,14 @@ import { computeHeadline } from '../../../../lib/financial';
 import {
   getField,
   listFields,
+  listRecentChats,
   getFieldPlan,
   postScenario,
   type ApiField,
   type ApiFieldPlanResponse,
   type ApiLedgerLine,
   type ApiScenarioResponse,
+  type ApiRecentChat,
 } from '../../../../lib/api';
 
 export default function FieldMoneyPage({ params }: { params: Promise<{ id: string }> }) {
@@ -42,6 +44,7 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,6 +64,9 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
     if (session.farmId) {
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
+        .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
         .catch(() => {});
     }
   }, [id, isHydrated, session, router]);
@@ -86,7 +92,16 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack gap={3}>

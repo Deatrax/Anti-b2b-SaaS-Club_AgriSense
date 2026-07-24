@@ -17,7 +17,7 @@ import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
 import { useFieldChat } from '../../../../lib/useFieldChat';
-import { getField, listFields, type ApiField } from '../../../../lib/api';
+import { getField, listFields, listRecentChats, type ApiField, type ApiRecentChat } from '../../../../lib/api';
 
 export default function FieldChatPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -27,6 +27,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
@@ -43,6 +44,9 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
         .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
+        .catch(() => {});
     }
   }, [id, isHydrated, session, router]);
 
@@ -58,7 +62,16 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
     <AppShell
       height="fill"
       contentPadding={0}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack height="100%" gap={0}>

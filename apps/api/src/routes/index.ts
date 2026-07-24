@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { validate } from '../middleware/validate.middleware';
 import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../controllers/auth.controller';
 import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.controller';
-import { listFarms, createFarm, createFarmSchema, listFields } from '../controllers/farm.controller';
+import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats } from '../controllers/farm.controller';
 import { getField, getFieldPlan, createField, createFieldSchema } from '../controllers/field.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
@@ -21,6 +21,7 @@ router.delete('/users/:id', deleteUser);
 router.get('/farms', listFarms);
 router.post('/farms', validate(createFarmSchema), createFarm);
 router.get('/farms/:id/fields', listFields);
+router.get('/farms/:id/chats', listRecentChats);
 
 router.post('/fields', validate(createFieldSchema), createField);
 router.get('/fields/:id', getField);

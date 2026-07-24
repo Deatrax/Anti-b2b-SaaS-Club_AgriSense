@@ -38,6 +38,7 @@ import { bdt, daysFromToday } from '../../../../lib/format';
 import {
   getField,
   listFields,
+  listRecentChats,
   getFieldPlan,
   postFieldLog,
   type ApiField,
@@ -45,6 +46,7 @@ import {
   type ApiPlanTimelineEntry,
   type ApiRiskWindow,
   type ApiReplanDiff,
+  type ApiRecentChat,
 } from '../../../../lib/api';
 import type { FeedItem } from '../../../../lib/feed';
 
@@ -56,6 +58,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
 
   const [field, setField] = useState<ApiField | null>(null);
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
@@ -77,6 +80,9 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     if (session.farmId) {
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
+        .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
         .catch(() => {});
     }
   }, [id, isHydrated, session, router]);
@@ -117,7 +123,16 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={siblingFields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={siblingFields}
+          activeFieldId={id}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}

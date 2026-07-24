@@ -20,7 +20,7 @@ import { useT, useSession } from '../../providers';
 import { ModeLangToggle } from '../../../components/ModeLangToggle';
 import { FieldRail } from '../../../components/FieldRail';
 import { bdt } from '../../../lib/format';
-import { listFarms, listFields, type ApiFarm, type ApiField } from '../../../lib/api';
+import { listFarms, listFields, listRecentChats, type ApiFarm, type ApiField, type ApiRecentChat } from '../../../lib/api';
 
 export default function FarmProfilePage() {
   const router = useRouter();
@@ -29,6 +29,7 @@ export default function FarmProfilePage() {
 
   const [farm, setFarm] = useState<ApiFarm | null>(null);
   const [fields, setFields] = useState<ApiField[] | null>(null);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -47,6 +48,9 @@ export default function FarmProfilePage() {
     listFields(session.farmId)
       .then((res) => setFields(res.fields))
       .catch((err) => setError(String(err)));
+    listRecentChats(session.farmId)
+      .then((res) => setRecentChats(res.chats))
+      .catch(() => {});
   }, [isHydrated, session, router]);
 
   function handleLogout() {
@@ -65,7 +69,15 @@ export default function FarmProfilePage() {
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={fields ?? []} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={fields ?? []}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack gap={4} width={640}>

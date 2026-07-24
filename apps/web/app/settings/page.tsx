@@ -19,7 +19,7 @@ import { useImperativeAlertDialog } from '@astryxdesign/core/AlertDialog';
 import { useT, useSession, useLang } from '../providers';
 import { ModeLangToggle } from '../../components/ModeLangToggle';
 import { FieldRail } from '../../components/FieldRail';
-import { updateUser, deleteUser, listFields, type ApiField } from '../../lib/api';
+import { updateUser, deleteUser, listFields, listRecentChats, type ApiField, type ApiRecentChat } from '../../lib/api';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -28,6 +28,7 @@ export default function SettingsPage() {
   const { session, isHydrated, setSession } = useSession();
 
   const [fields, setFields] = useState<ApiField[]>([]);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [name, setName] = useState(session?.name ?? '');
   const [isSaving, setIsSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
@@ -45,6 +46,9 @@ export default function SettingsPage() {
     if (session.farmId) {
       listFields(session.farmId)
         .then((res) => setFields(res.fields))
+        .catch(() => {});
+      listRecentChats(session.farmId)
+        .then((res) => setRecentChats(res.chats))
         .catch(() => {});
     }
   }, [isHydrated, session, router]);
@@ -88,7 +92,15 @@ export default function SettingsPage() {
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={fields} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={fields}
+          recentChats={recentChats}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack gap={4} width={480}>

@@ -23,13 +23,14 @@ import { Plus } from 'lucide-react';
 import { useT, useSession } from '../providers';
 import { ModeLangToggle } from '../../components/ModeLangToggle';
 import { FieldRail } from '../../components/FieldRail';
-import { listFields, createFarm, createField, type ApiField } from '../../lib/api';
+import { listFields, listRecentChats, createFarm, createField, type ApiField, type ApiRecentChat } from '../../lib/api';
 
 export default function FarmPage() {
   const router = useRouter();
   const { t } = useT();
   const { session, isHydrated, setSession } = useSession();
   const [fields, setFields] = useState<ApiField[] | null>(null);
+  const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [ownerName, setOwnerName] = useState('');
   const [newFarmName, setNewFarmName] = useState('');
@@ -47,6 +48,9 @@ export default function FarmPage() {
     listFields(session.farmId)
       .then((res) => setFields(res.fields))
       .catch((err) => setError(String(err)));
+    listRecentChats(session.farmId)
+      .then((res) => setRecentChats(res.chats))
+      .catch(() => {});
   }, [isHydrated, session, router]);
 
   async function handleCreateFarm() {
@@ -55,7 +59,7 @@ export default function FarmPage() {
     setError(null);
     try {
       const { farm, user } = await createFarm(session.userId, newFarmName.trim(), newFarmDistrict.trim(), ownerName.trim());
-      setSession({ ...session, name: user.name, farmId: farm.id, farmName: farm.name });
+      setSession({ ...session, name: user.name, farmId: farm.id, farmName: farm.name, farmDistrict: farm.district, farmAez: farm.aez });
     } catch (err) {
       setError(String(err));
     } finally {
@@ -111,7 +115,16 @@ export default function FarmPage() {
     <AppShell
       height="fill"
       contentPadding={4}
-      sideNav={<FieldRail farmName={session.farmName ?? ''} fields={fields ?? []} onAddField={handleAddField} />}
+      sideNav={
+        <FieldRail
+          farmName={session.farmName ?? ''}
+          farmDistrict={session.farmDistrict}
+          farmAez={session.farmAez}
+          fields={fields ?? []}
+          recentChats={recentChats}
+          onAddField={handleAddField}
+        />
+      }
       topNav={<TopNav endContent={<ModeLangToggle />} />}
     >
       <VStack gap={4}>
