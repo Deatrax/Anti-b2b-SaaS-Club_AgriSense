@@ -180,8 +180,8 @@ function PlanBody({
           </StackItem>
 
           {!isMobile && isChatOpen ? (
-            <StackItem width={380}>
-              <Card height={480}>
+            <StackItem>
+              <Card width={380} height={480}>
                 <ChatLayout
                   composer={
                     <ChatComposer

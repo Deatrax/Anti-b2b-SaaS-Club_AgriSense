@@ -217,8 +217,8 @@ function OverviewBody({
 
       <HStack gap={4} vAlign="start" wrap="wrap">
         {!isMobile ? (
-          <StackItem width={420}>
-            <Card height={520}>
+          <StackItem>
+            <Card width={420} height={520}>
               <ChatLayout
                 composer={
                   <VStack gap={2}>
