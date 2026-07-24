@@ -329,5 +329,13 @@
   "otp_code_placeholder": "123456",
   "otp_verify": "Verify",
   "otp_change_number": "Change number",
-  "otp_resend": "Resend code"
+  "otp_resend": "Resend code",
+
+  "checkout_go": "Buy fertilizer now",
+  "checkout_empty_title": "Nothing to buy yet",
+  "checkout_empty_desc": "No pending fertilizer cost is on the season plan right now.",
+  "log_kind_observation": "Observation",
+  "log_replan_summary": "Updated — {n} plan date(s) moved. Check chat for details.",
+  "log_replan_none": "Logged — no change to the plan or cost was needed.",
+  "scenario_budget_cut_label": "Budget cut"
 }

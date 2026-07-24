@@ -14,6 +14,11 @@ export const UserModel = {
     return row ?? null;
   },
 
+  async get(id: string): Promise<UserRow | null> {
+    const [row] = await query<UserRow>('select * from users where id = $1', [id]);
+    return row ?? null;
+  },
+
   async create(phone: string, name?: string, lang = 'bn'): Promise<UserRow> {
     const [row] = await query<UserRow>(
       'insert into users (phone, name, lang) values ($1, $2, $3) returning *',

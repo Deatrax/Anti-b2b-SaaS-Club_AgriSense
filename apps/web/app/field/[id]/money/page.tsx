@@ -1,6 +1,7 @@
 // Finance tracker — real itemized cost/revenue ledger (GET /fields/:id/plan) with a
-// derived headline (lib/financial.ts). No live scenario-recompute yet (Phase 8 backend);
-// this shows what's real today rather than fake stepper-driven numbers.
+// derived headline (lib/financial.ts), a real bdapps checkout entry point, and a real
+// scenario simulation ("what if") panel — reuses financial.engine.ts server-side, diffed
+// against the live plan (§A.1 T1, Phase 8 backend).
 'use client';
 
 import { use, useEffect, useState } from 'react';
@@ -14,12 +15,24 @@ import { Card } from '@astryxdesign/core/Card';
 import { Table } from '@astryxdesign/core/Table';
 import { Banner } from '@astryxdesign/core/Banner';
 import { Skeleton } from '@astryxdesign/core/Skeleton';
+import { Button } from '@astryxdesign/core/Button';
+import { NumberInput } from '@astryxdesign/core/NumberInput';
+import { ChatMessage, ChatMessageBubble, ChatToolCalls } from '@astryxdesign/core/Chat';
 import { useT, useSession } from '../../../providers';
 import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { bdt, percent } from '../../../../lib/format';
 import { computeHeadline } from '../../../../lib/financial';
-import { getField, listFields, getFieldPlan, type ApiField, type ApiFieldPlanResponse, type ApiLedgerLine } from '../../../../lib/api';
+import {
+  getField,
+  listFields,
+  getFieldPlan,
+  postScenario,
+  type ApiField,
+  type ApiFieldPlanResponse,
+  type ApiLedgerLine,
+  type ApiScenarioResponse,
+} from '../../../../lib/api';
 
 export default function FieldMoneyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -31,6 +44,11 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const [budgetCutPct, setBudgetCutPct] = useState<number | null>(40);
+  const [scenario, setScenario] = useState<ApiScenarioResponse | null>(null);
+  const [isRunningScenario, setIsRunningScenario] = useState(false);
+  const [scenarioError, setScenarioError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!session) {
@@ -46,11 +64,22 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
     }
   }, [id, session, router]);
 
+  function handleRunScenario() {
+    if (budgetCutPct == null) return;
+    setIsRunningScenario(true);
+    setScenarioError(null);
+    postScenario(id, { label: `budget cut ${budgetCutPct}%`, costMultiplier: 1 - budgetCutPct / 100 })
+      .then(setScenario)
+      .catch((err) => setScenarioError(String(err)))
+      .finally(() => setIsRunningScenario(false));
+  }
+
   if (!session) return null;
 
   const financial = planData?.financial;
   const lines: ApiLedgerLine[] = financial ? [...financial.actual, ...financial.projected] : [];
   const headline = financial ? computeHeadline(financial) : null;
+  const hasFertilizerCosts = financial?.projected.some((l) => l.kind === 'cost') === true;
 
   return (
     <AppShell
@@ -117,6 +146,73 @@ export default function FieldMoneyPage({ params }: { params: Promise<{ id: strin
                 </VStack>
               </Card>
             ) : null}
+
+            {hasFertilizerCosts ? (
+              <Card padding={3}>
+                <HStack justify="between" vAlign="center" wrap="wrap">
+                  <VStack gap={0}>
+                    <Text type="label" weight="semibold">
+                      {t('checkout_title')}
+                    </Text>
+                    <Text type="supporting" color="secondary">
+                      {t('checkout_desc')}
+                    </Text>
+                  </VStack>
+                  <Button label={t('checkout_go')} variant="primary" onClick={() => router.push(`/field/${id}/checkout`)} />
+                </HStack>
+              </Card>
+            ) : null}
+
+            <Card padding={3}>
+              <VStack gap={3}>
+                <VStack gap={0}>
+                  <Text type="label" weight="semibold">
+                    {t('scenario_heading')}
+                  </Text>
+                  <Text type="supporting" color="secondary">
+                    {t('scenario_note')}
+                  </Text>
+                </VStack>
+
+                <ChatMessage sender="user">
+                  <ChatMessageBubble variant="filled">{t('scenario_question')}</ChatMessageBubble>
+                </ChatMessage>
+
+                <HStack gap={2} vAlign="end" wrap="wrap">
+                  <NumberInput label={t('scenario_budget_cut_label')} value={budgetCutPct} onChange={setBudgetCutPct} units="%" min={0} max={100} />
+                  <Button label={t('scenario_run')} variant="primary" isDisabled={budgetCutPct == null || isRunningScenario} onClick={handleRunScenario} />
+                  {scenario ? <Button label={t('scenario_reset')} variant="ghost" onClick={() => setScenario(null)} /> : null}
+                </HStack>
+
+                {isRunningScenario ? (
+                  <ChatToolCalls calls={[{ key: 'recompute', name: 'compute_financials', node: 'deterministic', status: 'running' }]} isExpanded />
+                ) : null}
+
+                {scenarioError ? <Banner status="error" title={t('login_error_title')} description={scenarioError} /> : null}
+
+                {scenario ? (
+                  <VStack gap={2}>
+                    <ChatToolCalls
+                      calls={[{ key: 'recompute', name: 'compute_financials', node: 'deterministic', status: 'complete' }]}
+                    />
+                    <Table
+                      data={[
+                        { id: 'cost', item: t('money_total_cost'), was: bdt(scenario.baseline.totalCost), now: bdt(scenario.scenario.totalCost) },
+                        { id: 'net', item: t('money_net_profit'), was: bdt(scenario.baseline.netProfit), now: bdt(scenario.scenario.netProfit) },
+                        { id: 'roi', item: t('money_roi'), was: percent(scenario.baseline.roi), now: percent(scenario.scenario.roi) },
+                        { id: 'bcr', item: t('money_bcr'), was: scenario.baseline.bcr.toFixed(2), now: scenario.scenario.bcr.toFixed(2) },
+                      ]}
+                      idKey="id"
+                      columns={[
+                        { key: 'item', header: t('scenario_line') },
+                        { key: 'was', header: t('scenario_was') },
+                        { key: 'now', header: t('scenario_now') },
+                      ]}
+                    />
+                  </VStack>
+                ) : null}
+              </VStack>
+            </Card>
           </>
         )}
       </VStack>

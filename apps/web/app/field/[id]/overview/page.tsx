@@ -19,6 +19,10 @@ import { Badge } from '@astryxdesign/core/Badge';
 import { Banner } from '@astryxdesign/core/Banner';
 import { Skeleton } from '@astryxdesign/core/Skeleton';
 import { Button } from '@astryxdesign/core/Button';
+import { NumberInput } from '@astryxdesign/core/NumberInput';
+import { ToggleButtonGroup, ToggleButton } from '@astryxdesign/core/ToggleButton';
+import { Collapsible } from '@astryxdesign/core/Collapsible';
+import { List, ListItem } from '@astryxdesign/core/List';
 import { ChatLayout, ChatMessageList, ChatComposer, ChatSendButton } from '@astryxdesign/core/Chat';
 import { EmptyState } from '@astryxdesign/core/EmptyState';
 import { FlaskConical } from 'lucide-react';
@@ -31,7 +35,17 @@ import { MobileChatOverlay } from '../../../../components/MobileChatOverlay';
 import { useFieldChat } from '../../../../lib/useFieldChat';
 import { latestWeather } from '../../../../lib/weather';
 import { bdt, daysFromToday } from '../../../../lib/format';
-import { getField, listFields, getFieldPlan, type ApiField, type ApiFieldPlanResponse, type ApiPlanTimelineEntry } from '../../../../lib/api';
+import {
+  getField,
+  listFields,
+  getFieldPlan,
+  postFieldLog,
+  type ApiField,
+  type ApiFieldPlanResponse,
+  type ApiPlanTimelineEntry,
+  type ApiRiskWindow,
+  type ApiReplanDiff,
+} from '../../../../lib/api';
 import type { FeedItem } from '../../../../lib/feed';
 
 export default function FieldOverviewPage({ params }: { params: Promise<{ id: string }> }) {
@@ -45,6 +59,10 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
+  const [logKind, setLogKind] = useState<'irrigation' | 'fertilizer' | 'observation'>('irrigation');
+  const [logAmount, setLogAmount] = useState<number | null>(null);
+  const [logResult, setLogResult] = useState<ApiReplanDiff | null>(null);
+  const [isLogging, setIsLogging] = useState(false);
 
   const { feed, sendMessage, isStreaming } = useFieldChat(id);
 
@@ -66,6 +84,21 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     if (!value.trim()) return;
     sendMessage(value);
     setComposerValue('');
+  }
+
+  function handleLogSubmit() {
+    if (logAmount == null) return;
+    setIsLogging(true);
+    setLogResult(null);
+    const unit = logKind === 'irrigation' ? 'mm' : logKind === 'fertilizer' ? 'kg' : undefined;
+    postFieldLog(id, logKind, { quantity: logAmount, unit })
+      .then((res) => {
+        setLogResult(res.diff);
+        setLogAmount(null);
+        getFieldPlan(id).then(setPlanData).catch(() => {});
+      })
+      .catch((err) => setError(String(err)))
+      .finally(() => setIsLogging(false));
   }
 
   const forecast = latestWeather(feed);
@@ -101,12 +134,20 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
           financial={financial}
           netProfit={netProfit}
           forecast={forecast}
+          risk={planData?.risk ?? []}
           feed={feed}
           sendMessage={sendMessage}
           isStreaming={isStreaming}
           composerValue={composerValue}
           setComposerValue={setComposerValue}
           onComposerSubmit={handleComposerSubmit}
+          logKind={logKind}
+          setLogKind={setLogKind}
+          logAmount={logAmount}
+          setLogAmount={setLogAmount}
+          logResult={logResult}
+          isLogging={isLogging}
+          onLogSubmit={handleLogSubmit}
         />
       )}
     </AppShell>
@@ -121,12 +162,20 @@ function OverviewBody({
   financial,
   netProfit,
   forecast,
+  risk,
   feed,
   sendMessage,
   isStreaming,
   composerValue,
   setComposerValue,
   onComposerSubmit,
+  logKind,
+  setLogKind,
+  logAmount,
+  setLogAmount,
+  logResult,
+  isLogging,
+  onLogSubmit,
 }: {
   id: string;
   field: ApiField;
@@ -135,12 +184,20 @@ function OverviewBody({
   financial: ApiFieldPlanResponse['financial'] | undefined;
   netProfit: number | null;
   forecast: ReturnType<typeof latestWeather>;
+  risk: ApiRiskWindow[];
   feed: FeedItem[];
   sendMessage: (message: string) => void;
   isStreaming: boolean;
   composerValue: string;
   setComposerValue: (value: string) => void;
   onComposerSubmit: (value: string) => void;
+  logKind: 'irrigation' | 'fertilizer' | 'observation';
+  setLogKind: (kind: 'irrigation' | 'fertilizer' | 'observation') => void;
+  logAmount: number | null;
+  setLogAmount: (value: number | null) => void;
+  logResult: ApiReplanDiff | null;
+  isLogging: boolean;
+  onLogSubmit: () => void;
 }) {
   const { t, tf } = useT();
   const { isMobile } = useAppShellMobile();
@@ -163,14 +220,43 @@ function OverviewBody({
             <Card height={520}>
               <ChatLayout
                 composer={
-                  <ChatComposer
-                    value={composerValue}
-                    onChange={setComposerValue}
-                    placeholder={t('composer_placeholder')}
-                    onSubmit={onComposerSubmit}
-                    sendButton={<ChatSendButton />}
-                    isDisabled={isStreaming}
-                  />
+                  <VStack gap={2}>
+                    <Card variant="muted" padding={2}>
+                      <VStack gap={1.5}>
+                        <ToggleButtonGroup label={t('chips_label')} type="single" value={logKind} onChange={(v) => v && setLogKind(v as typeof logKind)} size="sm">
+                          <ToggleButton value="irrigation" label={t('card_water')} />
+                          <ToggleButton value="fertilizer" label={t('card_fertilizer')} />
+                          <ToggleButton value="observation" label={t('log_kind_observation')} />
+                        </ToggleButtonGroup>
+                        <HStack gap={2} vAlign="end">
+                          <NumberInput
+                            label={t('log_amount_label')}
+                            isLabelHidden
+                            value={logAmount}
+                            onChange={setLogAmount}
+                            units={logKind === 'irrigation' ? 'mm' : logKind === 'fertilizer' ? 'kg' : undefined}
+                            placeholder="0"
+                          />
+                          <Button label={t('log_action')} variant="secondary" isDisabled={logAmount == null || isLogging} onClick={onLogSubmit} />
+                        </HStack>
+                        {logResult ? (
+                          <Text type="supporting" color="secondary">
+                            {logResult.shiftedEvents.length > 0 || logResult.costChanged
+                              ? tf('log_replan_summary', { n: logResult.shiftedEvents.length })
+                              : t('log_replan_none')}
+                          </Text>
+                        ) : null}
+                      </VStack>
+                    </Card>
+                    <ChatComposer
+                      value={composerValue}
+                      onChange={setComposerValue}
+                      placeholder={t('composer_placeholder')}
+                      onSubmit={onComposerSubmit}
+                      sendButton={<ChatSendButton />}
+                      isDisabled={isStreaming}
+                    />
+                  </VStack>
                 }
                 emptyState={<EmptyState title={t('thread_empty_title')} description={t('thread_empty_description')} />}
               >
@@ -248,6 +334,32 @@ function OverviewBody({
                   </Text>
                   <Text type="display-3">{netProfit != null ? bdt(netProfit) : t('not_set')}</Text>
                   <Button label={t('field_finance_nav')} variant="ghost" size="sm" href={`/field/${id}/money`} />
+                </VStack>
+              </Card>
+            ) : null}
+
+            {risk.length > 0 ? (
+              <Card>
+                <VStack gap={2}>
+                  <Text type="label" weight="semibold">
+                    {t('card_risk')}
+                  </Text>
+                  {risk.map((r) => (
+                    <VStack key={r.id} gap={1.5}>
+                      <Banner
+                        status={r.level === 'high' ? 'error' : 'warning'}
+                        title={r.pest}
+                        description={r.level === 'high' ? t('risk_level_high') : r.level === 'elevated' ? t('risk_level_elevated') : t('risk_level_low')}
+                      />
+                      <Collapsible trigger={<Text type="supporting">{t('why_label')}</Text>}>
+                        <List>
+                          {r.prevention ? <ListItem label={t('risk_prevention')} description={r.prevention} /> : null}
+                          {r.treatment ? <ListItem label={t('risk_treatment')} description={r.treatment} /> : null}
+                          {r.estCostBdt != null ? <ListItem label={t('risk_est_cost')} description={bdt(r.estCostBdt)} /> : null}
+                        </List>
+                      </Collapsible>
+                    </VStack>
+                  ))}
                 </VStack>
               </Card>
             ) : null}

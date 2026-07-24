@@ -2,6 +2,14 @@
 import type { TransactionRow } from '../models/transaction.model';
 
 export function serializeReceipt(txn: TransactionRow) {
-  // TODO: internalTrxId, referenceId, amount, timestamp, status — plus raw response payload.
-  return txn;
+  return {
+    externalTrxId: txn.external_trx_id,
+    internalTrxId: txn.internal_trx_id,
+    referenceId: txn.reference_id,
+    amountBdt: txn.amount_bdt,
+    msisdn: txn.msisdn,
+    status: txn.status,
+    mode: txn.mode,
+    approvedAt: txn.approved_at,
+  };
 }

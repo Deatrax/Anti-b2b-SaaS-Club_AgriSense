@@ -329,5 +329,13 @@
   "otp_code_placeholder": "123456",
   "otp_verify": "যাচাই করুন",
   "otp_change_number": "নম্বর পরিবর্তন করুন",
-  "otp_resend": "আবার কোড পাঠান"
+  "otp_resend": "আবার কোড পাঠান",
+
+  "checkout_go": "এখনই সার কিনুন",
+  "checkout_empty_title": "কেনার কিছু নেই",
+  "checkout_empty_desc": "মৌসুম পরিকল্পনায় এখন কোনো সারের খরচ বাকি নেই।",
+  "log_kind_observation": "পর্যবেক্ষণ",
+  "log_replan_summary": "হালনাগাদ হয়েছে — {n}টি পরিকল্পনার তারিখ পরিবর্তিত হয়েছে। বিস্তারিত জানতে চ্যাট দেখুন।",
+  "log_replan_none": "লগ করা হয়েছে — পরিকল্পনা বা খরচে কোনো পরিবর্তনের প্রয়োজন হয়নি।",
+  "scenario_budget_cut_label": "বাজেট কর্তন"
 }

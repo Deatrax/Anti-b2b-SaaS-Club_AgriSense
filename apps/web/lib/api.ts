@@ -107,9 +107,24 @@ export interface ApiFinancial {
   actual: ApiLedgerLine[];
 }
 
+export interface ApiRiskWindow {
+  id: string;
+  cropCycleId: string;
+  pest: string;
+  level: 'low' | 'elevated' | 'high';
+  startsOn: string | null;
+  endsOn: string | null;
+  trigger: unknown;
+  prevention: string | null;
+  treatment: string | null;
+  estCostBdt: number | null;
+  sources: unknown[];
+}
+
 export interface ApiFieldPlanResponse {
   plan: ApiPlan | null;
   financial: ApiFinancial;
+  risk: ApiRiskWindow[];
 }
 
 // ---- Calls ------------------------------------------------------------------------------
@@ -144,4 +159,103 @@ export function getField(fieldId: string): Promise<ApiField> {
 
 export function getFieldPlan(fieldId: string): Promise<ApiFieldPlanResponse> {
   return apiGet(`/fields/${encodeURIComponent(fieldId)}/plan`);
+}
+
+// ---- Phase 8: field log + scoped replan --------------------------------------------------
+
+export interface ApiFieldLog {
+  id: string;
+  field_id: string;
+  crop_cycle_id: string | null;
+  kind: string;
+  payload: unknown;
+  logged_by: string;
+  occurred_at: string;
+}
+
+export interface ApiReplanDiff {
+  ranTools: string[];
+  costChanged: boolean;
+  totalCostBefore: number;
+  totalCostAfter: number;
+  shiftedEvents: { title: string; from: string | null; to: string | null }[];
+}
+
+export function postFieldLog(
+  fieldId: string,
+  kind: 'irrigation' | 'fertilizer' | 'pest' | 'observation',
+  input: { description?: string; quantity?: number; unit?: string },
+): Promise<{ log: ApiFieldLog; diff: ApiReplanDiff | null }> {
+  return apiPost(`/fields/${encodeURIComponent(fieldId)}/log`, { kind, ...input });
+}
+
+// ---- Phase 8: scenario simulation --------------------------------------------------------
+
+export interface ApiFinancialHeadline {
+  totalCost: number;
+  expectedYieldKg: number;
+  grossRevenue: number;
+  netProfit: number;
+  roi: number;
+  bcr: number;
+  breakEvenYieldKg: number;
+  breakEvenPrice: number;
+}
+
+export interface ApiScenarioOverrides {
+  label?: string;
+  weatherAdj?: number;
+  inputAdj?: number;
+  farmgatePriceBdtPerKg?: number;
+  costMultiplier?: number;
+}
+
+export interface ApiScenarioResponse {
+  id: string;
+  label: string;
+  overrides: ApiScenarioOverrides;
+  baseline: ApiFinancialHeadline;
+  scenario: ApiFinancialHeadline;
+  diff: Pick<ApiFinancialHeadline, 'totalCost' | 'expectedYieldKg' | 'grossRevenue' | 'netProfit' | 'roi' | 'bcr'>;
+}
+
+export function postScenario(fieldId: string, overrides: ApiScenarioOverrides): Promise<ApiScenarioResponse> {
+  return apiPost(`/fields/${encodeURIComponent(fieldId)}/scenario`, overrides);
+}
+
+// ---- Phase 7: bdapps CaaS checkout --------------------------------------------------------
+
+export interface ApiBasketItem {
+  id: string;
+  item: string;
+  qty: number | null;
+  unit: string | null;
+  unitCost: number | null;
+  total: number;
+}
+
+export interface ApiBasketResponse {
+  externalTrxId: string;
+  items: ApiBasketItem[];
+  totalBdt: number;
+  balanceBdt: number;
+}
+
+export function proposeBasket(fieldId: string): Promise<ApiBasketResponse> {
+  return apiPost('/payment/propose', { fieldId });
+}
+
+export interface ApiReceipt {
+  externalTrxId: string;
+  internalTrxId: string | null;
+  referenceId: string | null;
+  amountBdt: number;
+  msisdn: string | null;
+  status: string;
+  mode: string;
+  approvedAt: string | null;
+}
+
+export function approveAndDebit(externalTrxId: string): Promise<{ receipt: ApiReceipt }> {
+  return apiPost('/payment/approve', { externalTrxId });
 }

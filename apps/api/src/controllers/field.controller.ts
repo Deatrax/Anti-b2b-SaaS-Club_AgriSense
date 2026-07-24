@@ -5,6 +5,7 @@ import { FieldModel } from '../models/field.model';
 import { PlanEventModel } from '../models/planEvent.model';
 import { SeasonPlanModel } from '../models/seasonPlan.model';
 import { LedgerModel } from '../models/ledger.model';
+import { RiskWindowModel } from '../models/riskWindow.model';
 import { serializeField } from '../views/field.view';
 import { serializePlan } from '../views/plan.view';
 import { serializeFinancial } from '../views/financial.view';
@@ -56,18 +57,20 @@ export async function getFieldPlan(req: Request, res: Response, next: NextFuncti
     const state = await FieldModel.getState(id);
     const cycle = state.activeCycle;
     if (!cycle) {
-      res.json({ plan: null, financial: serializeFinancial([]) });
+      res.json({ plan: null, financial: serializeFinancial([]), risk: [] });
       return;
     }
-    const [events, meta, ledgerEntries] = await Promise.all([
+    const [events, meta, ledgerEntries, riskWindows] = await Promise.all([
       PlanEventModel.listByCycle(cycle.id),
       SeasonPlanModel.getLatestForCycle(cycle.id),
       LedgerModel.listByCycle(cycle.id),
+      RiskWindowModel.listByCycle(cycle.id),
     ]);
     const plan = meta ? { ...meta, events } : null;
     res.json({
       plan: serializePlan(plan),
       financial: serializeFinancial(ledgerEntries),
+      risk: riskWindows,
     });
   } catch (err) {
     if (isNotFound(err)) {

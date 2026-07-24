@@ -5,9 +5,9 @@ import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../con
 import { listFarms, createFarm, createFarmSchema, listFields } from '../controllers/farm.controller';
 import { getField, getFieldPlan, createField, createFieldSchema } from '../controllers/field.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
-import { postLog } from '../controllers/log.controller';
-import { postScenario } from '../controllers/scenario.controller';
-import { proposeBasket, approveAndDebit } from '../controllers/payment.controller';
+import { postLog, postLogSchema } from '../controllers/log.controller';
+import { postScenario, postScenarioSchema } from '../controllers/scenario.controller';
+import { proposeBasket, proposeBasketSchema, approveAndDebit, approveAndDebitSchema } from '../controllers/payment.controller';
 
 export const router = Router();
 
@@ -21,10 +21,10 @@ router.get('/farms/:id/fields', listFields);
 router.post('/fields', validate(createFieldSchema), createField);
 router.get('/fields/:id', getField);
 router.get('/fields/:id/plan', getFieldPlan);
-router.post('/fields/:id/log', postLog);
-router.post('/fields/:id/scenario', postScenario);
+router.post('/fields/:id/log', validate(postLogSchema), postLog);
+router.post('/fields/:id/scenario', validate(postScenarioSchema), postScenario);
 
 router.post('/chat', validate(postChatSchema), postChat);
 
-router.post('/payment/propose', proposeBasket);
-router.post('/payment/approve', approveAndDebit);
+router.post('/payment/propose', validate(proposeBasketSchema), proposeBasket);
+router.post('/payment/approve', validate(approveAndDebitSchema), approveAndDebit);
