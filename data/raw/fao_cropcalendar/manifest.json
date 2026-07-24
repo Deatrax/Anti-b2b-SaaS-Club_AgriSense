@@ -1,0 +1,23 @@
+[
+  {
+    "crop": "rice",
+    "crop_id": "0303",
+    "endpoint_used": "https://api-cropcalendar.apps.fao.org/api/v1/countries/BD/cropCalendar?crop=0303&language=en",
+    "record_count": 0,
+    "status": "absent"
+  },
+  {
+    "crop": "potato",
+    "crop_id": "0283",
+    "endpoint_used": "https://api-cropcalendar.apps.fao.org/api/v1/countries/BD/cropCalendar?crop=0283&language=en",
+    "record_count": 5,
+    "status": "ok"
+  },
+  {
+    "crop": "maize",
+    "crop_id": "0113",
+    "endpoint_used": "https://api-cropcalendar.apps.fao.org/api/v1/countries/BD/cropCalendar?crop=0113&language=en",
+    "record_count": 0,
+    "status": "absent"
+  }
+]
