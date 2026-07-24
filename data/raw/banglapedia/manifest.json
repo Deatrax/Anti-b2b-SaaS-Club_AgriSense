@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "agroecological-zone",
+    "title": "Agroecological Zone",
+    "url": "https://en.banglapedia.org/index.php/Agroecological_Zone",
+    "category": "reference",
+    "word_count": 3919,
+    "status": "ok",
+    "date_ambiguity_flag": null,
+    "coverage_note": "All 30 zones are present in the summary table (ID, name, sub-regions), but 3 zones have NO separate narrative/prose paragraph in the source article -- table row only: Low Ganges River Floodplain (zone 12); Northern and Eastern Piedmont Plain (zone 22); North-eastern Barind Tract (zone 27). This is a genuine gap in the source page itself (verified against raw HTML), not a truncation by this extractor. Additionally 2 zones have a narrative section titled slightly differently than their table name: zone 21 'Sylhet Basin' -- table cell has a stray tab-glued 'a)' fragment ('Sylhet Basin\\ta)'); its narrative section is titled cleanly 'Sylhet Basin'; zone 24 table name 'St Martin's Coral Island' vs its narrative section titled 'St Martin's Island' (drops 'Coral')."
+  },
+  {
+    "slug": "crop",
+    "title": "Crop",
+    "url": "https://en.banglapedia.org/index.php/Crop",
+    "category": "reference",
+    "word_count": 5261,
+    "status": "ok",
+    "date_ambiguity_flag": null
+  },
+  {
+    "slug": "rice",
+    "title": "Rice",
+    "url": "https://en.banglapedia.org/index.php/Rice",
+    "category": "reference",
+    "word_count": 5461,
+    "status": "ok",
+    "date_ambiguity_flag": "month-ranges given ('Aman...December-January, Boro...March-May, Aus...July-August') are stated only as 'cultivated in' -- this page does not itself specify whether that means planting or harvest; the 'Crop' page gives the identical three ranges but explicitly labels them as harvest ('the season in which they are harvested'). Compare against 'Crop' and 'Agricultural Produce' rather than trusting this page's ranges in isolation."
+  },
+  {
+    "slug": "agricultural-produce",
+    "title": "Agricultural Produce",
+    "url": "https://en.banglapedia.org/index.php/Agricultural_Produce",
+    "category": "reference",
+    "word_count": 3445,
+    "status": "ok",
+    "date_ambiguity_flag": null
+  },
+  {
+    "slug": "agriculture",
+    "title": "Agriculture",
+    "url": "https://en.banglapedia.org/index.php/Agriculture",
+    "category": "reference",
+    "word_count": 38319,
+    "status": "ok",
+    "date_ambiguity_flag": null
+  },
+  {
+    "slug": "bangladesh-rice-research-institute",
+    "title": "Bangladesh Rice Research Institute",
+    "url": "https://en.banglapedia.org/index.php/Bangladesh_Rice_Research_Institute",
+    "category": "reference",
+    "word_count": 568,
+    "status": "ok",
+    "date_ambiguity_flag": null
+  }
+]

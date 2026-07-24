@@ -1,7 +1,8 @@
 // Routes (§C.3) — thin mapping HTTP → controllers. Mounted under /api in app.ts.
 import { Router } from 'express';
-import { login } from '../controllers/auth.controller';
-import { listFarms, createFarm } from '../controllers/farm.controller';
+import { validate } from '../middleware/validate.middleware';
+import { login, loginSchema } from '../controllers/auth.controller';
+import { listFarms, createFarm, createFarmSchema } from '../controllers/farm.controller';
 import { getField, getFieldPlan } from '../controllers/field.controller';
 import { postChat } from '../controllers/chat.controller';
 import { postLog } from '../controllers/log.controller';
@@ -10,10 +11,10 @@ import { proposeBasket, approveAndDebit } from '../controllers/payment.controlle
 
 export const router = Router();
 
-router.post('/auth/login', login);
+router.post('/auth/login', validate(loginSchema), login);
 
 router.get('/farms', listFarms);
-router.post('/farms', createFarm);
+router.post('/farms', validate(createFarmSchema), createFarm);
 
 router.get('/fields/:id', getField);
 router.get('/fields/:id/plan', getFieldPlan);

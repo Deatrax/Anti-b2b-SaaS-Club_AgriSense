@@ -1,0 +1,17 @@
+{
+  "variety": "BARI Alu-71",
+  "crop": "potato",
+  "developer": "Bangladesh Agriculture Research Institute (BARI), Gazipur, Bangladesh",
+  "year_of_release": "2016",
+  "crop_duration_days": "90-95",
+  "season": null,
+  "planting_time": null,
+  "harvest_time": null,
+  "yield_t_ha": "29.64 (22.94-38.71)  t/ha",
+  "resistance_notes": null,
+  "main_characteristics": "Plant height medium; intermediate type; canopy habit semi determinate; growth habit semi-erect; absent or very few branching; thickness of main stem medium; extension of anthocyanin coloration of stem strong. Tuber shape round (compress); tuber size medium; depth of eyes medium; smoothness of tuber skin rough; color of tuber skin red; color of base of eye red; color of flesh light yellow; eye distribution predominantly; uniformity of tuber high. crop duration 90-95 days",
+  "source_url": "https://dhcrop.bsmrau.net/bari-alu-71/",
+  "source_org": "BARI, via BSMRAU Digital Herbarium of Crop Plants",
+  "retrieved_at": "2026-07-24T00:00:00Z",
+  "status": "ok"
+}

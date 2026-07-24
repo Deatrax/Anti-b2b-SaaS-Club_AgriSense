@@ -21,6 +21,20 @@ interface FieldRow {
   budget_bdt: number | null;
 }
 
+/** Raw shape as `pg` actually returns it: `numeric` columns come back as strings, not numbers. */
+interface FieldRawRow extends Omit<FieldRow, 'area_ha' | 'budget_bdt'> {
+  area_ha: string | null;
+  budget_bdt: string | null;
+}
+
+function toFieldRow(r: FieldRawRow): FieldRow {
+  return {
+    ...r,
+    area_ha: r.area_ha != null ? Number(r.area_ha) : null,
+    budget_bdt: r.budget_bdt != null ? Number(r.budget_bdt) : null,
+  };
+}
+
 interface CycleRow {
   id: string;
   field_id: string;
@@ -32,40 +46,52 @@ interface CycleRow {
   status: string;
   stage: string | null;
   day_index: number | null;
-  actual_yield_kg: number | null;
+  actual_yield_kg: string | null; // numeric column — raw from pg, coerced in toCycle()
 }
 
 export const FieldModel = {
   async getState(fieldId: string): Promise<FieldState> {
-    const [field] = await query<FieldRow>('select * from fields where id = $1', [fieldId]);
-    if (!field) throw new Error(`field ${fieldId} not found`);
-    const [cycle] = await query<CycleRow>(
+    const [rawField] = await query<FieldRawRow>('select * from fields where id = $1', [fieldId]);
+    if (!rawField) throw new Error(`field ${fieldId} not found`);
+    const field = toFieldRow(rawField);
+    const [activeCycle] = await query<CycleRow>(
       "select * from crop_cycles where field_id = $1 and status = 'active' limit 1",
       [fieldId],
     );
+    // No active cycle exists yet during GATHERING — target_season lives on a 'planned' cycle
+    // created as soon as the farmer answers it, before any crop is chosen (§C.8).
+    const [plannedCycle] = activeCycle
+      ? []
+      : await query<CycleRow>(
+          "select * from crop_cycles where field_id = $1 and status = 'planned' order by created_at desc limit 1",
+          [fieldId],
+        );
+    const targetSeason = activeCycle?.season ?? plannedCycle?.season ?? null;
     return {
       identity: toIdentity(field),
-      activeCycle: cycle ? toCycle(cycle) : null,
-      missingFields: computeMissing(field),
+      activeCycle: activeCycle ? toCycle(activeCycle) : null,
+      missingFields: computeMissing(field, targetSeason),
     };
   },
 
   async update(fieldId: string, patch: Partial<FieldRow>): Promise<void> {
-    // TODO: build a parameterized UPDATE from patch keys; set updated_at = now().
-    void fieldId;
-    void patch;
+    const keys = Object.keys(patch) as (keyof FieldRow)[];
+    if (keys.length === 0) return;
+    const setClause = keys.map((k, i) => `${k} = $${i + 2}`).join(', ');
+    const values = keys.map((k) => patch[k]);
+    await query(`update fields set ${setClause}, updated_at = now() where id = $1`, [fieldId, ...values]);
   },
 };
 
 /** The six intake slots → what's still empty. Drives GATHERING vs PLANNING (§C.8). */
-function computeMissing(f: FieldRow): IntakeField[] {
+function computeMissing(f: FieldRow, targetSeason: string | null): IntakeField[] {
   const present: Record<IntakeField, boolean> = {
     location: f.lat != null && f.lon != null,
     area_ha: f.area_ha != null,
     soil_type: f.soil_type != null,
     water_source: f.water_source != null,
     budget_bdt: f.budget_bdt != null,
-    target_season: false, // TODO: derive from the active/planned crop_cycle.season
+    target_season: targetSeason != null,
   };
   return REQUIRED_INTAKE_FIELDS.filter((k) => !present[k]);
 }
@@ -96,6 +122,6 @@ function toCycle(c: CycleRow): CropCycle {
     status: c.status as CropCycle['status'],
     stage: c.stage,
     dayIndex: c.day_index,
-    actualYieldKg: c.actual_yield_kg,
+    actualYieldKg: c.actual_yield_kg != null ? Number(c.actual_yield_kg) : null,
   };
 }

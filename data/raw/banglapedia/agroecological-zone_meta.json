@@ -1,0 +1,12 @@
+{
+  "slug": "agroecological-zone",
+  "title": "Agroecological Zone",
+  "url": "https://en.banglapedia.org/index.php/Agroecological_Zone",
+  "category": "reference",
+  "source_org": "Banglapedia (Asiatic Society of Bangladesh)",
+  "retrieved_at": "2026-07-24T12:20:04Z",
+  "word_count": 3919,
+  "status": "ok",
+  "date_ambiguity_flag": null,
+  "coverage_note": "All 30 zones are present in the summary table (ID, name, sub-regions), but 3 zones have NO separate narrative/prose paragraph in the source article -- table row only: Low Ganges River Floodplain (zone 12); Northern and Eastern Piedmont Plain (zone 22); North-eastern Barind Tract (zone 27). This is a genuine gap in the source page itself (verified against raw HTML), not a truncation by this extractor. Additionally 2 zones have a narrative section titled slightly differently than their table name: zone 21 'Sylhet Basin' -- table cell has a stray tab-glued 'a)' fragment ('Sylhet Basin\\ta)'); its narrative section is titled cleanly 'Sylhet Basin'; zone 24 table name 'St Martin's Coral Island' vs its narrative section titled 'St Martin's Island' (drops 'Coral')."
+}

@@ -32,7 +32,7 @@ apps/web (Next.js 14)  ⇄  SSE  ⇄  apps/api (Express, MVC)
 ## Setup (must work from a clean clone)
 ```bash
 npm install
-cp .env.example .env          # fill ANTHROPIC_API_KEY + DATABASE_URL (Supabase)
+cp .env.example .env          # fill OPENAI_API_KEY + DATABASE_URL (Supabase)
 npm run migrate               # apply apps/api/src/db/migrations/001_init.sql
 npm run ingest                # build KB embeddings offline (one-time)  [H8+]
 npm run dev                   # api :4000 + web :3000

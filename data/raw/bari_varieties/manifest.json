@@ -1,0 +1,66 @@
+[
+  {
+    "variety": "Maize Variety: Barnali",
+    "crop": "maize",
+    "status": "ok",
+    "has_planting_time": true,
+    "has_harvest_time": true,
+    "has_duration": false
+  },
+  {
+    "variety": "BARI  Hybrid Maize -4",
+    "crop": "maize",
+    "status": "ok",
+    "has_planting_time": true,
+    "has_harvest_time": false,
+    "has_duration": true
+  },
+  {
+    "variety": "BARI  Hybrid Maize -5",
+    "crop": "maize",
+    "status": "ok",
+    "has_planting_time": true,
+    "has_harvest_time": false,
+    "has_duration": true
+  },
+  {
+    "variety": "Khoibhutta",
+    "crop": "maize",
+    "status": "ok",
+    "has_planting_time": true,
+    "has_harvest_time": true,
+    "has_duration": false
+  },
+  {
+    "variety": "BARI Alu-68",
+    "crop": "potato",
+    "status": "ok",
+    "has_planting_time": false,
+    "has_harvest_time": false,
+    "has_duration": true
+  },
+  {
+    "variety": "BARI Alu-69",
+    "crop": "potato",
+    "status": "ok",
+    "has_planting_time": false,
+    "has_harvest_time": false,
+    "has_duration": true
+  },
+  {
+    "variety": "BARI Alu-71",
+    "crop": "potato",
+    "status": "ok",
+    "has_planting_time": false,
+    "has_harvest_time": false,
+    "has_duration": true
+  },
+  {
+    "variety": "BARI Alu-72",
+    "crop": "potato",
+    "status": "ok",
+    "has_planting_time": false,
+    "has_harvest_time": false,
+    "has_duration": true
+  }
+]
