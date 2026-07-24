@@ -2,12 +2,12 @@
   "_meta": {
     "purpose": "Deterministic 'how much / when' store (§C.6). RAG must NEVER supply these — doses, splits, durations, Kc, yields live here.",
     "sources": {
-      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018 (OCR). aman_rice: page_0094.txt (soil-test-level table). boro_rice/aus_rice: page_0202.txt (AEZ 2 general cropping-pattern table — see per-crop _source, this is a cross-zone borrow, not AEZ-9-matched).",
+      "doses_splits": "BARC Fertilizer Recommendation Guide (FRG) 2018 — data/raw/barc_frg_2018 (OCR). aman_rice: page_0094.txt (soil-test-level table). boro_rice/aus_rice: page_0212.txt / printed page 202 per manifest.json (AEZ 9 'Old Brahmaputra Floodplain' general cropping-pattern table — zone-matched to aez_default: 9).",
       "calendar": "BAMIS crop-weather calendar + BRRI variety durations (data/raw/brri_varieties).",
       "kc": "FAO CROPWAT / FAO-56 crop coefficients by growth stage (standard published reference, not yet re-verified against a locally retrieved copy).",
-      "base_yield": "aman_rice: Chanda et al. 2019. boro_rice/aus_rice: BARC FRG-2018 p.202 cropping-pattern table yield-goal column."
+      "base_yield": "aman_rice: Chanda et al. 2019. boro_rice/aus_rice: BARC FRG-2018 page_0212.txt (printed page 202) cropping-pattern table yield-goal column."
     },
-    "status": "Merge-conflict correction (2026-07-25): the 'obidit' branch added boro_rice/aus_rice to close the Tier-0 '≥3 candidate crops' gap — a real and valuable fix — but its specific N/P/K/S numbers didn't match the actual OCR text of the page it cited (page_0202.txt is AEZ 2 'Active Tista Floodplain', not AEZ 9 as claimed; Boro S was given as 18, the table reads 12; Aus K/S were given as 25/9, the table reads 20/6), and both crops kept the old basal+panicle-initiation 50/50 K split even though the very source they cite (page_0065.txt) says P/K/S/Zn are fully basal for rice. Corrected all four numbers and the K split against a direct re-read of page_0202.txt and page_0065.txt; AEZ citation corrected from 9 to 2 (a disclosed cross-zone borrow, since no AEZ-9-specific version of this table was located in the time available). aman_rice's own data (page_0094.txt, medium soil-test row) is unaffected by this — it was already independently verified before this merge.",
+    "status": "Correction history (2026-07-25), most recent first: (2) a first merge-resolution pass mistakenly read page_0202.txt (OCR index 202) as the boro_rice/aus_rice fertilizer source and 'corrected' Obidit's numbers (Boro S18→12, Aus K25/S9→20/6) plus mislabeled the zone as AEZ 2 — but page_0202.txt's OCR index is actually PRINTED page 192 (AEZ 2 'Active Tista Floodplain'), a different table entirely; this was an indexing error, not a real discrepancy, and has been reverted — Obidit's original N150/P20/K65/S18 (Boro) and N75/P10/K25/S9 (Aus) were correct all along, now cited to the right file (page_0212.txt, printed page 202, AEZ 9 — matching aez_default: 9 exactly). (1) the 'obidit' branch's original merge added boro_rice/aus_rice to close the Tier-0 '≥3 candidate crops' gap — a real, valuable fix, numbers now confirmed correct — but both crops kept the old basal+panicle-initiation 50/50 K split even though the cited split source (page_0065.txt: 'phosphorus, potassium, sulphur... applied as basal') says K is fully basal for rice generally; that K-split correction (still valid, independent of the AEZ mixup above) is kept. aman_rice's own data (page_0094.txt, medium soil-test row) was unaffected by either pass.",
     "retrieved_date": "2026-07-24"
   },
   "crops": {
@@ -77,14 +77,14 @@
         "booting": 14, "flowering": 8, "grain_filling": 25, "maturity": 15
       },
       "fertilizer": {
-        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0202.txt) — 'AEZ 2: Active Tista Floodplain' general cropping-pattern table, 'Rabi Boro rice' row: N150 P20 K65 S12, yield 7.5±0.75 t/ha. This is a CROSS-ZONE borrow (the table is AEZ 2, not our aez_default of 9) and the general cropping-pattern table, not the soil-test-level table aman_rice's dose cites — no AEZ-9-specific version of this table was located in the time available.",
+        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202 per manifest.json) — 'AEZ 9: Old Brahmaputra Floodplain' general cropping-pattern table, 'Rabi Boro rice' row: N150 P20 K65 S18, yield 7.5±0.75 t/ha. Zone-matched to our aez_default of 9 (correction 2026-07-25: an earlier merge-resolution pass mistakenly read page_0202.txt — OCR index 202, actually printed page 192, AEZ 2 — as the source and 'corrected' these numbers to S12; page_0212.txt/printed-page-202 is the real AEZ-9 table and restores the original S18).",
         "_verify": true,
         "unit": "kg/ha of nutrient",
         "nutrients": {
           "N": { "dose": 150, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
           "P": { "dose": 20, "splits": [ {"stage":"basal","fraction":1.0} ] },
           "K": { "dose": 65, "splits": [ {"stage":"basal","fraction":1.0} ] },
-          "S": { "dose": 12, "splits": [ {"stage":"basal","fraction":1.0} ] }
+          "S": { "dose": 18, "splits": [ {"stage":"basal","fraction":1.0} ] }
         },
         "_split_source": "BARC FRG-2018 p.65 (data/raw/barc_frg_2018/page_0065.txt): 'In case of rice (except B. Aman rice), urea should be applied in three equal splits...' + 'The full dose of phosphorus, potassium, sulphur... should be applied as basal' — general rice practice, so K is fully basal here (not the 50/50 basal+PI split, which the source reserves for coarse-textured soils only).",
         "carriers": {
@@ -103,7 +103,7 @@
         "_verify": true,
         "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
       },
-      "base_yield_kg_per_ha": { "value": 7500, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0202.txt) — AEZ 2 cropping-pattern table, Boro rice row (7.5±0.75 t/ha)", "_verify": true }
+      "base_yield_kg_per_ha": { "value": 7500, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — AEZ 9 cropping-pattern table, Boro rice row (7.5±0.75 t/ha)", "_verify": true }
     },
     "aus_rice": {
       "_added": "2026-07-25 — closes the '≥3 candidate crops' gap (Tier 0 #3).",
@@ -125,14 +125,14 @@
         "booting": 10, "flowering": 8, "grain_filling": 20, "maturity": 18
       },
       "fertilizer": {
-        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0202.txt) — 'AEZ 2: Active Tista Floodplain' general cropping-pattern table, 'Kharif 1 T. Aus rice' row: N75 P10 K20 S6, yield 4.0±0.40 t/ha. Same CROSS-ZONE caveat as boro_rice above.",
+        "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202 per manifest.json) — 'AEZ 9: Old Brahmaputra Floodplain' general cropping-pattern table, 'Kharif 1 T. Aus rice' row: N75 P10 K25 S9, yield 4.0±0.40 t/ha. Zone-matched to our aez_default of 9 (correction 2026-07-25: an earlier merge-resolution pass mistakenly read page_0202.txt — OCR index 202, actually printed page 192, AEZ 2 — as the source and 'corrected' these numbers to K20/S6; page_0212.txt/printed-page-202 is the real AEZ-9 table and restores the original K25/S9).",
         "_verify": true,
         "unit": "kg/ha of nutrient",
         "nutrients": {
           "N": { "dose": 75, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"tillering","fraction":0.33}, {"stage":"panicle_initiation","fraction":0.34} ] },
           "P": { "dose": 10, "splits": [ {"stage":"basal","fraction":1.0} ] },
-          "K": { "dose": 20, "splits": [ {"stage":"basal","fraction":1.0} ] },
-          "S": { "dose": 6, "splits": [ {"stage":"basal","fraction":1.0} ] }
+          "K": { "dose": 25, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 9, "splits": [ {"stage":"basal","fraction":1.0} ] }
         },
         "_split_source": "BARC FRG-2018 p.65 (data/raw/barc_frg_2018/page_0065.txt) — same general rice rule as boro_rice: K fully basal, not the 50/50 basal+PI split.",
         "carriers": {
@@ -151,7 +151,7 @@
         "_verify": true,
         "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
       },
-      "base_yield_kg_per_ha": { "value": 4000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0202.txt) — AEZ 2 cropping-pattern table, T. Aus rice row (4.0±0.40 t/ha)", "_verify": true }
+      "base_yield_kg_per_ha": { "value": 4000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — AEZ 9 cropping-pattern table, T. Aus rice row (4.0±0.40 t/ha)", "_verify": true }
     }
   }
 }
