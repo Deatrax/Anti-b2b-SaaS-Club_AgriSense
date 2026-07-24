@@ -1,3 +1,167 @@
-@tailwind base;
+/* No @tailwind base: Tailwind's Preflight resets element selectors (button,
+   etc.) with *unlayered* CSS, which always beats Astryx's layered component
+   styles regardless of specificity or source order — it unconditionally broke
+   every Astryx component's visual styling (e.g. Button rendered with no
+   background/padding). Wrapping it in an explicit @layer didn't reliably fix
+   this either: Astryx's own reset/astryx-base/astryx-theme layers are already
+   positioned by their first mention in earlier-imported stylesheets, and the
+   bundler's handling of a later @layer statement referencing those same names
+   didn't produce the intended order. Astryx's own reset.css already normalizes
+   browser defaults, so Tailwind's competing preflight isn't needed — only
+   components/utilities (the sanctioned className="..." escape hatch) are used. */
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Overused Grotesk — self-hosted (Docs/AgriSense_Wireframe.html's declared font).
+   "Roman" is the family's name for its regular/400 weight; "Book" is a distinct
+   350-ish weight between Light and Roman, not a style keyword. */
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Book.woff2') format('woff2');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-BookItalic.woff2') format('woff2');
+  font-weight: 350;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Roman.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-ExtraBoldItalic.woff2') format('woff2');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-BlackItalic.woff2') format('woff2');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* FarmEsy tokens with no Astryx system slot (see theme/farmesy.theme.ts's closing
+   comment). Scoped the same way Astryx scopes its own theme tokens so these only
+   apply inside the farmesy theme. Values from Docs/AgriSense_Wireframe.html. */
+[data-astryx-theme='farmesy'] {
+  --color-brand-lime: #e0ff20;
+  --color-on-brand-lime: #17310f;
+  --color-brand-yellow: #ffff00;
+  --color-text-tertiary: #87907f;
+  --color-surface-green-soft: #ebf3e1;
+  --color-surface-lime-soft: #f7ffd2;
+  /* Agent trace row colors, by tool class (§C.7) */
+  --color-trace-memory: #6b8547;
+  --color-trace-external: #2f7bc4;
+  --color-trace-retrieval: #294719;
+  --color-trace-deterministic: #ba7517;
+  --color-trace-side: #ef8844;
+}
+
+/* Root cause of the black-screen bug: Astryx's <Theme> wrapper renders with
+   `display: contents` (by design — it must not inject a layout box), so it can
+   carry the active theme's CSS-variable scope but can never paint a background
+   itself. Pages that don't wrap their content in AppShell (which paints its own
+   background) had nothing painting the canvas at all, so the browser fell back
+   to its native dark-mode canvas (reset.css sets `color-scheme: light dark`)
+   with unstyled black text on top of it — visible in practice as a near-black
+   page. This class is a real box, placed just inside <Theme> in layout.tsx, so
+   it's still within the active theme's scope. Theme-agnostic — works the same
+   regardless of which Astryx theme is active. */
+.app-canvas {
+  min-height: 100dvh;
+  background-color: var(--color-background-body);
+  color: var(--color-text-primary);
+}

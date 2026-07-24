@@ -2,5 +2,89 @@
   "app_title": "AgriSense AI",
   "start_chat": "Start chat",
   "next_steps": "Next steps",
-  "add_field": "Add a field"
+  "add_field": "Add a field",
+
+  "nav_field": "Field",
+
+  "identity_soil": "Soil",
+  "identity_water": "Water source",
+  "identity_area": "Area",
+  "not_set": "Not set",
+  "unit_hectare": "ha",
+  "unit_day": "day",
+  "day_suffix": "d",
+
+  "soil_sandy": "Sandy",
+  "soil_sandy_loam": "Sandy loam",
+  "soil_loam": "Loam",
+  "soil_silt_loam": "Silt loam",
+  "soil_clay_loam": "Clay loam",
+  "soil_clay": "Clay",
+
+  "water_rainfed": "Rainfed",
+  "water_shallow_tubewell": "Shallow tubewell",
+  "water_deep_tubewell": "Deep tubewell",
+  "water_canal": "Canal",
+  "water_pond": "Pond",
+  "water_river": "River",
+
+  "stage_land_prep": "Land preparation",
+  "stage_nursery": "Nursery",
+  "stage_transplanting": "Transplanting",
+  "stage_tillering": "Tillering",
+  "stage_panicle_initiation": "Panicle initiation",
+  "stage_booting": "Booting",
+  "stage_flowering": "Flowering",
+  "stage_grain_filling": "Grain filling",
+  "stage_maturity": "Maturity",
+  "stage_harvest": "Harvest",
+
+  "tab_overview": "Overview",
+  "tab_plan": "Plan",
+  "tab_money": "Money",
+  "tab_not_built_yet": "This tab isn't built yet — coming soon.",
+
+  "gathering_remaining": "{n} fields still needed",
+
+  "card_next_steps": "Next steps",
+  "next_steps_empty": "Nothing pending right now.",
+  "in_days": "in {n} days",
+  "overdue": "overdue",
+
+  "card_crop_stage": "Crop stage",
+
+  "card_weather": "Weather",
+  "weather_temp": "Temperature",
+  "weather_rain": "Rain (7d)",
+  "weather_et0": "ET₀",
+
+  "card_risk": "Risk alert",
+  "risk_level_low": "Low risk — keep an eye on it",
+  "risk_level_elevated": "Elevated risk",
+  "risk_level_high": "High risk — act now",
+  "risk_prevention": "Prevention",
+  "risk_treatment": "Treatment",
+  "risk_est_cost": "Est. cost",
+
+  "card_water": "Water",
+  "card_fertilizer": "Fertilizer",
+  "log_last": "Last logged",
+  "log_none_yet": "Nothing logged yet",
+  "log_amount_label": "Amount",
+  "log_action": "Log",
+
+  "chips_label": "Quick replies",
+  "composer_placeholder": "Type a message...",
+  "thread_empty_title": "No conversation yet",
+  "thread_empty_description": "Ask about the field, or log irrigation/fertilizer below.",
+  "proactive_marker": "· spoke unprompted",
+
+  "why_label": "Why?",
+  "why_sources": "Sources",
+  "why_assumptions": "Assumptions",
+  "method_api": "API",
+  "method_table": "Table",
+  "method_rag": "Knowledge base",
+  "method_computed": "Computed",
+  "method_memory": "Memory"
 }

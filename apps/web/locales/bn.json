@@ -2,5 +2,89 @@
   "app_title": "এগ্রিসেন্স এআই",
   "start_chat": "চ্যাট শুরু করুন",
   "next_steps": "পরবর্তী পদক্ষেপ",
-  "add_field": "নতুন জমি যোগ করুন"
+  "add_field": "নতুন জমি যোগ করুন",
+
+  "nav_field": "জমি",
+
+  "identity_soil": "মাটি",
+  "identity_water": "সেচের উৎস",
+  "identity_area": "জমির আয়তন",
+  "not_set": "নির্ধারিত নয়",
+  "unit_hectare": "হেক্টর",
+  "unit_day": "দিন",
+  "day_suffix": " দিন",
+
+  "soil_sandy": "বেলে",
+  "soil_sandy_loam": "বেলে-দোআঁশ",
+  "soil_loam": "দোআঁশ",
+  "soil_silt_loam": "পলি-দোআঁশ",
+  "soil_clay_loam": "দোআঁশ-কাদামাটি",
+  "soil_clay": "কাদামাটি",
+
+  "water_rainfed": "বৃষ্টি-নির্ভর",
+  "water_shallow_tubewell": "অগভীর নলকূপ",
+  "water_deep_tubewell": "গভীর নলকূপ",
+  "water_canal": "খাল",
+  "water_pond": "পুকুর",
+  "water_river": "নদী",
+
+  "stage_land_prep": "জমি প্রস্তুতি",
+  "stage_nursery": "বীজতলা",
+  "stage_transplanting": "চারা রোপণ",
+  "stage_tillering": "কুশি অবস্থা",
+  "stage_panicle_initiation": "শীষ শুরু",
+  "stage_booting": "বুটিং",
+  "stage_flowering": "ফুল আসা",
+  "stage_grain_filling": "দানা ভরাট",
+  "stage_maturity": "পরিপক্বতা",
+  "stage_harvest": "ফসল কাটা",
+
+  "tab_overview": "ওভারভিউ",
+  "tab_plan": "পরিকল্পনা",
+  "tab_money": "টাকা",
+  "tab_not_built_yet": "এই ট্যাবটি এখনো তৈরি হয়নি — শীঘ্রই আসছে।",
+
+  "gathering_remaining": "{n}টি তথ্য এখনো বাকি",
+
+  "card_next_steps": "পরবর্তী পদক্ষেপ",
+  "next_steps_empty": "এই মুহূর্তে কোনো পদক্ষেপ বাকি নেই।",
+  "in_days": "{n} দিনের মধ্যে",
+  "overdue": "নির্ধারিত সময় পেরিয়েছে",
+
+  "card_crop_stage": "ফসলের অবস্থা",
+
+  "card_weather": "আবহাওয়া",
+  "weather_temp": "তাপমাত্রা",
+  "weather_rain": "বৃষ্টিপাত (৭ দিন)",
+  "weather_et0": "বাষ্পীভবন",
+
+  "card_risk": "ঝুঁকি সতর্কতা",
+  "risk_level_low": "সামান্য ঝুঁকি — নজরে রাখুন",
+  "risk_level_elevated": "মাঝারি থেকে বেশি ঝুঁকি",
+  "risk_level_high": "উচ্চ ঝুঁকি — এখনই ব্যবস্থা নিন",
+  "risk_prevention": "প্রতিরোধ",
+  "risk_treatment": "চিকিৎসা",
+  "risk_est_cost": "আনুমানিক খরচ",
+
+  "card_water": "সেচ",
+  "card_fertilizer": "সার",
+  "log_last": "সর্বশেষ লগ",
+  "log_none_yet": "এখনো কোনো লগ করা হয়নি",
+  "log_amount_label": "পরিমাণ",
+  "log_action": "লগ করুন",
+
+  "chips_label": "দ্রুত উত্তর",
+  "composer_placeholder": "একটি বার্তা লিখুন...",
+  "thread_empty_title": "কথোপকথন শুরু হয়নি",
+  "thread_empty_description": "জমি সম্পর্কে প্রশ্ন করুন বা নিচে থেকে সেচ/সার লগ করুন।",
+  "proactive_marker": "· নিজে থেকে জানানো হয়েছে",
+
+  "why_label": "কেন?",
+  "why_sources": "উৎসসমূহ",
+  "why_assumptions": "অনুমান",
+  "method_api": "এপিআই",
+  "method_table": "টেবিল",
+  "method_rag": "জ্ঞানভান্ডার",
+  "method_computed": "গণনাকৃত",
+  "method_memory": "সংরক্ষিত তথ্য"
 }
