@@ -8,12 +8,14 @@ import { TraceModel } from '../../models/trace.model';
 
 /**
  * What every tool handler receives, threaded down from the orchestrator (§C.2).
- * Only the three fields the trace wrapper itself needs are typed; everything else
- * (fieldId, model, …) rides along via the index signature.
+ * `fieldId` is here (not just in the index signature) because every field/weather/
+ * planning tool operates on the one active field per conversation (§B.5 scope).
+ * Anything else (model, registry, …) rides along via the index signature.
  */
 export interface ToolCtx {
   conversationId: string;
   messageId: string | null;
+  fieldId: string;
   stream: AgentStream;
   [key: string]: unknown;
 }
