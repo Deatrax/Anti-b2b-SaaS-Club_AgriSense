@@ -6,6 +6,8 @@ import { VStack } from '@astryxdesign/core/Stack';
 import { Text } from '@astryxdesign/core/Text';
 import { Timestamp } from '@astryxdesign/core/Timestamp';
 import { ChatMessage, ChatMessageBubble, ChatMessageMetadata, ChatToolCalls } from '@astryxdesign/core/Chat';
+import { Spinner } from '@astryxdesign/core/Spinner';
+import { HStack } from '@astryxdesign/core/Stack';
 import type { TraceEntry } from '@agrisense/shared';
 import ReactMarkdown from 'react-markdown';
 import { useT } from '../../app/providers';
@@ -87,7 +89,23 @@ export function FeedMessage({ item }: { item: Extract<FeedItem, { type: 'message
           />
         }
       >
-        <ReactMarkdown className="markdown-body">{message.content}</ReactMarkdown>
+        <div className="markdown-body">
+          <ReactMarkdown>{message.content}</ReactMarkdown>
+        </div>
+      </ChatMessageBubble>
+    </ChatMessage>
+  );
+}
+
+export function FeedThinking() {
+  const { t } = useT();
+  return (
+    <ChatMessage sender="assistant">
+      <ChatMessageBubble variant="ghost">
+        <HStack gap={2} vAlign="center">
+          <Spinner size="sm" />
+          <Text type="supporting" color="secondary">{t('agent_thinking') || 'Agent is thinking...'}</Text>
+        </HStack>
       </ChatMessageBubble>
     </ChatMessage>
   );
