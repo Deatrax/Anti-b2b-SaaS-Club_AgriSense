@@ -7,6 +7,7 @@ import { Text } from '@astryxdesign/core/Text';
 import { Timestamp } from '@astryxdesign/core/Timestamp';
 import { ChatMessage, ChatMessageBubble, ChatMessageMetadata, ChatToolCalls } from '@astryxdesign/core/Chat';
 import type { TraceEntry } from '@agrisense/shared';
+import ReactMarkdown from 'react-markdown';
 import { useT } from '../../app/providers';
 import type { FeedItem } from '../../lib/mock-data';
 
@@ -15,6 +16,7 @@ export function toolCallStatus(status: TraceEntry['status']): 'pending' | 'runni
   if (status === 'error') return 'error';
   return status;
 }
+
 
 export function formatTarget(params: unknown): string {
   if (params == null || typeof params !== 'object') return '';
@@ -85,7 +87,7 @@ export function FeedMessage({ item }: { item: Extract<FeedItem, { type: 'message
           />
         }
       >
-        {message.content}
+        <ReactMarkdown className="markdown-body">{message.content}</ReactMarkdown>
       </ChatMessageBubble>
     </ChatMessage>
   );

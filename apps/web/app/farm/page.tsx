@@ -37,6 +37,7 @@ export default function FarmPage() {
   const [newFarmDistrict, setNewFarmDistrict] = useState('');
   const [isCreatingFarm, setIsCreatingFarm] = useState(false);
   const [isAddingField, setIsAddingField] = useState(false);
+  const [newFieldName, setNewFieldName] = useState('');
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -72,7 +73,7 @@ export default function FarmPage() {
     setIsAddingField(true);
     setError(null);
     try {
-      const { field } = await createField(session.farmId);
+      const { field } = await createField(session.farmId, newFieldName.trim() || undefined);
       router.push(`/field/${field.id}/chat`);
     } catch (err) {
       setError(String(err));
@@ -172,6 +173,7 @@ export default function FarmPage() {
                 <Text type="label" weight="semibold">
                   {t('add_field')}
                 </Text>
+                <TextInput value={newFieldName} onChange={setNewFieldName} placeholder={t('field_name_placeholder') || 'Field Name (Optional)'} />
                 <Button label={t('add_field')} variant="secondary" isDisabled={isAddingField} onClick={handleAddField} />
               </VStack>
             </Card>

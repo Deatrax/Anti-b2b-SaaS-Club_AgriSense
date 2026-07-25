@@ -53,6 +53,7 @@ const updateFieldSchema = z.object({
   district: z.string().nullable().optional().describe("District name to resolve into the field's location, ONLY if the farmer named it; null otherwise."),
   lat: z.number().nullable().optional().describe('Exact latitude the farmer gave — use with lon instead of district. null unless the farmer gave coordinates.'),
   lon: z.number().nullable().optional(),
+  name: z.string().nullable().optional().describe(`The name of the field, ${ONLY_IF_STATED}`),
 });
 
 const logFieldEventSchema = z.object({
@@ -80,7 +81,7 @@ export function registerFieldTools(): void {
   register({
     name: 'update_field',
     description:
-      'Patches one or more intake fields on the field record (area, soil type, water source, budget, ' +
+      'Patches one or more intake fields on the field record (name, area, soil type, water source, budget, ' +
       'target season, location) and returns the updated record plus what is still missing. ' +
       'CRITICAL: include ONLY the keys the farmer explicitly stated — every omitted key stays unknown ' +
       'and gets asked about later, which is correct. Example: farmer says "Gazipur, about 1.2 acres" → ' +
@@ -104,6 +105,7 @@ export function registerFieldTools(): void {
 
       // null means "the farmer didn't state it" (see schema note) — never write it.
       const patch: Partial<{
+        name: string;
         area_ha: number;
         soil_type: string;
         water_source: string;
