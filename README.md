@@ -63,8 +63,9 @@ _TODO (required by the brief). Weather real; KB real+cited; cost tables static+c
 payment simulated against the real contract; OTP not built (phone = plain identifier)._
 
 ## What we deliberately did not build, and why
-_TODO (§D.2): OTP verification, multi-session auth, image diagnosis, marketplace, voice —
-named choices under a 24-hour constraint, not omissions._
+_TODO (§D.2): OTP verification, multi-session auth, image diagnosis, voice —
+named choices under a 24-hour constraint, not omissions. (Marketplace & supplier comparison
+was added afterward — see `Docs/superpowers/specs/2026-07-25-marketplace-supplier-comparison-design.md`.)_
 
 ## Tests
 `npm test` — the **financial engine** consistency suite (§C.9) is the one that scores:
