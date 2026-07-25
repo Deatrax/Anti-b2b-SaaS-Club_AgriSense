@@ -25,6 +25,12 @@ export async function getMarketplaceMatches(req: Request, res: Response, next: N
     const result = await matchSuppliersForField(fieldId);
     res.json(result);
   } catch (err) {
+    // "no location set" is a farmer-fixable precondition, not a server error — surface it
+    // as a 400 the same way postSelectSupplier already does for its own precondition errors.
+    if (err instanceof Error && err.message.includes('no location set')) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
     next(err);
   }
 }
@@ -44,11 +50,19 @@ export async function postSelectSupplier(req: Request, res: Response, next: Next
   try {
     const { selection } = await selectSupplierForField(fieldId, itemKey, supplierId);
 
-    const conversation = (await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(fieldId));
-    const ctx: ToolCtx = { conversationId: conversation.id, messageId: null, fieldId, stream: createNoopStream() };
-    await getRegistry().get('compute_financials')!.handler({}, ctx);
+    // The selection is already persisted at this point — it will apply on the next recompute
+    // regardless. If this immediate recompute fails, still return 201 (the selection is real)
+    // but flag it so the caller knows the ledger/Money tab may not reflect it yet.
+    let recomputeFailed = false;
+    try {
+      const conversation = (await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(fieldId));
+      const ctx: ToolCtx = { conversationId: conversation.id, messageId: null, fieldId, stream: createNoopStream() };
+      await getRegistry().get('compute_financials')!.handler({}, ctx);
+    } catch {
+      recomputeFailed = true;
+    }
 
-    res.status(201).json({ selection });
+    res.status(201).json({ selection, recomputeFailed });
   } catch (err) {
     if (err instanceof Error && (err.message.startsWith('unknown supplier') || err.message.includes('does not currently stock') || err.message.startsWith('no active crop cycle'))) {
       res.status(400).json({ error: err.message });

@@ -110,8 +110,10 @@ export function registerFinancialTools(): void {
         const productKg = (spec.dose * areaHa) / pct;
         const selection = selectionByItem.get(carrier);
         const unitCost = selection ? selection.unit_price_bdt : priceEntry.value;
+        // Price is overridden by the supplier, but qty still comes from crop_rules.json's dose —
+        // cite both rather than dropping the dose's own provenance (§ audit finding #2).
         const source = selection
-          ? `supplier: ${selection.supplier_name} (data/suppliers.json)`
+          ? `supplier: ${selection.supplier_name} (data/suppliers.json) + crop_rules.json (${cropKey}.fertilizer.nutrients.${nutrient})`
           : `crop_rules.json (${cropKey}.fertilizer.nutrients.${nutrient}) + costs_bd.json (${carrier})`;
         costLineItems.push({
           item: `${carrier} (for ${nutrient})`,
@@ -141,7 +143,11 @@ export function registerFinancialTools(): void {
         const seedKg = seed.rate_kg_per_ha * areaHa;
         const seedSelection = selectionByItem.get('seed');
         const seedUnitCost = seedSelection ? seedSelection.unit_price_bdt : seed.price_bdt_per_kg;
-        const seedSource = seedSelection ? `supplier: ${seedSelection.supplier_name} (data/suppliers.json)` : 'costs_bd.json (seed)';
+        // Same provenance concern as the fertilizer loop above: seedKg's rate still comes from
+        // costs_bd.json even when the price is supplier-overridden.
+        const seedSource = seedSelection
+          ? `supplier: ${seedSelection.supplier_name} (data/suppliers.json) + costs_bd.json (seed rate)`
+          : 'costs_bd.json (seed)';
         costLineItems.push({
           item: 'seed',
           qty: Number(seedKg.toFixed(2)),
