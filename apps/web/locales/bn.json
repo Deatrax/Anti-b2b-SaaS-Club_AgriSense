@@ -145,6 +145,7 @@
   "onboarding_ask_budget_season": "শেষ দুটি প্রশ্ন — এই মৌসুমে আনুমানিক কত খরচ করতে পারবেন, আর এটি এখনকার জন্য নাকি পরের মৌসুমের জন্য?",
   "onboarding_record_heading": "জমির তথ্য — সরাসরি পূরণ হচ্ছে",
   "onboarding_not_given": "এখনো দেওয়া হয়নি",
+  "intake_name": "জমির নাম",
   "intake_location": "অবস্থান",
   "intake_area": "আয়তন",
   "intake_soil": "মাটি",

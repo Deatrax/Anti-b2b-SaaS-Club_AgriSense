@@ -13,7 +13,7 @@ import { Icon } from '@astryxdesign/core/Icon';
 import { Badge } from '@astryxdesign/core/Badge';
 import { Button } from '@astryxdesign/core/Button';
 import { Divider } from '@astryxdesign/core/Divider';
-import { MapPin, Ruler, Layers, Droplets, Wallet, CalendarClock, Check, Sprout } from 'lucide-react';
+import { MapPin, Ruler, Layers, Droplets, Wallet, CalendarClock, Check, Sprout, Tag } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { IntakeField } from '@agrisense/shared';
 import { useT } from '../app/providers';
@@ -21,6 +21,7 @@ import { bdt } from '../lib/format';
 import type { ApiField } from '../lib/api';
 
 const ROWS: { key: IntakeField; labelKey: string; icon: LucideIcon }[] = [
+  { key: 'name', labelKey: 'intake_name', icon: Tag },
   { key: 'location', labelKey: 'intake_location', icon: MapPin },
   { key: 'area_ha', labelKey: 'intake_area', icon: Ruler },
   { key: 'soil_type', labelKey: 'intake_soil', icon: Layers },
@@ -38,6 +39,8 @@ export function IntakePanel({ field, farmDistrict, fieldId }: { field: ApiField;
 
   function valueFor(key: IntakeField): string {
     switch (key) {
+      case 'name':
+        return field.name ?? t('intake_set');
       case 'location':
         return farmDistrict ?? t('intake_set');
       case 'area_ha':

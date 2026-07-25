@@ -10,6 +10,7 @@ export type Season = 'boro' | 'aus' | 'aman' | 'rabi' | 'kharif_1' | 'kharif_2';
 
 /** The six Tier-0 intake fields (§1.2 #1). Empty slots ARE the missing information. */
 export const REQUIRED_INTAKE_FIELDS = [
+  'name',
   'location',
   'area_ha',
   'soil_type',

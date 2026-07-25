@@ -8,8 +8,8 @@ import { SideNav, SideNavHeading, SideNavItem, SideNavSection } from '@astryxdes
 import { Selector } from '@astryxdesign/core/Selector';
 import { Divider } from '@astryxdesign/core/Divider';
 import { Wheat, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
-import { useT } from '../app/providers';
-import { createFieldConversation, type ApiField, type ApiRecentChat } from '../lib/api';
+import { useT, useSession } from '../app/providers';
+import { createField, createFieldConversation, type ApiField, type ApiRecentChat } from '../lib/api';
 
 const SUB_PAGES = ['overview', 'chat', 'plan', 'money'] as const;
 
@@ -35,6 +35,7 @@ export function FieldRail({
   onAddField?: () => void;
 }) {
   const { t } = useT();
+  const { session } = useSession();
   const router = useRouter();
   const pathname = usePathname() ?? '';
   const searchParams = useSearchParams();
@@ -55,6 +56,17 @@ export function FieldRail({
     if (!selectedField) return;
     createFieldConversation(selectedField.id)
       .then(({ conversation }) => router.push(`/field/${conversation.fieldId}/chat?c=${conversation.id}`))
+      .catch(() => {});
+  }
+
+  function handleAddField() {
+    if (onAddField) {
+      onAddField();
+      return;
+    }
+    if (!session?.farmId) return;
+    createField(session.farmId)
+      .then(({ field }) => router.push(`/field/${field.id}/chat`))
       .catch(() => {});
   }
 
@@ -109,7 +121,7 @@ export function FieldRail({
             <SideNavItem label={t('field_finance_nav')} icon={Wallet} isSelected={pathname === `/field/${selectedField.id}/money`} href={`/field/${selectedField.id}/money`} />
           </>
         ) : null}
-        {onAddField ? <SideNavItem label={t('add_field')} icon={Plus} onClick={onAddField} /> : null}
+        <SideNavItem label={t('add_field')} icon={Plus} onClick={handleAddField} />
       </SideNavSection>
 
       <Divider />

@@ -145,6 +145,7 @@
   "onboarding_ask_budget_season": "Last two: roughly what can you spend this season, and is this for now or later?",
   "onboarding_record_heading": "Field record — filling in live",
   "onboarding_not_given": "not yet given",
+  "intake_name": "Field Name",
   "intake_location": "Location",
   "intake_area": "Size",
   "intake_soil": "Soil",

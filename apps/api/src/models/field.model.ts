@@ -108,6 +108,7 @@ export const FieldModel = {
 /** The six intake slots → what's still empty. Drives GATHERING vs PLANNING (§C.8). */
 function computeMissing(f: FieldRow, targetSeason: string | null): IntakeField[] {
   const present: Record<IntakeField, boolean> = {
+    name: f.name != null && f.name.trim().length > 0,
     location: f.lat != null && f.lon != null,
     area_ha: f.area_ha != null,
     soil_type: f.soil_type != null,
