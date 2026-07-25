@@ -17,11 +17,12 @@ const identity: FieldState['identity'] = {
   budgetBdt: 40000,
 };
 
-const gatheringState: FieldState = { identity, activeCycle: null, missingFields: ['budget_bdt', 'target_season'] };
-const planningState: FieldState = { identity, activeCycle: null, missingFields: [] };
+const gatheringState: FieldState = { identity, activeCycle: null, targetSeason: null, missingFields: ['budget_bdt', 'target_season'] };
+const planningState: FieldState = { identity, activeCycle: null, targetSeason: 'aman', missingFields: [] };
 const maintainingState: FieldState = {
   identity,
   missingFields: [],
+  targetSeason: 'aman',
   activeCycle: {
     id: 'c1',
     fieldId: 'f1',

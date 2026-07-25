@@ -35,6 +35,7 @@ const maintainingState: FieldState = {
     waterSource: 'shallow_tubewell', lat: 24.7, lon: 90.4, budgetBdt: 40000,
   },
   missingFields: [],
+  targetSeason: 'aman',
   activeCycle: {
     id: 'c1', fieldId: 'f1', crop: 'aman_rice', variety: null, season: 'aman',
     sowingDate: null, expectedHarvest: null, status: 'active', stage: 'tillering',

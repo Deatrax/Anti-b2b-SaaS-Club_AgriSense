@@ -53,26 +53,41 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
 
       const close = openChatStream({ fieldId, message, conversationId }, (event: StreamEvent) => {
         if (event.type === 'text') {
+          // Determine the ID outside the state updater if we need a new one
+          const activeId = assistantIdRef.current || `assistant-${Date.now()}`;
+          
+          // Only update the ref if it changed, outside the setFeed call
+          if (assistantIdRef.current !== activeId) {
+            assistantIdRef.current = activeId;
+          }
+
           setFeed((f) => {
-            if (assistantIdRef.current) {
+            const exists = f.some((item) => item.id === activeId);
+
+            if (exists) {
               return f.map((item) =>
-                item.id === assistantIdRef.current && item.type === 'message'
+                item.id === activeId && item.type === 'message'
                   ? { ...item, message: { ...item.message, content: item.message.content + event.delta } }
                   : item,
               );
             }
-            const id = `assistant-${Date.now()}`;
-            assistantIdRef.current = id;
             return [
               ...f,
               {
-                id,
+                id: activeId,
                 type: 'message',
-                message: { id, conversationId: CONV_ID, role: 'assistant', content: event.delta, toolCalls: null, isProactive: false, createdAt: new Date().toISOString() },
+                message: { id: activeId, conversationId: CONV_ID, role: 'assistant', content: event.delta, toolCalls: null, isProactive: false, createdAt: new Date().toISOString() },
               },
             ];
           });
         } else if (event.type === 'tool_start' || event.type === 'tool_end') {
+          // CLOSE the open assistant bubble (BUG: "tool call happens but the output never
+          // shows"). assistantIdRef used to survive the whole turn, so the text of step 2+
+          // was appended into the bubble created in step 1 — which now sits ABOVE this trace
+          // block. The answer WAS arriving; it was being written off-screen above the last
+          // tool card while autoscroll sat at the bottom. Clearing the ref makes the next
+          // text delta open a fresh bubble BELOW the trace, which is where a reader looks.
+          if (event.type === 'tool_start') assistantIdRef.current = null;
           // Consecutive tool calls collapse into ONE feed block (Claude-style "worked for…"
           // summary) instead of one block per call; a text message in between starts a new
           // block. tool_end replaces its tool_start entry in place by trace id.
@@ -86,6 +101,9 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
             return [...f, { id: `trace-${event.trace.id}`, type: 'tool_trace', traces: [event.trace] }];
           });
         } else if (event.type === 'notice') {
+          // Same reason as tool_start: a notice is its own feed row, so any text that
+          // follows it must start a new bubble rather than reopening the one above it.
+          assistantIdRef.current = null;
           setFeed((f) => [
             ...f,
             {

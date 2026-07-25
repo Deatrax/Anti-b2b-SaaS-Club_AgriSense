@@ -17,7 +17,7 @@ const baseIdentity: FieldState['identity'] = {
 };
 
 function state(overrides: Partial<FieldState>): FieldState {
-  return { identity: baseIdentity, activeCycle: null, missingFields: [], ...overrides };
+  return { identity: baseIdentity, activeCycle: null, targetSeason: null, missingFields: [], ...overrides };
 }
 
 describe('derivePhase', () => {

@@ -79,7 +79,7 @@ export interface ApiFieldIdentity {
 }
 
 /** field.view.ts's serializeField() output. */
-export type ApiField = ApiFieldIdentity & Pick<FieldState, 'activeCycle'> & { missingFields: IntakeField[] };
+export type ApiField = ApiFieldIdentity & Pick<FieldState, 'activeCycle' | 'targetSeason'> & { missingFields: IntakeField[] };
 
 export interface ApiPlanTimelineEntry {
   id: string;
