@@ -45,6 +45,7 @@ npm run dev                   # api :4000 + web :3000
 | Knowledge base (RAG) | retrieval | IRRI RKB, BARC FRG-2018 prose | **Real** (public sources) |
 | Fertilizer / cost / calendar tables | deterministic | BARC FRG-2018, BBS, USDA FAS | **Real** (cited, `data/*.json`) |
 | bdapps CaaS | gated | published contract, simulator mode | **Simulated** (sanctioned by brief) |
+| SMS channel (`POST /agent/sms`) | channel adapter | called by the `farmer-sms-webhook` repo (bdapps SMS) | **Real** (real DB + RAG + LLM turn; bdapps SMS delivery itself lives in the webhook repo) |
 | _…_ | | | |
 
 ## Knowledge base
@@ -57,6 +58,7 @@ retrieval (pgvector cosine + metadata pre-filter). See `apps/api/src/services/ra
 | Conversational intake · weather · crop rec · season plan · financials · explainability · RAG · trace | 0 | scaffolded |
 | bdapps CaaS checkout | scored (10 pts) | scaffolded (simulator) |
 | Replan · scenario sim · pest risk | 1 | scaffolded |
+| SMS channel adapter (`/agent/sms`) — single retrieve+completion, no tool loop, ≤280-char Bangla, <8s | 2 | working, measured live |
 
 ## What is real vs. generated
 _TODO (required by the brief). Weather real; KB real+cited; cost tables static+cited;

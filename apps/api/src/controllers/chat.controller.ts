@@ -18,7 +18,7 @@ export const postChatSchema = z.object({
   conversationId: z.string().min(1).optional(),
 });
 
-function selectModel(): LanguageModel {
+export function selectModel(): LanguageModel {
   try {
     return primaryModel();
   } catch (err) {
