@@ -7,11 +7,11 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { SideNav, SideNavHeading, SideNavItem, SideNavSection } from '@astryxdesign/core/SideNav';
 import { Selector } from '@astryxdesign/core/Selector';
 import { Divider } from '@astryxdesign/core/Divider';
-import { Wheat, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
+import { Wheat, Home, MessageCircle, CalendarDays, Wallet, ShoppingCart, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
 import { useT } from '../app/providers';
 import { createFieldConversation, type ApiField, type ApiRecentChat } from '../lib/api';
 
-const SUB_PAGES = ['overview', 'chat', 'plan', 'money'] as const;
+const SUB_PAGES = ['overview', 'chat', 'plan', 'money', 'buy'] as const;
 
 export function FieldRail({
   farmName,
@@ -107,6 +107,7 @@ export function FieldRail({
               href={`/field/${selectedField.id}/plan`}
             />
             <SideNavItem label={t('field_finance_nav')} icon={Wallet} isSelected={pathname === `/field/${selectedField.id}/money`} href={`/field/${selectedField.id}/money`} />
+            <SideNavItem label={t('field_buy_nav')} icon={ShoppingCart} isSelected={pathname === `/field/${selectedField.id}/buy`} href={`/field/${selectedField.id}/buy`} />
           </>
         ) : null}
         {onAddField ? <SideNavItem label={t('add_field')} icon={Plus} onClick={onAddField} /> : null}
