@@ -75,7 +75,7 @@ export function computeStageDates(anchorDate: string, postAnchorStages: string[]
   let cursor = anchorDate;
   for (const stage of postAnchorStages) {
     stageDates[stage] = cursor;
-    cursor = addDays(cursor, stageDurationsDays[stage]);
+    cursor = addDays(cursor, stageDurationsDays[stage]!);
   }
   return stageDates;
 }
