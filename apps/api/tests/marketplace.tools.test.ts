@@ -7,10 +7,13 @@ import type { ToolCtx } from '../src/services/tools/registry';
 const getState = vi.fn();
 const listByCycle = vi.fn();
 const upsert = vi.fn();
+const selectionListByCycle = vi.fn();
 
 vi.mock('../src/models/field.model', () => ({ FieldModel: { getState } }));
 vi.mock('../src/models/ledger.model', () => ({ LedgerModel: { listByCycle } }));
-vi.mock('../src/models/supplierSelection.model', () => ({ SupplierSelectionModel: { upsert } }));
+vi.mock('../src/models/supplierSelection.model', () => ({
+  SupplierSelectionModel: { upsert, listByCycle: selectionListByCycle },
+}));
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
     begin: vi.fn(async (_c: string, _m: string | null, step: number) => ({ id: `t${step}`, step, startedAt: Date.now() })),
@@ -54,6 +57,7 @@ function seedLedgerLine(qty = 20) {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  selectionListByCycle.mockResolvedValue([]); // default: no confirmed supplier selections
 });
 
 describe('matchSuppliersForField — real data/suppliers.json + data/districts.json', () => {
@@ -73,6 +77,29 @@ describe('matchSuppliersForField — real data/suppliers.json + data/districts.j
     for (let i = 1; i < item.offers.length; i++) {
       expect(item.offers[i - 1]!.score).toBeGreaterThanOrEqual(item.offers[i]!.score);
     }
+  });
+
+  it('has a null selectedSupplierId when no supplier has been chosen for this item yet', async () => {
+    getState.mockResolvedValue(DHAKA_FIELD_STATE);
+    listByCycle.mockResolvedValue([ureaLedgerLine(50)]);
+    selectionListByCycle.mockResolvedValue([]);
+
+    const result = await matchSuppliersForField('field-1');
+    expect(result.items[0]!.selectedSupplierId).toBeNull();
+  });
+
+  it('surfaces the already-confirmed supplier as selectedSupplierId (survives a page reload)', async () => {
+    getState.mockResolvedValue(DHAKA_FIELD_STATE);
+    listByCycle.mockResolvedValue([ureaLedgerLine(50)]);
+    selectionListByCycle.mockResolvedValue([
+      {
+        id: 'sel-1', crop_cycle_id: 'cycle-1', item_key: 'urea', supplier_id: 'sup_dhaka_agrimart',
+        supplier_name: 'Dhaka Agri Mart', unit_price_bdt: 29, delivery_days: 1, selected_at: '2026-07-25T00:00:00Z',
+      },
+    ]);
+
+    const result = await matchSuppliersForField('field-1');
+    expect(result.items[0]!.selectedSupplierId).toBe('sup_dhaka_agrimart');
   });
 
   it('derives the seed catalog key from the active cycle\'s crop', async () => {

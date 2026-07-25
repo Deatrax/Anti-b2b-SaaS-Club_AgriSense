@@ -49,9 +49,6 @@ async function call(args: unknown, ctx = makeCtx()) {
 
 beforeEach(() => {
   vi.clearAllMocks();
-});
-
-beforeEach(() => {
   listByCycle.mockResolvedValue([]); // default: no supplier selections
 });
 

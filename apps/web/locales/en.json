@@ -307,6 +307,8 @@
   "item_mop": "MoP",
   "item_gypsum": "Gypsum",
   "item_seed": "Seed",
+  "buy_recompute_warning_title": "Selection saved, but the plan hasn't updated yet",
+  "buy_recompute_warning_desc": "Your supplier choice was saved. We couldn't refresh the season plan's cost right away — check the Money tab in a moment, or make another edit to trigger a refresh.",
 
   "weather_view_details": "View details",
   "weather_rain_probability": "{n}% chance of rain",

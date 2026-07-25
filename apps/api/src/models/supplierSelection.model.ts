@@ -4,6 +4,10 @@
 // by LedgerModel.replaceProjection()).
 import { query } from '../config/db';
 
+/** unit_price_bdt/delivery_days are a SNAPSHOT of the catalog offer at selection time, by
+ * design — matches how a real order locks in a quoted price. If data/suppliers.json changes
+ * or the offer goes out of stock afterward, this row (and financial.tools.ts's use of it)
+ * keeps the originally-selected price rather than silently re-pricing an already-chosen item. */
 export interface SupplierSelectionRow {
   id: string;
   crop_cycle_id: string;

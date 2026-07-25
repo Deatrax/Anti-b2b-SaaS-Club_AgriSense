@@ -49,6 +49,7 @@ export default function FieldBuyPage({ params }: { params: Promise<{ id: string 
   const [error, setError] = useState<string | null>(null);
   const [selectedBy, setSelectedBy] = useState<Record<string, string>>({});
   const [selectingKey, setSelectingKey] = useState<string | null>(null);
+  const [recomputeWarning, setRecomputeWarning] = useState(false);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -57,7 +58,18 @@ export default function FieldBuyPage({ params }: { params: Promise<{ id: string 
       return;
     }
     getField(id).then(setField).catch((err) => setError(String(err)));
-    getMarketplaceMatches(id).then(setMatches).catch((err) => setError(String(err)));
+    getMarketplaceMatches(id)
+      .then((res) => {
+        setMatches(res);
+        // Hydrate "already selected" from the server so the badge survives a reload —
+        // not just right after this session's own POST /marketplace/select.
+        const alreadySelected: Record<string, string> = {};
+        for (const item of res.items) {
+          if (item.selectedSupplierId) alreadySelected[item.itemKey] = item.selectedSupplierId;
+        }
+        setSelectedBy(alreadySelected);
+      })
+      .catch((err) => setError(String(err)));
     if (session.farmId) {
       listFields(session.farmId).then((res) => setSiblingFields(res.fields)).catch(() => {});
       listRecentChats(session.farmId).then((res) => setRecentChats(res.chats)).catch(() => {});
@@ -67,7 +79,10 @@ export default function FieldBuyPage({ params }: { params: Promise<{ id: string 
   function handleSelect(itemKey: string, supplierId: string) {
     setSelectingKey(`${itemKey}:${supplierId}`);
     selectSupplier(id, itemKey, supplierId)
-      .then(() => setSelectedBy((prev) => ({ ...prev, [itemKey]: supplierId })))
+      .then((res) => {
+        setSelectedBy((prev) => ({ ...prev, [itemKey]: supplierId }));
+        setRecomputeWarning(res.recomputeFailed);
+      })
       .catch((err) => setError(String(err)))
       .finally(() => setSelectingKey(null));
   }
@@ -110,6 +125,10 @@ export default function FieldBuyPage({ params }: { params: Promise<{ id: string 
         ) : null}
 
         {error ? <Banner status="error" title={t('login_error_title')} description={error} /> : null}
+
+        {recomputeWarning ? (
+          <Banner status="warning" title={t('buy_recompute_warning_title')} description={t('buy_recompute_warning_desc')} />
+        ) : null}
 
         {!matches ? (
           <Skeleton height={320} />

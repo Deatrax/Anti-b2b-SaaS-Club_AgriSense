@@ -368,6 +368,7 @@ export interface ApiItemMatch {
   neededQty: number;
   unit: string;
   offers: ApiSupplierOffer[];
+  selectedSupplierId: string | null;
 }
 
 export interface ApiMarketplaceMatches {
@@ -389,6 +390,10 @@ export interface ApiSupplierSelection {
   selected_at: string;
 }
 
-export function selectSupplier(fieldId: string, itemKey: string, supplierId: string): Promise<{ selection: ApiSupplierSelection }> {
+export function selectSupplier(
+  fieldId: string,
+  itemKey: string,
+  supplierId: string,
+): Promise<{ selection: ApiSupplierSelection; recomputeFailed: boolean }> {
   return apiPost(`/fields/${encodeURIComponent(fieldId)}/marketplace/select`, { itemKey, supplierId });
 }

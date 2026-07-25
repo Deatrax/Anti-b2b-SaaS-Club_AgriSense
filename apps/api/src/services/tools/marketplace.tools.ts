@@ -55,6 +55,9 @@ function deriveNeeds(ledgerLines: LedgerEntry[], crop: string): ItemNeed[] {
   const byItemKey = new Map<string, { qty: number; unit: string }>();
   for (const line of ledgerLines) {
     if (line.isActual || line.kind !== 'cost' || line.qty == null || !line.unit) continue;
+    // Matches financial.tools.ts's exact `${carrier} (for ${nutrient})` item naming — any
+    // future cost line starting with a carrier name (e.g. a new "urea..." line elsewhere)
+    // would false-match here; keep this in sync if that naming ever changes.
     const carrier = FERTILIZER_CARRIERS.find((c) => line.item.startsWith(c));
     const itemKey = carrier ?? (line.item === 'seed' ? 'seed' : null);
     if (!itemKey) continue;
@@ -86,6 +89,9 @@ export interface ItemMatch {
   neededQty: number;
   unit: string;
   offers: SupplierOfferResult[];
+  /** The farmer's currently-confirmed supplier for this item (supplier_selections), or null
+   * if none chosen yet — lets the UI show "Selected" on reload, not just right after a POST. */
+  selectedSupplierId: string | null;
 }
 
 export interface MarketplaceMatchResult {
@@ -110,6 +116,9 @@ export async function matchSuppliersForField(fieldId: string, itemKey?: string):
   let needs = deriveNeeds(ledgerLines, cycle.crop);
   if (itemKey) needs = needs.filter((n) => n.itemKey === itemKey);
   if (needs.length === 0) return { items: [] };
+
+  const selections = await SupplierSelectionModel.listByCycle(cycle.id);
+  const selectedSupplierByItem = new Map(selections.map((s) => [s.item_key, s.supplier_id]));
 
   const suppliersFile = loadJson<SuppliersFile>('suppliers.json');
   const districtsFile = loadJson<DistrictsFile>('districts.json');
@@ -147,7 +156,13 @@ export async function matchSuppliersForField(fieldId: string, itemKey?: string):
       score: Number(r.score.toFixed(4)),
       subScores: r.subScores,
     }));
-    return { itemKey: need.itemKey, neededQty: need.neededQty, unit: need.unit, offers };
+    return {
+      itemKey: need.itemKey,
+      neededQty: need.neededQty,
+      unit: need.unit,
+      offers,
+      selectedSupplierId: selectedSupplierByItem.get(need.itemKey) ?? null,
+    };
   });
 
   return { items };
