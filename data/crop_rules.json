@@ -214,6 +214,50 @@
         "initial": 0.5, "development": 0.83, "mid": 1.15, "late": 0.75
       },
       "base_yield_kg_per_ha": { "value": 30000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt / page_0120.txt) Yield Goal 30.0±3.0 t/ha — corroborated by BARI Alu-68 field-trial average 31.72 t/ha (data/raw/bari_varieties/potato_bari-alu-68.json)", "_verify": true }
+    },
+    "maize": {
+      "_added": "2026-07-25 — closes the '3 complete crops' ranking requirement (Docs/AgriSense_Conversational_Flow.md).",
+      "label": "Maize (BARI Hybrid Maize-5)",
+      "label_bn": "ভুট্টা",
+      "season": "rabi",
+      "growth_model": "direct_seed",
+      "aez_default": 9,
+      "calendar": {
+        "_source": "BARI Hybrid Maize-5 (data/raw/bari_varieties/maize_bari-hybrid-maize-5.json): Rabi planting mid-November to mid-December, crop duration 140-145 days.",
+        "_verify": true,
+        "sowing_window": { "start": "11-15", "end": "12-15", "_note": "direct-seeded, no separate nursery/transplant stage" },
+        "harvest_window": { "start": "04-05", "end": "05-10" }
+      },
+      "pre_anchor_stages": [],
+      "stage_durations_days": {
+        "_source": "Total duration verified: BARI Hybrid Maize-5, 140-145 days (data/raw/bari_varieties/maize_bari-hybrid-maize-5.json), which also states 'silk formation time 90-95 days' — used to anchor the tasseling_silking stage below. Per-stage breakdown is otherwise an engineering estimate consistent with those two verified figures, not itself line-cited — same treatment as aman_rice's stage_durations_days.",
+        "_verify": true,
+        "emergence": 10, "vegetative": 70, "tasseling_silking": 10, "grain_filling": 35, "maturity": 18
+      },
+      "fertilizer": {
+        "_source": "BARC FRG-2018, MAIZE (Hybrid maize), soil-test-level table, Yield Goal 10.0±1.0 t/ha, 'Medium' soil-test-interpretation row (N 86-170, P 26-50, K 41-80, S 19-36 kg/ha) — data/raw/barc_frg_2018/page_0100.txt. Dose is the midpoint of the Medium range, same convention as aman_rice's fertilizer sourcing.",
+        "_verify": true,
+        "unit": "kg/ha of nutrient",
+        "nutrients": {
+          "N": { "dose": 128, "splits": [ {"stage":"basal","fraction":0.33}, {"stage":"vegetative","fraction":0.33}, {"stage":"tasseling_silking","fraction":0.34} ] },
+          "P": { "dose": 38, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 61, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "S": { "dose": 28, "splits": [ {"stage":"basal","fraction":1.0} ] }
+        },
+        "_split_source": "BARC FRG-2018 p.100 (data/raw/barc_frg_2018/page_0100.txt) Method of application: 'One-third of nitrogen and all of phosphorus, potassium, sulphur... applied during sowing... remaining nitrogen in two equal splits as side dressing... at 8-10 leaf stage (30-35 DAS) and at tasselling stage (50-60 DAS)'. BARC's generic 50-60 DAS tasselling reference assumes a shorter-season hybrid than BARI Hybrid Maize-5 (whose own verified silk formation time is 90-95 DAS) — the second N split is placed at this crop's actual 'tasseling_silking' stage (day 80-90) rather than the literal 50-60 DAS figure, preserving BARC's 'top-dress near tasseling' intent for our longer-season variety. The first N split (30-35 DAS) falls within this crop's 'vegetative' stage (days 10-80) and is placed there directly.",
+        "carriers": {
+          "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
+          "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
+        },
+        "method_of_application": "BARC FRG-2018 p.100: one-third N plus all P/K/S applied at sowing in furrows; remaining two-thirds N applied as two side-dressing splits during vegetative growth and near tasseling."
+      },
+      "kc_phase_by_stage": { "emergence": "initial", "vegetative": "development", "tasseling_silking": "mid", "grain_filling": "mid", "maturity": "late" },
+      "kc_by_stage": {
+        "_source": "FAO-56 / CROPWAT (maize, grain) Table 12 standard published Kc values (Kc_ini 0.3, Kc_mid 1.20, Kc_end 0.35 for dry-grain harvest) — not yet re-verified against a locally retrieved copy. 'development' is an engineering interpolation between initial and mid, same convention as rice's kc_by_stage.",
+        "_verify": true,
+        "initial": 0.3, "development": 0.75, "mid": 1.2, "late": 0.35
+      },
+      "base_yield_kg_per_ha": { "value": 10000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0100.txt) Yield Goal 10.0±1.0 t/ha — corroborated by BARI Hybrid Maize-5 field-trial rabi yield 10-10.5 t/ha (data/raw/bari_varieties/maize_bari-hybrid-maize-5.json)", "_verify": true }
     }
   }
 }

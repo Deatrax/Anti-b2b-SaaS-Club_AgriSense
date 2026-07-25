@@ -30,6 +30,12 @@
       "price_bdt_per_kg": 57,
       "_verify": true,
       "_note": "Seed rate is a standard BARI-recommended range midpoint (2000-2500 kg/ha), not independently re-verified this pass. Price is the GoB-recommended minimum seed-potato price from the prior season (Tk 57/kg) — 2025's actual market price collapsed to Tk 15-16/kg due to oversupply (freshplaza.com 'Bangladesh farmers face soaring seed costs, threatening potato crop viability'), so the prior-year recommended minimum is used here as a more representative normal-year figure than the crash price."
+    },
+    "maize": {
+      "rate_kg_per_ha": 20,
+      "price_bdt_per_kg": 400,
+      "_verify": true,
+      "_note": "Hybrid maize seed rate is a standard BARI-recommended figure. Price is a market estimate — no precise per-kg source found this pass (same treatment as this file's existing gypsum line)."
     }
   },
   "irrigation": {
@@ -46,6 +52,12 @@
       "assumption": "Upper end of the DAE-reported Feb 2025 farmgate range used.",
       "_verify": true,
       "_note": "This reflects a 2025 oversupply/price-collapse period; a normal-year farmgate price could run higher."
+    },
+    "maize": {
+      "value": 34.5,
+      "source": "USDA GAIN-reported wholesale maize price, Feb 2025 (Tk 34.49/kg) — via The Daily Star 'Maize prices remain high as demand for livestock feed keeps rising'.",
+      "assumption": "Wholesale price used as a farmgate proxy in the absence of a farm-gate-specific figure — likely overstates true farmgate price somewhat.",
+      "_verify": true
     }
   }
 }

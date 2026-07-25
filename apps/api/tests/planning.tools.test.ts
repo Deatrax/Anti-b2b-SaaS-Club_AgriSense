@@ -226,3 +226,32 @@ describe('potato — direct-seeded crop end-to-end (§3 generalization)', () => 
     expect(nVegetative?.quantity).toBeCloseTo(135 * 0.5 * readyIdentity.areaHa, 2);
   });
 });
+
+describe('maize — direct-seeded crop end-to-end (§3 generalization)', () => {
+  it('rank_crops includes maize as a candidate with a real tempFit score', async () => {
+    listByField.mockResolvedValue([{ id: 'p1', field_id: 'field-1', crop: null, variety: null, season: 'rabi', sowing_date: null, expected_harvest: null, status: 'planned', stage: null, day_index: null, actual_yield_kg: null }]);
+    const out = await call('rank_crops', {});
+    const maize = out.data.ranked.find((c: { crop: string }) => c.crop === 'maize');
+    expect(maize).toBeDefined();
+    expect(maize.seasonFit).toBe(1);
+    expect(maize.tempFit).toBeGreaterThan(0);
+  });
+
+  it('build_season_plan(maize) emits a sowing event with no nursery/transplanting, and does not throw', async () => {
+    const out = await call('build_season_plan', { crop: 'maize' });
+    expect(out.data.events.some((e: { stageKey: string }) => e.stageKey === 'sowing')).toBe(true);
+    expect(out.data.events.some((e: { stageKey: string }) => e.stageKey === 'nursery')).toBe(false);
+    expect(out.data.events.some((e: { stageKey: string }) => e.stageKey === 'transplanting')).toBe(false);
+    expect(cycleCreate).toHaveBeenCalledWith('field-1', expect.objectContaining({ crop: 'maize', status: 'active' }));
+  });
+
+  it('build_season_plan(maize) places the tasseling_silking N split after the vegetative split', async () => {
+    const out = await call('build_season_plan', { crop: 'maize' });
+    const events = out.data.events as { title: string; plannedDate: string }[];
+    const vegetative = events.find((e) => e.title === 'Apply N (vegetative)');
+    const tasseling = events.find((e) => e.title === 'Apply N (tasseling silking)');
+    expect(vegetative).toBeDefined();
+    expect(tasseling).toBeDefined();
+    expect(tasseling!.plannedDate >= vegetative!.plannedDate).toBe(true);
+  });
+});
