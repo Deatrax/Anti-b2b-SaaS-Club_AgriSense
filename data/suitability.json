@@ -23,6 +23,12 @@
       "temp_c":          { "min": 10, "opt_low": 20, "opt_high": 30, "max": 36 },
       "rain_mm_season":  { "min": 1000, "opt_low": 1500, "opt_high": 2000, "max": 4000 },
       "ph":              { "min": 4.5, "opt_low": 5.5, "opt_high": 7.0, "max": 9.0 }
+    },
+    "potato": {
+      "_source": "FAO ECOCROP, Solanum tuberosum (EcoPortCode 1971) — data/raw/fao_ecocrop/potato.json: TMIN/TOPMN/TOPMX/TMAX, RMIN/ROPMN/ROPMX/RMAX, PHMIN/PHOPMN/PHOPMX/PHMAX",
+      "temp_c":          { "min": 7, "opt_low": 15, "opt_high": 25, "max": 30 },
+      "rain_mm_season":  { "min": 250, "opt_low": 500, "opt_high": 800, "max": 2000 },
+      "ph":              { "min": 4.2, "opt_low": 5, "opt_high": 6.2, "max": 8.5 }
     }
   }
 }

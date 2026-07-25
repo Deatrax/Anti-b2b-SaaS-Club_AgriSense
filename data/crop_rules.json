@@ -170,6 +170,50 @@
         "initial": 1.05, "development": 1.10, "mid": 1.20, "late": 0.90
       },
       "base_yield_kg_per_ha": { "value": 4000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — AEZ 9 cropping-pattern table, T. Aus rice row (4.0±0.40 t/ha)", "_verify": true }
+    },
+    "potato": {
+      "_added": "2026-07-25 — closes the '3 complete crops' ranking requirement (Docs/AgriSense_Conversational_Flow.md).",
+      "label": "Potato (BARI HYV)",
+      "label_bn": "আলু",
+      "season": "rabi",
+      "growth_model": "direct_seed",
+      "aez_default": 9,
+      "calendar": {
+        "_source": "BARI Alu-68 (data/raw/bari_varieties/potato_bari-alu-68.json, crop_duration_days 90-95) + standard Bangladesh Rabi potato planting/harvest convention (mid-October to mid-November planting, mid-January to mid-February harvest). The planting/harvest month window is general BD Rabi convention, not itself BARI-line-cited.",
+        "_verify": true,
+        "sowing_window": { "start": "10-15", "end": "11-15", "_note": "seed-tuber planting (MM-DD) — direct-seeded, no separate nursery/transplant stage" },
+        "harvest_window": { "start": "01-15", "end": "02-15" }
+      },
+      "pre_anchor_stages": [],
+      "stage_durations_days": {
+        "_source": "Total duration verified: BARI Alu-68, 90-95 days (data/raw/bari_varieties/potato_bari-alu-68.json). Per-stage breakdown below is an engineering estimate consistent with that verified total, not itself line-cited — same treatment as aman_rice's stage_durations_days.",
+        "_verify": true,
+        "emergence": 14, "vegetative": 23, "tuber_initiation": 18, "tuber_bulking": 23, "maturation": 14
+      },
+      "fertilizer": {
+        "_source": "BARC FRG-2018, POTATO, AEZ 9 'Old Brahmaputra Floodplain' cropping-pattern table, Rabi Potato row: N135 P30 K90 S15, Yield Goal 30.0±3.0 t/ha (data/raw/barc_frg_2018/page_0212.txt, printed page 202) — same table already cited for boro_rice/aus_rice. Cross-checked against the dedicated POTATO soil-test-level table (data/raw/barc_frg_2018/page_0120.txt), which confirms the same Yield Goal 30.0±3.0 t/ha; page_0120's own P/K/S soil-test numeric columns are not used as the primary numeric source because the OCR dropped the table's N column and the remaining column order does not reconcile with the AEZ-9 row, so page_0212's cleaner single-row figures are used instead.",
+        "_verify": true,
+        "unit": "kg/ha of nutrient",
+        "nutrients": {
+          "N": { "dose": 135, "splits": [ {"stage":"basal","fraction":0.5}, {"stage":"vegetative","fraction":0.5} ] },
+          "P": { "dose": 30, "splits": [ {"stage":"basal","fraction":1.0} ] },
+          "K": { "dose": 90, "splits": [ {"stage":"basal","fraction":0.5}, {"stage":"vegetative","fraction":0.5} ] },
+          "S": { "dose": 15, "splits": [ {"stage":"basal","fraction":1.0} ] }
+        },
+        "_split_source": "BARC FRG-2018 p.120 (data/raw/barc_frg_2018/page_0120.txt) Method of application: 'All of organic manure, phosphorus, sulphur, magnesium, zinc and boron and half of nitrogen and potassium should be applied as basal during final land preparation. Remaining half nitrogen and potassium should be applied as side dressing at 30-35 days after planting during earthing up operation.' Day 30-35 falls within this crop's 'vegetative' stage window (days 14-37 after planting).",
+        "carriers": {
+          "_note": "Engine converts nutrient kg → product kg (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S). Do the conversion in financial.engine, not here.",
+          "urea": "N", "tsp": "P", "mop": "K", "gypsum": "S"
+        },
+        "method_of_application": "BARC FRG-2018 p.120: half of N and K plus all P/S applied basal at final land preparation; remaining half N and K applied as side dressing at 30-35 days after planting during earthing up."
+      },
+      "kc_phase_by_stage": { "emergence": "initial", "vegetative": "development", "tuber_initiation": "mid", "tuber_bulking": "mid", "maturation": "late" },
+      "kc_by_stage": {
+        "_source": "FAO-56 / CROPWAT (potato) Table 12 standard published Kc values (Kc_ini 0.5, Kc_mid 1.15, Kc_end 0.75) — not yet re-verified against a locally retrieved copy. 'development' is an engineering interpolation between initial and mid, same convention as rice's kc_by_stage.",
+        "_verify": true,
+        "initial": 0.5, "development": 0.83, "mid": 1.15, "late": 0.75
+      },
+      "base_yield_kg_per_ha": { "value": 30000, "_source": "BARC FRG-2018 (data/raw/barc_frg_2018/page_0212.txt / page_0120.txt) Yield Goal 30.0±3.0 t/ha — corroborated by BARI Alu-68 field-trial average 31.72 t/ha (data/raw/bari_varieties/potato_bari-alu-68.json)", "_verify": true }
     }
   }
 }

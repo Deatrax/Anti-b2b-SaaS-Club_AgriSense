@@ -24,7 +24,13 @@
   "seed": {
     "aman_rice": { "rate_kg_per_ha": 40, "price_bdt_per_kg": 60, "_verify": true, "_note": "40 kg/ha is BRRI's standard T. Aman transplanted-HYV seed rate; per-kg price not independently verified this pass" },
     "boro_rice": { "rate_kg_per_ha": 40, "price_bdt_per_kg": 60, "_verify": true, "_note": "Same BRRI standard transplanted-HYV seed rate/price as aman_rice — not independently re-verified for Boro specifically this pass." },
-    "aus_rice": { "rate_kg_per_ha": 40, "price_bdt_per_kg": 60, "_verify": true, "_note": "Same BRRI standard transplanted-HYV seed rate/price as aman_rice — not independently re-verified for Aus specifically this pass." }
+    "aus_rice": { "rate_kg_per_ha": 40, "price_bdt_per_kg": 60, "_verify": true, "_note": "Same BRRI standard transplanted-HYV seed rate/price as aman_rice — not independently re-verified for Aus specifically this pass." },
+    "potato": {
+      "rate_kg_per_ha": 2000,
+      "price_bdt_per_kg": 57,
+      "_verify": true,
+      "_note": "Seed rate is a standard BARI-recommended range midpoint (2000-2500 kg/ha), not independently re-verified this pass. Price is the GoB-recommended minimum seed-potato price from the prior season (Tk 57/kg) — 2025's actual market price collapsed to Tk 15-16/kg due to oversupply (freshplaza.com 'Bangladesh farmers face soaring seed costs, threatening potato crop viability'), so the prior-year recommended minimum is used here as a more representative normal-year figure than the crash price."
+    }
   },
   "irrigation": {
     "_note": "Aman is largely rainfed; supplemental only. Boro irrigation would be ~20–25% of cost (§1.6 [DOC]).",
@@ -33,6 +39,13 @@
   "farmgate_prices_bdt_per_kg": {
     "aman_rice": { "value": 34, "source": "GoB Aman 2025-season paddy procurement price (raised from Tk 33) — The Business Standard 'Govt to procure 7 lakh tonnes of Aman paddy, rice from local sources at higher prices from 20 Nov'", "assumption": "government procurement price used as the practical farmgate-price proxy" },
     "boro_rice": { "value": 36, "source": "GoB Boro 2025-26 season paddy procurement price — Bangladesh Pratidin 'Govt sets procurement prices for Boro season paddy, rice and wheat' (2026-04-22); jagonews24 'Govt to procure Boro paddy at Tk 36, rice at Tk 49 per kg'.", "assumption": "government procurement price used as the practical farmgate-price proxy, same convention as aman_rice." },
-    "aus_rice": { "value": 34, "source": "No dedicated GoB Aus procurement price found via search. Using the GoB Aman 2025-season procurement price (Tk 34/kg, cited above for aman_rice) as the nearest seasonal proxy.", "assumption": "government procurement price used as the practical farmgate-price proxy — borrowed from Aman's rate since Aus has no distinct published GoB procurement price this pass.", "_verify": true }
+    "aus_rice": { "value": 34, "source": "No dedicated GoB Aus procurement price found via search. Using the GoB Aman 2025-season procurement price (Tk 34/kg, cited above for aman_rice) as the nearest seasonal proxy.", "assumption": "government procurement price used as the practical farmgate-price proxy — borrowed from Aman's rate since Aus has no distinct published GoB procurement price this pass.", "_verify": true },
+    "potato": {
+      "value": 15,
+      "source": "DAE-reported farmgate price, Feb 2025 (Tk 11-15/kg) — The Daily Star 'Potato farmers in peril as prices fall below production costs'.",
+      "assumption": "Upper end of the DAE-reported Feb 2025 farmgate range used.",
+      "_verify": true,
+      "_note": "This reflects a 2025 oversupply/price-collapse period; a normal-year farmgate price could run higher."
+    }
   }
 }
