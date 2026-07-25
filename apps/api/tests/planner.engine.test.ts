@@ -7,10 +7,14 @@ const calendarSource = [{ source: 'BAMIS / BRRI', method: 'table' as const, retr
 const fertilizerSource = [{ source: 'BARC FRG-2018', method: 'table' as const, retrievedAt: 'now' }];
 const irrigationSource = [{ source: 'Open-Meteo (ECMWF)', method: 'api' as const, retrievedAt: 'now' }];
 
+const RICE_POST_ANCHOR_STAGES = ['tillering', 'panicle_initiation', 'booting', 'flowering', 'grain_filling', 'maturity'];
+
 function baseInput(overrides: Partial<PlanInput> = {}): PlanInput {
   return {
     areaHa: 0.4,
+    growthModel: 'transplant',
     sowingDate: '2026-07-01',
+    postAnchorStages: RICE_POST_ANCHOR_STAGES,
     stageDurationsDays: {
       nursery: 25,
       tillering: 35,
@@ -20,7 +24,7 @@ function baseInput(overrides: Partial<PlanInput> = {}): PlanInput {
       grain_filling: 25,
       maturity: 15,
     },
-    transplantWindowStart: '2026-08-01',
+    anchorDate: '2026-08-01',
     harvestWindowStart: '2026-11-30',
     fertilizer: {
       N: {
@@ -40,7 +44,7 @@ function baseInput(overrides: Partial<PlanInput> = {}): PlanInput {
   };
 }
 
-describe('buildPlan (§C.9 calendar)', () => {
+describe('buildPlan — transplant crops (§C.9 calendar)', () => {
   it('dates land prep, nursery, transplanting, and harvest from real crop_rules values', () => {
     const events = buildPlan(baseInput());
     expect(events.find((e) => e.stageKey === 'land_prep')?.plannedDate).toBe('2026-06-24'); // sowing - 7d
@@ -94,10 +98,11 @@ describe('buildPlan (§C.9 calendar)', () => {
     expect(events.some((e) => e.title === 'Irrigation checkpoint')).toBe(false);
   });
 
-  it('includes exactly one field scouting checkpoint with no fabricated source', () => {
+  it('includes exactly one field scouting checkpoint, at the first post-anchor stage, with no fabricated source', () => {
     const events = buildPlan(baseInput());
     const scouting = events.filter((e) => e.title === 'Field scouting checkpoint');
     expect(scouting).toHaveLength(1);
+    expect(scouting[0]!.stageKey).toBe('tillering');
     expect(scouting[0]!.sources).toEqual([]);
   });
 
@@ -113,5 +118,53 @@ describe('buildPlan (§C.9 calendar)', () => {
       expect(events[i]!.plannedDate! >= events[i - 1]!.plannedDate!).toBe(true);
     }
     expect(events.map((e) => e.sortOrder)).toEqual(events.map((_, i) => i));
+  });
+});
+
+function directSeedInput(overrides: Partial<PlanInput> = {}): PlanInput {
+  return {
+    areaHa: 0.5,
+    growthModel: 'direct_seed',
+    sowingDate: '2026-11-01',
+    postAnchorStages: ['emergence', 'vegetative', 'tuber_bulking', 'maturation'],
+    stageDurationsDays: { emergence: 14, vegetative: 23, tuber_bulking: 41, maturation: 14 },
+    anchorDate: '2026-11-01',
+    harvestWindowStart: '2027-02-01',
+    fertilizer: {
+      N: { dose: 135, splits: [{ stage: 'basal', fraction: 0.5 }, { stage: 'vegetative', fraction: 0.5 }] },
+      P: { dose: 30, splits: [{ stage: 'basal', fraction: 1.0 }] },
+    },
+    sources: { calendar: calendarSource, fertilizer: fertilizerSource, irrigation: irrigationSource },
+    ...overrides,
+  };
+}
+
+describe('buildPlan — direct-seeded crops (§3 generalization)', () => {
+  it('emits sowing directly at the anchor date, with no nursery/transplanting events', () => {
+    const events = buildPlan(directSeedInput());
+    expect(events.find((e) => e.stageKey === 'sowing')?.plannedDate).toBe('2026-11-01');
+    expect(events.some((e) => e.stageKey === 'nursery')).toBe(false);
+    expect(events.some((e) => e.stageKey === 'transplanting')).toBe(false);
+  });
+
+  it('still dates land prep a week before sowing, and harvest at the harvest window start', () => {
+    const events = buildPlan(directSeedInput());
+    expect(events.find((e) => e.stageKey === 'land_prep')?.plannedDate).toBe('2026-10-25');
+    expect(events.find((e) => e.stageKey === 'harvest')?.plannedDate).toBe('2027-02-01');
+  });
+
+  it('walks post-anchor stages sequentially from the sowing date', () => {
+    const events = buildPlan(directSeedInput());
+    const basalSplit = events.find((e) => e.title === 'Apply N (basal)');
+    const vegetativeSplit = events.find((e) => e.title === 'Apply N (vegetative)');
+    expect(basalSplit?.plannedDate).toBe('2026-11-01');
+    expect(vegetativeSplit?.plannedDate).toBe('2026-11-15'); // 2026-11-01 + emergence(14)
+  });
+
+  it('places the field scouting checkpoint at the first post-anchor stage', () => {
+    const events = buildPlan(directSeedInput());
+    const scouting = events.find((e) => e.title === 'Field scouting checkpoint');
+    expect(scouting?.stageKey).toBe('emergence');
+    expect(scouting?.plannedDate).toBe('2026-11-01');
   });
 });

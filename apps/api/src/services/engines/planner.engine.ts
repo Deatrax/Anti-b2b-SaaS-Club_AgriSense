@@ -1,13 +1,17 @@
 // engines/planner.engine.ts — PURE. Calendar = lookup (crop_rules windows/durations) + date math.
-// Assumes a nursery→transplant crop like rice (matches the only crop in crop_rules.json today
-// and the demo's T. Aman scope, §1.8). Direct-seeded crops (potato/maize) will need this
-// generalized once their data lands — not built speculatively ahead of that data existing.
+// Generalized (2026-07-25) to cover both transplant crops (rice: nursery -> transplant, stage
+// walk anchored on the transplant date) and direct-seeded crops (potato/maize: no nursery, the
+// stage walk anchors directly on the sowing/planting date). The caller (planning.tools.ts)
+// derives `postAnchorStages` from crop_rules.json's own stage_durations_days keys, so this file
+// carries no crop-specific stage vocabulary at all.
 import type { PlanEvent, PlanEventStatus, Provenance } from '@agrisense/shared';
 
-export const POST_TRANSPLANT_STAGES = ['tillering', 'panicle_initiation', 'booting', 'flowering', 'grain_filling', 'maturity'] as const;
-export type Stage = 'nursery' | (typeof POST_TRANSPLANT_STAGES)[number];
+export type GrowthModel = 'transplant' | 'direct_seed';
+/** Free-form stage name, defined per-crop in crop_rules.json (e.g. rice: 'tillering',
+ * potato: 'tuber_bulking'). No longer a fixed union — see the 2026-07-25 generalization note above. */
+export type Stage = string;
 
-/** Documented assumption: land prep starts a week before nursery sowing. Not sourced — no
+/** Documented assumption: land prep starts a week before sowing/planting. Not sourced — no
  * crop_rules.json field gives a prep lead time. */
 const LAND_PREP_LEAD_DAYS = 7;
 /** Skip near-zero irrigation checkpoints rather than clutter the calendar. */
@@ -26,18 +30,25 @@ export interface FertilizerNutrient {
 
 export interface PlanInput {
   areaHa: number;
-  /** ISO YYYY-MM-DD — nursery sowing date. */
+  growthModel: GrowthModel;
+  /** ISO YYYY-MM-DD. Transplant crops: nursery sowing date. Direct-seed crops: the planting
+   * date itself — same value as `anchorDate` for this growth model. */
   sowingDate: string;
-  stageDurationsDays: Record<Stage, number>;
-  /** From crop_rules.json's calendar.transplant_window — preferred over a computed date. */
-  transplantWindowStart: string;
+  /** Ordered stage keys AFTER the anchor point (transplant date, or sowing date for
+   * direct-seed crops) — derived by the caller from crop_rules.json's stage_durations_days,
+   * excluding any pre-anchor stages (e.g. rice's 'nursery'). */
+  postAnchorStages: string[];
+  stageDurationsDays: Record<string, number>;
+  /** ISO YYYY-MM-DD. Transplant crops: crop_rules.json's calendar.transplant_window.start.
+   * Direct-seed crops: equal to sowingDate — planting IS the anchor. */
+  anchorDate: string;
   /** From crop_rules.json's calendar.harvest_window. */
   harvestWindowStart: string;
   /** Keyed by nutrient symbol (N/P/K/S) as crop_rules.json uses. */
   fertilizer: Record<string, FertilizerNutrient>;
   /** Net irrigation mm per stage, pre-aggregated by the tool layer from irrigation.engine's
    * daily output — this engine does no aggregation, only placement on the calendar. */
-  irrigationByStage?: Partial<Record<Stage, number>>;
+  irrigationByStage?: Partial<Record<string, number>>;
   sources: {
     calendar: Provenance[];
     fertilizer: Provenance[];
@@ -54,16 +65,15 @@ function addDays(isoDate: string, days: number): string {
 }
 
 /**
- * Walks the post-transplant stage_durations_days sequentially from the transplant date.
- * 'basal' fertilizer splits apply AT transplanting — it isn't one of the durationed stages
- * itself. Exported so planning.tools.ts can map a weather forecast's dates onto the same
- * stage boundaries (for irrigation) without duplicating this walk or risking it drifting
- * from what buildPlan() itself uses.
+ * Walks `postAnchorStages` sequentially from `anchorDate`. 'basal' fertilizer splits apply AT
+ * the anchor date — it isn't one of the durationed stages itself. Exported so planning.tools.ts
+ * can map a weather forecast's dates onto the same stage boundaries (for irrigation) without
+ * duplicating this walk or risking it drifting from what buildPlan() itself uses.
  */
-export function computeStageDates(transplantWindowStart: string, stageDurationsDays: Record<Stage, number>): Record<string, string> {
-  const stageDates: Record<string, string> = { basal: transplantWindowStart };
-  let cursor = transplantWindowStart;
-  for (const stage of POST_TRANSPLANT_STAGES) {
+export function computeStageDates(anchorDate: string, postAnchorStages: string[], stageDurationsDays: Record<string, number>): Record<string, string> {
+  const stageDates: Record<string, string> = { basal: anchorDate };
+  let cursor = anchorDate;
+  for (const stage of postAnchorStages) {
     stageDates[stage] = cursor;
     cursor = addDays(cursor, stageDurationsDays[stage]);
   }
@@ -84,33 +94,54 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
     draft({
       stageKey: 'land_prep',
       title: 'Land preparation',
-      action: 'Plough and level the field ahead of nursery sowing.',
+      action: input.growthModel === 'transplant' ? 'Plough and level the field ahead of nursery sowing.' : 'Plough and level the field ahead of planting.',
       quantity: null,
       unit: null,
       plannedDate: addDays(input.sowingDate, -LAND_PREP_LEAD_DAYS),
       sources: input.sources.calendar,
       sortOrder: order++,
     }),
-    draft({
-      stageKey: 'nursery',
-      title: 'Nursery sowing',
-      action: 'Sow seed in the nursery bed.',
-      quantity: null,
-      unit: null,
-      plannedDate: input.sowingDate,
-      sources: input.sources.calendar,
-      sortOrder: order++,
-    }),
-    draft({
-      stageKey: 'transplanting',
-      title: 'Transplanting',
-      action: 'Transplant seedlings into the main field.',
-      quantity: null,
-      unit: null,
-      plannedDate: input.transplantWindowStart,
-      sources: input.sources.calendar,
-      sortOrder: order++,
-    }),
+  );
+
+  if (input.growthModel === 'transplant') {
+    events.push(
+      draft({
+        stageKey: 'nursery',
+        title: 'Nursery sowing',
+        action: 'Sow seed in the nursery bed.',
+        quantity: null,
+        unit: null,
+        plannedDate: input.sowingDate,
+        sources: input.sources.calendar,
+        sortOrder: order++,
+      }),
+      draft({
+        stageKey: 'transplanting',
+        title: 'Transplanting',
+        action: 'Transplant seedlings into the main field.',
+        quantity: null,
+        unit: null,
+        plannedDate: input.anchorDate,
+        sources: input.sources.calendar,
+        sortOrder: order++,
+      }),
+    );
+  } else {
+    events.push(
+      draft({
+        stageKey: 'sowing',
+        title: 'Sowing / planting',
+        action: 'Direct-seed or plant into the main field.',
+        quantity: null,
+        unit: null,
+        plannedDate: input.anchorDate,
+        sources: input.sources.calendar,
+        sortOrder: order++,
+      }),
+    );
+  }
+
+  events.push(
     draft({
       stageKey: 'harvest',
       title: 'Harvest',
@@ -123,7 +154,7 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
     }),
   );
 
-  const stageDates = computeStageDates(input.transplantWindowStart, input.stageDurationsDays);
+  const stageDates = computeStageDates(input.anchorDate, input.postAnchorStages, input.stageDurationsDays);
 
   for (const [nutrient, data] of Object.entries(input.fertilizer)) {
     for (const split of data.splits) {
@@ -147,7 +178,7 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
   }
 
   if (input.irrigationByStage) {
-    for (const stage of POST_TRANSPLANT_STAGES) {
+    for (const stage of input.postAnchorStages) {
       const mm = input.irrigationByStage[stage];
       if (mm == null || mm < IRRIGATION_EVENT_THRESHOLD_MM) continue;
       events.push(
@@ -165,20 +196,25 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
     }
   }
 
-  // General practice, not a specific pest/disease call — assess_pest_risk (Phase 8, real
-  // pest_rules.json + citations) is where a grounded pest claim belongs, not here.
-  events.push(
-    draft({
-      stageKey: 'tillering',
-      title: 'Field scouting checkpoint',
-      action: 'General practice: scout for weeds and early pest/disease signs during active tillering.',
-      quantity: null,
-      unit: null,
-      plannedDate: stageDates.tillering ?? null,
-      sources: [],
-      sortOrder: order++,
-    }),
-  );
+  // General practice, not a specific pest/disease call — assess_pest_risk (real pest_rules.json
+  // + citations) is where a grounded pest claim belongs, not here. Scouting is placed at the
+  // FIRST post-anchor stage (rice: 'tillering', same as before this file was generalized;
+  // potato/maize: their first growth stage after planting) rather than a hardcoded stage name.
+  const scoutingStage = input.postAnchorStages[0];
+  if (scoutingStage) {
+    events.push(
+      draft({
+        stageKey: scoutingStage,
+        title: 'Field scouting checkpoint',
+        action: `General practice: scout for weeds and early pest/disease signs during ${scoutingStage.replace(/_/g, ' ')}.`,
+        quantity: null,
+        unit: null,
+        plannedDate: stageDates[scoutingStage] ?? null,
+        sources: [],
+        sortOrder: order++,
+      }),
+    );
+  }
 
   return events
     .sort((a, b) => (a.plannedDate ?? '').localeCompare(b.plannedDate ?? ''))
