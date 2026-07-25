@@ -8,6 +8,7 @@ import { registerFinancialTools } from './financial.tools';
 import { registerKnowledgeTools } from './knowledge.tools';
 import { registerPaymentTools } from './payment.tools';
 import { registerRiskTools } from './risk.tools';
+import { registerMarketplaceTools } from './marketplace.tools';
 
 let registered = false;
 
@@ -20,5 +21,6 @@ export function registerAllTools(): void {
   registerKnowledgeTools();
   registerPaymentTools();
   registerRiskTools();
+  registerMarketplaceTools();
   registered = true;
 }
