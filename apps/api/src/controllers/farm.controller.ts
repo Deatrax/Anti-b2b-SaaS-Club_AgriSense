@@ -76,3 +76,17 @@ export async function listRecentChats(req: Request, res: Response, next: NextFun
     next(err);
   }
 }
+
+export async function createFarmConversation(req: Request, res: Response, next: NextFunction) {
+  const farmId = req.params.id;
+  if (!farmId) {
+    res.status(400).json({ error: 'farm id is required' });
+    return;
+  }
+  try {
+    const conversation = await ConversationModel.create(farmId);
+    res.status(201).json({ conversation });
+  } catch (err) {
+    next(err);
+  }
+}

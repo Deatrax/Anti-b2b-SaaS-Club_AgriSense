@@ -23,7 +23,7 @@ function userMessage(content: string): FeedItem {
 /** @param conversationId - a specific thread to open (a "recent chats" entry). Omit to use
  * the field's default (most recently started) conversation, creating one on first send —
  * what Overview/Plan's embedded panels and a plain Chat-tab visit want. */
-export function useFieldChat(fieldId: string, conversationId?: string) {
+export function useFieldChat(farmId: string, fieldId?: string, conversationId?: string) {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,7 +35,11 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
     setFeed([]);
     setIsLoaded(false);
     assistantIdRef.current = null;
-    const load = conversationId ? getConversation(conversationId) : getFieldChatHistory(fieldId);
+    const load = conversationId ? getConversation(conversationId) : (fieldId ? getFieldChatHistory(fieldId) : null);
+    if (!load) {
+      setIsLoaded(true);
+      return;
+    }
     load
       .then((history) => {
         if (!cancelled) {
@@ -56,7 +60,7 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
       setIsStreaming(true);
       assistantIdRef.current = null;
 
-      const close = openChatStream({ fieldId, message, conversationId }, (event: StreamEvent) => {
+      const close = openChatStream({ farmId, fieldId, message, conversationId }, (event: StreamEvent) => {
         if (event.type === 'text') {
           // Determine the ID outside the state updater if we need a new one
           const activeId = assistantIdRef.current || `assistant-${Date.now()}`;

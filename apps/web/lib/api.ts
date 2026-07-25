@@ -211,7 +211,8 @@ export function getFieldChatHistory(fieldId: string): Promise<ApiFieldChatHistor
 
 export interface ApiConversation {
   id: string;
-  fieldId: string;
+  farmId: string;
+  fieldId: string | null;
   title: string | null;
   createdAt: string;
 }
@@ -219,6 +220,10 @@ export interface ApiConversation {
 /** A field can have several conversations (§ multi-chat) — this starts a fresh one. */
 export function createFieldConversation(fieldId: string): Promise<{ conversation: ApiConversation }> {
   return apiPost(`/fields/${encodeURIComponent(fieldId)}/conversations`, {});
+}
+
+export function createFarmConversation(farmId: string): Promise<{ conversation: ApiConversation }> {
+  return apiPost(`/farms/${encodeURIComponent(farmId)}/conversations`, {});
 }
 
 export interface ApiConversationHistory {
@@ -231,6 +236,10 @@ export interface ApiConversationHistory {
  * getFieldChatHistory's "whichever is most recent" default. */
 export function getConversation(conversationId: string): Promise<ApiConversationHistory> {
   return apiGet(`/conversations/${encodeURIComponent(conversationId)}`);
+}
+
+export function updateConversation(conversationId: string, fieldId: string): Promise<{ success: boolean }> {
+  return apiPatch(`/conversations/${encodeURIComponent(conversationId)}`, { fieldId });
 }
 
 export function getFieldPlan(fieldId: string): Promise<ApiFieldPlanResponse> {

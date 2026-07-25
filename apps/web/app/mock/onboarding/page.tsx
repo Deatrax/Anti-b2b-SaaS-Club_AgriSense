@@ -53,6 +53,7 @@ const SEASONS = ['now', 'later'] as const;
 const AEZ_MAJORITY_SOIL = 'clay_loam';
 
 const INTAKE_LABEL_KEYS: Record<IntakeField, string> = {
+  name: 'intake_name',
   location: 'intake_location',
   area_ha: 'intake_area',
   soil_type: 'intake_soil',

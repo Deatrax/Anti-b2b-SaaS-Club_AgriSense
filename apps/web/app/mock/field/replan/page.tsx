@@ -72,23 +72,25 @@ export default function MockFieldReplanPage() {
               </ChatLayout>
             </StackItem>
 
-            <StackItem width={320}>
-              <VStack gap={3} padding={3}>
-                <Card>
-                  <VStack gap={2}>
-                    <HStack gap={1.5} vAlign="center">
-                      <Icon icon={Droplet} color="accent" />
-                      <Text type="label" weight="semibold">
-                        {t('card_water')}
+            <StackItem>
+              <div style={{ width: 320 }}>
+                <VStack gap={3} padding={3}>
+                  <Card>
+                    <VStack gap={2}>
+                      <HStack gap={1.5} vAlign="center">
+                        <Icon icon={Droplet} color="accent" />
+                        <Text type="label" weight="semibold">
+                          {t('card_water')}
+                        </Text>
+                      </HStack>
+                      <Text type="supporting" color="secondary">
+                        {hasLogged ? t('replan_water_updated_badge') : t('log_none_yet')}
                       </Text>
-                    </HStack>
-                    <Text type="supporting" color="secondary">
-                      {hasLogged ? t('replan_water_updated_badge') : t('log_none_yet')}
-                    </Text>
-                  </VStack>
-                </Card>
-                <WhyPanel items={[{ toolClass: 'field', label: t('replan_scoped_note_title'), description: t('replan_scoped_note_desc') }]} />
-              </VStack>
+                    </VStack>
+                  </Card>
+                  <WhyPanel items={[{ toolClass: 'field', label: t('replan_scoped_note_title'), description: t('replan_scoped_note_desc') }]} />
+                </VStack>
+              </div>
             </StackItem>
           </HStack>
         </StackItem>

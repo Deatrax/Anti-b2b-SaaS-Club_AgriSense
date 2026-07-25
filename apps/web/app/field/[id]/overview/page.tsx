@@ -67,7 +67,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const [logResult, setLogResult] = useState<ApiReplanDiff | null>(null);
   const [isLogging, setIsLogging] = useState(false);
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id);
+  const { feed, sendMessage, isStreaming } = useFieldChat(session?.farmId ?? '', id);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -231,59 +231,6 @@ function OverviewBody({
       ) : null}
 
       <HStack gap={4} vAlign="start" wrap="wrap">
-        {!isMobile ? (
-          <StackItem>
-            <Card width={420} height={520}>
-              <ChatLayout
-                composer={
-                  <VStack gap={2}>
-                    <Card variant="muted" padding={2}>
-                      <VStack gap={1.5}>
-                        <ToggleButtonGroup label={t('chips_label')} type="single" value={logKind} onChange={(v) => v && setLogKind(v as typeof logKind)} size="sm">
-                          <ToggleButton value="irrigation" label={t('card_water')} />
-                          <ToggleButton value="fertilizer" label={t('card_fertilizer')} />
-                          <ToggleButton value="observation" label={t('log_kind_observation')} />
-                        </ToggleButtonGroup>
-                        <HStack gap={2} vAlign="end">
-                          <NumberInput
-                            label={t('log_amount_label')}
-                            isLabelHidden
-                            value={logAmount}
-                            onChange={setLogAmount}
-                            units={logKind === 'irrigation' ? 'mm' : logKind === 'fertilizer' ? 'kg' : undefined}
-                            placeholder="0"
-                          />
-                          <Button label={t('log_action')} variant="secondary" isDisabled={logAmount == null || isLogging} onClick={onLogSubmit} />
-                        </HStack>
-                        {logResult ? (
-                          <Text type="supporting" color="secondary">
-                            {logResult.shiftedEvents.length > 0 || logResult.costChanged
-                              ? tf('log_replan_summary', { n: logResult.shiftedEvents.length })
-                              : t('log_replan_none')}
-                          </Text>
-                        ) : null}
-                      </VStack>
-                    </Card>
-                    <ChatComposer
-                      value={composerValue}
-                      onChange={setComposerValue}
-                      placeholder={t('composer_placeholder')}
-                      onSubmit={onComposerSubmit}
-                      sendButton={<ChatSendButton />}
-                      isDisabled={isStreaming}
-                    />
-                  </VStack>
-                }
-                emptyState={<EmptyState title={t('thread_empty_title')} description={t('thread_empty_description')} />}
-              >
-                <ChatMessageList>
-                  {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
-                </ChatMessageList>
-              </ChatLayout>
-            </Card>
-          </StackItem>
-        ) : null}
-
         <StackItem size="fill">
           <Grid columns={{ minWidth: 260 }} gap={3}>
             <Card>
@@ -381,6 +328,59 @@ function OverviewBody({
             ) : null}
           </Grid>
         </StackItem>
+
+        {!isMobile ? (
+          <StackItem>
+            <Card width={380} height={520}>
+              <ChatLayout
+                composer={
+                  <VStack gap={2}>
+                    <Card variant="muted" padding={2}>
+                      <VStack gap={1.5}>
+                        <ToggleButtonGroup label={t('chips_label')} type="single" value={logKind} onChange={(v) => v && setLogKind(v as typeof logKind)} size="sm">
+                          <ToggleButton value="irrigation" label={t('card_water')} />
+                          <ToggleButton value="fertilizer" label={t('card_fertilizer')} />
+                          <ToggleButton value="observation" label={t('log_kind_observation')} />
+                        </ToggleButtonGroup>
+                        <HStack gap={2} vAlign="end">
+                          <NumberInput
+                            label={t('log_amount_label')}
+                            isLabelHidden
+                            value={logAmount}
+                            onChange={setLogAmount}
+                            units={logKind === 'irrigation' ? 'mm' : logKind === 'fertilizer' ? 'kg' : undefined}
+                            placeholder="0"
+                          />
+                          <Button label={t('log_action')} variant="secondary" isDisabled={logAmount == null || isLogging} onClick={onLogSubmit} />
+                        </HStack>
+                        {logResult ? (
+                          <Text type="supporting" color="secondary">
+                            {logResult.shiftedEvents.length > 0 || logResult.costChanged
+                              ? tf('log_replan_summary', { n: logResult.shiftedEvents.length })
+                              : t('log_replan_none')}
+                          </Text>
+                        ) : null}
+                      </VStack>
+                    </Card>
+                    <ChatComposer
+                      value={composerValue}
+                      onChange={setComposerValue}
+                      placeholder={t('composer_placeholder')}
+                      onSubmit={onComposerSubmit}
+                      sendButton={<ChatSendButton />}
+                      isDisabled={isStreaming}
+                    />
+                  </VStack>
+                }
+                emptyState={<EmptyState title={t('thread_empty_title')} description={t('thread_empty_description')} />}
+              >
+                <ChatMessageList>
+                  {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+                </ChatMessageList>
+              </ChatLayout>
+            </Card>
+          </StackItem>
+        ) : null}
       </HStack>
 
       {isMobile ? <MobileChatOverlay feed={feed} sendMessage={sendMessage} isStreaming={isStreaming} /> : null}

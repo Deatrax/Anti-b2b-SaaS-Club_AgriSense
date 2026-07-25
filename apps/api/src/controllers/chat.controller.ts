@@ -9,7 +9,8 @@ import { ConversationModel } from '../models/conversation.model';
 import { primaryModel, failoverModel } from '../config/llm';
 
 export const postChatSchema = z.object({
-  fieldId: z.string().min(1),
+  farmId: z.string().min(1),
+  fieldId: z.string().min(1).optional(),
   message: z.string().min(1),
   /** A field can have several conversations (§ multi-chat). Omit to continue/create the
    * field's default (most recent) thread; pass the id from a "recent chats" entry to reply
@@ -28,7 +29,7 @@ function selectModel(): LanguageModel {
 }
 
 export async function postChat(req: Request, res: Response, next: NextFunction) {
-  const { fieldId, message, conversationId } = req.body as z.infer<typeof postChatSchema>;
+  const { farmId, fieldId, message, conversationId } = req.body as z.infer<typeof postChatSchema>;
 
   let model: LanguageModel;
   try {
@@ -41,13 +42,16 @@ export async function postChat(req: Request, res: Response, next: NextFunction) 
   let conversation: { id: string };
   if (conversationId) {
     const existing = await ConversationModel.getById(conversationId);
-    if (!existing || existing.fieldId !== fieldId) {
-      res.status(404).json({ error: 'conversation not found for this field' });
+    if (!existing || existing.farmId !== farmId) {
+      res.status(404).json({ error: 'conversation not found for this farm' });
       return;
     }
     conversation = existing;
   } else {
-    conversation = (await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(fieldId));
+    // If fieldId is provided, get the field's default conversation, otherwise create a new general one.
+    conversation = fieldId 
+      ? ((await ConversationModel.getForField(fieldId)) ?? (await ConversationModel.create(farmId, fieldId)))
+      : (await ConversationModel.create(farmId));
   }
 
   res.setHeader('Content-Type', 'text/event-stream');
@@ -62,7 +66,8 @@ export async function postChat(req: Request, res: Response, next: NextFunction) 
   const ctx: AgentContext = {
     conversationId: conversation.id,
     messageId: null,
-    fieldId,
+    farmId,
+    fieldId: fieldId ?? conversation.fieldId ?? undefined,
     stream,
     model,
   };

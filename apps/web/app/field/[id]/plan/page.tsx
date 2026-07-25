@@ -63,7 +63,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
   const [composerValue, setComposerValue] = useState('');
   const [cycleJustCompleted, setCycleJustCompleted] = useState(false);
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id);
+  const { feed, sendMessage, isStreaming } = useFieldChat(session?.farmId ?? '', id);
 
   useEffect(() => {
     if (!isHydrated) return;

@@ -3,9 +3,9 @@ import { Router } from 'express';
 import { validate } from '../middleware/validate.middleware';
 import { requestOtp, requestOtpSchema, verifyOtp, verifyOtpSchema } from '../controllers/auth.controller';
 import { updateUser, updateUserSchema, deleteUser } from '../controllers/user.controller';
-import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats } from '../controllers/farm.controller';
+import { listFarms, createFarm, createFarmSchema, listFields, listRecentChats, createFarmConversation } from '../controllers/farm.controller';
 import { getField, getFieldPlan, getFieldChatHistory, createFieldConversation, createField, createFieldSchema } from '../controllers/field.controller';
-import { getConversation } from '../controllers/conversation.controller';
+import { getConversation, updateConversation, updateConversationSchema } from '../controllers/conversation.controller';
 import { markPlanEventDone } from '../controllers/planEvent.controller';
 import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
@@ -24,6 +24,7 @@ router.get('/farms', listFarms);
 router.post('/farms', validate(createFarmSchema), createFarm);
 router.get('/farms/:id/fields', listFields);
 router.get('/farms/:id/chats', listRecentChats);
+router.post('/farms/:id/conversations', createFarmConversation);
 
 router.post('/fields', validate(createFieldSchema), createField);
 router.get('/fields/:id', getField);
@@ -34,6 +35,7 @@ router.post('/fields/:id/log', validate(postLogSchema), postLog);
 router.post('/fields/:id/scenario', validate(postScenarioSchema), postScenario);
 
 router.get('/conversations/:id', getConversation);
+router.patch('/conversations/:id', validate(updateConversationSchema), updateConversation);
 
 router.patch('/plan-events/:id/done', markPlanEventDone);
 

@@ -20,6 +20,11 @@ const ANSWER_SHAPE =
   'values behind every claim.';
 
 const PHASE_INSTRUCTIONS: Record<Phase, string> = {
+  GENERAL:
+    'Phase: GENERAL. General farming advisory mode. The farmer is asking general questions not yet tied ' +
+    'to a specific field. You can answer agronomy questions, search the knowledge base, or check the weather ' +
+    'for their location. Do not attempt to build a season plan or log field events, because you do not have ' +
+    'a specific field to operate on. If they want to plan a crop, advise them to attach this chat to a field first.',
   GATHERING:
     'Phase: GATHERING. Intake is incomplete. Ask about at most 2 missing fields per turn — pick the ' +
     'ones that unblock the most next steps first (location and target season before soil/water/budget ' +
@@ -77,11 +82,13 @@ function describePriorConversations(messages: Message[]): string | null {
   ].join('\n');
 }
 
-export function buildSystemPrompt(field: FieldState, phase: Phase, priorMessages: Message[] = []): string {
+export function buildSystemPrompt(field: FieldState | null, phase: Phase, priorMessages: Message[] = []): string {
   const parts = [ROLE];
   const prior = describePriorConversations(priorMessages);
   if (prior) parts.push(prior);
-  parts.push(NO_INVENTED_NUMBERS, describeField(field), PHASE_INSTRUCTIONS[phase], ANSWER_SHAPE);
+  parts.push(NO_INVENTED_NUMBERS);
+  if (field) parts.push(describeField(field));
+  parts.push(PHASE_INSTRUCTIONS[phase], ANSWER_SHAPE);
   return parts.join('\n\n');
 }
 

@@ -18,17 +18,33 @@ export function registerKnowledgeTools(): void {
       "Retrieves cited agronomic guidance (why/how — never doses, dates, or prices, those come from the reference tables) grounded in this field's actual crop, stage, soil, and AEZ.",
     schema: searchKnowledgeBaseSchema,
     toolClass: 'retrieval',
-    phases: ['PLANNING', 'MAINTAINING'],
+    phases: ['GENERAL', 'PLANNING', 'MAINTAINING', 'ANALYSIS'],
     timeoutMs: 8000,
     handler: async (args, ctx): Promise<ToolResult<RetrieveResult>> => {
-      const field = await FieldModel.getState(ctx.fieldId);
-      const farm = await FarmModel.get(field.identity.farmId);
+      let field;
+      let farm;
+      if (ctx.fieldId) {
+        field = await FieldModel.getState(ctx.fieldId);
+        farm = await FarmModel.get(field.identity.farmId);
+      } else {
+        farm = await FarmModel.get(ctx.farmId);
+      }
+
+      // Dynamic namespace string for vector search — forces exact subsetting. E.g.
+      // "rice_stage:flowering_soil:loamy_aez:9"
+      const filterSegments: string[] = [];
+      if (field) {
+        if (field.cropCycle?.crop) filterSegments.push(field.cropCycle.crop);
+        if (field.cropCycle?.stage) filterSegments.push(`stage:${field.cropCycle.stage}`);
+        if (field.identity.soilType) filterSegments.push(`soil:${field.identity.soilType}`);
+      }
+      if (farm?.aez) filterSegments.push(`aez:${farm.aez}`);
 
       const result = await retrieve({
-        crop: field.activeCycle?.crop ?? undefined,
-        stage: field.activeCycle?.stage ?? undefined,
+        crop: field?.cropCycle?.crop ?? undefined,
+        stage: field?.cropCycle?.stage ?? undefined,
         topic: args.topic,
-        soilType: field.identity.soilType ?? undefined,
+        soilType: field?.identity.soilType ?? undefined,
         aez: farm?.aez ?? undefined,
       });
 

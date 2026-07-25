@@ -37,7 +37,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
-  const { feed, sendMessage, isStreaming, isLoaded } = useFieldChat(id, conversationId);
+  const { feed, sendMessage, isStreaming, isLoaded } = useFieldChat(session?.farmId ?? '', id, conversationId);
 
   const hasAutoStarted = useRef(false);
   useEffect(() => {

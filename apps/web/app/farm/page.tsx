@@ -176,7 +176,7 @@ export default function FarmPage() {
                 <Text type="label" weight="semibold">
                   {t('add_field')}
                 </Text>
-                <TextInput value={newFieldName} onChange={setNewFieldName} placeholder={t('field_name_placeholder') || 'Field Name (Optional)'} />
+                <TextInput label={t('field_name')} isLabelHidden value={newFieldName} onChange={setNewFieldName} placeholder={t('field_name_placeholder') || 'Field Name (Optional)'} />
                 <Button label={t('add_field')} variant="secondary" isDisabled={isAddingField} onClick={handleAddField} />
               </VStack>
             </Card>

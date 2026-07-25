@@ -9,7 +9,13 @@ import { Selector } from '@astryxdesign/core/Selector';
 import { Divider } from '@astryxdesign/core/Divider';
 import { Wheat, Home, MessageCircle, CalendarDays, Wallet, Plus, Settings, Building2, MessagesSquare, Receipt } from 'lucide-react';
 import { useT, useSession } from '../app/providers';
-import { createField, createFieldConversation, type ApiField, type ApiRecentChat } from '../lib/api';
+import {
+  createField,
+  createFieldConversation,
+  createFarmConversation,
+  type ApiField,
+  type ApiRecentChat,
+} from '../lib/api';
 
 const SUB_PAGES = ['overview', 'chat', 'plan', 'money'] as const;
 
@@ -50,12 +56,11 @@ export function FieldRail({
     router.push(`/field/${fieldId}/${subPage}`);
   }
 
-  /** A field can hold several conversations (§ multi-chat) — this starts a fresh one on
-   * whichever field is currently active, rather than reusing the latest. */
+  /** Creates a general farm-level conversation that can later be attached to a specific field. */
   function handleNewChat() {
-    if (!selectedField) return;
-    createFieldConversation(selectedField.id)
-      .then(({ conversation }) => router.push(`/field/${conversation.fieldId}/chat?c=${conversation.id}`))
+    if (!session?.farmId) return;
+    createFarmConversation(session.farmId)
+      .then(({ conversation }) => router.push(`/farm/chat?c=${conversation.id}`))
       .catch(() => {});
   }
 
@@ -87,10 +92,13 @@ export function FieldRail({
         {(recentChats ?? []).slice(0, 5).map((c) => (
           <SideNavItem
             key={c.conversationId}
-            label={c.fieldName ?? t('field_unnamed')}
+            label={c.fieldName ? `${c.fieldName} Chat` : t('field_unnamed')}
             icon={MessageCircle}
-            isSelected={pathname === `/field/${c.fieldId}/chat` && activeConversationId === c.conversationId}
-            href={`/field/${c.fieldId}/chat?c=${c.conversationId}`}
+            isSelected={
+              (pathname === `/field/${c.fieldId}/chat` && activeConversationId === c.conversationId) ||
+              (pathname === '/farm/chat' && activeConversationId === c.conversationId)
+            }
+            href={c.fieldId ? `/field/${c.fieldId}/chat?c=${c.conversationId}` : `/farm/chat?c=${c.conversationId}`}
           />
         ))}
         {recentChats && recentChats.length > 0 ? (

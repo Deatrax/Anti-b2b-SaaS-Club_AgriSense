@@ -56,10 +56,12 @@ function levelTier(level: 'Low' | 'Medium' | 'High', invert: boolean): Tier {
 function ScoreMeter({ label, value, tier, tierLabel }: { label: string; value: number; tier: Tier; tierLabel: string }) {
   return (
     <HStack gap={2} vAlign="center">
-      <StackItem width={90}>
+      <StackItem>
+        <div style={{ width: 90 }}>
         <Text type="supporting" color="secondary">
           {label}
         </Text>
+        </div>
       </StackItem>
       <StackItem size="fill">
         <ProgressBar label={label} isLabelHidden value={value} max={100} variant={TIER_PROGRESS_VARIANT[tier]} />
@@ -121,18 +123,22 @@ export default function MockPlanningPage() {
                     <ScoreMeter label={t('crop_suitability')} value={c.score} tier={suitTier} tierLabel={tierLabel(suitTier)} />
                     <ScoreMeter label={t('crop_est_return')} value={Math.min(100, Math.round((c.netProfitBdt / c.totalCostBdt) * 50))} tier={retTier} tierLabel={tierLabel(retTier)} />
                     <HStack gap={2} vAlign="center">
-                      <StackItem width={90}>
+                      <StackItem>
+                        <div style={{ width: 90 }}>
                         <Text type="supporting" color="secondary">
                           {t('crop_water_need')}
                         </Text>
+                        </div>
                       </StackItem>
                       <Badge variant={TIER_BADGE_VARIANT[waterTier]} label={levelLabel(c.water)} />
                     </HStack>
                     <HStack gap={2} vAlign="center">
-                      <StackItem width={90}>
+                      <StackItem>
+                        <div style={{ width: 90 }}>
                         <Text type="supporting" color="secondary">
                           {t('crop_risk')}
                         </Text>
+                        </div>
                       </StackItem>
                       <Badge variant={TIER_BADGE_VARIANT[riskTier]} label={levelLabel(c.risk)} />
                     </HStack>

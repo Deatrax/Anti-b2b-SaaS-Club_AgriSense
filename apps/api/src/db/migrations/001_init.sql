@@ -94,6 +94,7 @@ create table if not exists field_logs (
 
 create table if not exists conversations (
   id uuid primary key default gen_random_uuid(),
+  farm_id uuid references farms(id) on delete cascade,
   field_id uuid references fields(id) on delete cascade,
   title text, created_at timestamptz default now()
 );

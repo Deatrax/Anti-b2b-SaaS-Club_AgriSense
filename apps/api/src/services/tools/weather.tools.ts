@@ -25,13 +25,24 @@ export function registerWeatherTools(): void {
       'temperature, ET₀, humidity, soil moisture. Call once per turn; the data covers 16 days.',
     schema,
     toolClass: 'external',
-    phases: ['PLANNING', 'MAINTAINING'],
+    phases: ['GENERAL', 'PLANNING', 'MAINTAINING'],
     timeoutMs: 8000,
     handler: async (_args, ctx): Promise<ToolResult<WeatherData>> => {
-      const field = await FieldModel.getState(ctx.fieldId);
-      const { lat, lon } = field.identity;
+      let lat: number | null = null;
+      let lon: number | null = null;
+      if (ctx.fieldId) {
+        const field = await FieldModel.getState(ctx.fieldId);
+        lat = field.identity.lat ?? null;
+        lon = field.identity.lon ?? null;
+      } else {
+        const { FarmModel } = await import('../../models/farm.model');
+        const farm = await FarmModel.get(ctx.farmId);
+        lat = farm?.lat ?? null;
+        lon = farm?.lon ?? null;
+      }
+      
       if (lat == null || lon == null) {
-        throw new Error('get_weather called before the field has a location — resolve location first.');
+        throw new Error('get_weather called before a location is known — resolve location first.');
       }
       const forecast = await getForecast(lat, lon);
       return {

@@ -78,7 +78,7 @@ export function IntakePanel({ field, farmDistrict, fieldId }: { field: ApiField;
             return (
               <VStack key={row.key} gap={0}>
                 {i > 0 ? <Divider /> : null}
-                <HStack gap={2.5} vAlign="center" padding={{ block: 2 }}>
+                <HStack gap={2} vAlign="center" padding={2}>
                   <Icon icon={row.icon} color={filled ? 'accent' : 'secondary'} size="sm" />
                   <StackItem size="fill">
                     <Text type="supporting" color="secondary">

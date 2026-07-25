@@ -110,8 +110,8 @@ export default function MockCheckoutPage() {
             </VStack>
           </StackItem>
 
-          <StackItem width={320}>
-            <VStack gap={3}>
+          <StackItem>
+            <VStack gap={3} style={{ width: 320 }}>
               <Card padding={3}>
                 <VStack gap={2}>
                   <Text type="label" weight="semibold">

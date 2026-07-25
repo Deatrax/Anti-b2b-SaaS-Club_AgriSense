@@ -22,18 +22,20 @@ import { buildSystemPrompt, toolsForPhase } from './prompt';
  */
 export interface AgentContext extends ToolCtx {
   model: LanguageModel;
+  farmId: string;
+  fieldId?: string;
 }
 
 const MAX_STEPS = 10;
 
 export async function runAgent(ctx: AgentContext, userMessage: string): Promise<void> {
-  let field = await FieldModel.getState(ctx.fieldId);
-  let phase = derivePhase(field); // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
+  let field = ctx.fieldId ? await FieldModel.getState(ctx.fieldId) : null;
+  let phase: Phase = field ? derivePhase(field) : 'GENERAL'; // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
 
   await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
   const [history, priorMessages] = await Promise.all([
     ConversationModel.recentMessages(ctx.conversationId, 20),
-    ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10),
+    ctx.fieldId ? ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10) : Promise.resolve([]),
   ]);
   const messages: ModelMessage[] = [
     ...history
@@ -124,13 +126,15 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
     }
 
     // Dynamic phase transition (e.g. GATHERING -> PLANNING) mid-turn if tools updated the field state.
-    const nextField = await FieldModel.getState(ctx.fieldId);
-    const nextPhase = derivePhase(nextField);
-    if (nextPhase !== phase) {
-      field = nextField;
-      phase = nextPhase;
-      system = buildSystemPrompt(field, phase, priorMessages);
-      tools = buildToolSet(toolsForPhase(phase));
+    if (ctx.fieldId) {
+      const nextField = await FieldModel.getState(ctx.fieldId);
+      const nextPhase = derivePhase(nextField);
+      if (nextPhase !== phase) {
+        field = nextField;
+        phase = nextPhase;
+        system = buildSystemPrompt(field, phase, priorMessages);
+        tools = buildToolSet(toolsForPhase(phase));
+      }
     }
   }
 

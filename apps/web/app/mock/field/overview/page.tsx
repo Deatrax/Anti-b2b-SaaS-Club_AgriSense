@@ -98,7 +98,8 @@ export default function MockFieldOverviewPage() {
         <FieldTabsNav active="overview" />
 
         <HStack gap={4} vAlign="start" wrap="wrap">
-          <StackItem width={420}>
+          <StackItem>
+            <div style={{ width: 420 }}>
             <Card height={520}>
               <ChatLayout
                 composer={
@@ -124,6 +125,7 @@ export default function MockFieldOverviewPage() {
                 </ChatMessageList>
               </ChatLayout>
             </Card>
+            </div>
           </StackItem>
 
           <StackItem size="fill">

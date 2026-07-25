@@ -29,7 +29,8 @@ function toMessage(r: MessageRow): Message {
 
 export interface ConversationSummary {
   id: string;
-  fieldId: string;
+  farmId: string;
+  fieldId: string | null;
   title: string | null;
   createdAt: string;
 }
@@ -46,21 +47,25 @@ export const ConversationModel = {
   },
 
   async getById(conversationId: string): Promise<ConversationSummary | null> {
-    const [row] = await query<{ id: string; field_id: string; title: string | null; created_at: string }>(
-      'select id, field_id, title, created_at from conversations where id = $1',
+    const [row] = await query<{ id: string; farm_id: string; field_id: string | null; title: string | null; created_at: string }>(
+      'select id, farm_id, field_id, title, created_at from conversations where id = $1',
       [conversationId],
     );
-    return row ? { id: row.id, fieldId: row.field_id, title: row.title, createdAt: row.created_at } : null;
+    return row ? { id: row.id, farmId: row.farm_id, fieldId: row.field_id, title: row.title, createdAt: row.created_at } : null;
   },
 
   /** Tier 0 is at least one conversation per field (§3.4) — a field may accumulate several
    * over time; each "new chat" is its own row, not a reused one. */
-  async create(fieldId: string, title?: string): Promise<ConversationSummary> {
-    const [row] = await query<{ id: string; field_id: string; title: string | null; created_at: string }>(
-      'insert into conversations (field_id, title) values ($1, $2) returning id, field_id, title, created_at',
-      [fieldId, title ?? null],
+  async create(farmId: string, fieldId?: string, title?: string): Promise<ConversationSummary> {
+    const [row] = await query<{ id: string; farm_id: string; field_id: string | null; title: string | null; created_at: string }>(
+      'insert into conversations (farm_id, field_id, title) values ($1, $2, $3) returning id, farm_id, field_id, title, created_at',
+      [farmId, fieldId ?? null, title ?? null],
     );
-    return { id: row!.id, fieldId: row!.field_id, title: row!.title, createdAt: row!.created_at };
+    return { id: row!.id, farmId: row!.farm_id, fieldId: row!.field_id, title: row!.title, createdAt: row!.created_at };
+  },
+
+  async updateField(conversationId: string, fieldId: string): Promise<void> {
+    await query('update conversations set field_id = $1 where id = $2', [fieldId, conversationId]);
   },
 
   async recentMessages(conversationId: string, limit = 20): Promise<Message[]> {
@@ -123,13 +128,13 @@ export const ConversationModel = {
     }>(
       `select c.id as conversation_id, c.field_id, f.name as field_name, m.role, m.content, m.created_at
        from conversations c
-       join fields f on f.id = c.field_id
+       left join fields f on f.id = c.field_id
        join lateral (
          select role, content, created_at from messages
          where conversation_id = c.id
          order by created_at desc limit 1
        ) m on true
-       where f.farm_id = $1
+       where c.farm_id = $1
        order by m.created_at desc
        limit $2 offset $3`,
       [farmId, limit, offset],
@@ -137,9 +142,8 @@ export const ConversationModel = {
     const [countRow] = await query<{ count: number }>(
       `select count(*)::int as count
        from conversations c
-       join fields f on f.id = c.field_id
        join lateral (select 1 from messages where conversation_id = c.id limit 1) m on true
-       where f.farm_id = $1`,
+       where c.farm_id = $1`,
       [farmId],
     );
     return {
@@ -155,7 +159,7 @@ export const ConversationModel = {
 };
 
 export interface RecentChat {
-  fieldId: string;
+  fieldId: string | null;
   fieldName: string | null;
   conversationId: string;
   lastMessage: { role: string; content: string; createdAt: string };

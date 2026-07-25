@@ -100,8 +100,9 @@ export default function MockFieldPlanPage() {
           </StackItem>
 
           {isChatOpen ? (
-            <StackItem width={380}>
-              <Card height={480}>
+            <StackItem>
+              <div style={{ width: 380 }}>
+                <Card height={480}>
                 <ChatLayout
                   composer={<ChatComposer value={composerValue} onChange={setComposerValue} placeholder={t('composer_placeholder')} onSubmit={handleComposerSubmit} sendButton={<ChatSendButton />} />}
                   emptyState={<EmptyState title={t('thread_empty_title')} description={t('thread_empty_description')} />}
@@ -111,6 +112,7 @@ export default function MockFieldPlanPage() {
                   </ChatMessageList>
                 </ChatLayout>
               </Card>
+            </div>
             </StackItem>
           ) : null}
         </HStack>

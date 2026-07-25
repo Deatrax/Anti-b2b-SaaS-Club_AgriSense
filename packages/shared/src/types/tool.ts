@@ -29,4 +29,4 @@ export type ToolClass =
   | 'gated';        // consequential — requires HITL approval (bdapps debit)
 
 /** Agent phases are derived in CODE (§C.8 derivePhase), never chosen by the LLM. */
-export type Phase = 'GATHERING' | 'PLANNING' | 'MAINTAINING' | 'TRANSACTING';
+export type Phase = 'GENERAL' | 'GATHERING' | 'PLANNING' | 'MAINTAINING' | 'TRANSACTING';

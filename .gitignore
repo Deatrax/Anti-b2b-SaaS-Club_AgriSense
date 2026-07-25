@@ -33,3 +33,4 @@ coverage/
 #  tsc emits .js next to the .ts source there instead of failing clean — see repo notes)
 packages/shared/src/**/*.js
 packages/shared/src/**/*.js.map
+.env.old

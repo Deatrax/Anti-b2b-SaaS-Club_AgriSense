@@ -4,7 +4,7 @@ import type { StreamEvent } from '@agrisense/shared';
 
 /** POSTs to /api/chat and streams events as they arrive. Returns an abort function. */
 export function openChatStream(
-  body: { fieldId: string; message: string; conversationId?: string },
+  body: { farmId: string; fieldId?: string; message: string; conversationId?: string },
   onEvent: (e: StreamEvent) => void,
 ): () => void {
   const controller = new AbortController();
