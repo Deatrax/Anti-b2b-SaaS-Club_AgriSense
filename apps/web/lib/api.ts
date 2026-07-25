@@ -341,3 +341,54 @@ export interface ApiReceipt {
 export function approveAndDebit(externalTrxId: string): Promise<{ receipt: ApiReceipt }> {
   return apiPost('/payment/approve', { externalTrxId });
 }
+
+// ---- Marketplace: supplier matching + selection --------------------------------------------
+
+export interface ApiSupplierSubScores {
+  price: number;
+  delivery: number;
+  distance: number;
+  rating: number;
+}
+
+export interface ApiSupplierOffer {
+  supplierId: string;
+  name: string;
+  district: string;
+  distanceKm: number;
+  priceBdtPerKg: number;
+  deliveryDays: number;
+  rating: number;
+  score: number;
+  subScores: ApiSupplierSubScores;
+}
+
+export interface ApiItemMatch {
+  itemKey: string;
+  neededQty: number;
+  unit: string;
+  offers: ApiSupplierOffer[];
+}
+
+export interface ApiMarketplaceMatches {
+  items: ApiItemMatch[];
+}
+
+export function getMarketplaceMatches(fieldId: string): Promise<ApiMarketplaceMatches> {
+  return apiGet(`/fields/${encodeURIComponent(fieldId)}/marketplace`);
+}
+
+export interface ApiSupplierSelection {
+  id: string;
+  crop_cycle_id: string;
+  item_key: string;
+  supplier_id: string;
+  supplier_name: string;
+  unit_price_bdt: number;
+  delivery_days: number;
+  selected_at: string;
+}
+
+export function selectSupplier(fieldId: string, itemKey: string, supplierId: string): Promise<{ selection: ApiSupplierSelection }> {
+  return apiPost(`/fields/${encodeURIComponent(fieldId)}/marketplace/select`, { itemKey, supplierId });
+}
