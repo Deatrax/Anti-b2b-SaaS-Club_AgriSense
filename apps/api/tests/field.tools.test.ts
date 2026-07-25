@@ -9,14 +9,18 @@ const getState = vi.fn();
 const update = vi.fn(async () => undefined);
 const cycleCreate = vi.fn(async () => ({ id: 'cycle-new' }));
 const cycleHistory = vi.fn();
+const cycleListByField = vi.fn(async () => [] as unknown[]);
+const cycleUpdate = vi.fn(async () => ({ id: 'cycle-upd' }));
 const logAdd = vi.fn();
 
 vi.mock('../src/models/field.model', () => ({ FieldModel: { getState, update } }));
-vi.mock('../src/models/cropCycle.model', () => ({ CropCycleModel: { create: cycleCreate, history: cycleHistory } }));
+vi.mock('../src/models/cropCycle.model', () => ({
+  CropCycleModel: { create: cycleCreate, history: cycleHistory, listByField: cycleListByField, update: cycleUpdate },
+}));
 vi.mock('../src/models/fieldLog.model', () => ({ FieldLogModel: { add: logAdd } }));
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
-    begin: vi.fn(async (_c: string, _m: string | null, step: number) => ({ id: `t${step}`, step, startedAt: Date.now() })),
+    begin: (() => { let s = 0; return vi.fn(async () => { s += 1; return { id: `t${s}`, step: s, startedAt: Date.now() }; }); })(),
     ok: vi.fn(async () => undefined),
     error: vi.fn(async () => undefined),
     fallback: vi.fn(async () => undefined),
@@ -93,13 +97,42 @@ describe('update_field', () => {
     await expect(call('update_field', { district: 'Atlantis' })).rejects.toThrow(/unknown district/);
   });
 
-  it('prefers explicit lat/lon over district when both are given', async () => {
-    await call('update_field', { lat: 1, lon: 2, district: 'Dhaka' });
-    expect(update).toHaveBeenCalledWith('field-1', { lat: 1, lon: 2 });
+  it('prefers explicit IN-BOUNDS lat/lon over district when both are given', async () => {
+    await call('update_field', { lat: 24.5, lon: 90.1, district: 'Dhaka' });
+    expect(update).toHaveBeenCalledWith('field-1', { lat: 24.5, lon: 90.1 });
+  });
+
+  it('discards out-of-Bangladesh coordinates in favor of the district, visibly (BUG-3)', async () => {
+    const out = await call('update_field', { lat: 0, lon: 0, district: 'Dhaka' });
+    expect(update).toHaveBeenCalledWith('field-1', { lat: 23.8103, lon: 90.4125 });
+    expect(out.assumptions?.[0]).toMatch(/outside Bangladesh/);
+  });
+
+  it('rejects out-of-Bangladesh coordinates with instructions when no district is present (BUG-3)', async () => {
+    await expect(call('update_field', { lat: 90, lon: 180 })).rejects.toThrow(/outside Bangladesh.*district/s);
+    expect(update).not.toHaveBeenCalled();
   });
 
   it('rejects lat without lon', async () => {
-    await expect(call('update_field', { lat: 1 })).rejects.toThrow(/together/);
+    await expect(call('update_field', { lat: 24.5 })).rejects.toThrow(/together/);
+  });
+
+  it('canonicalizes kharif_2 to aman at the write point (BUG-8)', async () => {
+    await call('update_field', { target_season: 'kharif_2' });
+    expect(cycleCreate).toHaveBeenCalledWith('field-1', { season: 'aman' });
+  });
+
+  it('re-targets an existing planned cycle instead of stacking a sibling (BUG-11)', async () => {
+    cycleListByField.mockResolvedValueOnce([{ id: 'cycle-old', status: 'planned', season: 'kharif_2' }]);
+    await call('update_field', { target_season: 'aman' });
+    expect(cycleUpdate).toHaveBeenCalledWith('cycle-old', { season: 'aman' });
+    expect(cycleCreate).not.toHaveBeenCalled();
+  });
+
+  it('flags a replan when identity changes under an active cycle (BUG-4c)', async () => {
+    getState.mockResolvedValue({ ...emptyState, activeCycle: { id: 'cycle-1' } as never });
+    const out = await call('update_field', { area_ha: 3 });
+    expect(out.assumptions?.some((a) => /rebuild with build_season_plan/.test(a))).toBe(true);
   });
 });
 

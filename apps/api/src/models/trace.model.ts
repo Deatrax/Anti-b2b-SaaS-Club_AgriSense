@@ -45,17 +45,21 @@ export const TraceModel = {
   async begin(
     conversationId: string,
     messageId: string | null,
-    step: number,
     tool: string,
     toolClass: ToolClass,
     params: unknown,
   ): Promise<TraceHandle> {
-    const [row] = await query<{ id: string }>(
+    // Step is allocated in the INSERT from the DB's own max, not an in-memory counter —
+    // a process restart (tsx watch reload counts) used to reset the counter to 1, producing
+    // duplicate (conversation_id, step) rows and a mis-ordered trace panel (BUG-9c).
+    const [row] = await query<{ id: string; step: number }>(
       `insert into traces (conversation_id, message_id, step, tool, tool_class, params, status)
-       values ($1,$2,$3,$4,$5,$6,'running') returning id`,
-      [conversationId, messageId, step, tool, toolClass, JSON.stringify(params)],
+       select $1, $2, coalesce(max(step), 0) + 1, $3, $4, $5, 'running'
+       from traces where conversation_id = $1
+       returning id, step`,
+      [conversationId, messageId, tool, toolClass, JSON.stringify(params)],
     );
-    return { id: row!.id, step, startedAt: Date.now() };
+    return { id: row!.id, step: row!.step, startedAt: Date.now() };
   },
 
   async ok(h: TraceHandle, result: unknown, source: string | null, durationMs: number): Promise<void> {

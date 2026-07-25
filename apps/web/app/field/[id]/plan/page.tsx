@@ -25,9 +25,9 @@ import { useT, useSession } from '../../../providers';
 import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { WhyPanel } from '../../../../components/mock/WhyPanel';
-import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
+import { FeedTrace, FeedMessage, ThinkingIndicator } from '../../../../components/mock/FeedChat';
 import { MobileChatOverlay } from '../../../../components/MobileChatOverlay';
-import { useFieldChat } from '../../../../lib/useFieldChat';
+import { useFieldChat, type ChatActivity } from '../../../../lib/useFieldChat';
 import {
   getField,
   listFields,
@@ -63,7 +63,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
   const [composerValue, setComposerValue] = useState('');
   const [cycleJustCompleted, setCycleJustCompleted] = useState(false);
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id);
+  const { feed, sendMessage, isStreaming, activity } = useFieldChat(id);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -128,6 +128,7 @@ export default function FieldPlanPage({ params }: { params: Promise<{ id: string
         feed={feed}
         sendMessage={sendMessage}
         isStreaming={isStreaming}
+        activity={activity}
         composerValue={composerValue}
         setComposerValue={setComposerValue}
         onComposerSubmit={handleComposerSubmit}
@@ -146,6 +147,7 @@ function PlanBody({
   feed,
   sendMessage,
   isStreaming,
+  activity,
   composerValue,
   setComposerValue,
   onComposerSubmit,
@@ -159,6 +161,7 @@ function PlanBody({
   feed: FeedItem[];
   sendMessage: (message: string) => void;
   isStreaming: boolean;
+  activity: ChatActivity;
   composerValue: string;
   setComposerValue: (value: string) => void;
   onComposerSubmit: (value: string) => void;
@@ -244,6 +247,7 @@ function PlanBody({
                 >
                   <ChatMessageList>
                     {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+                    {activity === 'thinking' ? <ThinkingIndicator /> : null}
                   </ChatMessageList>
                 </ChatLayout>
               </Card>
@@ -252,7 +256,7 @@ function PlanBody({
         </HStack>
       )}
 
-      {isMobile ? <MobileChatOverlay feed={feed} sendMessage={sendMessage} isStreaming={isStreaming} /> : null}
+      {isMobile ? <MobileChatOverlay feed={feed} sendMessage={sendMessage} isStreaming={isStreaming} activity={activity} /> : null}
     </VStack>
   );
 }

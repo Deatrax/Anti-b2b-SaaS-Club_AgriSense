@@ -12,7 +12,7 @@ vi.mock('../src/models/field.model', () => ({ FieldModel: { getState } }));
 vi.mock('../src/services/external/openmeteo.client', () => ({ getForecast }));
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
-    begin: vi.fn(async (_c: string, _m: string | null, step: number) => ({ id: `t${step}`, step, startedAt: Date.now() })),
+    begin: (() => { let s = 0; return vi.fn(async () => { s += 1; return { id: `t${s}`, step: s, startedAt: Date.now() }; }); })(),
     ok: vi.fn(async () => undefined),
     error: vi.fn(async () => undefined),
     fallback: traceFallback,

@@ -26,15 +26,30 @@ export interface AgentContext extends ToolCtx {
 
 const MAX_STEPS = 10;
 
+/** Tool results can carry live pg Date objects (the models' row types say `string`, but that
+ * is compile-time only — node-postgres returns Date instances for date/timestamp columns).
+ * The AI SDK validates tool-result `value`s as JSONValue on the NEXT streamText call, so a
+ * Date instance kills the following reasoning step with AI_InvalidPromptError. Round-tripping
+ * through JSON converts Dates → ISO strings and drops undefined. */
+export function toJsonSafe(value: unknown): JSONValue {
+  try {
+    return JSON.parse(JSON.stringify(value)) as JSONValue;
+  } catch {
+    return { error: 'tool result was not JSON-serializable' };
+  }
+}
+
 export async function runAgent(ctx: AgentContext, userMessage: string): Promise<void> {
   const field = await FieldModel.getState(ctx.fieldId);
   const phase = derivePhase(field); // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
 
-  await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
+  // History is fetched BEFORE the user message is inserted — fetching after put the just-added
+  // message in `history` AND in the explicit push below, so the model saw every farmer message twice.
   const [history, priorMessages] = await Promise.all([
     ConversationModel.recentMessages(ctx.conversationId, 20),
     ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10),
   ]);
+  await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
   const messages: ModelMessage[] = [
     ...history
       .filter((m) => m.role === 'user' || m.role === 'assistant')
@@ -75,7 +90,15 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
       stepToolCalls = (await result.toolCalls) as typeof stepToolCalls;
       responseMessages = (await result.responseMessages) as ModelMessage[];
     } catch (err) {
-      ctx.stream.notice(`⚠ The reasoning model is unavailable right now (${String(err)}) — please try again.`);
+      // Name the actual failure class: blaming "the model is unavailable" for our own
+      // message-construction bugs misdirected an hour of live debugging on 25 Jul.
+      const name = err instanceof Error ? err.name : 'UnknownError';
+      const friendly =
+        name === 'AI_APICallError' || name === 'AI_RetryError' || name === 'AI_LoadAPIKeyError'
+          ? 'The reasoning model is unreachable right now — please try again.'
+          : 'The agent hit an internal error this turn — details are in the server log.';
+      console.error('[agent] turn failed:', err);
+      ctx.stream.notice(`⚠ ${friendly} (${name})`);
       await persist(ctx, textParts, toolCallLog);
       ctx.stream.done();
       return;
@@ -116,8 +139,7 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
             type: 'tool-result',
             toolCallId: call.toolCallId,
             toolName: call.toolName,
-            // Tool results are always JSON-serializable by design (registry.ts's ToolResult<R>).
-            output: isError ? { type: 'error-json', value: toolResult as JSONValue } : { type: 'json', value: toolResult as JSONValue },
+            output: isError ? { type: 'error-json', value: toJsonSafe(toolResult) } : { type: 'json', value: toJsonSafe(toolResult) },
           },
         ],
       });

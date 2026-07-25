@@ -5,11 +5,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { ToolResult } from '@agrisense/shared';
 import type { ToolCtx } from '../src/services/tools/registry';
 
-const begin = vi.fn(async (_c: string, _m: string | null, step: number, _tool: string, _toolClass: string, _params: unknown) => ({
-  id: `trace-${step}`,
-  step,
-  startedAt: Date.now(),
-}));
+// Step is now allocated by TraceModel.begin (the DB's coalesce(max(step))+1), NOT by an
+// in-memory counter in the registry — so a process restart can't reset it (BUG-9c). This mock
+// stands in for the DB's per-conversation sequence.
+const stepSeq = new Map<string, number>();
+const begin = vi.fn(async (conversationId: string, _m: string | null, _tool: string, _toolClass: string, _params: unknown) => {
+  const step = (stepSeq.get(conversationId) ?? 0) + 1;
+  stepSeq.set(conversationId, step);
+  return { id: `trace-${step}`, step, startedAt: Date.now() };
+});
 const ok = vi.fn(async (_h: unknown, _result: unknown, _source: string | null, _durationMs: number) => undefined);
 const error = vi.fn(async (_h: unknown, _err: unknown, _durationMs: number) => undefined);
 const fallback = vi.fn(async (_h: unknown, _result: unknown, _err: unknown, _durationMs: number) => undefined);
@@ -37,6 +41,7 @@ const okResult: ToolResult<{ ok: true }> = {
 beforeEach(() => {
   vi.clearAllMocks();
   getRegistry().clear();
+  stepSeq.clear();
 });
 
 describe('registry trace wrapper', () => {
@@ -53,7 +58,7 @@ describe('registry trace wrapper', () => {
     const out = await getRegistry().get('echo_ok')!.handler(undefined, ctx);
 
     expect(out).toBe(okResult);
-    expect(begin).toHaveBeenCalledWith('conv-1', null, 1, 'echo_ok', 'deterministic', undefined);
+    expect(begin).toHaveBeenCalledWith('conv-1', null, 'echo_ok', 'deterministic', undefined);
     expect(ok).toHaveBeenCalledWith(expect.objectContaining({ id: 'trace-1' }), okResult, 'Test Source', expect.any(Number));
     expect(ctx.stream.toolStart).toHaveBeenCalledWith(expect.objectContaining({ status: 'running', tool: 'echo_ok' }));
     expect(ctx.stream.toolEnd).toHaveBeenCalledWith(
@@ -125,7 +130,7 @@ describe('registry trace wrapper', () => {
     expect(fallback.mock.calls[0]![2]).toBeInstanceOf(Error);
   });
 
-  it('steps increment per conversation and are independent across conversations', async () => {
+  it('uses the DB-allocated step (from begin) on the streamed trace entry, per conversation', async () => {
     register({
       name: 'echo_step',
       description: 'test',
@@ -141,8 +146,13 @@ describe('registry trace wrapper', () => {
     await getRegistry().get('echo_step')!.handler(undefined, ctxB);
     await getRegistry().get('echo_step')!.handler(undefined, ctxA);
 
-    expect(begin).toHaveBeenNthCalledWith(1, 'conv-A', null, 1, 'echo_step', 'deterministic', undefined);
-    expect(begin).toHaveBeenNthCalledWith(2, 'conv-B', null, 1, 'echo_step', 'deterministic', undefined);
-    expect(begin).toHaveBeenNthCalledWith(3, 'conv-A', null, 2, 'echo_step', 'deterministic', undefined);
+    // begin is called WITHOUT a step arg — the DB allocates it. The registry must thread the
+    // returned step onto the trace entry it streams, per conversation.
+    expect(begin).toHaveBeenNthCalledWith(1, 'conv-A', null, 'echo_step', 'deterministic', undefined);
+    expect(begin).toHaveBeenNthCalledWith(2, 'conv-B', null, 'echo_step', 'deterministic', undefined);
+    expect(begin).toHaveBeenNthCalledWith(3, 'conv-A', null, 'echo_step', 'deterministic', undefined);
+    expect((ctxA.stream.toolStart as ReturnType<typeof vi.fn>).mock.calls[0]![0]).toMatchObject({ step: 1 });
+    expect((ctxB.stream.toolStart as ReturnType<typeof vi.fn>).mock.calls[0]![0]).toMatchObject({ step: 1 });
+    expect((ctxA.stream.toolStart as ReturnType<typeof vi.fn>).mock.calls[1]![0]).toMatchObject({ step: 2 });
   });
 });

@@ -49,14 +49,19 @@ describe('buildPlan (§C.9 calendar)', () => {
     expect(events.find((e) => e.stageKey === 'harvest')?.plannedDate).toBe('2026-11-30');
   });
 
-  it('walks post-transplant stages sequentially by their real durations', () => {
+  it('places post-transplant top-dress splits MID-stage, not on the transplant day (BUG-6)', () => {
     const events = buildPlan(baseInput());
-    // tillering starts AT transplant; panicle_initiation starts 35 days later.
     const nFertilizerEvents = events.filter((e) => e.title.startsWith('Apply N'));
+    const basalSplit = nFertilizerEvents.find((e) => e.stageKey === 'basal');
     const tilleringSplit = nFertilizerEvents.find((e) => e.stageKey === 'tillering');
     const piSplit = nFertilizerEvents.find((e) => e.stageKey === 'panicle_initiation');
-    expect(tilleringSplit?.plannedDate).toBe('2026-08-01');
-    expect(piSplit?.plannedDate).toBe('2026-09-05'); // 2026-08-01 + 35 days
+    // basal AT transplant; tillering mid-stage (2026-08-01 + floor(35/2)=17 days);
+    // PI mid-stage (stage starts 2026-09-05, +floor(20/2)=10 days).
+    expect(basalSplit?.plannedDate).toBe('2026-08-01');
+    expect(tilleringSplit?.plannedDate).toBe('2026-08-18');
+    expect(piSplit?.plannedDate).toBe('2026-09-15');
+    // The regression itself: the tillering split must NOT land on the transplant/basal day.
+    expect(tilleringSplit?.plannedDate).not.toBe(basalSplit?.plannedDate);
   });
 
   it('prices each fertilizer split as dose × fraction × areaHa', () => {

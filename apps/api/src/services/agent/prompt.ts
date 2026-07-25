@@ -17,7 +17,9 @@ const ANSWER_SHAPE =
   'When you explain a recommendation, use this shape: cause → immediate action → prevention → source. ' +
   'Example: "Apply 45 kg/acre urea in the next 3 days, because your soil is sandy, rice is at the ' +
   'vegetative stage, and no rain is forecast this week." Name the specific farm inputs and retrieved ' +
-  'values behind every claim.';
+  'values behind every claim. State dates and quantities EXACTLY as the tool results returned them — ' +
+  'never adjust, round to a different day, or "correct" them in prose; if a tool value looks wrong, ' +
+  'say so instead of silently substituting your own.';
 
 const PHASE_INSTRUCTIONS: Record<Phase, string> = {
   GATHERING:
@@ -31,12 +33,17 @@ const PHASE_INSTRUCTIONS: Record<Phase, string> = {
     'or build a plan yet.',
   PLANNING:
     "Phase: PLANNING. Intake is complete and there's no active crop cycle yet. Work the full chain " +
-    'without asking permission: crop history, then weather, then rank candidate crops, then build the ' +
-    "season plan and financial projection. Make the tool calls — don't just describe what you would do.",
+    'without asking permission: crop history, then weather, then rank candidate crops, then call ' +
+    "search_knowledge_base for the top crop's key risks and practices, then build the season plan and " +
+    'financial projection — citing the retrieved guidance in your explanation. Make the tool calls — ' +
+    "don't just describe what you would do. If the farmer corrects an intake value, call update_field " +
+    'with the correction before continuing.',
   MAINTAINING:
     'Phase: MAINTAINING. This field has an active crop cycle. Answer against the current plan and log ' +
-    'what the farmer reports with log_field_event. When something changes the plan, say exactly what ' +
-    'moved and by how much, and why.',
+    'what the farmer reports with log_field_event. For any why/how/pest/disease question, call ' +
+    'search_knowledge_base before answering and name the source you used. When something changes the ' +
+    'plan, say exactly what moved and by how much, and why. If an update_field result says the plan ' +
+    'needs rebuilding, rebuild it with build_season_plan and state exactly what changed.',
   TRANSACTING:
     'Phase: TRANSACTING. A payment proposal is approved and pending. Only call bdapps_direct_debit if ' +
     'an approved proposal already exists for this transaction — never debit without one.',

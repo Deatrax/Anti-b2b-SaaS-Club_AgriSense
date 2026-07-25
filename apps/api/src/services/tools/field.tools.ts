@@ -36,6 +36,11 @@ const getFieldStateSchema = z.object({});
 const SOIL_TYPES = ['sandy', 'sandy_loam', 'loam', 'silt_loam', 'clay_loam', 'clay'] as const;
 const WATER_SOURCES = ['rainfed', 'shallow_tubewell', 'deep_tubewell', 'canal', 'pond', 'river'] as const;
 const SEASONS = ['boro', 'aus', 'aman', 'rabi', 'kharif_1', 'kharif_2'] as const;
+/** BD cropping-calendar synonyms: Kharif-2 IS the aman season, Kharif-1 the aus season —
+ * crop_rules.json keys by aman/aus/boro, so the synonym must collapse at the single write
+ * point or season matching scores 0 for every crop (BUG-8). `rabi` is deliberately NOT
+ * mapped to boro: rabi spans non-rice crops too, and forcing it would invent a fact. */
+const SEASON_CANONICAL: Record<string, string> = { kharif_2: 'aman', kharif_1: 'aus' };
 
 // Mirrors packages/shared/src/types/field.ts's SoilType/WaterSource/Season unions — zod needs
 // the literal list at runtime, so keep these in sync if that file's unions ever change.
@@ -88,18 +93,32 @@ export function registerFieldTools(): void {
       'water source, or season the farmer never said corrupts the farm record.',
     schema: updateFieldSchema,
     toolClass: 'field',
-    phases: ['GATHERING', 'MAINTAINING'],
+    // PLANNING too: a farmer correcting intake mid-plan ("actually 3 hectares") must be
+    // actionable in every phase — with this tool gone from PLANNING, the live test saw the
+    // agent silently ignore a correction (bug_report_tier0.md BUG-4b).
+    phases: ['GATHERING', 'PLANNING', 'MAINTAINING'],
     handler: async (args, ctx): Promise<ToolResult<FieldState>> => {
       let { lat, lon } = args;
       const { district, target_season, lat: _lat, lon: _lon, ...rest } = args;
       if ((lat == null) !== (lon == null)) {
         throw new Error('lat and lon must be provided together');
       }
-      // Models sometimes pad the call with lat:0, lon:0 — a point in the Atlantic, never a
-      // Bangladesh field. Treat it as absent so a real district lookup isn't clobbered.
-      if (lat === 0 && lon === 0) {
-        lat = undefined;
-        lon = undefined;
+      const assumptions: string[] = [];
+      // Models pad calls with fabricated coordinates — lat:0, lon:0 (the Atlantic) was
+      // observed 3/3 turns in the live test. Anything outside Bangladesh's bounding box is
+      // discarded in favor of the district lookup when one is present, and rejected with
+      // instructions otherwise (the model recovers well from instructive tool errors).
+      if (lat != null && lon != null && !(lat >= 20.5 && lat <= 26.7 && lon >= 88.0 && lon <= 92.8)) {
+        if (district) {
+          assumptions.push(`Ignored coordinates (${lat}, ${lon}) — outside Bangladesh; using the ${district} district centre instead.`);
+          lat = undefined;
+          lon = undefined;
+        } else {
+          throw new Error(
+            `coordinates (${lat}, ${lon}) are outside Bangladesh (lat 20.5–26.7, lon 88.0–92.8) — ` +
+              "pass the farmer's district name instead, or corrected coordinates.",
+          );
+        }
       }
 
       // null means "the farmer didn't state it" (see schema note) — never write it.
@@ -132,13 +151,27 @@ export function registerFieldTools(): void {
         await FieldModel.update(ctx.fieldId, patch);
       }
       // fields has no target_season column — it's derived from a 'planned' crop_cycle's
-      // season, so a season-only patch routes to CropCycleModel.create(), not FieldModel.update().
+      // season, so a season-only patch routes to the cycle model, not FieldModel.update().
+      // Farmers (and the demo script) say "Kharif-2" for the same season crop_rules.json
+      // calls "aman" — without this mapping every crop scored seasonFit 0 (BUG-8). An
+      // existing planned cycle is re-targeted rather than stacking a sibling (BUG-11).
       if (target_season) {
-        await CropCycleModel.create(ctx.fieldId, { season: target_season });
+        const season = SEASON_CANONICAL[target_season] ?? target_season;
+        const planned = (await CropCycleModel.listByField(ctx.fieldId)).find((c) => c.status === 'planned');
+        if (planned) {
+          if (planned.season !== season) await CropCycleModel.update(planned.id, { season });
+        } else {
+          await CropCycleModel.create(ctx.fieldId, { season });
+        }
       }
 
       const state = await FieldModel.getState(ctx.fieldId);
-      return { data: state, provenance };
+      if (state.activeCycle && ['area_ha', 'soil_type', 'water_source', 'lat'].some((k) => k in patch)) {
+        assumptions.push(
+          'Field identity changed while a plan is active — the existing plan quantities used the previous values; rebuild with build_season_plan.',
+        );
+      }
+      return { data: state, provenance, assumptions: assumptions.length ? assumptions : undefined };
     },
   });
 

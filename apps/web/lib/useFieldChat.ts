@@ -12,6 +12,15 @@ import { buildFeedFromHistory, type FeedItem } from './feed';
 
 const CONV_ID = 'live'; // display-only placeholder; the real conversation id lives server-side
 
+/** What the agent is doing RIGHT NOW, derived client-side from the SSE event stream —
+ * no server/protocol change needed, the events already delimit every state:
+ *   'thinking'   — dead air: after send (or after a tool finished) while the model reasons,
+ *                  before any token or tool event arrives. The UI's "AI is thinking…" row.
+ *   'tool'       — a tool call is running; FeedTrace's spinner + running label is the indicator.
+ *   'responding' — tokens are streaming into the bubble; the growing text is the indicator.
+ *   null         — idle (turn finished). */
+export type ChatActivity = 'thinking' | 'tool' | 'responding' | null;
+
 function userMessage(content: string): FeedItem {
   return {
     id: `user-${Date.now()}`,
@@ -26,6 +35,7 @@ function userMessage(content: string): FeedItem {
 export function useFieldChat(fieldId: string, conversationId?: string) {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [activity, setActivity] = useState<ChatActivity>(null);
   const closeRef = useRef<(() => void) | null>(null);
   const assistantIdRef = useRef<string | null>(null);
 
@@ -49,10 +59,12 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
       if (!message.trim() || isStreaming) return;
       setFeed((f) => [...f, userMessage(message)]);
       setIsStreaming(true);
+      setActivity('thinking');
       assistantIdRef.current = null;
 
       const close = openChatStream({ fieldId, message, conversationId }, (event: StreamEvent) => {
         if (event.type === 'text') {
+          setActivity('responding');
           setFeed((f) => {
             if (assistantIdRef.current) {
               return f.map((item) =>
@@ -73,6 +85,9 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
             ];
           });
         } else if (event.type === 'tool_start' || event.type === 'tool_end') {
+          // tool_end → 'thinking', not 'tool': the model is reasoning again over the result
+          // until its next token/tool event — that gap is exactly the "AI is thinking…" window.
+          setActivity(event.type === 'tool_start' ? 'tool' : 'thinking');
           // Consecutive tool calls collapse into ONE feed block (Claude-style "worked for…"
           // summary) instead of one block per call; a text message in between starts a new
           // block. tool_end replaces its tool_start entry in place by trace id.
@@ -96,6 +111,7 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
           ]);
         } else if (event.type === 'done') {
           setIsStreaming(false);
+          setActivity(null);
         }
       });
       closeRef.current = close;
@@ -103,5 +119,5 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
     [fieldId, conversationId, isStreaming],
   );
 
-  return { feed, sendMessage, isStreaming };
+  return { feed, sendMessage, isStreaming, activity };
 }

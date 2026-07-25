@@ -367,6 +367,7 @@
   "recent_chats_heading": "Recent chats",
   "all_chats": "All chats",
   "new_chat": "New chat",
+  "ai_thinking": "AgriSense is thinking…",
   "trace_running_generic": "Working…",
   "trace_running_get_weather": "Checking the weather…",
   "trace_running_search_knowledge_base": "Looking up agronomy references…",

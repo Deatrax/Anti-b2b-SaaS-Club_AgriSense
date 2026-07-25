@@ -104,15 +104,78 @@ const NUTRIENT_TO_PRODUCT: Record<string, { product: string; pctNutrient: number
 const now = () => new Date().toISOString();
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
-function addDaysToMonthDay(monthDay: string, year: number): Date {
-  return new Date(`${year}-${monthDay}T00:00:00Z`);
+const addDaysIso = (isoDate: string, days: number): string => {
+  const d = new Date(`${isoDate}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+};
+
+/** First ISO date `MM-DD` falls on, on or after `anchorIso` (this year if still upcoming,
+ * else next year). ISO-string comparison is safe for YYYY-MM-DD. */
+function firstOnOrAfter(monthDay: string, anchorIso: string): string {
+  const year = Number(anchorIso.slice(0, 4));
+  const thisYear = `${year}-${monthDay}`;
+  return thisYear >= anchorIso ? thisYear : `${year + 1}-${monthDay}`;
 }
 
-/** Resolves a crop_rules.json MM-DD window-start into a real date: this year's if it's still
- * upcoming, otherwise next year's. Used for sowing/transplant/harvest when not overridden. */
-function resolveYearFor(monthDay: string, referenceNow: Date): number {
-  const year = referenceNow.getUTCFullYear();
-  return addDaysToMonthDay(monthDay, year) < referenceNow ? year + 1 : year;
+export interface SeasonDates {
+  sowingDate: string;
+  transplantWindowStart: string;
+  harvestWindowStart: string;
+  assumptions: string[];
+}
+
+/**
+ * The whole calendar's date anchoring, pure and clock-injectable (bug_report_tier0.md BUG-5).
+ * The old code resolved EVERY window's year from `now` against the SOWING window start, so a
+ * mid-window "today" (25 Jul, aman window 07-01…08-15) rolled transplant/harvest to NEXT year
+ * while the model-supplied sowing stayed this year — a 371-day gap in the flagship artifact.
+ * Here transplant and harvest are anchored on the SOWING date instead, so the chain can't
+ * split across years.
+ *
+ * @param todayIso  YYYY-MM-DD "now" (injected so this is testable without mocking the clock).
+ */
+export function resolveSeasonDates(
+  calendar: { sowing_window: { start: string; end: string }; transplant_window: { start: string }; harvest_window: { start: string } },
+  todayIso: string,
+  nurseryDays: number,
+  sowingDateArg?: string,
+): SeasonDates {
+  const assumptions: string[] = [];
+  const year = Number(todayIso.slice(0, 4));
+  const windowStart = `${year}-${calendar.sowing_window.start}`;
+  const windowEnd = `${year}-${calendar.sowing_window.end}`;
+
+  // Sowing: an explicit arg wins. Otherwise: today if the window is open now, the window start
+  // if it's still upcoming, or next year's window start if this year's already closed.
+  let sowingDate: string;
+  if (sowingDateArg) {
+    sowingDate = sowingDateArg;
+  } else if (todayIso > windowEnd) {
+    sowingDate = firstOnOrAfter(calendar.sowing_window.start, addDaysIso(windowEnd, 1));
+  } else {
+    sowingDate = todayIso < windowStart ? windowStart : todayIso;
+  }
+
+  // Transplant: the calendar window start (in the SOWING year, never a rolled-forward year —
+  // that was the 371-day bug), but never before the nursery has finished. When sowing is late
+  // enough that the window start has already passed, the nursery-ready date wins and is flagged.
+  const nurseryReady = addDaysIso(sowingDate, nurseryDays);
+  const transplantWindow = `${sowingDate.slice(0, 4)}-${calendar.transplant_window.start}`;
+  let transplantWindowStart: string;
+  if (transplantWindow >= nurseryReady) {
+    transplantWindowStart = transplantWindow;
+  } else {
+    transplantWindowStart = nurseryReady;
+    assumptions.push(
+      `Sowing (${sowingDate}) is late relative to the transplant window (${calendar.transplant_window.start}); transplanting after the ${nurseryDays}-day nursery instead (${nurseryReady}).`,
+    );
+  }
+
+  // Harvest: first harvest window on/after transplanting (handles Boro's Nov→Apr year wrap).
+  const harvestWindowStart = firstOnOrAfter(calendar.harvest_window.start, transplantWindowStart);
+
+  return { sowingDate, transplantWindowStart, harvestWindowStart, assumptions };
 }
 
 async function getTargetSeason(fieldId: string): Promise<string | null> {
@@ -244,11 +307,13 @@ export function registerPlanningTools(): void {
         throw new Error('build_season_plan called before the field has area/location — resolve intake first.');
       }
 
-      const referenceNow = new Date();
-      const sowYear = resolveYearFor(rule.calendar.sowing_window.start, referenceNow);
-      const sowingDate = args.sowingDate ?? `${sowYear}-${rule.calendar.sowing_window.start}`;
-      const transplantWindowStart = `${sowYear}-${rule.calendar.transplant_window.start}`;
-      const harvestWindowStart = `${sowYear}-${rule.calendar.harvest_window.start}`;
+      const todayIso = new Date().toISOString().slice(0, 10);
+      const { sowingDate, transplantWindowStart, harvestWindowStart, assumptions: dateAssumptions } = resolveSeasonDates(
+        rule.calendar,
+        todayIso,
+        rule.stage_durations_days.nursery,
+        args.sowingDate ?? undefined,
+      );
 
       const forecast = await getForecast(field.identity.lat, field.identity.lon);
       const stageDates = computeStageDates(transplantWindowStart, rule.stage_durations_days);
@@ -269,13 +334,17 @@ export function registerPlanningTools(): void {
         sources: { calendar: calendarSources, fertilizer: fertilizerSources, irrigation: irrigationSources },
       });
 
-      const cycle = await CropCycleModel.create(ctx.fieldId, {
-        season: rule.season,
-        crop: args.crop,
-        sowingDate,
-        expectedHarvest: harvestWindowStart,
-        status: 'active',
-      });
+      // Promote the GATHERING-created 'planned' cycle (or a prior active one, e.g. a rebuild
+      // after a correction) instead of inserting a sibling — orphan cycles were piling up and
+      // a rebuild left two 'active' rows (BUG-11). One active cycle per field is the invariant.
+      const cycles = await CropCycleModel.listByField(ctx.fieldId);
+      const priorActive = cycles.find((c) => c.status === 'active');
+      if (priorActive) await CropCycleModel.update(priorActive.id, { status: 'superseded' });
+      const planned = cycles.find((c) => c.status === 'planned');
+      const cyclePatch = { season: rule.season, crop: args.crop, sowingDate, expectedHarvest: harvestWindowStart, status: 'active' as const };
+      const cycle = planned
+        ? await CropCycleModel.update(planned.id, cyclePatch)
+        : await CropCycleModel.create(ctx.fieldId, cyclePatch);
 
       const fullEvents = events.map((e) => ({ ...e, id: '', cropCycleId: cycle.id }));
       await PlanEventModel.replaceForCycle(cycle.id, fullEvents);
@@ -286,7 +355,9 @@ export function registerPlanningTools(): void {
         provenance: [...calendarSources, ...fertilizerSources, ...irrigationSources],
         assumptions: [
           `Land preparation is dated a week before sowing — a scheduling default, not from a cited source.`,
+          `Post-transplant fertilizer top-dressings (tillering, panicle initiation) and the scouting checkpoint are placed mid-stage — the FRG timing ("early tillering", "5–7 days before panicle initiation") is a window, so the exact day is a scheduling heuristic, not a cited date.`,
           `Irrigation is estimated only for the stage(s) covered by the current 16-day Open-Meteo forecast; later stages need a closer-to-the-date forecast.`,
+          ...dateAssumptions,
         ],
       };
     },

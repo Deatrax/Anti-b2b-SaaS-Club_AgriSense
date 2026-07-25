@@ -9,18 +9,19 @@ const getState = vi.fn();
 const listByField = vi.fn();
 const history = vi.fn();
 const cycleCreate = vi.fn(async () => ({ id: 'cycle-1' }));
+const cycleUpdate = vi.fn(async (id: string) => ({ id }));
 const replaceForCycle = vi.fn(async () => undefined);
 const seasonPlanCreate = vi.fn(async () => ({ id: 'plan-1', cropCycleId: 'cycle-1', revision: 1, weatherSnapshot: {}, generatedAt: 'now' }));
 const getForecast = vi.fn();
 
 vi.mock('../src/models/field.model', () => ({ FieldModel: { getState } }));
-vi.mock('../src/models/cropCycle.model', () => ({ CropCycleModel: { listByField, history, create: cycleCreate } }));
+vi.mock('../src/models/cropCycle.model', () => ({ CropCycleModel: { listByField, history, create: cycleCreate, update: cycleUpdate } }));
 vi.mock('../src/models/planEvent.model', () => ({ PlanEventModel: { replaceForCycle } }));
 vi.mock('../src/models/seasonPlan.model', () => ({ SeasonPlanModel: { create: seasonPlanCreate, getLatestForCycle: vi.fn() } }));
 vi.mock('../src/services/external/openmeteo.client', () => ({ getForecast }));
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
-    begin: vi.fn(async (_c: string, _m: string | null, step: number) => ({ id: `t${step}`, step, startedAt: Date.now() })),
+    begin: (() => { let s = 0; return vi.fn(async () => { s += 1; return { id: `t${s}`, step: s, startedAt: Date.now() }; }); })(),
     ok: vi.fn(async () => undefined),
     error: vi.fn(async () => undefined),
     fallback: vi.fn(async () => undefined),
@@ -174,22 +175,40 @@ describe('build_season_plan', () => {
     await expect(call('build_season_plan', { crop: 'aman_rice' })).rejects.toThrow(/area\/location/);
   });
 
-  it('activates a crop cycle, replaces the plan events, and persists a season plan with the real weather snapshot', async () => {
+  it('PROMOTES the planned cycle to active instead of inserting a sibling (BUG-11)', async () => {
     const out = await call('build_season_plan', { crop: 'aman_rice' });
 
-    expect(cycleCreate).toHaveBeenCalledWith('field-1', expect.objectContaining({ season: 'aman', crop: 'aman_rice', status: 'active' }));
-    expect(replaceForCycle).toHaveBeenCalledWith('cycle-1', expect.any(Array));
-    expect(seasonPlanCreate).toHaveBeenCalledWith('cycle-1', expect.objectContaining({ cachedAt: expect.any(String) }));
+    // The GATHERING-created 'planned' cycle is re-targeted, not a fresh insert.
+    expect(cycleUpdate).toHaveBeenCalledWith('planned-1', expect.objectContaining({ season: 'aman', crop: 'aman_rice', status: 'active' }));
+    expect(cycleCreate).not.toHaveBeenCalled();
+    expect(replaceForCycle).toHaveBeenCalledWith('planned-1', expect.any(Array));
+    expect(seasonPlanCreate).toHaveBeenCalledWith('planned-1', expect.objectContaining({ cachedAt: expect.any(String) }));
 
-    expect(out.data.cropCycleId).toBe('cycle-1');
+    expect(out.data.cropCycleId).toBe('planned-1');
     expect(out.data.seasonPlanId).toBe('plan-1');
     expect(out.data.events.length).toBeGreaterThan(0);
-    expect(out.data.events.every((e: { cropCycleId: string }) => e.cropCycleId === 'cycle-1')).toBe(true);
+    expect(out.data.events.every((e: { cropCycleId: string }) => e.cropCycleId === 'planned-1')).toBe(true);
+  });
+
+  it('supersedes a prior active cycle so exactly one stays active (BUG-11)', async () => {
+    listByField.mockResolvedValue([
+      { id: 'active-old', field_id: 'field-1', crop: 'aman_rice', variety: null, season: 'aman', sowing_date: null, expected_harvest: null, status: 'active', stage: null, day_index: null, actual_yield_kg: null },
+      { id: 'planned-1', field_id: 'field-1', crop: null, variety: null, season: 'aman', sowing_date: null, expected_harvest: null, status: 'planned', stage: null, day_index: null, actual_yield_kg: null },
+    ]);
+    await call('build_season_plan', { crop: 'aman_rice' });
+    expect(cycleUpdate).toHaveBeenCalledWith('active-old', { status: 'superseded' });
+    expect(cycleUpdate).toHaveBeenCalledWith('planned-1', expect.objectContaining({ status: 'active' }));
+  });
+
+  it('creates a fresh cycle when no planned cycle exists', async () => {
+    listByField.mockResolvedValue([]);
+    await call('build_season_plan', { crop: 'aman_rice' });
+    expect(cycleCreate).toHaveBeenCalledWith('field-1', expect.objectContaining({ season: 'aman', crop: 'aman_rice', status: 'active' }));
   });
 
   it('honors an explicit sowingDate override instead of the crop_rules default', async () => {
     await call('build_season_plan', { crop: 'aman_rice', sowingDate: '2026-07-10' });
-    expect(cycleCreate).toHaveBeenCalledWith('field-1', expect.objectContaining({ sowingDate: '2026-07-10' }));
+    expect(cycleUpdate).toHaveBeenCalledWith('planned-1', expect.objectContaining({ sowingDate: '2026-07-10' }));
   });
 
   it('only estimates irrigation for the stage the 16-day forecast window actually covers', async () => {

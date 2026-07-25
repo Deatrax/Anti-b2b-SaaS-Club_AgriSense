@@ -33,15 +33,6 @@ export interface ToolDef<A = unknown, R = unknown> {
 
 const registry = new Map<string, ToolDef>();
 
-/** Trace rows are ordered by (conversation_id, step) — one counter per conversation. */
-const stepCounters = new Map<string, number>();
-
-function nextStep(conversationId: string): number {
-  const step = (stepCounters.get(conversationId) ?? 0) + 1;
-  stepCounters.set(conversationId, step);
-  return step;
-}
-
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error(`tool timed out after ${ms}ms`)), ms);
@@ -60,15 +51,14 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
 
 export function register<A, R>(def: ToolDef<A, R>): void {
   const traced = async (args: A, ctx: ToolCtx): Promise<ToolResult<R>> => {
-    const step = nextStep(ctx.conversationId);
     const handle = await TraceModel.begin(
       ctx.conversationId,
       ctx.messageId,
-      step,
       def.name,
       def.toolClass,
       args,
     );
+    const step = handle.step; // DB-allocated, survives restarts (BUG-9c)
     const running: TraceEntry = {
       id: handle.id,
       conversationId: ctx.conversationId,

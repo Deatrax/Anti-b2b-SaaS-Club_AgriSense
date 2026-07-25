@@ -44,18 +44,12 @@ function loadJson<T>(file: string): T {
 const CARRIER_NUTRIENT_PCT: Record<string, number> = { urea: 0.46, tsp: 0.46, mop: 0.6, gypsum: 0.18 };
 const NUTRIENT_CARRIER: Record<string, string> = { N: 'urea', P: 'tsp', K: 'mop', S: 'gypsum' };
 
-const computeFinancialsSchema = z.object({
-  weatherAdj: z
-    .number()
-    .positive()
-    .optional()
-    .describe('Yield multiplier for current weather conditions (1.0 = normal). Defaults to 1.0.'),
-  inputAdj: z
-    .number()
-    .positive()
-    .optional()
-    .describe('Yield multiplier for input quality/access (1.0 = standard). Defaults to 1.0.'),
-});
+// No arguments — the multipliers this schema used to expose (weatherAdj/inputAdj) were
+// model-pickable yield adjustments with no grounding requirement; the live test caught
+// gpt-4o passing 0.75 out of thin air and then recycling the rank_crops score (0.658) as a
+// yield multiplier (bug_report_tier0.md BUG-10). The engine keeps the parameters for Tier 1
+// scenario simulation, where the DELTA comes from an explicit farmer request, not the model.
+const computeFinancialsSchema = z.object({});
 
 export function registerFinancialTools(): void {
   register({
@@ -67,7 +61,7 @@ export function registerFinancialTools(): void {
     schema: computeFinancialsSchema,
     toolClass: 'deterministic',
     phases: ['PLANNING', 'MAINTAINING'],
-    handler: async (args, ctx): Promise<ToolResult<FinancialResult>> => {
+    handler: async (_args, ctx): Promise<ToolResult<FinancialResult>> => {
       const field = await FieldModel.getState(ctx.fieldId);
       const cycle = field.activeCycle;
       if (!cycle) {
@@ -159,8 +153,8 @@ export function registerFinancialTools(): void {
         areaHa,
         baseYieldKgPerHa: rules.base_yield_kg_per_ha.value,
         farmgatePriceBdtPerKg: farmgate.value,
-        weatherAdj: args.weatherAdj ?? 1.0,
-        inputAdj: args.inputAdj ?? 1.0,
+        weatherAdj: 1.0,
+        inputAdj: 1.0,
         costLineItems,
       });
 
@@ -174,6 +168,7 @@ export function registerFinancialTools(): void {
           { source: 'data/costs_bd.json', method: 'table', retrievedAt: now },
           { source: 'financial.engine.ts (computeFinancials)', method: 'computed', retrievedAt: now },
         ],
+        assumptions: ['Yield is the crop_rules.json reference level — no weather or input-quality multiplier is applied.'],
       };
     },
   });

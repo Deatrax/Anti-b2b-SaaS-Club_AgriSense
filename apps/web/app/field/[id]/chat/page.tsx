@@ -15,7 +15,7 @@ import { EmptyState } from '@astryxdesign/core/EmptyState';
 import { useT, useSession } from '../../../providers';
 import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
-import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
+import { FeedTrace, FeedMessage, ThinkingIndicator } from '../../../../components/mock/FeedChat';
 import { useFieldChat } from '../../../../lib/useFieldChat';
 import { getField, listFields, listRecentChats, type ApiField, type ApiRecentChat } from '../../../../lib/api';
 
@@ -33,7 +33,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id, conversationId);
+  const { feed, sendMessage, isStreaming, activity } = useFieldChat(id, conversationId);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -100,6 +100,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
           >
             <ChatMessageList>
               {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+              {activity === 'thinking' ? <ThinkingIndicator /> : null}
             </ChatMessageList>
           </ChatLayout>
         </StackItem>

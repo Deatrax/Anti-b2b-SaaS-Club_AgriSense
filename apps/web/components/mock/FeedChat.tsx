@@ -2,9 +2,10 @@
 // stream (Overview, Trace, Replan) — the exact FeedTrace/FeedMessage pattern already
 // built inline in app/field/[id]/page.tsx, lifted here so three new routes don't each
 // re-derive it.
-import { VStack } from '@astryxdesign/core/Stack';
+import { VStack, HStack } from '@astryxdesign/core/Stack';
 import { Text } from '@astryxdesign/core/Text';
 import { Timestamp } from '@astryxdesign/core/Timestamp';
+import { Spinner } from '@astryxdesign/core/Spinner';
 import { ChatMessage, ChatMessageBubble, ChatMessageMetadata, ChatToolCalls } from '@astryxdesign/core/Chat';
 import type { TraceEntry } from '@agrisense/shared';
 import { useT } from '../../app/providers';
@@ -68,6 +69,26 @@ export function FeedTrace({ traces, isExpanded }: { traces: TraceEntry[]; isExpa
         resultDetail: <TraceResultDetail trace={tr} />,
       }))}
     />
+  );
+}
+
+/** "AI is thinking…" row — rendered at the tail of the feed ONLY while the agent is between
+ * events (activity === 'thinking'): after the farmer sends, and after a tool finishes while
+ * the model reasons over its result. While a tool runs, FeedTrace's spinner is the indicator;
+ * while tokens stream, the growing bubble is — so this never doubles up with either. */
+export function ThinkingIndicator() {
+  const { t } = useT();
+  return (
+    <ChatMessage sender="assistant">
+      <ChatMessageBubble variant="ghost">
+        <HStack gap={1} vAlign="center">
+          <Spinner size="sm" />
+          <Text type="supporting" color="secondary">
+            {t('ai_thinking')}
+          </Text>
+        </HStack>
+      </ChatMessageBubble>
+    </ChatMessage>
   );
 }
 

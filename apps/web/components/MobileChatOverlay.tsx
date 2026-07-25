@@ -13,10 +13,21 @@ import { ChatLayout, ChatMessageList, ChatComposer, ChatSendButton } from '@astr
 import { EmptyState } from '@astryxdesign/core/EmptyState';
 import { MessageCircle } from 'lucide-react';
 import { useT } from '../app/providers';
-import { FeedTrace, FeedMessage } from './mock/FeedChat';
+import { FeedTrace, FeedMessage, ThinkingIndicator } from './mock/FeedChat';
 import type { FeedItem } from '../lib/feed';
+import type { ChatActivity } from '../lib/useFieldChat';
 
-export function MobileChatOverlay({ feed, sendMessage, isStreaming }: { feed: FeedItem[]; sendMessage: (message: string) => void; isStreaming: boolean }) {
+export function MobileChatOverlay({
+  feed,
+  sendMessage,
+  isStreaming,
+  activity = null,
+}: {
+  feed: FeedItem[];
+  sendMessage: (message: string) => void;
+  isStreaming: boolean;
+  activity?: ChatActivity;
+}) {
   const { t } = useT();
   const [isOpen, setIsOpen] = useState(false);
   const [composerValue, setComposerValue] = useState('');
@@ -54,6 +65,7 @@ export function MobileChatOverlay({ feed, sendMessage, isStreaming }: { feed: Fe
             >
               <ChatMessageList>
                 {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+                {activity === 'thinking' ? <ThinkingIndicator /> : null}
               </ChatMessageList>
             </ChatLayout>
           }

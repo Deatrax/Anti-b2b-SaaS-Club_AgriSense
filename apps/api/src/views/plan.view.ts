@@ -1,5 +1,6 @@
 // V — season plan serializer: PlanEvent rows → timeline + NextSteps card payload.
 import type { SeasonPlan } from '@agrisense/shared';
+import { toDhakaDate } from './date';
 
 export function serializePlan(plan: SeasonPlan | null) {
   if (!plan) return null;
@@ -18,8 +19,8 @@ export function serializePlan(plan: SeasonPlan | null) {
         action: e.action,
         quantity: e.quantity,
         unit: e.unit,
-        plannedDate: e.plannedDate,
-        actualDate: e.actualDate,
+        plannedDate: toDhakaDate(e.plannedDate),
+        actualDate: toDhakaDate(e.actualDate),
         status: e.status,
         shiftReason: e.shiftReason,
         sources: e.sources,

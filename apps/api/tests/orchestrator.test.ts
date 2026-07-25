@@ -19,7 +19,7 @@ vi.mock('../src/models/conversation.model', () => ({
 
 vi.mock('../src/models/trace.model', () => ({
   TraceModel: {
-    begin: vi.fn(async (_c: string, _m: string | null, step: number) => ({ id: `t${step}`, step, startedAt: Date.now() })),
+    begin: (() => { let s = 0; return vi.fn(async () => { s += 1; return { id: `t${s}`, step: s, startedAt: Date.now() }; }); })(),
     ok: vi.fn(async () => undefined),
     error: vi.fn(async () => undefined),
     fallback: vi.fn(async () => undefined),
@@ -226,16 +226,30 @@ describe('runAgent — resilience', () => {
     expect(ctx.stream.done).toHaveBeenCalledOnce();
   });
 
-  it('degrades gracefully when the model call itself fails', async () => {
+  it('names provider outages as such when the model call fails (BUG-13)', async () => {
+    const apiErr = new Error('ECONNRESET');
+    apiErr.name = 'AI_APICallError';
     streamText.mockImplementationOnce(() => {
-      throw new Error('ECONNRESET');
+      throw apiErr;
     });
     const ctx = makeCtx();
 
     await runAgent(ctx, 'hi');
 
-    expect(ctx.stream.notice).toHaveBeenCalledWith(expect.stringMatching(/unavailable/));
+    expect(ctx.stream.notice).toHaveBeenCalledWith(expect.stringMatching(/unreachable/));
     expect(ctx.stream.done).toHaveBeenCalledOnce();
     expect(streamText).toHaveBeenCalledTimes(1);
+  });
+
+  it('names our own bugs as internal errors, not model outages (BUG-13)', async () => {
+    streamText.mockImplementationOnce(() => {
+      throw new Error('messages do not match the ModelMessage[] schema');
+    });
+    const ctx = makeCtx();
+
+    await runAgent(ctx, 'hi');
+
+    expect(ctx.stream.notice).toHaveBeenCalledWith(expect.stringMatching(/internal error/));
+    expect(ctx.stream.done).toHaveBeenCalledOnce();
   });
 });

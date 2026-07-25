@@ -30,9 +30,9 @@ import { useT, useSession } from '../../../providers';
 import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { WeatherPanel } from '../../../../components/WeatherPanel';
-import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
+import { FeedTrace, FeedMessage, ThinkingIndicator } from '../../../../components/mock/FeedChat';
 import { MobileChatOverlay } from '../../../../components/MobileChatOverlay';
-import { useFieldChat } from '../../../../lib/useFieldChat';
+import { useFieldChat, type ChatActivity } from '../../../../lib/useFieldChat';
 import { latestWeather } from '../../../../lib/weather';
 import { bdt, daysFromToday } from '../../../../lib/format';
 import {
@@ -67,7 +67,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const [logResult, setLogResult] = useState<ApiReplanDiff | null>(null);
   const [isLogging, setIsLogging] = useState(false);
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id);
+  const { feed, sendMessage, isStreaming, activity } = useFieldChat(id);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -154,6 +154,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
           feed={feed}
           sendMessage={sendMessage}
           isStreaming={isStreaming}
+          activity={activity}
           composerValue={composerValue}
           setComposerValue={setComposerValue}
           onComposerSubmit={handleComposerSubmit}
@@ -182,6 +183,7 @@ function OverviewBody({
   feed,
   sendMessage,
   isStreaming,
+  activity,
   composerValue,
   setComposerValue,
   onComposerSubmit,
@@ -204,6 +206,7 @@ function OverviewBody({
   feed: FeedItem[];
   sendMessage: (message: string) => void;
   isStreaming: boolean;
+  activity: ChatActivity;
   composerValue: string;
   setComposerValue: (value: string) => void;
   onComposerSubmit: (value: string) => void;
@@ -278,6 +281,7 @@ function OverviewBody({
               >
                 <ChatMessageList>
                   {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+                  {activity === 'thinking' ? <ThinkingIndicator /> : null}
                 </ChatMessageList>
               </ChatLayout>
             </Card>
@@ -383,7 +387,7 @@ function OverviewBody({
         </StackItem>
       </HStack>
 
-      {isMobile ? <MobileChatOverlay feed={feed} sendMessage={sendMessage} isStreaming={isStreaming} /> : null}
+      {isMobile ? <MobileChatOverlay feed={feed} sendMessage={sendMessage} isStreaming={isStreaming} activity={activity} /> : null}
     </VStack>
   );
 }

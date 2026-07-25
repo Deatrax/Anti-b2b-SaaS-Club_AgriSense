@@ -73,4 +73,41 @@ export const CropCycleModel = {
   async complete(cycleId: string): Promise<void> {
     await query("update crop_cycles set status = 'harvested' where id = $1", [cycleId]);
   },
+
+  /** Patches a cycle in place — build_season_plan PROMOTES the GATHERING-created 'planned'
+   * cycle to 'active' instead of inserting a sibling (orphan planned rows were accumulating,
+   * bug_report_tier0.md BUG-11), and update_field re-targets a planned cycle's season. */
+  async update(
+    cycleId: string,
+    data: Partial<{
+      crop: string;
+      season: string;
+      sowingDate: string;
+      expectedHarvest: string;
+      status: 'planned' | 'active' | 'harvested' | 'superseded';
+    }>,
+  ): Promise<CropCycleRow> {
+    const columns: Record<string, string> = {
+      crop: 'crop',
+      season: 'season',
+      sowingDate: 'sowing_date',
+      expectedHarvest: 'expected_harvest',
+      status: 'status',
+    };
+    const sets: string[] = [];
+    const values: unknown[] = [cycleId];
+    for (const [key, column] of Object.entries(columns)) {
+      const value = (data as Record<string, unknown>)[key];
+      if (value === undefined) continue;
+      values.push(value);
+      sets.push(`${column} = $${values.length}`);
+    }
+    if (sets.length === 0) throw new Error('CropCycleModel.update called with an empty patch');
+    const [row] = await query<CropCycleRawRow>(
+      `update crop_cycles set ${sets.join(', ')} where id = $1 returning *`,
+      values,
+    );
+    if (!row) throw new Error(`crop cycle ${cycleId} not found`);
+    return toCropCycleRow(row);
+  },
 };

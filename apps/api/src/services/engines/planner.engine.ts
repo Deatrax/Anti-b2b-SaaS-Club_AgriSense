@@ -125,9 +125,21 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
 
   const stageDates = computeStageDates(input.transplantWindowStart, input.stageDurationsDays);
 
+  // Top-dress timing: 'basal' applies AT transplanting; a post-transplant split lands
+  // MID-stage, not at the stage boundary. Placing it at the boundary put the tillering split
+  // on the exact transplant day, colliding with the basal application (BUG-6). Mid-stage is a
+  // scheduling heuristic (surfaced as an assumption by the tool layer), not a cited date.
+  const fertilizerDate = (stage: string): string | null => {
+    if (stage === 'basal') return input.transplantWindowStart;
+    const start = stageDates[stage];
+    if (!start) return null;
+    const duration = input.stageDurationsDays[stage as Stage];
+    return duration ? addDays(start, Math.floor(duration / 2)) : start;
+  };
+
   for (const [nutrient, data] of Object.entries(input.fertilizer)) {
     for (const split of data.splits) {
-      const date = stageDates[split.stage];
+      const date = fertilizerDate(split.stage);
       if (!date) continue; // unknown stage name in the data — skip rather than guess a date
       const totalKg = Number((data.dose * split.fraction * input.areaHa).toFixed(2));
       const label = split.stage.replace(/_/g, ' ');
@@ -174,7 +186,9 @@ export function buildPlan(input: PlanInput): PlanEventDraft[] {
       action: 'General practice: scout for weeds and early pest/disease signs during active tillering.',
       quantity: null,
       unit: null,
-      plannedDate: stageDates.tillering ?? null,
+      // Mid-tillering, same reasoning as fertilizerDate — "active tillering" is a window, and
+      // dating this at the stage start collided it with the transplant/basal day (BUG-6).
+      plannedDate: fertilizerDate('tillering'),
       sources: [],
       sortOrder: order++,
     }),
