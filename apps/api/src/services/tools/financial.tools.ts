@@ -12,6 +12,7 @@ import type { FinancialResult, ToolResult } from '@agrisense/shared';
 import { register } from './registry';
 import { FieldModel } from '../../models/field.model';
 import { LedgerModel } from '../../models/ledger.model';
+import { SupplierSelectionModel, type SupplierSelectionRow } from '../../models/supplierSelection.model';
 import { computeFinancials, type CostLineItemInput } from '../engines/financial.engine';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -98,19 +99,27 @@ export function registerFinancialTools(): void {
 
       const costLineItems: CostLineItemInput[] = [];
 
+      const selections = await SupplierSelectionModel.listByCycle(cycle.id);
+      const selectionByItem = new Map<string, SupplierSelectionRow>(selections.map((s) => [s.item_key, s]));
+
       for (const [nutrient, spec] of Object.entries(rules.fertilizer.nutrients)) {
         const carrier = NUTRIENT_CARRIER[nutrient];
         const pct = carrier ? CARRIER_NUTRIENT_PCT[carrier] : undefined;
         const priceEntry = carrier ? costsBd.fertilizer_prices_bdt_per_kg[carrier] : undefined;
         if (!carrier || !pct || !priceEntry) continue;
         const productKg = (spec.dose * areaHa) / pct;
+        const selection = selectionByItem.get(carrier);
+        const unitCost = selection ? selection.unit_price_bdt : priceEntry.value;
+        const source = selection
+          ? `supplier: ${selection.supplier_name} (data/suppliers.json)`
+          : `crop_rules.json (${cropKey}.fertilizer.nutrients.${nutrient}) + costs_bd.json (${carrier})`;
         costLineItems.push({
           item: `${carrier} (for ${nutrient})`,
           qty: Number(productKg.toFixed(2)),
           unit: 'kg',
-          unitCost: priceEntry.value,
-          total: Number((productKg * priceEntry.value).toFixed(2)),
-          source: `crop_rules.json (${cropKey}.fertilizer.nutrients.${nutrient}) + costs_bd.json (${carrier})`,
+          unitCost,
+          total: Number((productKg * unitCost).toFixed(2)),
+          source,
           assumption: `${spec.dose} kg/ha ${nutrient} ÷ ${(pct * 100).toFixed(0)}% ${carrier} content × ${areaHa} ha`,
         });
       }
@@ -130,13 +139,16 @@ export function registerFinancialTools(): void {
       const seed = costsBd.seed[cropKey];
       if (seed) {
         const seedKg = seed.rate_kg_per_ha * areaHa;
+        const seedSelection = selectionByItem.get('seed');
+        const seedUnitCost = seedSelection ? seedSelection.unit_price_bdt : seed.price_bdt_per_kg;
+        const seedSource = seedSelection ? `supplier: ${seedSelection.supplier_name} (data/suppliers.json)` : 'costs_bd.json (seed)';
         costLineItems.push({
           item: 'seed',
           qty: Number(seedKg.toFixed(2)),
           unit: 'kg',
-          unitCost: seed.price_bdt_per_kg,
-          total: Number((seedKg * seed.price_bdt_per_kg).toFixed(2)),
-          source: 'costs_bd.json (seed)',
+          unitCost: seedUnitCost,
+          total: Number((seedKg * seedUnitCost).toFixed(2)),
+          source: seedSource,
           assumption: `${seed.rate_kg_per_ha} kg/ha × ${areaHa} ha`,
         });
       }
