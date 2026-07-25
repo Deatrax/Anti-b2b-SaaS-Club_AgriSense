@@ -198,7 +198,7 @@ function PlanBody({
                         <VStack gap={1.5}>
                           <HStack gap={2} vAlign="center">
                             <StatusDot variant={STATUS_DOT_VARIANT[ev.status]} label={t(`plan_status_${ev.status}`)} />
-                            <Badge variant={ev.status === 'shifted' ? 'yellow' : 'neutral'} label={ev.plannedDate ?? t('not_set')} />
+                            <Badge variant={ev.status === 'shifted' ? 'yellow' : 'neutral'} label={ev.plannedDate ? new Date(ev.plannedDate).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : t('not_set')} />
                           </HStack>
                           <Text type="label" weight="semibold">
                             {ev.title}

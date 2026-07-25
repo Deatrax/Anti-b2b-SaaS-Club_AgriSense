@@ -18,7 +18,7 @@ import { useT, useSession } from '../../../providers';
 import { ModeLangToggle } from '../../../../components/ModeLangToggle';
 import { FieldRail } from '../../../../components/FieldRail';
 import { IntakePanel } from '../../../../components/IntakePanel';
-import { FeedTrace, FeedMessage } from '../../../../components/mock/FeedChat';
+import { FeedTrace, FeedMessage, FeedThinking } from '../../../../components/mock/FeedChat';
 import { useFieldChat } from '../../../../lib/useFieldChat';
 import { getField, listFields, listRecentChats, type ApiField, type ApiRecentChat } from '../../../../lib/api';
 
@@ -37,7 +37,15 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
 
-  const { feed, sendMessage, isStreaming } = useFieldChat(id, conversationId);
+  const { feed, sendMessage, isStreaming, isLoaded } = useFieldChat(id, conversationId);
+
+  const hasAutoStarted = useRef(false);
+  useEffect(() => {
+    if (isLoaded && feed.length === 0 && !isStreaming && !hasAutoStarted.current) {
+      hasAutoStarted.current = true;
+      sendMessage("Hi, I just created this field. Please help me set it up.");
+    }
+  }, [isLoaded, feed.length, isStreaming, sendMessage]);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -75,6 +83,9 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
 
   if (!isHydrated || !session) return null;
 
+  const lastItem = feed[feed.length - 1];
+  const isThinking = isStreaming && (!lastItem || lastItem.type === 'tool_trace' || (lastItem.type === 'message' && lastItem.message.role === 'user'));
+
   const chatColumn = (
     <VStack height="100%" gap={0}>
       <StackItem>
@@ -100,6 +111,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
         >
           <ChatMessageList>
             {feed.map((item) => (item.type === 'tool_trace' ? <FeedTrace key={item.id} traces={item.traces} /> : <FeedMessage key={item.id} item={item} />))}
+            {isThinking && <FeedThinking />}
           </ChatMessageList>
         </ChatLayout>
       </StackItem>
@@ -129,7 +141,7 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
           <StackItem size="fill">{chatColumn}</StackItem>
           <StackItem>
             {/* functional-only inline style: fixed rail width + own vertical scroll */}
-            <div style={{ width: 360, height: '100%', overflowY: 'auto' }}>
+            <div style={{ width: 360, maxHeight: 'calc(100vh - 48px)', overflowY: 'auto', position: 'sticky', top: 24 }}>
               <VStack padding={3}>
                 <IntakePanel field={field} farmDistrict={session.farmDistrict} fieldId={id} />
               </VStack>

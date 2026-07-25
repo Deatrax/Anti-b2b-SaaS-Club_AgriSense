@@ -61,9 +61,12 @@ export default function FarmPage() {
     try {
       const { farm, user } = await createFarm(session.userId, newFarmName.trim(), newFarmDistrict.trim(), ownerName.trim());
       setSession({ ...session, name: user.name, farmId: farm.id, farmName: farm.name, farmDistrict: farm.district, farmAez: farm.aez });
+      
+      // Automatically create the first field and start the chat flow
+      const { field } = await createField(farm.id);
+      router.push(`/field/${field.id}/chat`);
     } catch (err) {
       setError(String(err));
-    } finally {
       setIsCreatingFarm(false);
     }
   }

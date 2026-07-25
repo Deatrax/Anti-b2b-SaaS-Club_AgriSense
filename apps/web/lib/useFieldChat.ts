@@ -26,17 +26,22 @@ function userMessage(content: string): FeedItem {
 export function useFieldChat(fieldId: string, conversationId?: string) {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const closeRef = useRef<(() => void) | null>(null);
   const assistantIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     setFeed([]);
+    setIsLoaded(false);
     assistantIdRef.current = null;
     const load = conversationId ? getConversation(conversationId) : getFieldChatHistory(fieldId);
     load
       .then((history) => {
-        if (!cancelled) setFeed(buildFeedFromHistory(history.messages, history.traces));
+        if (!cancelled) {
+          setFeed(buildFeedFromHistory(history.messages, history.traces));
+          setIsLoaded(true);
+        }
       })
       .catch(() => {});
     return () => {
@@ -121,5 +126,5 @@ export function useFieldChat(fieldId: string, conversationId?: string) {
     [fieldId, conversationId, isStreaming],
   );
 
-  return { feed, sendMessage, isStreaming };
+  return { feed, sendMessage, isStreaming, isLoaded };
 }
