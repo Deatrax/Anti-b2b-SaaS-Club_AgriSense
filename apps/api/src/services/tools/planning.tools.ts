@@ -23,7 +23,7 @@ import { SeasonPlanModel } from '../../models/seasonPlan.model';
 import { getForecast } from '../external/openmeteo.client';
 import { rankCrops, ecocropFit, type CropCandidateFit, type EcocropRange } from '../engines/ranking.engine';
 import { irrigationSchedule } from '../engines/irrigation.engine';
-import { buildPlan, computeStageDates, POST_TRANSPLANT_STAGES, type Stage } from '../engines/planner.engine';
+import { buildPlan, computeStageDates, type GrowthModel } from '../engines/planner.engine';
 
 // ─── data loading (mirrors field.tools.ts's districts.json pattern) ──────────────────────
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,23 +33,40 @@ function loadJson<T>(file: string): T {
   return JSON.parse(readFileSync(path.join(DATA_DIR, file), 'utf-8')) as T;
 }
 
+/** Ordered stage keys AFTER the anchor point, derived from a crop's own stage_durations_days —
+ * every key that isn't a `_`-prefixed metadata field (`_source`, `_verify`, ...) and isn't
+ * listed in pre_anchor_stages. Object key order matches crop_rules.json's own field order,
+ * which is written chronologically (this is the same convention JSON.parse already relies on
+ * elsewhere in this codebase). */
+function postAnchorStages(rule: CropRule): string[] {
+  return Object.keys(rule.stage_durations_days).filter(
+    (k) => !k.startsWith('_') && !rule.pre_anchor_stages.includes(k),
+  );
+}
+
 interface CropRule {
   label: string;
   label_bn?: string;
   season: string;
+  growth_model: GrowthModel;
+  /** Stage keys that occur BEFORE the anchor date (rice: ['nursery']; direct-seed crops: []). */
+  pre_anchor_stages: string[];
   calendar: {
     _verify?: boolean;
     sowing_window: { start: string; end: string };
-    transplant_window: { start: string; end: string };
+    /** Only present for growth_model: 'transplant' crops. */
+    transplant_window?: { start: string; end: string };
     harvest_window: { start: string; end: string };
   };
-  stage_durations_days: Record<Stage, number> & { _verify?: boolean };
+  stage_durations_days: Record<string, number> & { _verify?: boolean };
   fertilizer: {
     _verify?: boolean;
     unit: string;
     nutrients: Record<string, { dose: number; splits: { stage: string; fraction: number }[] }>;
     organic_alternatives?: unknown;
   };
+  /** Maps each post-anchor stage to one of the 4 broad Kc phases. */
+  kc_phase_by_stage: Record<string, 'initial' | 'development' | 'mid' | 'late'>;
   kc_by_stage: { initial: number; development: number; mid: number; late: number; _verify?: boolean };
   base_yield_kg_per_ha: { value: number; _source: string; _verify?: boolean };
 }
@@ -71,24 +88,10 @@ interface CostsFile {
   operations_bdt_per_ha: Record<string, { value: number; _verify?: boolean }>;
 }
 
-const ALL_STAGE_KEYS: Stage[] = ['nursery', ...POST_TRANSPLANT_STAGES];
-
 const CROP_RULES = loadJson<CropRulesFile>('crop_rules.json');
 const SUITABILITY = loadJson<SuitabilityFile>('suitability.json');
 const ROTATION = loadJson<RotationFile>('rotation.json');
 const COSTS = loadJson<CostsFile>('costs_bd.json');
-
-// Standard FAO-56 Kc-curve phase correspondence for rice (initial/development/mid/late) —
-// not from a specific citation, just the conventional mapping of the 4 broad Kc phases onto
-// the 6 detailed agronomic stages this codebase tracks.
-const STAGE_TO_KC_PHASE: Record<(typeof POST_TRANSPLANT_STAGES)[number], 'initial' | 'development' | 'mid' | 'late'> = {
-  tillering: 'development',
-  panicle_initiation: 'mid',
-  booting: 'mid',
-  flowering: 'mid',
-  grain_filling: 'late',
-  maturity: 'late',
-};
 
 // Standard fertilizer analysis percentages, cited directly in crop_rules.json's own
 // fertilizer.carriers note (urea ~46% N, TSP ~46% P2O5, MoP ~60% K2O, gypsum ~18% S) —
@@ -194,7 +197,9 @@ export function registerPlanningTools(): void {
         const seasonFit = rule.season === targetSeason ? 1 : 0;
         const tempFit = ecocropFit(avgTempC, suit.temp_c);
 
-        const seasonDays = ALL_STAGE_KEYS.reduce((sum, key) => sum + rule.stage_durations_days[key], 0);
+        const seasonDays = Object.entries(rule.stage_durations_days)
+          .filter(([key]) => !key.startsWith('_'))
+          .reduce((sum, [, days]) => sum + (days as number), 0);
         const estimatedSeasonRainMm = avgDailyRainMm * seasonDays;
         assumptions.add(`Rainfall fit for ${rule.label} extrapolates the current 16-day Open-Meteo forecast rate across the crop's ~${seasonDays}-day season — not a full-season forecast.`);
         const rainFit = ecocropFit(estimatedSeasonRainMm, suit.rain_mm_season);
@@ -247,12 +252,15 @@ export function registerPlanningTools(): void {
       const referenceNow = new Date();
       const sowYear = resolveYearFor(rule.calendar.sowing_window.start, referenceNow);
       const sowingDate = args.sowingDate ?? `${sowYear}-${rule.calendar.sowing_window.start}`;
-      const transplantWindowStart = `${sowYear}-${rule.calendar.transplant_window.start}`;
+      const anchorDate = rule.growth_model === 'transplant'
+        ? `${sowYear}-${rule.calendar.transplant_window!.start}`
+        : sowingDate;
       const harvestWindowStart = `${sowYear}-${rule.calendar.harvest_window.start}`;
 
       const forecast = await getForecast(field.identity.lat, field.identity.lon);
-      const stageDates = computeStageDates(transplantWindowStart, rule.stage_durations_days);
-      const irrigationByStage = estimateIrrigationForForecastWindow(forecast, stageDates, rule);
+      const stages = postAnchorStages(rule);
+      const stageDates = computeStageDates(anchorDate, stages, rule.stage_durations_days);
+      const irrigationByStage = estimateIrrigationForForecastWindow(forecast, stageDates, rule, stages);
 
       const calendarSources: Provenance[] = [{ source: 'BAMIS crop-weather calendar / BRRI variety durations', reference: `crops.${args.crop}.calendar`, method: 'table', retrievedAt: now() }];
       const fertilizerSources: Provenance[] = [{ source: 'BARC Fertilizer Recommendation Guide (FRG) 2018', reference: `crops.${args.crop}.fertilizer`, method: 'table', retrievedAt: now() }];
@@ -260,9 +268,11 @@ export function registerPlanningTools(): void {
 
       const events = buildPlan({
         areaHa: field.identity.areaHa,
+        growthModel: rule.growth_model,
         sowingDate,
+        postAnchorStages: stages,
         stageDurationsDays: rule.stage_durations_days,
-        transplantWindowStart,
+        anchorDate,
         harvestWindowStart,
         fertilizer: rule.fertilizer.nutrients,
         irrigationByStage,
@@ -333,23 +343,24 @@ function estimateBudgetPenalty(rule: CropRule, areaHa: number | null, budgetBdt:
   return cost > budgetBdt ? (cost - budgetBdt) / budgetBdt : 0;
 }
 
-/** Only estimates irrigation for whichever post-transplant stage the 16-day forecast window
+/** Only estimates irrigation for whichever post-anchor stage the 16-day forecast window
  * actually falls in — stages beyond that horizon get no fabricated irrigation figure. */
 function estimateIrrigationForForecastWindow(
   forecast: Awaited<ReturnType<typeof getForecast>>,
   stageDates: Record<string, string>,
   rule: CropRule,
-): Partial<Record<Stage, number>> {
+  stages: string[],
+): Partial<Record<string, number>> {
   const forecastStart = forecast.daily.time[0];
   if (!forecastStart) return {};
 
-  let currentStage: (typeof POST_TRANSPLANT_STAGES)[number] | null = null;
-  for (const stage of POST_TRANSPLANT_STAGES) {
+  let currentStage: string | null = null;
+  for (const stage of stages) {
     if (stageDates[stage]! <= forecastStart) currentStage = stage;
   }
   if (!currentStage) return {};
 
-  const kc = rule.kc_by_stage[STAGE_TO_KC_PHASE[currentStage]];
+  const kc = rule.kc_by_stage[rule.kc_phase_by_stage[currentStage]!];
   const days = forecast.daily.time.map((date, i) => ({
     date,
     et0: forecast.daily.et0_fao_evapotranspiration[i]!,

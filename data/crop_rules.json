@@ -15,6 +15,8 @@
       "label": "T. Aman rice (HYV)",
       "label_bn": "রোপা আমন ধান",
       "season": "aman",
+      "growth_model": "transplant",
+      "pre_anchor_stages": ["nursery"],
       "aez_default": 9,
       "calendar": {
         "_source": "BRRI dhan-71 / dhan-93 / dhan-94 variety records — data/raw/brri_varieties/{brri-dhan-71,brri-dhan-93,brri-dhan-94}.json",
@@ -50,6 +52,10 @@
           "dhaincha_green_manure": { "rate_t_per_ha_range": [12, 15], "n_reduction_kg_per_ha_range": [25, 30], "note": "incorporate within a week before T. Aman transplanting" }
         }
       },
+      "kc_phase_by_stage": {
+        "tillering": "development", "panicle_initiation": "mid", "booting": "mid",
+        "flowering": "mid", "grain_filling": "late", "maturity": "late"
+      },
       "kc_by_stage": {
         "_source": "FAO-56 / CROPWAT (rice) — standard published reference; not yet re-verified against a locally retrieved copy",
         "_verify": true,
@@ -62,6 +68,8 @@
       "label": "Boro rice (HYV)",
       "label_bn": "বোরো ধান",
       "season": "boro",
+      "growth_model": "transplant",
+      "pre_anchor_stages": ["nursery"],
       "aez_default": 9,
       "calendar": {
         "_source": "harvest window: BRRI dhan101/dhan102 variety pages (data/raw/brri_varieties, 'planting_time: January-February', 'harvest_time: May-June'). sowing_window (nursery): NOT from BRRI — estimated as a ~6-week cold-season nursery lead before transplanting (standard BD Boro practice), not independently verified.",
@@ -98,6 +106,10 @@
           "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" }
         }
       },
+      "kc_phase_by_stage": {
+        "tillering": "development", "panicle_initiation": "mid", "booting": "mid",
+        "flowering": "mid", "grain_filling": "late", "maturity": "late"
+      },
       "kc_by_stage": {
         "_source": "FAO-56 / CROPWAT (rice) — same as aman_rice. Kc reflects rice physiology, not season, so it carries across Boro/Aus/Aman.",
         "_verify": true,
@@ -110,6 +122,8 @@
       "label": "T. Aus rice (HYV)",
       "label_bn": "রোপা আউশ ধান",
       "season": "aus",
+      "growth_model": "transplant",
+      "pre_anchor_stages": ["nursery"],
       "aez_default": 9,
       "calendar": {
         "_source": "harvest window: BRRI dhan85/dhan83 variety pages (data/raw/brri_varieties, harvest_time 'June-August'; planting_time only says 'Aus', no explicit month). sowing/transplant windows: NOT from BRRI — standard Bangladesh Kharif-1/Aus calendar convention (nursery Feb–Mar, transplant Mar–Apr), matching the BARC AEZ table's own 'Kharif 1' label for this crop.",
@@ -145,6 +159,10 @@
           "cow_dung": { "rate_t_per_ha": 5, "n_credit_kg_per_ha": 12, "note": "well-decomposed; apply during land prep; substitutes part of N/P/K" },
           "compost": { "rate_t_per_ha": 3, "note": "basal soil amendment" }
         }
+      },
+      "kc_phase_by_stage": {
+        "tillering": "development", "panicle_initiation": "mid", "booting": "mid",
+        "flowering": "mid", "grain_filling": "late", "maturity": "late"
       },
       "kc_by_stage": {
         "_source": "FAO-56 / CROPWAT (rice) — same as aman_rice.",
