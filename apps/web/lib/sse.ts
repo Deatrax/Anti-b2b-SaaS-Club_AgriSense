@@ -8,6 +8,18 @@ export function openChatStream(
   onEvent: (e: StreamEvent) => void,
 ): () => void {
   const controller = new AbortController();
+  // The composer is disabled while `isStreaming` is true, and only a `done` event clears it.
+  // If the connection closes without one (server crash, proxy timeout, process restart mid-turn)
+  // the farmer is locked out of the chat with no way back except a reload. Track whether the
+  // server sent `done` and synthesize one on exit if it didn't.
+  let sawDone = false;
+  const deliver = (e: StreamEvent) => {
+    if (e.type === 'done') sawDone = true;
+    onEvent(e);
+  };
+  const finish = () => {
+    if (!sawDone && !controller.signal.aborted) deliver({ type: 'done' });
+  };
 
   (async () => {
     try {
@@ -18,8 +30,8 @@ export function openChatStream(
         signal: controller.signal,
       });
       if (!res.ok || !res.body) {
-        onEvent({ type: 'notice', message: `⚠ Chat request failed (${res.status}).` });
-        onEvent({ type: 'done' });
+        deliver({ type: 'notice', message: `⚠ Chat request failed (${res.status}).` });
+        deliver({ type: 'done' });
         return;
       }
 
@@ -38,7 +50,7 @@ export function openChatStream(
           const dataLine = frame.split('\n').find((line) => line.startsWith('data: '));
           if (!dataLine) continue;
           try {
-            onEvent(JSON.parse(dataLine.slice('data: '.length)) as StreamEvent);
+            deliver(JSON.parse(dataLine.slice('data: '.length)) as StreamEvent);
           } catch {
             // malformed frame — skip rather than crash the stream
           }
@@ -46,8 +58,10 @@ export function openChatStream(
       }
     } catch (err) {
       if (controller.signal.aborted) return;
-      onEvent({ type: 'notice', message: `⚠ Connection lost (${String(err)}).` });
-      onEvent({ type: 'done' });
+      deliver({ type: 'notice', message: `⚠ Connection lost (${String(err)}).` });
+      deliver({ type: 'done' });
+    } finally {
+      finish();
     }
   })();
 

@@ -50,6 +50,7 @@ const emptyState: FieldState = {
     budgetBdt: null,
   },
   activeCycle: null,
+  targetSeason: null,
   missingFields: ['location', 'area_ha', 'soil_type', 'water_source', 'budget_bdt', 'target_season'],
 };
 

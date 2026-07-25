@@ -3,7 +3,7 @@
 import type { FieldState } from '@agrisense/shared';
 
 export function serializeField(state: FieldState) {
-  const { identity, activeCycle, missingFields } = state;
+  const { identity, activeCycle, targetSeason, missingFields } = state;
   return {
     id: identity.id,
     farmId: identity.farmId,
@@ -15,6 +15,7 @@ export function serializeField(state: FieldState) {
     lon: identity.lon,
     budgetBdt: identity.budgetBdt,
     activeCycle,
+    targetSeason,
     missingFields,
   };
 }

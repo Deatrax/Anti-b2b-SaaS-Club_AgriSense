@@ -49,5 +49,9 @@ export interface CropCycle {
 export interface FieldState {
   identity: FieldIdentity;
   activeCycle: CropCycle | null;
+  /** The chosen season, whether it lives on an 'active' cycle or a 'planned' one created
+   * during intake before a crop is picked — so consumers can show it even during GATHERING,
+   * when activeCycle is still null. */
+  targetSeason: Season | null;
   missingFields: IntakeField[];
 }

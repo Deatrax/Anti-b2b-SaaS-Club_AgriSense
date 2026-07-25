@@ -55,6 +55,7 @@ export const fieldState: FieldState = {
     dayIndex: 19,
     actualYieldKg: null,
   },
+  targetSeason: 'aman',
   missingFields: [],
 };
 

@@ -7,6 +7,7 @@ import {
   type FieldIdentity,
   type CropCycle,
   type IntakeField,
+  type Season,
 } from '@agrisense/shared';
 
 interface FieldRow {
@@ -67,6 +68,7 @@ async function stateForField(field: FieldRow): Promise<FieldState> {
   return {
     identity: toIdentity(field),
     activeCycle: activeCycle ? toCycle(activeCycle) : null,
+    targetSeason: targetSeason as Season | null,
     missingFields: computeMissing(field, targetSeason),
   };
 }

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgriSense AI — Interface Mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   AgriSense AI — mock interface
+   Two registers: farmer surface (silt/paddy) + instrument (slate)
+   ============================================================ */
+
+:root{
+  /* palette — delta silt, paddy water, turmeric, indigo, brick */
+  --silt:#E7E8E1;
+  --silt-2:#DBDDD2;
+  --paper:#F8F8F4;
+  --ink:#131E1A;
+  --ink-60:#4A5A54;
+  --ink-40:#77857E;
+  --paddy:#1E4B3C;
+  --paddy-2:#2E6B55;
+  --paddy-wash:#E2EBE5;
+  --turmeric:#DF9E14;
+  --turmeric-wash:#F7EBCE;
+  --indigo:#27456F;
+  --indigo-wash:#E3E8F1;
+  --brick:#A8402A;
+  --brick-wash:#F4E3DE;
+  --slate:#0D1513;
+  --slate-2:#16211E;
+  --slate-3:#22302C;
+  --slate-line:#2C3C37;
+  --mono-dim:#6D8A80;
+  --mono-lit:#9FE0C4;
+
+  --r-s:6px; --r-m:10px; --r-l:16px;
+  --shadow:0 1px 2px rgba(19,30,26,.06), 0 8px 24px -12px rgba(19,30,26,.22);
+
+  --f-display:'Archivo',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  --f-bn:'Noto Sans Bengali','IBM Plex Sans',sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body);
+  background:var(--silt);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px;border-radius:3px}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+[lang="bn"],.bn{font-family:var(--f-bn)}
+
+/* ---------- harness chrome ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:18px;
+  padding:0 20px;height:56px;
+  background:var(--slate);color:#E9F2ED;
+  border-bottom:1px solid var(--slate-line);
+}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{
+  font-family:var(--f-display);font-weight:800;font-size:17px;
+  letter-spacing:-.02em;color:#fff;
+}
+.brand span{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mono-dim);
+}
+.topbar-spacer{flex:1}
+.tgl{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--mono-dim);
+  border:1px solid var(--slate-line);border-radius:999px;
+  padding:6px 13px;transition:.15s;
+}
+.tgl:hover{color:#E9F2ED;border-color:var(--mono-dim)}
+.tgl[aria-pressed="true"]{background:var(--mono-lit);color:var(--slate);border-color:var(--mono-lit)}
+
+.shell{
+  display:grid;
+  grid-template-columns:212px minmax(0,1fr) 400px;
+  align-items:start;
+  min-height:calc(100vh - 56px);
+}
+
+/* ---------- screen navigator ---------- */
+.nav{
+  position:sticky;top:56px;
+  padding:26px 14px 40px;
+  border-right:1px solid var(--silt-2);
+  height:calc(100vh - 56px);overflow-y:auto;
+}
+.nav-h{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-40);
+  padding:0 10px 12px;
+}
+.nav-i{
+  display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
+  padding:9px 10px;border-radius:var(--r-s);margin-bottom:2px;
+  transition:background .14s;
+}
+.nav-i:hover{background:var(--silt-2)}
+.nav-i[aria-current="true"]{background:var(--paddy);color:#fff}
+.nav-i[aria-current="true"] .nav-n{color:var(--mono-lit)}
+.nav-i[aria-current="true"] .nav-s{color:rgba(255,255,255,.62)}
+.nav-n{font-family:var(--f-mono);font-size:11px;color:var(--ink-40);padding-top:2px}
+.nav-t{font-size:13.5px;font-weight:600;line-height:1.32;display:block}
+.nav-s{font-size:11px;color:var(--ink-40);line-height:1.3;display:block;margin-top:1px}
+
+/* ---------- stage ---------- */
+.stage{padding:34px 32px 70px;display:flex;flex-direction:column;align-items:center;gap:26px}
+.stage-head{width:100%;max-width:430px}
+.eyebrow{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-40);margin-bottom:5px;
+}
+.stage-head h1{
+  font-family:var(--f-display);font-weight:700;font-size:25px;
+  letter-spacing:-.025em;line-height:1.15;
+}
+.stage-head p{font-size:13.5px;color:var(--ink-60);margin-top:7px;max-width:400px}
+
+/* ---------- phone ---------- */
+.phone{
+  width:390px;flex:none;
+  background:var(--paper);
+  border:1px solid var(--silt-2);
+  border-radius:26px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  height:720px;
+}
+.status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 20px 3px;
+  font-family:var(--f-mono);font-size:10.5px;color:var(--ink-40);
+}
+.appbar{
+  display:flex;align-items:center;gap:10px;
+  padding:6px 18px 12px;border-bottom:1px solid var(--silt-2);
+}
+.logo{
+  width:26px;height:26px;border-radius:7px;background:var(--paddy);
+  display:grid;place-items:center;color:var(--mono-lit);
+  font-family:var(--f-display);font-weight:800;font-size:13px;
+}
+.appbar h2{font-family:var(--f-display);font-size:15px;font-weight:700;letter-spacing:-.01em;flex:1}
+.appbar-ic{
+  width:28px;height:28px;border-radius:7px;display:grid;place-items:center;
+  color:var(--ink-40);font-size:14px;
+}
+.appbar-ic:hover{background:var(--silt-2);color:var(--ink)}
+.scroll{flex:1;overflow-y:auto;padding:14px 16px 18px;scrollbar-width:thin}
+.scroll::-webkit-scrollbar{width:5px}
+.scroll::-webkit-scrollbar-thumb{background:var(--silt-2);border-radius:9px}
+
+/* ---------- farm at a glance ---------- */
+.glance{
+  border:1px solid var(--paddy);border-radius:var(--r-m);
+  background:var(--paddy);color:#fff;
+  padding:13px 14px;margin-bottom:14px;
+}
+.glance-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:9px;
+}
+.glance-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.gf-l{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);
+}
+.gf-v{font-size:13.5px;font-weight:600;line-height:1.25}
+.gf-v.empty{color:rgba(255,255,255,.34);font-weight:400}
+.glance-next{
+  margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,255,255,.16);
+  display:flex;gap:9px;align-items:flex-start;
+}
+.glance-next .dot{
+  width:7px;height:7px;border-radius:50%;background:var(--turmeric);
+  margin-top:5px;flex:none;
+}
+.glance-next div{font-size:12.5px;line-height:1.35;color:rgba(255,255,255,.9)}
+.glance-next b{color:#fff}
+
+/* ---------- conversation ---------- */
+.msg{margin-bottom:13px;max-width:88%}
+.msg.user{margin-left:auto}
+.bub{padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.45}
+.msg.user .bub{background:var(--paddy);color:#fff;border-bottom-right-radius:4px}
+.msg.bot .bub{background:var(--silt);border-bottom-left-radius:4px}
+.msg.bot .bub b{font-weight:600}
+.who{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-40);margin-bottom:4px;
+}
+.msg.user .who{text-align:right}
+
+.thinking{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-40);
+  background:var(--silt);border-radius:999px;padding:6px 12px;
+  margin-bottom:13px;width:fit-content;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--turmeric);animation:p 1.3s infinite}
+@keyframes p{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ---------- chips ---------- */
+.chip-row{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}
+.chip-lbl{
+  width:100%;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-40);margin-bottom:1px;
+}
+.chip{
+  border:1px solid var(--paddy);color:var(--paddy);
+  border-radius:999px;padding:7px 13px;font-size:13px;font-weight:500;
+  background:var(--paper);transition:.14s;
+}
+.chip:hover{background:var(--paddy-wash)}
+.chip.soft{border-color:var(--silt-2);color:var(--ink-60);border-style:dashed}
+.chip.soft:hover{background:var(--silt);border-color:var(--ink-40)}
+
+/* ---------- composer ---------- */
+.composer{
+  display:flex;align-items:center;gap:9px;
+  padding:11px 14px;border-top:1px solid var(--silt-2);background:var(--paper);
+}
+.composer .field{
+  flex:1;background:var(--silt);border-radius:999px;padding:9px 15px;
+  font-size:13.5px;color:var(--ink-40);
+}
+.cbtn{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:var(--paddy);color:#fff;font-size:14px;flex:none;
+}
+.cbtn.ghost{background:var(--silt);color:var(--ink-60)}
+
+/* ---------- cards ---------- */
+.card{
+  border:1px solid var(--silt-2);border-radius:var(--r-m);
+  background:var(--paper);margin-bottom:12px;overflow:hidden;
+}
+.card-h{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:11px 13px 9px;
+}
+.card-k{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-40);
+}
+.card-b{padding:0 13px 13px}
+
+/* rank */
+.rank{border-left:3px solid var(--silt-2);padding:12px 13px;border-bottom:1px solid var(--silt-2)}
+.rank:last-child{border-bottom:0}
+.rank.top{border-left-color:var(--paddy);background:var(--paddy-wash)}
+.rank-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px}
+.rank-n{font-family:var(--f-mono);font-size:12px;color:var(--ink-40)}
+.rank-name{font-family:var(--f-display);font-size:16.5px;font-weight:700;letter-spacing:-.015em;flex:1}
+.rank-score{font-family:var(--f-mono);font-size:15px;font-weight:600;color:var(--paddy)}
+.rank-score small{font-size:10px;color:var(--ink-40);font-weight:400}
+.rank-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink-60);margin-bottom:9px}
+.rank-meta b{color:var(--ink);font-weight:600}
+
+.bars{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;margin-bottom:10px}
+.bar-r{display:flex;align-items:center;gap:7px}
+.bar-l{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-40);width:42px;flex:none;text-transform:uppercase}
+.bar-t{flex:1;height:4px;background:var(--silt-2);border-radius:9px;overflow:hidden}
+.bar-f{height:100%;background:var(--paddy-2);border-radius:9px}
+.bar-v{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-60);width:26px;text-align:right;flex:none}
+
+.actions{display:flex;gap:7px}
+.btn{
+  border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;
+  border:1px solid var(--paddy);background:var(--paddy);color:#fff;transition:.14s;
+}
+.btn:hover{background:var(--paddy-2);border-color:var(--paddy-2)}
+.btn.sec{background:transparent;color:var(--paddy)}
+.btn.sec:hover{background:var(--paddy-wash)}
+.btn.warn{background:var(--brick);border-color:var(--brick)}
+.btn.warn:hover{filter:brightness(1.1)}
+.btn.mute{background:transparent;border-color:var(--silt-2);color:var(--ink-60)}
+.btn.mute:hover{background:var(--silt)}
+.btn.full{width:100%;text-align:center;justify-content:center}
+
+/* why disclosure */
+.why{margin-top:10px;border-top:1px dashed var(--silt-2);padding-top:9px}
+.why-btn{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--paddy);display:flex;align-items:center;gap:5px;
+}
+.why-body{display:none;margin-top:9px}
+.why.open .why-body{display:block}
+.why.open .why-btn .caret{transform:rotate(90deg)}
+.caret{display:inline-block;transition:transform .16s;font-size:9px}
+.prov{
+  border-left:2px solid var(--turmeric);padding:0 0 0 10px;margin-bottom:9px;
+}
+.prov:last-child{margin-bottom:0}
+.prov-s{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--turmeric);filter:brightness(.8);margin-bottom:2px;
+}
+.prov-t{font-size:12.5px;line-height:1.45;color:var(--ink-60)}
+.prov-t b{color:var(--ink);font-weight:600}
+
+/* tether — the signature */
+.num{
+  font-family:var(--f-mono);font-weight:600;
+  border-bottom:1.5px dotted var(--turmeric);
+  cursor:help;position:relative;
+}
+.num:hover,.num.lit{background:var(--turmeric-wash)}
+.tag{
+  font-family:var(--f-mono);font-size:8.5px;letter-spacing:.06em;
+  color:var(--ink-40);vertical-align:super;margin-left:2px;text-transform:uppercase;
+}
+
+/* timeline */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:5px;top:6px;bottom:8px;width:2px;background:var(--silt-2)}
+.tl-i{position:relative;padding-bottom:15px}
+.tl-i::before{
+  content:'';position:absolute;left:-21px;top:5px;width:12px;height:12px;
+  border-radius:50%;background:var(--paper);border:2px solid var(--silt-2);
+}
+.tl-i.done::before{background:var(--paddy);border-color:var(--paddy)}
+.tl-i.now::before{background:var(--turmeric);border-color:var(--turmeric);box-shadow:0 0 0 4px var(--turmeric-wash)}
+.tl-i.shift::before{border-color:var(--indigo);background:var(--indigo)}
+.tl-d{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-40);letter-spacing:.03em}
+.tl-t{font-size:14px;font-weight:600;line-height:1.3;margin:1px 0 2px}
+.tl-x{font-size:12.5px;color:var(--ink-60);line-height:1.4}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+  border-radius:4px;padding:2px 6px;margin-left:5px;vertical-align:2px;
+}
+.badge.rain{background:var(--indigo-wash);color:var(--indigo)}
+.badge.now{background:var(--turmeric-wash);color:#8A6208}
+.badge.risk{background:var(--brick-wash);color:var(--brick)}
+.badge.ok{background:var(--paddy-wash);color:var(--paddy)}
+
+/* ledger */
+.ledger{width:100%;border-collapse:collapse;font-size:12.5px}
+.ledger th{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-40);text-align:left;font-weight:400;padding:0 0 7px;
+  border-bottom:1px solid var(--silt-2);
+}
+.ledger th:last-child,.ledger td:last-child{text-align:right}
+.ledger td{padding:6px 0;border-bottom:1px solid var(--silt-2)}
+.ledger td:first-child{color:var(--ink)}
+.ledger td:nth-child(2){font-family:var(--f-mono);font-size:11.5px;color:var(--ink-40)}
+.ledger td:last-child{font-family:var(--f-mono);font-weight:500}
+.ledger tr.sum td{border-bottom:0;padding-top:9px;font-weight:700}
+.ledger tr.sum td:last-child{font-size:14px}
+
+.headline{background:var(--paddy);color:#fff;border-radius:var(--r-m);padding:14px;margin:12px 0}
+.hl-r{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px}
+.hl-r span{color:rgba(255,255,255,.66)}
+.hl-r b{font-family:var(--f-mono);font-weight:500}
+.hl-net{
+  border-top:1px solid rgba(255,255,255,.18);margin-top:8px;padding-top:11px;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.hl-net span{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.hl-net b{font-family:var(--f-display);font-size:27px;font-weight:800;letter-spacing:-.03em}
+.hl-foot{
+  display:flex;gap:14px;margin-top:9px;padding-top:9px;
+  border-top:1px solid rgba(255,255,255,.14);
+  font-family:var(--f-mono);font-size:11px;color:rgba(255,255,255,.8);flex-wrap:wrap;
+}
+
+/* stepper */
+.stepper{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--silt);border-radius:var(--r-m);padding:10px 12px;margin-bottom:12px;
+}
+.stepper-l{font-family:var(--f-mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-40)}
+.stepper-v{font-family:var(--f-mono);font-size:15px;font-weight:600}
+.stepper-v small{font-size:10.5px;color:var(--ink-40);font-weight:400}
+.stepper-c{display:flex;gap:6px;align-items:center}
+.sbtn{
+  width:28px;height:28px;border-radius:7px;background:var(--paper);
+  border:1px solid var(--silt-2);display:grid;place-items:center;font-size:15px;color:var(--paddy);
+}
+.sbtn:hover{background:var(--paddy);color:#fff;border-color:var(--paddy)}
+
+/* HITL */
+.hitl{border:2px solid var(--turmeric);border-radius:var(--r-m);background:var(--turmeric-wash);padding:13px;margin-bottom:12px}
+.hitl-k{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:#8A6208;display:flex;align-items:center;gap:6px;margin-bottom:8px;
+}
+.hitl-amt{font-family:var(--f-display);font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:2px}
+.hitl-to{font-size:12.5px;color:var(--ink-60);margin-bottom:10px}
+.hitl-lines{background:rgba(255,255,255,.6);border-radius:7px;padding:9px 11px;margin-bottom:11px}
+.hitl-line{display:flex;justify-content:space-between;font-size:12.5px;padding:2px 0}
+.hitl-line span{color:var(--ink-60)}
+.hitl-line b{font-family:var(--f-mono);font-weight:500}
+
+.receipt{border:1px solid var(--paddy);border-radius:var(--r-m);overflow:hidden;margin-bottom:12px}
+.receipt-h{background:var(--paddy);color:#fff;padding:11px 13px;display:flex;align-items:center;gap:8px}
+.receipt-h b{font-family:var(--f-display);font-size:15px;font-weight:700;flex:1}
+.receipt-b{padding:12px 13px;background:var(--paper)}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:12.5px;border-bottom:1px dashed var(--silt-2)}
+.kv:last-child{border-bottom:0}
+.kv span{color:var(--ink-40);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.kv b{font-family:var(--f-mono);font-weight:500;text-align:right;word-break:break-all}
+
+/* alert */
+.alert{border-radius:var(--r-m);padding:12px 13px;margin-bottom:12px;display:flex;gap:10px}
+.alert.rain{background:var(--indigo-wash);border-left:3px solid var(--indigo)}
+.alert.risk{background:var(--brick-wash);border-left:3px solid var(--brick)}
+.alert .ai{font-size:17px;line-height:1.2}
+.alert h4{font-size:13.5px;font-weight:700;margin-bottom:3px}
+.alert p{font-size:12.5px;color:var(--ink-60);line-height:1.45}
+
+/* diff */
+.diff{width:100%;border-collapse:collapse;font-size:12.5px}
+.diff th{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-40);font-weight:400;padding:0 0 7px;text-align:right;border-bottom:1px solid var(--silt-2);
+}
+.diff th:first-child{text-align:left}
+.diff td{padding:7px 0;border-bottom:1px solid var(--silt-2);text-align:right;font-family:var(--f-mono);font-size:12px}
+.diff td:first-child{text-align:left;font-family:var(--f-body);font-size:12.5px}
+.diff td.was{color:var(--ink-40);text-decoration:line-through}
+.diff td.now{font-weight:600}
+.diff td.up{color:var(--paddy)}
+.diff td.down{color:var(--brick)}
+
+/* ---------- notes under phone ---------- */
+.notes{width:100%;max-width:430px}
+.notes-h{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-40);margin-bottom:9px;
+}
+.note{
+  background:var(--paper);border:1px solid var(--silt-2);border-radius:var(--r-m);
+  padding:12px 14px;margin-bottom:8px;
+}
+.note h5{font-size:13px;font-weight:700;margin-bottom:4px}
+.note p{font-size:12.5px;color:var(--ink-60);line-height:1.5}
+.pill-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.pill{
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--paddy-wash);color:var(--paddy);border-radius:4px;padding:3px 7px;
+}
+.pill.pts{background:var(--turmeric-wash);color:#7C5806}
+
+/* ---------- trace instrument ---------- */
+.trace{
+  position:sticky;top:56px;height:calc(100vh - 56px);
+  background:var(--slate);color:#DDEAE4;
+  border-left:1px solid var(--slate-line);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.trace-h{padding:16px 18px 12px;border-bottom:1px solid var(--slate-line)}
+.trace-h .t1{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mono-lit);margin-bottom:5px;
+}
+.trace-h .t2{font-family:var(--f-mono);font-size:11px;color:var(--mono-dim)}
+.trace-body{flex:1;overflow-y:auto;padding:12px 12px 30px;scrollbar-width:thin}
+.trace-body::-webkit-scrollbar{width:6px}
+.trace-body::-webkit-scrollbar-thumb{background:var(--slate-3);border-radius:9px}
+
+.step{
+  border:1px solid var(--slate-line);border-radius:8px;margin-bottom:7px;
+  background:var(--slate-2);transition:border-color .16s,background .16s;
+}
+.step.lit{border-color:var(--turmeric);background:#1F2A23}
+.step-h{display:flex;align-items:center;gap:9px;padding:9px 11px;width:100%;text-align:left}
+.step-n{font-family:var(--f-mono);font-size:10px;color:var(--mono-dim);width:15px;flex:none}
+.step-ic{width:16px;flex:none;font-size:11px;text-align:center}
+.step-name{font-family:var(--f-mono);font-size:12px;flex:1;color:#EAF4EF}
+.step-ms{font-family:var(--f-mono);font-size:10px;color:var(--mono-dim)}
+.step-st{font-size:10px;width:13px;text-align:center;flex:none}
+.ok{color:var(--mono-lit)} .fb{color:var(--turmeric)} .er{color:#E07A5F}
+
+.step-b{padding:0 11px 10px 46px;font-family:var(--f-mono);font-size:11px;line-height:1.6}
+.io{display:flex;gap:7px;margin-bottom:3px}
+.io-k{color:var(--mono-dim);flex:none}
+.io-v{color:#C9E3D8;word-break:break-word}
+.io-v em{color:var(--mono-lit);font-style:normal}
+.src{
+  margin-top:6px;font-size:10px;color:var(--mono-dim);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.raw-btn{font-family:var(--f-mono);font-size:9.5px;color:var(--mono-lit);letter-spacing:.06em;text-transform:uppercase}
+.raw{display:none;margin-top:7px;background:#0A100E;border:1px solid var(--slate-line);border-radius:6px;padding:9px;color:#8FB8A8;font-size:10px;line-height:1.55;white-space:pre-wrap;max-height:190px;overflow:auto}
+.raw.open{display:block}
+
+.legend{
+  padding:11px 18px;border-top:1px solid var(--slate-line);
+  display:flex;flex-wrap:wrap;gap:9px;
+  font-family:var(--f-mono);font-size:9.5px;color:var(--mono-dim);letter-spacing:.05em;
+}
+.legend b{color:#B9CFC6;font-weight:400}
+
+/* ---------- tokens page ---------- */
+.tok-wrap{width:100%;max-width:820px;display:grid;gap:22px}
+.tok-sec h3{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--ink-40);margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--silt-2);
+}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+.sw{border-radius:var(--r-m);overflow:hidden;border:1px solid var(--silt-2);background:var(--paper)}
+.sw-c{height:56px}
+.sw-t{padding:8px 10px}
+.sw-t b{display:block;font-size:12px;font-weight:600}
+.sw-t code{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-40)}
+.sw-t p{font-size:10.5px;color:var(--ink-40);margin-top:3px;line-height:1.35}
+.type-row{display:flex;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--silt-2);flex-wrap:wrap}
+.type-row .lbl{font-family:var(--f-mono);font-size:10px;color:var(--ink-40);width:118px;flex:none;letter-spacing:.08em;text-transform:uppercase}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+
+@media (max-width:1180px){
+  .shell{grid-template-columns:180px 1fr 340px}
+  .phone{width:360px}
+}
+@media (max-width:980px){
+  .shell{display:block}
+  .nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--silt-2);display:flex;gap:5px;overflow-x:auto;padding:12px}
+  .nav-h{display:none}
+  .nav-i{flex:none;width:auto;white-space:nowrap;margin:0}
+  .nav-s{display:none}
+  .trace{position:static;height:520px;border-left:0;border-top:1px solid var(--slate-line)}
+  .stage{padding:22px 14px 40px}
+  .phone{width:100%;max-width:390px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><b>AgriSense</b><span>Interface mock · v0.1</span></div>
+  <div class="topbar-spacer"></div>
+  <button class="tgl" id="bnToggle" aria-pressed="false">বাংলা</button>
+  <button class="tgl" id="traceToggle" aria-pressed="true">Trace</button>
+</header>
+
+<div class="shell">
+
+  <!-- =============== NAVIGATOR =============== -->
+  <nav class="nav" id="nav">
+    <div class="nav-h">Screens</div>
+  </nav>
+
+  <!-- =============== STAGE =============== -->
+  <main class="stage">
+    <div class="stage-head">
+      <div class="eyebrow" id="scrEyebrow">Screen 01</div>
+      <h1 id="scrTitle">Intake</h1>
+      <p id="scrDesc"></p>
+    </div>
+
+    <div class="phone" id="phone">
+      <div class="status"><span>9:41</span><span>▮▮▮ ⌁ 87%</span></div>
+      <div class="appbar">
+        <div class="logo">A</div>
+        <h2 id="appTitle">AgriSense</h2>
+        <button class="appbar-ic" title="Language">অ</button>
+        <button class="appbar-ic" title="Settings">⚙</button>
+      </div>
+      <div class="scroll" id="screenBody"></div>
+      <div class="composer" id="composer">
+        <button class="cbtn ghost" title="Attach photo">＋</button>
+        <div class="field" data-en="Type a message…" data-bn="বার্তা লিখুন…">Type a message…</div>
+        <button class="cbtn ghost" title="Speak">🎙</button>
+        <button class="cbtn" title="Send">↑</button>
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="notes-h">What this screen has to prove</div>
+      <div id="notesBody"></div>
+    </div>
+  </main>
+
+  <!-- =============== TRACE INSTRUMENT =============== -->
+  <aside class="trace" id="trace">
+    <div class="trace-h">
+      <div class="t1">Agent trace</div>
+      <div class="t2" id="traceMeta">—</div>
+    </div>
+    <div class="trace-body" id="traceBody"></div>
+    <div class="legend">
+      <span><b>◈</b> external</span><span><b>▤</b> retrieval</span>
+      <span><b>∑</b> deterministic</span><span><b>⌾</b> memory</span><span><b>₿</b> charge</span>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+/* ============================================================
+   Financial engine — the same pure function the real app needs.
+   Per-hectare rates; everything downstream derives from area.
+   ============================================================ */
+const RATES = {
+  landprep:{label:'Land preparation', note:'4 passes, power tiller', perHa:11000, src:'BBS'},
+  seed:    {label:'Seed — BRRI dhan89', note:'25 kg/ha @ ৳58', perHa:1469, src:'BADC'},
+  urea:    {label:'Urea', note:'220 kg/ha @ ৳27', perHa:5940, src:'FRG', kgPerHa:220},
+  tsp:     {label:'TSP', note:'90 kg/ha @ ৳27', perHa:2430, src:'FRG', kgPerHa:90},
+  mop:     {label:'MoP', note:'110 kg/ha @ ৳20', perHa:2200, src:'FRG', kgPerHa:110},
+  gypsum:  {label:'Gypsum', note:'60 kg/ha @ ৳15', perHa:900, src:'FRG', kgPerHa:60},
+  irrig:   {label:'Irrigation', note:'shallow tubewell, diesel', perHa:20000, src:'BBS'},
+  labour:  {label:'Hired labour', note:'55 man-days/ha @ ৳500', perHa:27500, src:'BBS'},
+  pest:    {label:'Pest management', note:'2 applications', perHa:4898, src:'BARI'},
+  harvest: {label:'Harvest & threshing', note:'incl. transport', perHa:13878, src:'BBS'}
+};
+const BASE_YIELD = 4.95;      // t/ha, Boro HYV — BBS
+const WEATHER_ADJ = 0.94;     // heat stress at grain fill — Open-Meteo derived
+const PADDY_PRICE = 36;       // ৳/kg — govt procurement, USDA FAS BG2025-0010
+
+function computeFinancials(areaHa, mult){
+  mult = mult || {};
+  const lines = Object.entries(RATES).map(([k,r])=>({
+    key:k, label:r.label, note:r.note, src:r.src,
+    total: Math.round(r.perHa * areaHa * (mult[k] ?? 1)),
+    kg: r.kgPerHa ? Math.round(r.kgPerHa * areaHa * (mult[k] ?? 1)) : null
+  }));
+  const cost = lines.reduce((s,l)=>s+l.total,0);
+  const yieldT = +(BASE_YIELD * areaHa * WEATHER_ADJ * (mult.yield ?? 1)).toFixed(2);
+  const yieldKg = Math.round(yieldT*1000);
+  const revenue = yieldKg * PADDY_PRICE;
+  const net = revenue - cost;
+  return {
+    lines, cost, yieldT, yieldKg, revenue, net,
+    roi: Math.round(net/cost*100),
+    bcr: +(revenue/cost).toFixed(2),
+    beYield: +(cost/PADDY_PRICE/1000).toFixed(2),
+    bePrice: +(cost/yieldKg).toFixed(2)
+  };
+}
+const tk = n => '৳' + n.toLocaleString('en-IN');
+
+/* ============================================================
+   Trace data per screen
+   ============================================================ */
+const ICON = {ext:'◈', rag:'▤', det:'∑', mem:'⌾', pay:'₿'};
+
+const TRACE = {
+  intake:{meta:'2 steps · 0.02 s · gathering',steps:[
+    {n:1,t:'mem',name:'get_farm_profile',ms:12,st:'ok',in:'—',out:'{} · missing: 6 fields',src:'session store',
+     raw:'{\n  "profile": {},\n  "missing_fields": [\n    "district","area_ha","soil_type",\n    "water_source","budget_bdt","target_season"\n  ]\n}'},
+    {n:2,t:'mem',name:'update_farm_profile',ms:8,st:'ok',in:'{district:"Gazipur", area_ha:0.49}',out:'missing: 4 fields',src:'session store',
+     raw:'{\n  "written": { "district":"Gazipur", "lat":23.99, "lon":90.42,\n               "aez":28, "area_ha":0.49 },\n  "derived": "AEZ 28 — Madhupur Tract (districts.json)",\n  "missing_fields": ["soil_type","water_source","budget_bdt","target_season"]\n}'}
+  ]},
+  crops:{meta:'6 steps · 4.21 s · planning',steps:[
+    {n:1,t:'mem',name:'get_farm_profile',ms:11,st:'ok',in:'—',out:'6/6 fields present',src:'session store'},
+    {n:2,t:'ext',name:'get_weather',ms:412,st:'ok',in:'lat 23.99, lon 90.42, days 16',out:'41.2 mm/14d · ET₀ 3.2 mm/d · 18–29 °C',src:'Open-Meteo (ECMWF)',
+     raw:'{\n  "latitude": 23.99, "longitude": 90.42,\n  "daily": {\n    "time": ["2026-03-18","2026-03-19","2026-03-20", …],\n    "precipitation_sum": [0,0,2.1,0,0,6.4,11.8,0.2, …],\n    "temperature_2m_max": [29.1,28.8,29.4,30.0, …],\n    "temperature_2m_min": [18.2,18.6,19.0,19.4, …],\n    "et0_fao_evapotranspiration": [3.1,3.2,3.4,3.2, …]\n  },\n  "hourly": { "soil_moisture_0_to_7cm": [0.31,0.31,0.30, …] }\n}'},
+    {n:3,t:'det',name:'lookup_crop_rules',ms:4,st:'ok',in:'season "Rabi", aez 28',out:'5 candidates + calendars + doses',src:'crop_rules.json — BARC FRG-2018, BAMIS'},
+    {n:4,t:'det',name:'rank_crops',ms:3,st:'ok',in:'profile, weather, 5 candidates',out:'Boro 92 · Potato 81 · Maize 74',src:'computed — weighted suitability',
+     raw:'{\n  "weights": { "season":0.30,"rain":0.25,"temp":0.20,\n               "soil":0.15,"water":0.10 },\n  "boro_rice": {\n    "season_fit":1.00,\n    "rain_fit":0.78,   // 41.2 mm vs 60–90 mm optimal (ECOCROP)\n    "temp_fit":0.95,   // 18–29 °C vs 20–30 °C optimal\n    "soil_fit":0.90, "water_fit":1.00,\n    "budget_penalty":0.00,\n    "score":92\n  }\n}'},
+    {n:5,t:'rag',name:'search_knowledge_base',ms:186,st:'ok',in:'"Boro rice Madhupur Tract establishment"',out:'4 chunks · top sim 0.84',src:'pgvector · BARC FRG-2018 p.47',
+     raw:'[\n  { "sim":0.84, "source":"BARC FRG-2018", "ref":"p.47",\n    "text":"For Boro rice in AEZ 28 on medium-P loam soils, apply\\n           nitrogen in three splits: basal, 20 DAT and 40 DAT…" },\n  { "sim":0.79, "source":"BAMIS crop calendar", "ref":"Boro/Rabi" },\n  { "sim":0.71, "source":"IRRI Rice Knowledge Bank", "ref":"Land preparation" },\n  { "sim":0.66, "source":"BARC FRG-2018", "ref":"p.51" }\n]'},
+    {n:6,t:'det',name:'compute_financials',ms:2,st:'ok',in:'crop "boro", area 0.49',out:'net ৳37,874 · ROI 86% · BCR 1.86',src:'costs_bd.json — BBS, MoA 2023'}
+  ]},
+  plan:{meta:'8 steps · 5.06 s · planning',steps:[
+    {n:2,t:'ext',name:'get_weather',ms:412,st:'ok',in:'lat 23.99, lon 90.42',out:'18 mm rain 23–25 Mar',src:'Open-Meteo (ECMWF)'},
+    {n:3,t:'det',name:'lookup_crop_rules',ms:4,st:'ok',in:'crop "boro", aez 28',out:'8 stages · N in 3 splits',src:'crop_rules.json — BAMIS'},
+    {n:7,t:'det',name:'build_season_plan',ms:6,st:'ok',in:'crop, sowing 2026-01-08, area 0.49, weather',out:'8 stages · 1 date shifted',src:'computed',
+     raw:'{\n  "shift": {\n    "stage": "N top-dress #2",\n    "from": "2026-03-24", "to": "2026-03-28",\n    "trigger": "precipitation_sum 18.2 mm over 2026-03-23…25",\n    "rule": "shift N application if >15 mm forecast within 48 h",\n    "reason": "runoff and volatilisation loss",\n    "source": "BARC FRG-2018 p.51"\n  }\n}'},
+    {n:8,t:'det',name:'assess_pest_risk',ms:5,st:'ok',in:'crop, stages, weather',out:'sheath blight — elevated, 12–18 Apr',src:'pest_rules.json — IRRI RKB, EPIRICE'}
+  ]},
+  money:{meta:'6 steps · 4.21 s · recompute 2 ms',steps:[
+    {n:2,t:'ext',name:'get_weather',ms:412,st:'ok',in:'lat 23.99, lon 90.42',out:'heat-stress adj 0.94',src:'Open-Meteo (ECMWF)'},
+    {n:3,t:'det',name:'lookup_crop_rules',ms:4,st:'ok',in:'crop "boro", aez 28',out:'N 220 · P 90 · K 110 · S 60 kg/ha',src:'crop_rules.json — BARC FRG-2018 p.47'},
+    {n:6,t:'det',name:'compute_financials',ms:2,st:'ok',in:'area 0.49 ha, no overrides',out:'cost ৳44,206 · net ৳37,874',src:'costs_bd.json — BBS, MoA 2023',
+     raw:'{\n  "assumptions": [\n    "Fertiliser at 2023 MoA subsidised farmer-level prices;\\n     dealer prices commonly run ৳3–4/kg higher.",\n    "Hired labour only — family labour not costed.",\n    "Yield adjusted ×0.94 for forecast heat stress at grain fill.",\n    "Paddy sold at government procurement rate ৳36/kg."\n  ],\n  "totals": { "cost":44206, "yield_kg":2280, "revenue":82080,\n              "net":37874, "roi":0.857, "bcr":1.86,\n              "break_even_yield_t":1.23, "break_even_price":19.39 }\n}'},
+    {n:9,t:'det',name:'compute_financials',ms:2,st:'ok',in:'area override — live recompute',out:'recomputed on each step',src:'same pure function · unit-tested'}
+  ]},
+  basket:{meta:'4 steps · 1.07 s · transacting',steps:[
+    {n:3,t:'det',name:'lookup_crop_rules',ms:4,st:'ok',in:'crop "boro", aez 28, soil "loam"',out:'urea 108 · TSP 44 · MoP 54 kg',src:'crop_rules.json — BARC FRG-2018 p.47'},
+    {n:10,t:'pay',name:'bdapps_query_balance',ms:388,st:'ok',in:'subscriberId "tel:8801712XXXXXX"',out:'chargeableBalance ৳6,420 · ACTIVE',src:'bdapps CaaS · simulator',
+     raw:'REQUEST  POST /caas/balance/query\n{\n  "applicationId": "APP_000142",\n  "password": "8f57d2e8de06e6f2d6ee5da6107d0a4f",\n  "subscriberId": "tel:8801712XXXXXX",\n  "paymentInstrumentName": "Mobile Account"\n}\n\nRESPONSE  200\n{\n  "accountType": "Prepaid",\n  "accountStatus": "ACTIVE",\n  "chargeableBalance": "6420.00",\n  "statusCode": "S1000",\n  "statusDetail": "Success"\n}'},
+    {n:11,t:'det',name:'await_human_approval',ms:0,st:'fb',in:'proposal ৳5,184',out:'gate open — waiting on farmer',src:'HITL · fires before the charge'},
+    {n:12,t:'pay',name:'bdapps_direct_debit',ms:640,st:'ok',in:'externalTrxId "AGRI-1721800142-a1b2", amount 5184',out:'internalTrxId 8f2a41c9… · S1000',src:'bdapps CaaS · simulator',
+     raw:'REQUEST  POST /caas/direct/debit\n{\n  "applicationId": "APP_000142",\n  "password": "8f57d2e8de06e6f2d6ee5da6107d0a4f",\n  "externalTrxId": "AGRI-1721800142-a1b2",\n  "subscriberId": "tel:8801712XXXXXX",\n  "amount": "5184",\n  "currency": "BDT",\n  "paymentInstrumentName": "Mobile Account"\n}\n\nRESPONSE  200\n{\n  "externalTrxId": "AGRI-1721800142-a1b2",\n  "internalTrxId": "8f2a41c9d7b04e15",\n  "referenceId": "40118273",\n  "timeStamp": "2026-01-08T09:41:22+06:00",\n  "statusCode": "S1000",\n  "statusDetail": "Success"\n}'}
+  ]},
+  ret:{meta:'4 steps · 0.71 s · proactive',steps:[
+    {n:1,t:'mem',name:'get_farm_profile',ms:14,st:'ok',in:'phone "8801712XXXXXX"',out:'farm restored · plan day 32 · tillering',src:'farms table — session 3 of 3',
+     raw:'{\n  "farm_id": "e3c1…",\n  "first_seen": "2026-01-08",\n  "sessions": 3,\n  "district": "Gazipur", "aez": 28, "area_ha": 0.49,\n  "soil_type": "loam", "water_source": "shallow tubewell",\n  "active_plan": { "crop":"boro_rice", "sowing":"2026-01-08",\n                   "day":32, "stage":"tillering" }\n}'},
+    {n:2,t:'ext',name:'get_weather',ms:397,st:'fb',in:'lat 23.99, lon 90.42',out:'⚠ timeout — cached 09:14 served',src:'Open-Meteo → disk cache',
+     raw:'{\n  "status": "fallback",\n  "error": "ETIMEDOUT after 8000 ms",\n  "served_from": "cache/openmeteo_23.99_90.42.json",\n  "cached_at": "2026-02-09T09:14:03+06:00",\n  "staleness_min": 27,\n  "note": "Surfaced to the farmer with the timestamp, not silently."\n}'},
+    {n:13,t:'det',name:'build_season_plan',ms:6,st:'ok',in:'replan from day 32',out:'N top-dress 24 Mar → 28 Mar',src:'computed · rule: >15 mm within 48 h'},
+    {n:8,t:'det',name:'assess_pest_risk',ms:5,st:'ok',in:'tillering, 29 °C, RH 88%',out:'sheath blight — elevated',src:'pest_rules.json — IRRI RKB'}
+  ]},
+  whatif:{meta:'3 steps · 0.31 s · re-planning',steps:[
+    {n:14,t:'mem',name:'get_farm_profile',ms:10,st:'ok',in:'—',out:'base plan #1 loaded',src:'plans table'},
+    {n:15,t:'det',name:'simulate_scenario',ms:9,st:'ok',in:'{budget_bdt: 45000 → 27000}',out:'diff on 6 line items',src:'computed — same pure function',
+     raw:'{\n  "constraint": { "budget_bdt": 27000 },\n  "strategy": "protect yield per taka — cut lowest-marginal-return\\n             inputs first, preserve basal P and K",\n  "overrides": {\n    "urea": 0.70, "labour": 0.65, "irrig": 0.73,\n    "gypsum": 0.00, "pest": 0.50, "landprep": 0.65,\n    "yield": 0.755\n  },\n  "finding": "Net profit falls ৳3,094 (−8%), but ROI rises 86% → 128%\\n            because capital efficiency improves. Recommend only if\\n            cash is the binding constraint, not land."\n}'},
+    {n:16,t:'rag',name:'search_knowledge_base',ms:171,st:'ok',in:'"reduced nitrogen Boro yield response"',out:'2 chunks · top sim 0.77',src:'pgvector · BARC FRG-2018 p.19'}
+  ]},
+  trace:{meta:'12 steps · 6.44 s · complete',steps:[]}
+};
+TRACE.trace.steps = [...TRACE.crops.steps, ...TRACE.plan.steps.slice(2), ...TRACE.basket.steps.slice(1)];
+
+/* ============================================================
+   Screen definitions
+   ============================================================ */
+const glance = (o={}) => `
+<div class="glance">
+  <div class="glance-top"><span data-en="Farm at a glance" data-bn="খামারের সারসংক্ষেপ">Farm at a glance</span><span>${o.session||'Session 1'}</span></div>
+  <div class="glance-grid">
+    <div><div class="gf-l" data-en="Location" data-bn="অবস্থান">Location</div><div class="gf-v ${o.loc?'':'empty'}">${o.loc||'—'}</div></div>
+    <div><div class="gf-l" data-en="Land" data-bn="জমি">Land</div><div class="gf-v ${o.land?'':'empty'}">${o.land||'—'}</div></div>
+    <div><div class="gf-l" data-en="Soil" data-bn="মাটি">Soil</div><div class="gf-v ${o.soil?'':'empty'}">${o.soil||'—'}</div></div>
+    <div><div class="gf-l" data-en="Water" data-bn="সেচ">Water</div><div class="gf-v ${o.water?'':'empty'}">${o.water||'—'}</div></div>
+    ${o.crop?`<div><div class="gf-l" data-en="Crop" data-bn="ফসল">Crop</div><div class="gf-v">${o.crop}</div></div>`:''}
+    ${o.stage?`<div><div class="gf-l" data-en="Stage" data-bn="পর্যায়">Stage</div><div class="gf-v">${o.stage}</div></div>`:''}
+  </div>
+  ${o.next?`<div class="glance-next"><span class="dot"></span><div>${o.next}</div></div>`:''}
+</div>`;
+
+const why = (id, items) => `
+<div class="why" id="${id}">
+  <button class="why-btn" onclick="this.parentNode.classList.toggle('open')">
+    <span class="caret">▶</span><span data-en="Why this?" data-bn="কেন?">Why this?</span>
+  </button>
+  <div class="why-body">${items.map(p=>`
+    <div class="prov"><div class="prov-s">${p.s}</div><div class="prov-t">${p.t}</div></div>`).join('')}
+  </div>
+</div>`;
+
+const SCREENS = {
+
+/* ---------- 01 INTAKE ---------- */
+intake:{
+  nav:['Intake','Vague opening, targeted gaps'],
+  title:'Conversational intake',
+  desc:'The farmer opens with nothing useful. The agent detects six missing fields and asks for the highest-information one first — never all six at once.',
+  trace:'intake',
+  body:()=>`
+${glance({})}
+<div class="msg user"><div class="who">Karim</div><div class="bub" data-en="I want to farm this season, what should I plant?" data-bn="এই মৌসুমে চাষ করতে চাই, কী লাগাবো?">I want to farm this season, what should I plant?</div></div>
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub" data-en="I can build you a full season plan — crop, calendar, and costs. I need six things about your farm. Let's start with one: which district is your land in?" data-bn="আমি আপনার জন্য পুরো মৌসুমের পরিকল্পনা করতে পারি — ফসল, সময়সূচি ও খরচ। প্রথমে বলুন: আপনার জমি কোন জেলায়?">I can build you a full season plan — crop, calendar, and costs. I need six things about your farm. Let's start with one: which district is your land in?</div></div>
+<div class="chip-row">
+  <span class="chip-lbl" data-en="District" data-bn="জেলা">District</span>
+  <button class="chip">Gazipur</button><button class="chip">Mymensingh</button>
+  <button class="chip">Rangpur</button><button class="chip soft" data-en="Other…" data-bn="অন্য…">Other…</button>
+</div>
+<div class="msg user"><div class="who">Karim</div><div class="bub" data-en="Gazipur, about 1.2 acres" data-bn="গাজীপুর, প্রায় ১.২ একর">Gazipur, about 1.2 acres</div></div>
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub"><span data-en="Gazipur — that's AEZ 28, Madhupur Tract. 1.2 acres is 0.49 hectares, about 3.6 bigha. Two more: what's your soil like, and how do you water the field?" data-bn="গাজীপুর — এটি AEZ ২৮, মধুপুর ট্র্যাক্ট। ১.২ একর মানে ০.৪৯ হেক্টর, প্রায় ৩.৬ বিঘা। আর দুটি বিষয়: মাটি কেমন, আর সেচ কীভাবে দেন?">Gazipur — that's AEZ 28, Madhupur Tract. 1.2 acres is 0.49 hectares, about 3.6 bigha. Two more: what's your soil like, and how do you water the field?</span></div></div>
+<div class="chip-row">
+  <span class="chip-lbl" data-en="Soil" data-bn="মাটি">Soil</span>
+  <button class="chip">Loam</button><button class="chip">Clay</button><button class="chip">Sandy</button>
+  <button class="chip soft" data-en="Not sure" data-bn="জানি না">Not sure</button>
+</div>
+<div class="chip-row">
+  <span class="chip-lbl" data-en="Water source" data-bn="সেচের উৎস">Water source</span>
+  <button class="chip">Shallow tubewell</button><button class="chip">Deep tubewell</button>
+  <button class="chip">Canal</button><button class="chip">Rain only</button>
+</div>
+<div class="thinking"><span class="pulse"></span><span>4 fields still missing · asking 2 per turn</span></div>`,
+  notes:[
+    {h:'Gap detection is deterministic, phrasing is not',p:'A REQUIRED_FIELDS array computes what is missing; the model only writes the question. The trace shows missing_fields shrinking from 6 → 4, which is the visible proof.',pills:['Agentic behaviour'],pts:'20 pts'},
+    {h:'"Not sure" is always offered',p:'Choosing it makes the agent assume the AEZ-typical soil and say so out loud. Graceful degradation on incomplete input is the exact behaviour the rubric names — and it demos better than a clean answer.'},
+    {h:'Two units, always',p:'The farmer said acres. The agent answers in acres, hectares and bigha. Small, but it is the difference between a tool built for Bangladesh and a tool translated into it.'}
+  ]
+},
+
+/* ---------- 02 CROPS ---------- */
+crops:{
+  nav:['Crop ranking','Weather enters the score'],
+  title:'Crop recommendation',
+  desc:'Three ranked candidates with per-factor sub-scores. The rain-fit component is computed from the forecast the agent just fetched — this is where the weather coupling becomes numeric rather than claimed.',
+  trace:'crops',
+  body:()=>`
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha · 3.6 bigha',soil:'Loam',water:'Shallow tubewell'})}
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub" data-en="I checked the 16-day forecast for your coordinates and matched it against Rabi-season crops for AEZ 28. Three come out ahead." data-bn="আমি আপনার এলাকার ১৬ দিনের পূর্বাভাস দেখে AEZ ২৮-এর রবি ফসলের সাথে মিলিয়েছি। তিনটি ফসল এগিয়ে আছে।">I checked the 16-day forecast for your coordinates and matched it against Rabi-season crops for AEZ 28. Three come out ahead.</div></div>
+
+<div class="card">
+  <div class="card-h"><span class="card-k" data-en="Ranked for your farm" data-bn="আপনার জমির জন্য বাছাই">Ranked for your farm</span><span class="card-k">weights shown</span></div>
+  <div class="rank top">
+    <div class="rank-top"><span class="rank-n">01</span><span class="rank-name">Boro rice</span><span class="rank-score">92<small>/100</small></span></div>
+    <div class="rank-meta"><span>BRRI dhan89</span><span>💧 <b>High</b> water</span><span>⚠ <b>Low</b> risk</span></div>
+    <div class="bars">
+      <div class="bar-r"><span class="bar-l">Season</span><span class="bar-t"><span class="bar-f" style="width:100%"></span></span><span class="bar-v">1.00</span></div>
+      <div class="bar-r"><span class="bar-l">Rain</span><span class="bar-t"><span class="bar-f" style="width:78%"></span></span><span class="bar-v">0.78</span></div>
+      <div class="bar-r"><span class="bar-l">Temp</span><span class="bar-t"><span class="bar-f" style="width:95%"></span></span><span class="bar-v">0.95</span></div>
+      <div class="bar-r"><span class="bar-l">Soil</span><span class="bar-t"><span class="bar-f" style="width:90%"></span></span><span class="bar-v">0.90</span></div>
+      <div class="bar-r"><span class="bar-l">Water</span><span class="bar-t"><span class="bar-f" style="width:100%"></span></span><span class="bar-v">1.00</span></div>
+      <div class="bar-r"><span class="bar-l">Budget</span><span class="bar-t"><span class="bar-f" style="width:100%"></span></span><span class="bar-v">0.00</span></div>
+    </div>
+    <div style="font-size:13px;margin-bottom:10px">Estimated net profit <span class="num" data-step="6">৳37,874</span><span class="tag">calc</span> on 0.49 ha.</div>
+    <div class="actions"><button class="btn" data-en="Choose this crop" data-bn="এই ফসল বেছে নিন">Choose this crop</button><button class="btn sec" data-en="Compare" data-bn="তুলনা">Compare</button></div>
+    ${why('w1',[
+      {s:'Open-Meteo · live',t:'<b>41.2 mm</b> forecast over the 14-day sowing window against a <b>60–90 mm</b> optimum, so rain-fit scores 0.78 — the shortfall is covered by your shallow tubewell, which is why water-fit is 1.00.'},
+      {s:'BARC FRG-2018 · p.47',t:'AEZ 28 loam at medium-P status is a recommended Boro soil; the guide gives a full N-P-K-S dose schedule for exactly this combination.'},
+      {s:'Your farm profile',t:'0.49 ha, shallow tubewell, ৳45,000 budget. Boro needs ৳44,206 — inside budget, so no penalty applied.'},
+      {s:'BBS cost-of-production',t:'Boro HYV yields ~4.95 t/ha nationally; adjusted ×0.94 for forecast heat stress at grain fill.'}
+    ])}
+  </div>
+  <div class="rank">
+    <div class="rank-top"><span class="rank-n">02</span><span class="rank-name">Potato</span><span class="rank-score" style="color:var(--ink-60)">81<small>/100</small></span></div>
+    <div class="rank-meta"><span>BARI Alu-7</span><span>💧 <b>Medium</b></span><span>⚠ <b>Medium</b> risk</span><span>net ~৳31,200</span></div>
+    <div style="font-size:12.5px;color:var(--ink-60)">Late blight risk rises sharply if humidity holds above 85% — the forecast shows three such days.</div>
+  </div>
+  <div class="rank">
+    <div class="rank-top"><span class="rank-n">03</span><span class="rank-name">Maize</span><span class="rank-score" style="color:var(--ink-60)">74<small>/100</small></span></div>
+    <div class="rank-meta"><span>Rabi</span><span>💧 <b>Low</b></span><span>⚠ <b>Low</b> risk</span><span>net ~৳24,900</span></div>
+    <div style="font-size:12.5px;color:var(--ink-60)">Lowest water need of the three, but farmgate price at your nearest market is weak this month.</div>
+  </div>
+</div>`,
+  notes:[
+    {h:'The sub-scores are the whole point',p:'"The AI said rice" is not defensible. "Here is the model, here are the weights, here is where your farm scored on each" is. A judge can argue with it — and being arguable is what makes it credible.',pills:['Accuracy'],pts:'20 pts'},
+    {h:'This is the answer to the named failure mode',p:'The problem statement warns about a crop recommendation that ignores the weather it just fetched. Rain-fit 0.78 is literally computed from 41.2 mm. Hover the profit figure to see it tether to the trace.'},
+    {h:'Rejected options carry reasons too',p:'Potato and maize each say why they lost. A ranking that only explains the winner looks like a ranking that was written backwards from the winner.'}
+  ]
+},
+
+/* ---------- 03 SEASON PLAN ---------- */
+plan:{
+  nav:['Season plan','Dated, and one date moved'],
+  title:'Season calendar',
+  desc:'Land preparation through harvest, dated. One fertiliser date has been shifted by the forecast, and the plan says so on the timeline rather than burying it.',
+  trace:'plan',
+  body:()=>`
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice',stage:'Planned'})}
+<div class="card">
+  <div class="card-h"><span class="card-k">Boro rice · 8 Jan – 4 May 2026</span><span class="card-k">117 days</span></div>
+  <div class="card-b">
+    <div class="tl">
+      <div class="tl-i done"><div class="tl-d">02 – 06 JAN</div><div class="tl-t">Land preparation</div><div class="tl-x">4 passes with power tiller, then puddle and level. Keep 3–5 cm standing water.</div></div>
+      <div class="tl-i done"><div class="tl-d">08 JAN</div><div class="tl-t">Transplanting <span class="badge ok">window 5 – 12 Jan</span></div><div class="tl-x">30-day seedlings, 20 × 15 cm spacing, 2–3 seedlings per hill.</div></div>
+      <div class="tl-i done"><div class="tl-d">08 JAN</div><div class="tl-t">Basal fertiliser</div><div class="tl-x">All TSP <span class="num" data-step="3">44 kg</span>, all MoP <span class="num" data-step="3">54 kg</span>, all gypsum <span class="num" data-step="3">29 kg</span>, plus one third of urea <span class="num" data-step="3">36 kg</span><span class="tag">FRG</span>.</div></div>
+      <div class="tl-i now"><div class="tl-d">09 FEB · TODAY</div><div class="tl-t">Tillering — day 32 <span class="badge now">now</span></div><div class="tl-x">Maintain 2–3 cm water. First weeding due within 4 days.</div></div>
+      <div class="tl-i"><div class="tl-d">20 FEB</div><div class="tl-t">N top-dress #1</div><div class="tl-x">Urea <span class="num" data-step="3">36 kg</span> at active tillering. Drain to shallow water before broadcasting.</div></div>
+      <div class="tl-i shift">
+        <div class="tl-d">24 MAR → <b style="color:var(--indigo)">28 MAR</b></div>
+        <div class="tl-t">N top-dress #2 <span class="badge rain">🌧 moved 4 days</span></div>
+        <div class="tl-x">Urea <span class="num" data-step="7">36 kg</span> at panicle initiation. <b>Moved because 18.2 mm of rain is forecast 23–25 Mar</b> — applying nitrogen before heavy rain loses a large share to runoff and volatilisation.</div>
+        ${why('w2',[
+          {s:'Open-Meteo · live',t:'precipitation_sum <b>18.2 mm</b> across 23–25 Mar, above the 15 mm threshold that triggers a shift.'},
+          {s:'BARC FRG-2018 · p.51',t:'Urea should not be broadcast within 48 hours of heavy rainfall on standing water; split applications are timed to drained-field conditions.'},
+          {s:'Rule · plan engine',t:'<b>shift_nitrogen_if(rain_48h &gt; 15 mm)</b> — one deterministic rule, applied once, recorded with its trigger value.'}
+        ])}
+      </div>
+      <div class="tl-i"><div class="tl-d">12 – 18 APR</div><div class="tl-t">Pest checkpoint <span class="badge risk">sheath blight</span></div><div class="tl-x">Scout the lower canopy. Risk is elevated: forecast holds 28–32 °C with canopy humidity above 85%.</div></div>
+      <div class="tl-i"><div class="tl-d">28 APR – 04 MAY</div><div class="tl-t">Harvest</div><div class="tl-x">Cut at 80–85% golden grain. Expect <span class="num" data-step="6">2.28 t</span><span class="tag">calc</span> of paddy from this plot.</div></div>
+    </div>
+    <div class="actions" style="margin-top:6px">
+      <button class="btn sec" data-en="Send to my phone by SMS" data-bn="এসএমএসে পাঠান">Send to my phone by SMS</button>
+    </div>
+  </div>
+</div>`,
+  notes:[
+    {h:'One moved date does more work than ten features',p:'It is the single clearest demonstration that the weather call changed the plan rather than decorating it. Say the trigger value out loud in the demo: 18.2 mm, threshold 15 mm.',pills:['Innovation'],pts:'5 pts'},
+    {h:'Quantities live on the calendar, not in a separate scheduler',p:'Tier 1 asks for a fertiliser and irrigation scheduler. It already exists here — every stage carries its dose from the same FRG table. Do not build it twice.'},
+    {h:'The SMS button is the honest version of bdapps SMS',p:'Useful to a farmer with a basic phone, cheap to build, and it does not pretend to be the payment integration that actually carries the ten points.'}
+  ]
+},
+
+/* ---------- 04 MONEY ---------- */
+money:{
+  nav:['Financials','Change an input, watch it move'],
+  title:'Cost and profit',
+  desc:'An itemised ledger over a pure function. The area stepper is live — every figure below recomputes from the same code path the agent calls, with no model round-trip.',
+  trace:'money',
+  body:()=>{
+    const f = computeFinancials(state.area);
+    return `
+${glance({loc:'Gazipur · AEZ 28',land:state.area.toFixed(2)+' ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice'})}
+<div class="stepper">
+  <div><div class="stepper-l" data-en="Land area" data-bn="জমির পরিমাণ">Land area</div>
+    <div class="stepper-v">${state.area.toFixed(2)} <small>ha · ${(state.area*7.4).toFixed(1)} bigha</small></div></div>
+  <div class="stepper-c">
+    <button class="sbtn" onclick="bumpArea(-0.1)" aria-label="Decrease area">−</button>
+    <button class="sbtn" onclick="bumpArea(0.1)" aria-label="Increase area">+</button>
+  </div>
+</div>
+
+<div class="card"><div class="card-b" style="padding-top:12px">
+<table class="ledger">
+  <thead><tr><th data-en="Item" data-bn="খাত">Item</th><th data-en="Basis" data-bn="ভিত্তি">Basis</th><th data-en="Cost" data-bn="খরচ">Cost</th></tr></thead>
+  <tbody>
+    ${f.lines.map(l=>`<tr><td>${l.label}</td><td>${l.kg?l.kg+' kg · ':''}${l.note}</td><td>${tk(l.total)}</td></tr>`).join('')}
+    <tr class="sum"><td data-en="Total cost" data-bn="মোট খরচ">Total cost</td><td></td><td>${tk(f.cost)}</td></tr>
+  </tbody>
+</table>
+</div></div>
+
+<div class="headline">
+  <div class="hl-r"><span data-en="Expected yield" data-bn="প্রত্যাশিত ফলন">Expected yield</span><b>${f.yieldT} t</b></div>
+  <div class="hl-r"><span data-en="Gross revenue" data-bn="মোট আয়">Gross revenue</span><b>${tk(f.revenue)}</b></div>
+  <div class="hl-r"><span data-en="Total cost" data-bn="মোট খরচ">Total cost</span><b>− ${tk(f.cost)}</b></div>
+  <div class="hl-net"><span data-en="Net profit" data-bn="নিট মুনাফা">Net profit</span><b>${tk(f.net)}</b></div>
+  <div class="hl-foot"><span>ROI ${f.roi}%</span><span>BCR ${f.bcr}</span><span>Break-even ${f.beYield} t</span><span>or ৳${f.bePrice}/kg</span></div>
+</div>
+
+<div class="card"><div class="card-b" style="padding-top:12px">
+${why('w3',[
+  {s:'BARC FRG-2018 · p.47',t:'Urea 220 kg/ha for Boro on AEZ 28 medium-P loam. At '+state.area.toFixed(2)+' ha that is <b>'+Math.round(220*state.area)+' kg</b>.'},
+  {s:'MoA order, 2023',t:'Subsidised farmer-level price <b>৳27/kg</b> urea, ৳27 TSP, ৳20 MoP. Dealer prices commonly run ৳3–4/kg higher — this projection uses the official rate.'},
+  {s:'BBS cost-of-production',t:'Labour, tillage, irrigation and harvest rates from the annual Boro survey. Family labour is <b>not</b> costed; hired labour only.'},
+  {s:'Open-Meteo · live',t:'Yield adjusted <b>×0.94</b> for forecast heat stress during grain fill. Remove the adjustment and expected yield rises to '+(BASE_YIELD*state.area).toFixed(2)+' t.'},
+  {s:'USDA FAS BG2025-0010',t:'Paddy valued at the government procurement rate <b>৳36/kg</b>. Break-even price is ৳'+f.bePrice+'/kg, so there is '+Math.round((36-f.bePrice)/36*100)+'% headroom before this plot loses money.'}
+])}
+</div></div>`;
+  },
+  notes:[
+    {h:'The stepper is the demo moment for FR-7',p:'Press + and every number moves at once, correctly, instantly. That is the rubric line "change an input and the outputs change correctly" made visible in two seconds. It runs client-side on the same pure function — no LLM involved.',pills:['Accuracy'],pts:'20 pts'},
+    {h:'Break-even is the number farmers actually use',p:'ROI is an analyst\'s metric. "You lose money below ৳19.39/kg" is the sentence a farmer repeats to a buyer. Put both on screen, but make the second one plain.'},
+    {h:'The assumptions are printed, not hidden',p:'Family labour not costed, subsidised fertiliser rate used, heat adjustment applied. Stating these pre-empts the sharpest Q&A question you will get, and BCR 1.86 sits inside the published 1.9–2.3 band for Boro — close enough to be credible, honest enough not to be suspicious.'}
+  ]
+},
+
+/* ---------- 05 BASKET ---------- */
+basket:{
+  nav:['Checkout','bdapps CaaS, gated'],
+  title:'Input basket and charge',
+  desc:'The fertiliser schedule becomes an order. The approval gate fires before the charge, not after — and both raw CaaS payloads are visible in the trace.',
+  trace:'basket',
+  body:()=>{
+    if(state.pay===0) return `
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice'})}
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub">Your basal application is due in four days. I've priced the three fertilisers at the subsidised rate and checked your mobile balance.</div></div>
+<div class="hitl">
+  <div class="hitl-k">⏸ <span data-en="Waiting for your approval" data-bn="আপনার অনুমোদনের অপেক্ষায়">Waiting for your approval</span></div>
+  <div class="hitl-amt">৳5,184</div>
+  <div class="hitl-to">charged to <b>017 1234 5678</b> · Mobile Account · balance ৳6,420</div>
+  <div class="hitl-lines">
+    <div class="hitl-line"><span>Urea · 108 kg @ ৳27</span><b>৳2,916</b></div>
+    <div class="hitl-line"><span>TSP · 44 kg @ ৳27</span><b>৳1,188</b></div>
+    <div class="hitl-line"><span>MoP · 54 kg @ ৳20</span><b>৳1,080</b></div>
+  </div>
+  <div class="actions">
+    <button class="btn" onclick="setPay(1)" data-en="Approve" data-bn="অনুমোদন">Approve</button>
+    <button class="btn mute" data-en="Edit quantities" data-bn="পরিমাণ বদলান">Edit quantities</button>
+    <button class="btn mute" data-en="Cancel" data-bn="বাতিল">Cancel</button>
+  </div>
+  ${why('w4',[
+    {s:'BARC FRG-2018 · p.47',t:'Quantities are the same table rows that generated your fertiliser calendar — <b>220, 90 and 110 kg/ha</b> scaled to 0.49 ha. The basket cannot drift from the plan because it reads the same source.'},
+    {s:'bdapps CaaS · balance query',t:'Chargeable balance <b>৳6,420</b>, account ACTIVE, prepaid. ৳5,184 leaves ৳1,236 — sufficient, so the agent proceeded to propose.'},
+    {s:'Gate policy',t:'This card appears <b>before</b> direct-debit fires. Approval after a charge is not approval, it is documentation.'}
+  ])}
+</div>`;
+    if(state.pay===1) return `
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice'})}
+<div class="thinking"><span class="pulse"></span><span>POST /caas/direct/debit · awaiting operator…</span></div>
+<div class="card"><div class="card-b" style="padding:14px 13px">
+  <div class="kv"><span>externalTrxId</span><b>AGRI-1721800142-a1b2</b></div>
+  <div class="kv"><span>amount</span><b>5184 BDT</b></div>
+  <div class="kv"><span>instrument</span><b>Mobile Account</b></div>
+</div></div>
+<button class="btn full" onclick="setPay(2)">Continue →</button>`;
+    return `
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice'})}
+<div class="receipt">
+  <div class="receipt-h"><span>✓</span><b data-en="Payment complete" data-bn="পেমেন্ট সম্পন্ন">Payment complete</b><span style="font-family:var(--f-mono);font-size:10px;opacity:.7">S1000</span></div>
+  <div class="receipt-b">
+    <div class="kv"><span>Amount</span><b>৳5,184.00</b></div>
+    <div class="kv"><span>externalTrxId</span><b>AGRI-1721800142-a1b2</b></div>
+    <div class="kv"><span>internalTrxId</span><b>8f2a41c9d7b04e15</b></div>
+    <div class="kv"><span>referenceId</span><b>40118273</b></div>
+    <div class="kv"><span>Subscriber</span><b>tel:8801712XXXXXX</b></div>
+    <div class="kv"><span>Timestamp</span><b>2026-01-08 09:41:22 +06</b></div>
+    <div class="kv"><span>Mode</span><b style="color:var(--turmeric);filter:brightness(.85)">SIMULATOR</b></div>
+  </div>
+</div>
+<div class="alert rain"><div class="ai">ℹ</div><div>
+  <h4>Running against the documented CaaS contract</h4>
+  <p>Request and response shapes are exactly those in the bdapps API guide §5.1 and §5.3. Live credentials switch on with one environment variable — the calling code does not change.</p>
+</div></div>
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub">Paid. Your basal application is scheduled for <b>8 January</b> — I've added a reminder and I'll text you the morning before.</div></div>
+<button class="btn mute full" onclick="setPay(0)">↺ Replay from the approval gate</button>`;
+  },
+  notes:[
+    {h:'This is ten rubric points sitting in Tier 2',p:'"bdapps Payment Gateway Integration — successful simulation of the CaaS API flow during checkout." It is worth more than Explainability and twice Innovation. Build it immediately after Tier 0 closes.',pills:['bdapps CaaS'],pts:'10 pts'},
+    {h:'Gate the proposal, not the side effect',p:'Approve appears before direct-debit fires, and the farmer can edit quantities rather than only accepting or rejecting. This is your one required human-in-the-loop moment and it belongs here, on the only genuinely consequential action in the product.'},
+    {h:'Say "simulator" out loud',p:'The problem statement asks for sandbox mode. Naming it, showing the mode on the receipt, and documenting it in the README turns an apparent gap into evidence that you read the brief. Demo the insufficient-balance branch too — a decision point is more impressive than a happy path.'}
+  ]
+},
+
+/* ---------- 06 RETURN ---------- */
+ret:{
+  nav:['Return visit','Memory and a stale-data fallback'],
+  title:'Coming back mid-season',
+  desc:'Session three. Nothing is re-asked. The weather call timed out and the agent says so with a timestamp instead of quietly inventing a forecast.',
+  trace:'ret',
+  body:()=>`
+${glance({session:'Session 3',loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice · BRRI dhan89',stage:'Tillering · day 32',next:'<b>Next action</b> — first weeding, due within 4 days'})}
+<div class="alert rain">
+  <div class="ai">🌧</div>
+  <div>
+    <h4>Nitrogen moved to Friday 28 March</h4>
+    <p>18.2 mm of rain is forecast 23–25 March. Applying urea into that would lose a large share to runoff. I've pushed the second top-dress back four days and the calendar is updated.</p>
+  </div>
+</div>
+<div class="alert risk">
+  <div class="ai">⚠</div>
+  <div>
+    <h4>Sheath blight risk is rising</h4>
+    <p>Temperature is holding 28–32 °C with canopy humidity above 85% — the conditions IRRI lists as favourable. Scout the lower canopy this week. Treating early costs about ৳900; a late infection at tillering can take 15–20% of yield.</p>
+  </div>
+</div>
+<div class="card"><div class="card-b" style="padding-top:12px;display:flex;gap:8px;align-items:flex-start">
+  <span style="font-size:15px">⚠</span>
+  <div style="font-size:12.5px;color:var(--ink-60);line-height:1.5">
+    <b style="color:var(--ink)">Weather service did not respond.</b> Using this morning's cached forecast from <span style="font-family:var(--f-mono)">09:14</span>, 27 minutes old. Numbers below rest on that snapshot.
+  </div>
+</div></div>
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub">Karim — your Boro is at day 32, tillering. Weeding is due within four days, and I've already moved the March nitrogen because of the forecast. Anything you want to change?</div></div>
+<div class="chip-row">
+  <button class="chip" data-en="Show the plan" data-bn="পরিকল্পনা দেখান">Show the plan</button>
+  <button class="chip" data-en="What if it rains more?" data-bn="আরও বৃষ্টি হলে?">What if it rains more?</button>
+  <button class="chip soft" data-en="Buy pesticide" data-bn="কীটনাশক কিনুন">Buy pesticide</button>
+</div>`,
+  notes:[
+    {h:'Make memory a visible tool call',p:'An agent that simply does not re-ask looks identical to an agent with a short conversation. get_farm_profile returning a populated record in the trace — session 3 of 3, first seen 8 January — is the proof. Silent correctness scores nothing.',pills:['Agentic behaviour'],pts:'20 pts'},
+    {h:'The failed call is the strongest thing on this screen',p:'Everyone demos a happy path. An agent that says "the weather service timed out, here is cached data and its age" reads as engineering maturity, and it costs one if-branch. Rehearse showing this on purpose.'},
+    {h:'Proactive advice needs a trigger value, not an adjective',p:'Not "heavy rain expected" but "18.2 mm, 23–25 March, threshold 15 mm". The specific number is what separates an alert from a horoscope.'}
+  ]
+},
+
+/* ---------- 07 WHAT-IF ---------- */
+whatif:{
+  nav:['Scenario','A numeric diff, not an essay'],
+  title:'What if the budget drops 40%?',
+  desc:'The same pure function, re-run under a constraint, diffed against the base plan. The finding is more interesting than the question — and that is what makes it memorable.',
+  trace:'whatif',
+  body:()=>`
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice'})}
+<div class="msg user"><div class="who">Karim</div><div class="bub" data-en="What if my budget drops 40%?" data-bn="আমার বাজেট ৪০% কমে গেলে কী হবে?">What if my budget drops 40%?</div></div>
+<div class="msg bot"><div class="who">AgriSense</div><div class="bub">Re-ran the plan against ৳27,000. I protected basal phosphorus and potassium and cut the inputs with the weakest return per taka first.</div></div>
+
+<div class="card">
+  <div class="card-h"><span class="card-k">Base plan → constrained plan</span><span class="card-k">6 line items changed</span></div>
+  <div class="card-b" style="padding-top:4px">
+  <table class="diff">
+    <thead><tr><th>Line</th><th>Was</th><th>Now</th></tr></thead>
+    <tbody>
+      <tr><td>Urea</td><td class="was">৳2,911</td><td class="now">৳2,038</td></tr>
+      <tr><td>Hired labour</td><td class="was">৳13,475</td><td class="now">৳8,759</td></tr>
+      <tr><td>Irrigation</td><td class="was">৳9,800</td><td class="now">৳7,154</td></tr>
+      <tr><td>Land preparation</td><td class="was">৳5,390</td><td class="now">৳3,504</td></tr>
+      <tr><td>Pest management</td><td class="was">৳2,400</td><td class="now">৳1,200</td></tr>
+      <tr><td>Gypsum</td><td class="was">৳441</td><td class="now">dropped</td></tr>
+      <tr><td><b>Total cost</b></td><td class="was">৳44,206</td><td class="now down">৳27,140</td></tr>
+      <tr><td>Expected yield</td><td class="was">2.28 t</td><td class="now down">1.72 t</td></tr>
+      <tr><td>Gross revenue</td><td class="was">৳82,080</td><td class="now down">৳61,920</td></tr>
+      <tr><td><b>Net profit</b></td><td class="was">৳37,874</td><td class="now down">৳34,780</td></tr>
+      <tr><td><b>ROI</b></td><td class="was">86%</td><td class="now up">128%</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="alert rain">
+  <div class="ai">◑</div>
+  <div>
+    <h4>Less money, barely less profit — but more risk</h4>
+    <p>You lose ৳3,094, about 8% of profit, while ROI climbs from 86% to 128% because every taka works harder. The catch: yield drops to 1.72 t against a break-even of 0.75 t, so your margin for a bad season narrows. Worth doing if cash is tight. Not worth doing if land is your constraint.</p>
+  </div>
+</div>
+${why('w5',[
+  {s:'BARC FRG-2018 · p.19',t:'Nitrogen response in Boro is close to linear up to about 70% of the recommended dose, then flattens — so a 30% N cut costs proportionally less yield than a 30% cut anywhere else. That is why urea was cut first and phosphorus was not.'},
+  {s:'Same pure function',t:'compute_financials re-run with an override map. No second engine, no separate model — which is why the two columns are guaranteed comparable.'},
+  {s:'Your stated constraint',t:'Budget ৳45,000 → ৳27,000. The solver stopped as soon as total cost fit, rather than cutting to the minimum.'}
+])}`,
+  notes:[
+    {h:'Close the demo with this',p:'The named Innovation example, roughly 45 minutes of work because the financial engine is already pure, and the most memorable eight seconds you can show. Ask the question, let the diff appear, stop talking.',pills:['Innovation'],pts:'5 pts'},
+    {h:'The counter-intuitive finding is the credibility',p:'Profit falls but ROI rises. A system that only ever says "less money is worse" is a system nobody had to build. Surfacing the trade-off — and naming when it is the wrong choice — is what an advisor does.'},
+    {h:'A diff, never a fresh essay',p:'Two columns, struck-through old values, coloured deltas. If the agent regenerates the whole plan as prose, the judge has to do the comparison themselves, and they will not.'}
+  ]
+},
+
+/* ---------- 08 TRACE ---------- */
+trace:{
+  nav:['Full trace','What the judge actually reads'],
+  title:'Agent trace, expanded',
+  desc:'Twelve steps for one plan generation. Every parameter sent, every raw value returned, colour-coded by what kind of thing it is. Open a raw payload on the right.',
+  trace:'trace',
+  body:()=>`
+${glance({loc:'Gazipur · AEZ 28',land:'0.49 ha',soil:'Loam',water:'Shallow tubewell',crop:'Boro rice',stage:'Planned'})}
+<div class="card"><div class="card-b" style="padding-top:12px">
+  <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);margin-bottom:9px">Where the numbers came from</div>
+  <table class="ledger">
+    <thead><tr><th>Class</th><th>Calls</th><th>Share</th></tr></thead>
+    <tbody>
+      <tr><td>◈ External API</td><td>Open-Meteo</td><td>2</td></tr>
+      <tr><td>▤ Retrieval</td><td>pgvector · 312 chunks</td><td>2</td></tr>
+      <tr><td>∑ Deterministic</td><td>tables + pure functions</td><td>6</td></tr>
+      <tr><td>⌾ Memory</td><td>farms, plans</td><td>2</td></tr>
+      <tr><td>₿ Charge</td><td>bdapps CaaS</td><td>2</td></tr>
+      <tr class="sum"><td>Model-generated numbers</td><td></td><td>0</td></tr>
+    </tbody>
+  </table>
+</div></div>
+<div class="alert rain"><div class="ai">◈</div><div>
+  <h4>Zero is the number that matters</h4>
+  <p>Every quantity on every screen came from a tool. The model chose which tools to call and wrote the sentences around them. It did not produce a single figure of its own — and this table is how you prove that in ten seconds when a judge asks.</p>
+</div></div>
+<div class="card"><div class="card-b" style="padding-top:12px">
+  <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);margin-bottom:9px">Reproducibility</div>
+  <div class="kv"><span>plan_id</span><b>e3c1b90a-7d4f</b></div>
+  <div class="kv"><span>weather_snapshot</span><b>stored on the plan row</b></div>
+  <div class="kv"><span>kb revision</span><b>312 chunks · bge/1536 · 24 Jul</b></div>
+  <div class="kv"><span>rules revision</span><b>crop_rules.json @ a41f0c2</b></div>
+</div></div>`,
+  notes:[
+    {h:'This panel is load-bearing for thirty points',p:'Tier 0 #8 requires it outright, and it is what makes Agentic behaviour and Explainability provable rather than asserted. Write the trace middleware in your first two hours, before the second tool exists.',pills:['Agentic','Explainability'],pts:'30 pts'},
+    {h:'Colour-code by class, not by status',p:'Five colours tell a judge what kind of system this is before they read a word: it talks to the world, it retrieves, it computes, it remembers, it transacts. Status is secondary.'},
+    {h:'Store the weather snapshot on the plan',p:'It means any plan can be reproduced exactly, months later. Mention it in Q&A — it is the detail that separates a demo from a system, and it costs one JSONB column.'}
+  ]
+},
+
+/* ---------- 09 TOKENS ---------- */
+tokens:{
+  nav:['Design tokens','Palette, type, components'],
+  title:'The system underneath',
+  desc:'Not a brand — a starting set of decisions you can argue with. Two registers: a warm farmer surface and a cold instrument panel, deliberately not reconciled.',
+  trace:null,
+  full:true,
+  body:()=>`
+<div class="tok-wrap">
+  <section class="tok-sec">
+    <h3>Palette — delta silt, paddy water, turmeric</h3>
+    <div class="swatches">
+      ${[
+        ['Silt','#E7E8E1','Page ground. Delta soil is grey-green silt, not cream.'],
+        ['Paper','#F8F8F4','Card surface, one step up from ground.'],
+        ['Paddy','#1E4B3C','Primary. Deep flooded-field green.'],
+        ['Paddy wash','#E2EBE5','Selected and recommended states.'],
+        ['Turmeric','#DF9E14','Action, attention, the provenance tether.'],
+        ['Indigo','#27456F','Weather and data. Bengal\'s own crop.'],
+        ['Brick','#A8402A','Risk and loss. Never for errors of ours.'],
+        ['Slate','#0D1513','Instrument panel ground.'],
+        ['Mono lit','#9FE0C4','Trace success, terminal green.'],
+        ['Ink','#131E1A','Body text, near-black with a green cast.']
+      ].map(([n,h,d])=>`<div class="sw"><div class="sw-c" style="background:${h}"></div><div class="sw-t"><b>${n}</b><code>${h}</code><p>${d}</p></div></div>`).join('')}
+    </div>
+  </section>
+
+  <section class="tok-sec">
+    <h3>Type — one superfamily plus a signage face</h3>
+    <div class="type-row"><span class="lbl">Display / Archivo</span><span style="font-family:var(--f-display);font-weight:800;font-size:31px;letter-spacing:-.03em">৳37,874 net profit</span></div>
+    <div class="type-row"><span class="lbl">Heading / Archivo</span><span style="font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em">Season calendar</span></div>
+    <div class="type-row"><span class="lbl">Body / Plex Sans</span><span style="font-size:15px">Apply 108 kg of urea within the next three days.</span></div>
+    <div class="type-row"><span class="lbl">Data / Plex Mono</span><span style="font-family:var(--f-mono);font-size:14px">get_weather · 412 ms · 41.2 mm/14d</span></div>
+    <div class="type-row"><span class="lbl">Label / Plex Mono</span><span style="font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-40)">Farm at a glance</span></div>
+    <div class="type-row"><span class="lbl">Bangla / Noto Bengali</span><span class="bn" style="font-size:16px">আগামী তিন দিনের মধ্যে ১০৮ কেজি ইউরিয়া প্রয়োগ করুন।</span></div>
+    <p style="font-size:12.5px;color:var(--ink-60);margin-top:12px;max-width:620px">Archivo carries the institutional, signage quality of agricultural extension material without going stiff. IBM Plex Sans and Mono share a skeleton, so a figure in the ledger and the same figure in the trace read as the same object seen twice. Noto Sans Bengali carries the Bangla surface — swap the toggle in the top bar to see it in place.</p>
+  </section>
+
+  <section class="tok-sec">
+    <h3>The signature — provenance tether</h3>
+    <p style="font-size:13.5px;color:var(--ink-60);max-width:620px;margin-bottom:14px">Every number that came from a tool is underlined in dotted turmeric and carries a small monospace source tag. Hovering it lights the originating step in the trace panel. Nothing floats: if a figure has no tether, it should not be on screen.</p>
+    <div class="card"><div class="card-b" style="padding:14px 13px;font-size:14px">
+      Apply <span class="num">108 kg</span><span class="tag">FRG</span> of urea within <span class="num">3 days</span><span class="tag">calc</span>, because your soil is loam, rice is at tillering, and only <span class="num">2.1 mm</span><span class="tag">OM</span> of rain is forecast this week.
+    </div></div>
+  </section>
+
+  <section class="tok-sec">
+    <h3>Component inventory</h3>
+    <div class="comp-grid">
+      ${[
+        ['Farm at a glance','Persistent memory made visible. Shows dashes for unknown fields so gap-filling is legible.'],
+        ['Agent chips','3–5 tappable options per question, always with a soft escape hatch.'],
+        ['Rank card','Score, sub-score bars, weights, and a reason on the losers too.'],
+        ['Timeline stage','Date, action, quantity, and a badge when the forecast moved it.'],
+        ['Ledger','Item, basis, cost. The basis column is where explainability lives.'],
+        ['Headline block','One large net figure, ROI and break-even beneath it.'],
+        ['Why disclosure','One tap, no modal. Source, reference, and the sentence that connects them.'],
+        ['HITL proposal','Amount, destination, line items, then Approve / Edit / Cancel — before the call fires.'],
+        ['Receipt','Both transaction ids, the reference, and the mode, stated plainly.'],
+        ['Alert','Rain, risk, and stale-data variants. Always carries the trigger value.'],
+        ['Diff table','Struck-through old column, coloured new column. Never prose.'],
+        ['Trace step','Tool, params, raw return, source, duration, expandable payload.']
+      ].map(([n,d])=>`<div class="note"><h5>${n}</h5><p>${d}</p></div>`).join('')}
+    </div>
+  </section>
+
+  <section class="tok-sec">
+    <h3>Rules worth keeping when you replace all of this</h3>
+    <div class="comp-grid">
+      <div class="note"><h5>Two registers, unreconciled</h5><p>The farmer surface and the instrument panel should not share a visual language. The contrast is the product's argument: warm advice, cold evidence.</p></div>
+      <div class="note"><h5>Numbers in mono, always</h5><p>Every figure in the same face wherever it appears makes the ledger and the trace legibly the same data.</p></div>
+      <div class="note"><h5>Nothing floats</h5><p>If a number has no source tag, it is a bug, not a design choice.</p></div>
+      <div class="note"><h5>14 px floor in the trace</h5><p>It will be read on a projector from two metres. Anything smaller is decoration.</p></div>
+    </div>
+  </section>
+</div>`,
+  notes:[]
+}
+};
+
+/* ============================================================
+   Runtime
+   ============================================================ */
+const state = {screen:'intake', area:0.49, pay:0, bn:false, showTrace:true};
+const order = ['intake','crops','plan','money','basket','ret','whatif','trace','tokens'];
+
+function renderNav(){
+  const nav = document.getElementById('nav');
+  nav.innerHTML = '<div class="nav-h">Screens</div>' + order.map((k,i)=>{
+    const s = SCREENS[k];
+    return `<button class="nav-i" data-k="${k}" ${state.screen===k?'aria-current="true"':''}>
+      <span class="nav-n">${String(i+1).padStart(2,'0')}</span>
+      <span><span class="nav-t">${s.nav[0]}</span><span class="nav-s">${s.nav[1]}</span></span></button>`;
+  }).join('');
+  nav.querySelectorAll('.nav-i').forEach(b=>b.onclick=()=>{state.screen=b.dataset.k;state.pay=0;render();});
+}
+
+function renderTrace(){
+  const key = SCREENS[state.screen].trace;
+  const box = document.getElementById('traceBody');
+  const meta = document.getElementById('traceMeta');
+  if(!key){ meta.textContent='no agent activity on this screen'; box.innerHTML=''; return; }
+  const t = TRACE[key];
+  meta.textContent = t.meta;
+  box.innerHTML = t.steps.map(s=>`
+    <div class="step" data-step="${s.n}">
+      <div class="step-h">
+        <span class="step-n">${String(s.n).padStart(2,'0')}</span>
+        <span class="step-ic">${ICON[s.t]}</span>
+        <span class="step-name">${s.name}</span>
+        <span class="step-ms">${s.ms}ms</span>
+        <span class="step-st ${s.st==='ok'?'ok':s.st==='fb'?'fb':'er'}">${s.st==='ok'?'✓':s.st==='fb'?'⚠':'✕'}</span>
+      </div>
+      <div class="step-b">
+        <div class="io"><span class="io-k">←</span><span class="io-v">${s.in}</span></div>
+        <div class="io"><span class="io-k">→</span><span class="io-v"><em>${s.out}</em></span></div>
+        <div class="src"><span>${s.src}</span>${s.raw?`<button class="raw-btn" onclick="this.closest('.step-b').querySelector('.raw').classList.toggle('open')">raw ▾</button>`:''}</div>
+        ${s.raw?`<pre class="raw">${s.raw.replace(/</g,'&lt;')}</pre>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function renderNotes(){
+  const n = SCREENS[state.screen].notes || [];
+  const el = document.getElementById('notesBody');
+  el.parentNode.style.display = n.length ? 'block' : 'none';
+  el.innerHTML = n.map(x=>`<div class="note"><h5>${x.h}</h5><p>${x.p}</p>${
+    x.pills?`<div class="pill-row">${x.pills.map(p=>`<span class="pill">${p}</span>`).join('')}${x.pts?`<span class="pill pts">${x.pts}</span>`:''}</div>`:''
+  }</div>`).join('');
+}
+
+function applyLang(){
+  document.querySelectorAll('[data-en]').forEach(e=>{
+    const v = state.bn ? e.dataset.bn : e.dataset.en;
+    if(v){ e.textContent=v; e.classList.toggle('bn', state.bn); }
+  });
+}
+
+function tethers(){
+  document.querySelectorAll('.num[data-step]').forEach(n=>{
+    const on = ()=>{ const s=document.querySelector(`.step[data-step="${n.dataset.step}"]`);
+                     if(s){s.classList.add('lit'); s.scrollIntoView({block:'nearest',behavior:'smooth'});} n.classList.add('lit'); };
+    const off= ()=>{ document.querySelectorAll('.step.lit').forEach(s=>s.classList.remove('lit')); n.classList.remove('lit'); };
+    n.onmouseenter=on; n.onmouseleave=off; n.onfocus=on; n.onblur=off; n.tabIndex=0;
+  });
+}
+
+function render(){
+  const s = SCREENS[state.screen];
+  document.getElementById('scrEyebrow').textContent = 'Screen ' + String(order.indexOf(state.screen)+1).padStart(2,'0');
+  document.getElementById('scrTitle').textContent = s.title;
+  document.getElementById('scrDesc').textContent = s.desc;
+
+  const phone = document.getElementById('phone');
+  const stage = document.querySelector('.stage');
+  if(s.full){
+    phone.style.display='none';
+    let w = document.getElementById('fullWrap');
+    if(!w){ w=document.createElement('div'); w.id='fullWrap'; w.style.width='100%'; w.style.display='flex'; w.style.justifyContent='center'; stage.insertBefore(w, document.querySelector('.notes')); }
+    w.innerHTML = s.body(); w.style.display='flex';
+  }else{
+    phone.style.display='flex';
+    const w = document.getElementById('fullWrap'); if(w) w.style.display='none';
+    document.getElementById('screenBody').innerHTML = s.body();
+    document.getElementById('screenBody').scrollTop = 0;
+    document.getElementById('composer').style.display = ['intake','crops','ret','whatif'].includes(state.screen) ? 'flex':'none';
+  }
+
+  renderNav(); renderTrace(); renderNotes(); applyLang(); tethers();
+  document.getElementById('trace').style.display = (state.showTrace && s.trace) ? 'flex':'none';
+  document.querySelector('.shell').style.gridTemplateColumns =
+    (state.showTrace && s.trace) ? '212px minmax(0,1fr) 400px' : '212px minmax(0,1fr)';
+}
+
+function bumpArea(d){ state.area = Math.max(0.1, Math.min(4, +(state.area+d).toFixed(2))); render(); }
+function setPay(v){ state.pay = v; render(); }
+
+document.getElementById('bnToggle').onclick = e => {
+  state.bn = !state.bn; e.currentTarget.setAttribute('aria-pressed', state.bn); applyLang();
+};
+document.getElementById('traceToggle').onclick = e => {
+  state.showTrace = !state.showTrace; e.currentTarget.setAttribute('aria-pressed', state.showTrace); render();
+};
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  const i = order.indexOf(state.screen);
+  if(e.key==='ArrowRight' && i<order.length-1){ state.screen=order[i+1]; state.pay=0; render(); }
+  if(e.key==='ArrowLeft'  && i>0){ state.screen=order[i-1]; state.pay=0; render(); }
+});
+
+render();
+</script>
+</body>
+</html>
