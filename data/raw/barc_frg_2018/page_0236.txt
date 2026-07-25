@@ -1,0 +1,17 @@
+AEZ 24: ST. MARTIN’S CORAL ISLAND
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+Highland 33 St. Martin’s Island.
+Medium Highland 63
+
+Cropping pattern TE ‘ Nutrient (he ‘hay.
+Sex [aap (ha) | N | P| K | S | Mg] zn| B | Mo dune r se
+Rabi Fallow - - - - - - - - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.04050] 90 15 40 4 - 10 - - - -
+Rabi Cucumber 16.0+1.6 | 45 24 32 3 - - - - 5 3
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Amanrice | 5.04050] 90 10 35 4 - 10 - - - -
+Rabi Onion 16.0416] 90 45 80 5 - 30 - - 5 3
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -

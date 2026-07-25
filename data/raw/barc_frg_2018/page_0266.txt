@@ -1,0 +1,37 @@
+B (kg/ha) =1.0- 2 x(0.2-0.151)
+0.15
+0.5
+
+=1.0- 015 X 0.049
+
+= 0.837 kg B/ha
+
+= 0.837 X ue = 4.92 kg Boric acid/ha
+
+Note:
+
+When zinc sulphate is used sulphur is also supplied (approximately 18% S in ZnSO,.H,O). Thus, if
+
+2.9 kg of zinc sulphate is used
+
+2.9 X18
+
+100 = 0.52 kg of S will be added per hectare
+
+Thus the S requirement from the above example can be reduced to (13.34 — 0.52) = 12.82 S/ha. The
+
+new calculation for sulphur from gypsum would then be -
+
+ea = 71.2 kg S gypsum per hectare
+
+The Final Recommendation
+
+From the above example, the final recommendation would be -
+
+Nutrient (kg/ha) Fertilizer (kg/ha) Fertilizer/Nutrient Ratio
+N=116 Urea = 252.2 2.17
+P=16.1 TSP = 80.5 5.00
+K=70.3 MoP = 140.6 2.00
+S = 13.34 Gypsum = 83.38 6.25
+Zn = 1.04 Zinc sulphate, monohydrate = 2.9 2.79
+B =0.837 Boric acid = 4.92 5.88

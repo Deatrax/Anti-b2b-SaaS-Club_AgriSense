@@ -1,0 +1,16 @@
+{
+  "variety": "BRRI dhan 101",
+  "developer": "Crossing between IRBB60 and BRRI Dhan 29",
+  "year_of_release": "2021",
+  "crop_duration_days": "142",
+  "season": "Boro",
+  "planting_time": "January-February",
+  "harvest_time": "May-June",
+  "yield_t_ha": "8.9 t/ha",
+  "resistance_notes": "Resistance to bacterial leaf blight, and contains resistant dominant genes Xa21, Xa4 and Xa7.",
+  "main_characteristics": "High yielding boro rice variety.Plant height around 110 cm and crop duration is around 142days. Flag leaf is erect and dark green. The grain is white in colour, slender and 1000 grain weight is 23.1 gram. Rice contains 25% amylose and 9.8% protein.",
+  "source_url": "https://dhcrop.bsmrau.net/brri-dhan-101/",
+  "source_org": "BRRI, via BSMRAU Digital Herbarium of Crop Plants",
+  "retrieved_at": "2026-07-24T00:00:00Z",
+  "status": "ok"
+}

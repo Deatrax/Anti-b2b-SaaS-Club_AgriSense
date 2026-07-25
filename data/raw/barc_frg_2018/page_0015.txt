@@ -1,0 +1,42 @@
+2.3 Nutrient Availability in Soils
+
+Plants build up their biomass using water from soils, CO, from air, energy from sunlight
+and nutrients from soil and water. For optimum plant growth, nutrients must be available
+as solutes in the soil water, in adequate and balanced amounts, and in a form which is
+accessible to the plant root system.
+
+The availability of a nutrient in soil refers to that fraction of the nutrient which is
+accessible to plant roots. It is often observed that the total status of a particular nutrient in
+soil is high but the plants grown on this soil suffers from deficiency of that element. This
+indicates that the extent of availability is a big concern in question of plant uptake and
+subsequent growth. Thus, a portion of the total content becomes available for plant uptake
+depending on some soil conditions, viz. soil pH, soil texture, organic matter content,
+flooding, nutrient interaction, temperature, etc.
+
+Nutrient Major conditions inducing nutrient deficiency
+
+Nitrogen Low organic matter content, wetland soils
+
+Phosphorus Acidic, leached and calcareous soils
+
+Potassium Sandy, leached and eroded soils
+
+Calcium Acidic, alkali and sodic soils
+
+Magnesium Acidic, alkali and sodic soils
+
+Sulphur Low organic matter content, submerged soils, burning of crop residues
+
+Iron Calcareous soils, high soil P, Mn, Cu, Zn and HCO; contents
+
+Manganese Sandy soils, calcareous soils; high organic matter content, high soil
+Fe, Cu and Zn contents
+
+Zinc Calcareous soils, saline soils, submerged soils, low organic matter
+content, high soil P, Ca, Mg and Cu contents
+
+Copper High soil N, P and Zn contents
+
+Boron Sandy soils, high pH soils, dry soils
+
+Molybdenum | Calcareous soils, acid soils with high free Fe content

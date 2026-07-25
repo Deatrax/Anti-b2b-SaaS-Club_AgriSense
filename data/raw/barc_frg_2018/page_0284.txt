@@ -1,0 +1,118 @@
+ADP
+AEO
+AEZ
+ATDP
+ATP
+BARC
+BARI
+BAU
+BCSIR
+BFRI
+BINA
+BJRI
+BRRI
+BSRI
+BSTI
+CLL.
+CEC
+CHT
+CNC
+DAE
+DAP
+DAP
+DAS
+DAT
+EC
+ESP
+FAO
+GM
+HYG
+HYV
+IFDC
+IPNS
+KUET
+MoA
+NRM
+NUE
+SRDI
+STVI
+UAO
+UNDP
+
+ABBREVIATION
+
+: Additional Agriculture Officer
+
+: Adenosine Diphosphate
+
+: Agriculture Extension Officer
+
+: Agro-ecological zone
+
+: Agricultural Technology Development Project
+: Adenosine Triphosphate
+
+: Bangladesh Agricultural Research Council
+
+: Bangladesh Agricultural Research Institute
+: Bangladesh Agricultural University
+
+: Bangladesh Council for Scientific and Industrial Research
+: Bangladesh Forest Research Institute
+
+: Bangladesh Institute of Nuclear Agriculture
+: Bangladesh Jute Research Institute
+
+: Bangladesh Rice Research Institute
+
+: Bangladesh Sugarcane Research Institute
+
+: Bangladesh Standard Testing Institute
+
+: Critical Limit
+
+: Cation Exchange Capacity
+
+: Chittagong Hill Tracts
+
+: Critical Nutrient Concentration
+
+: Department of Agriculture Extension
+
+: Di-ammonium Phosphate
+
+: Days After Planting
+
+: Days After Sowing
+
+: Days After Transplanting
+
+: Electrical Conductivity
+
+: Exchangeable Sodium Percentage
+
+: Food and Agriculture Organization
+
+: Green Manure
+
+: High Yield Goal
+
+: High Yielding Variety
+
+: International Fertilizer Development Centre
+: Integrated Plant Nutrition System
+
+: Khulna University of Engineering and Technology
+: Ministry of Agriculture
+
+: Natural Resources Management
+
+: Nutrient Use Efficiency
+
+: Soil Resource Development Institute
+
+: Soil Test Value Interpretation
+
+: Upazila Agriculture Officer
+
+: United Nations Development Program

@@ -1,0 +1,56 @@
+AEZ 14: Gopalganj-Khulna Bils
+
+The region occupies extensive low-lying areas between Ganges River Floodplains and the
+Ganges Tidal Floodplains. Almost level, low-lying basins occupy most of the region, with
+low ridges along rivers and creeks. The region is seasonally moderately deep to deeply
+flooded by clear water. Basin centers stay wet through the dry season.
+
+Soils of the area are grey and dark grey acidic heavy clays, peat or muck overlie at 25-100
+cm. Soft peat and muck occupy perennially wet basin centers. General Soil Types include
+mainly Peat and Noncalcareous Dark Grey Floodplain soils. Organic matter content is
+high. They have low bearing capacity when wet, very strongly acidic to neutral in top soil
+reaction and low in K, B and Zn status. The C: N ratio is very wide.
+
+Major Soil Soil Nutrient status
+
+Land
+Type pH OM| N | P| K | S_| Ca | Mg| Zn! B | Mo
+
+Medium
+Highland | 4.8-7.5| H L L-M L_ | VL-L| Opt | Opt | VL-L}| VL | Opt
+(13%)
+
+Medium
+Lowland | 4.7-7.3| H | VL-L| L-M L L-M | Opt | Opt | VL-L| VL-L| Opt
+(41%)
+
+Lowland
+
+(28%) 4.3-6.7| H | VL-L| L-M L | L-M| Opt | Opt | VL-L} VL-L| Opt
+(
+
+Very
+Lowland | 4.0-6.4) H | VL-L| L-M | L-M | VL-L) Opt | Opt | VL-L} VL-L}| Opt
+(11%)
+
+AEZ 15: Arial Bil
+
+This region occupies a low lying basin between the Ganges and Dhaleshwari rivers in the
+south of Dhaka and north-west of Munshiganj districts.
+
+The soils of this area are dark grey; acidic heavy clays predominate. Non-calcareous Dark
+Grey Floodplain soil is the major General Soil Type. Organic matter content generally
+exceeds 2% in the top and subsoils. Available moisture holding capacity is inherently low.
+They have high CEC, and general fertility level is medium to high, N status is very low to
+low and B status is very low. Top soil pH ranges from slightly acidic to neutral.
+
+Major Soil | Soil Nutrient status
+
+hand | pH |omM| n | p | «x | s \calmg| zm] B|M
+Type g n 0
+Medium
+
+Lowland |5.3-6.8] M |VL-L} L-M | VL-L| M-Opt | Opt] Opt | M | VL | Opt
+(13%)
+
+O30 4.7-5.4| M |VL-L|M-Opt| L-M | M-Opt Opt|L-M| M | VL | Opt

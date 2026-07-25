@@ -1,0 +1,31 @@
+AEZ 16: MIDDLE MEGHNA RIVER FLOODPLAIN
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+Medium Lowland 29 The region occurs between the southern part of the
+Lowland a5 Sylhet Basin and the confluence of the Meghna river
+Very Lowland il with the Dhaleshwari and Ganges rivers. It covers
+parts of Kishorganj, B. Baria, Comilla, Chandpur,
+Narshingdi, Munshiganj and Narayanganj districts.
+Coops patie et d Nutrient (ee ‘hay,
+Season Crop (t/ha) N |] P|K | S |Mg| Zn | B | Mo dune or sey
+Rabi Potato 30.043.0) 135 20 90 10 3 20 10 - 5 3
+Kharif B. Aman rice | 2.5+0.25 | 30 6 14 4 - - - - -
+Rabi Potato 30.043.0) 135 20 90 10 3 20 10 - 5 3
+Kharif 1 Boro rice 7.540.75 | 150 10 55 12 - 1.3 - - - -
+Rabi Fallow - - - - - - - - - - -
+Rabi Mustard 1.840.188} 90 18 32 10 15 10 10 - - -
+Kharif 1 Boro rice 7.540.75 | 150 10 55 12 - 1.3 - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Mustard 1.840.188} 90 18 32 10 15 10 10 - - -
+Kharif B. Aman rice | 2.5+0.25 | 30 6 14 4 - - - - -
+Rabi Boro rice 7.540.75 | 150 15 65 12 - 1.5 - - - -
+Kharif B. Aman rice | 2.5+0.25 | 30 6 14 4 - - - - -
+Rabi Boro rice 7.540.75 | 150 15 65 12 - 1.5 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Boro rice 7.540.75 | 150 15 65 12 - 1.5 - - - -
+Kharif 1 T. Aus rice 4.0+0.40 | 75 6 25 6 - 0.6 - - - -
+Kharif 2 T. Aman rice | 5.0+0.50 | 90 6 35 8 - 1.0 - - - -
+Rabi Wheat 4.540.45|120 20 60 10 - 13 10 - - -
+Kharif 1 Jute (O) 4540.45} 111 10 42 9 - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -

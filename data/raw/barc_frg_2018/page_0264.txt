@@ -1,0 +1,90 @@
+Appendix-10
+
+For example: Crop-Wheat; Yield Goal = 4.5 + 0.45 t/ha
+
+Location: Village......
+
+District
+
+Soil analysis
+
+Soil test value
+
+Soil test value
+interpretation
+
+Range of values used within
+the interpretation class
+
+Texture
+Total N (%)
+Available P (ug/g)
+
+Exchangeable K
+(meq/100g)
+Available S (ug/g)
+
+Available Zn (ug/g)
+Available B (ug/g)
+
+Loam
+0.1
+18
+
+0.15
+10
+
+1.0
+0.2
+
+(Appendix- 9A)
+
+Low
+
+Medium
+
+Low
+
+Low
+Medium
+
+Low
+
+(Appendix- 9A)
+
+0.091-0.18
+15.1-22.5
+
+0.091-0.18
+7.51-15.0
+
+0.91-1.35
+0.151-0.3
+
+Step-1: Consult the Appendix-8A to see the position of given soil test value within the range of
+the interpretation class.
+
+Step-II: | Consult the Table 1 under wheat (page # 88) to see the range of fertilizer nutrient
+recommended for the same soil test value interpretation class.
+
+Step-III: | Compute the exact fertilizer nutrient required for making the recommendation following
+the formula given below:
+
+F, =U; -
+
+Ca
+Cy
+
+x (S,— Ls)
+
+F,_: Fertilizer nutrient required for given soil test value
+
+Us : Upper limit of the recommended fertilizer nutrient for the respective STVI class
+
+C;_ : Units of class intervals used for fertilizer nutrient recommendation
+
+C, : Units of class intervals used for STVI class
+
+S; : Soil test value
+
+L, : Lower limit of the soil test value within STVI class

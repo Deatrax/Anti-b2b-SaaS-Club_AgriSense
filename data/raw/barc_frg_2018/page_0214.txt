@@ -1,0 +1,40 @@
+AEZ 10: ACTIVE GANGES FLOODPLAIN
+
+MAJOR LAND TYPE | PERCENT LOCATION AND EXTENT
+
+Highland 12 The region extends along the Ganges and lower
+
+Medium Highland 33 Meghna river Channels from the Indian border through
+
+Medium Lowland 18 Chapai Nawabganj and Rajshahi districts to the mouth
+
+of Meghna Estuary in Laxmipur and Barisal districts.
+Cropping pattern Yi ‘ Nutrient (eh ‘hay.
+Season  |Crop (vha) | N | P | K | S | Mg| Zn | B | Mo dune soe
+Rabi Boro rice 7.540.75 | 150 20 65 = 12 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Boro rice 7.540.75 | 150 20 65 = 12 - 1.3 - - - -
+Kharif 1 T. Aus rice 4.040.40 | 75 10 25 6 - 06 - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Wheat 4540.45 | 120 30 60 10 4 10 10 - - -
+Kharif 1 Jute (O) 4.540.45]111 10 42 9 - - - - - -
+Kharif2 | T.Aman rice 5.040.5 | 90 10 35 8 - 10 = - - - -
+Rabi Wheat 4540.45 | 120 30 60 10 4 10 10 - - -
+Kharif 1 T. Aus rice 4.0+0.40 | 75 10 25 6 - 06 - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Wheat 4540.45 | 120 30 60 10 4 10 10 - - -
+Kharif 1 Okra/ 1641.6 | 90 21 30 10 - 15 - - 5 3
+Brinjal 6046.0 | 120 25 42 10 - 15 - - 5 3
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Wheat 4540.45 | 120 30 60 10 4 10 10 - - -
+Kharif1 Fallow - - - - - - - - - - -
+Kharif2 T.Aman rice 5.040.5 | 90 10 35 8 - 10 = - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 415 415 10 - - -
+Kharif 1 Boro rice 7.540.75 | 150 12 55 12 - 13 - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 15 415 10 - - -
+Boro rice 7.540.75 | 150 12 55 12 - 13 - - - -
+
+Kharif1 Fallow - - - - 0 c 3 E - - -
+Kharif2 | T.Aman rice 5.0+0.5 90 10 35 8 - 10 = =- - - -

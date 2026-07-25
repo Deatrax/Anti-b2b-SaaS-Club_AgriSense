@@ -1,0 +1,30 @@
+If farmers’ existing cropping pattern under irrigated condition is Wheat-T. aus-T. aman
+rice, we should calculate balanced fertilizer dose for wheat (4.5+0.45 t/ha), T. Aus
+(4.0+0.4 t/ha) and T. Aman rice (5.0+0.5 t/ha) based on soil test value and the procedure
+as described in the Appendix 10 of the FRG-2012. In calculating fertilizer dose for a
+cropping pattern, rationales (chapter 5.7 of FRG-2012) need to be followed.
+
+9.3 Fertilizer Recommendation for Cropping Patterns in Different AEZs
+
+The most efficient and economic use of chemical fertilizers and organic manure requires
+a knowledge about basic data of soil, climate and crops. The soil related data include pH,
+texture, organic matter and some other soil properties. The requirement of nutrient for a
+particular crop depends on overall environmental conditions as well as on the yield
+potential of the crop in question. The more the climate and the soil physical conditions
+are favorable for crop growth, the more will be the need for nutrients. High yielding
+varieties require more quantities of nutrients than traditional (local) varieties. Utilization
+of applied nutrients thus depends on the cropping system, efficiency of crop
+management and time and methods of fertilizer application. In fertilizer scheduling for
+different crops and cropping patterns, nutrient loss mechanisms and immobilization
+process should be kept taken into account.
+
+In AEZ basis fertilizer recommendation, attention has been paid to the information of
+cropping patterns and land type. The other important information like soil pH, organic
+matter and nutrient content have been furnished in the Chapter 3.1. For all cases, the rabi
+crops (with a particular yield goal) have been considered as the first crops in the
+patterns. Since fertilizer recommendations are based on soil test values available for
+different AEZs, not on the basis of site specific soil test, the suggested fertilizer doses
+are not absolute values, rather it is only indicative and subject to variations as arises. The
+residual effect of P, K, S, Zn and B should be taken into consideration, as mentioned in
+section 5.7 while making fertilizer recommendations for the second and third crops in a
+year.

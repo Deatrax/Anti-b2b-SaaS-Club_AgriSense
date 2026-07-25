@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T00:00:00.000Z",
+  "title": "Design System: AgriSense AI",
+  "extensions": {
+    "colorMeta": {
+      "canvas": {"role": "neutral", "displayName": "Field Paper", "canonical": "light-dark(#F7F9F4, #12160D)", "tonalRamp": ["#12160D", "#293020", "#434C38", "#606B54", "#7F8974", "#A4AD9A", "#CDD4C5", "#F7F9F4"]},
+      "surface": {"role": "neutral", "displayName": "Working Surface", "canonical": "light-dark(#FFFFFF, #1B2114)", "tonalRamp": ["#1B2114", "#343B2B", "#505843", "#6D765E", "#8C957D", "#ADB6A0", "#D3D9CD", "#FFFFFF"]},
+      "forest-accent": {"role": "primary", "displayName": "Field Forest", "canonical": "light-dark(#294719, #8FB56B)", "tonalRamp": ["#10200A", "#1C3610", "#294719", "#456732", "#6B8547", "#8FB56B", "#B5D69A", "#DCF7C5"]},
+      "positive-green": {"role": "secondary", "displayName": "Crop Green", "canonical": "#6B8547", "tonalRamp": ["#1D2A11", "#32441D", "#4B6532", "#6B8547", "#88A664", "#A9C787", "#CBE5AE", "#EDFAD9"]},
+      "ai-lime": {"role": "tertiary", "displayName": "AI Lime", "canonical": "#E0FF20", "tonalRamp": ["#263000", "#4B5D00", "#758C00", "#A3BF00", "#C7E900", "#E0FF20", "#ECFF6B", "#F6FFB6"]},
+      "warning-orange": {"role": "tertiary", "displayName": "Harvest Warning", "canonical": "#EF8844", "tonalRamp": ["#3D1C05", "#67300A", "#934814", "#BA631F", "#D97932", "#EF8844", "#F7B27F", "#FFDDC7"]}
+    },
+    "typographyMeta": {
+      "display": {"displayName": "AgriSense Display", "purpose": "Field identity and page-level headings."},
+      "body": {"displayName": "AgriSense Body", "purpose": "Recommendations, instructions, and operational content."},
+      "label": {"displayName": "AgriSense Label", "purpose": "Controls, status, card titles, and short metadata."}
+    },
+    "shadows": [
+      {"name": "selected-inset", "value": "inset 0px 0px 0px 2px rgba(107, 133, 71, 0.16)", "purpose": "Selected control or contained state; AgriSense's only explicit depth token."}
+    ],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {"name": "Primary Button", "kind": "button", "refersTo": "button-primary", "description": "The single high-commitment action, signaled as an AI-assisted decision.", "html": "<button class=\"ds-btn-primary\">পরিকল্পনা আপডেট করুন</button>", "css": ".ds-btn-primary { appearance: none; border: 0; border-radius: 8px; padding: 10px 16px; background: linear-gradient(90deg, #E0FF20 0%, #FFFF00 100%); color: #17310F; font: 600 14px/1.2 'Overused Grotesk', Inter, Arial, sans-serif; cursor: pointer; } .ds-btn-primary:hover { filter: brightness(0.97); } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid #294719; outline-offset: 2px; }"},
+    {"name": "Secondary Button", "kind": "button", "refersTo": "button-secondary", "description": "A calm alternative action that preserves the main CTA's authority.", "html": "<button class=\"ds-btn-secondary\">বিস্তারিত দেখুন</button>", "css": ".ds-btn-secondary { appearance: none; border: 1px solid #CCD6C4; border-radius: 8px; padding: 10px 16px; background: #FFFFFF; color: #182014; font: 500 14px/1.2 'Overused Grotesk', Inter, Arial, sans-serif; cursor: pointer; } .ds-btn-secondary:hover { background: #F1F5EC; } .ds-btn-secondary:active { background: #E4E9DF; } .ds-btn-secondary:focus-visible { outline: 2px solid #294719; outline-offset: 2px; }"},
+    {"name": "Operational Card", "kind": "card", "refersTo": "card", "description": "A restrained module for a discrete field decision or editable dashboard widget.", "html": "<section class=\"ds-card\"><strong>পরবর্তী কাজ</strong><p>আগামীকাল ১২ মিমি সেচ দিন</p></section>", "css": ".ds-card { border: 1px solid #E4E9DF; border-radius: 12px; padding: 16px; background: #FFFFFF; color: #182014; font: 400 14px/1.45 'Overused Grotesk', Inter, Arial, sans-serif; } .ds-card strong { display: block; font-weight: 600; } .ds-card p { margin: 6px 0 0; color: #596452; }"},
+    {"name": "AI Evidence Badge", "kind": "chip", "refersTo": "badge-ai", "description": "A compact marker for AI-supported insight or evidence context.", "html": "<span class=\"ds-badge-ai\">AI ব্যাখ্যা</span>", "css": ".ds-badge-ai { display: inline-block; border: 1px solid #6B8547; border-radius: 8px; padding: 4px 8px; background: #F7FFD2; color: #17310F; font: 600 12px/1.2 'Overused Grotesk', Inter, Arial, sans-serif; }"},
+    {"name": "Field Input", "kind": "input", "refersTo": "field-input", "description": "An explicit, touch-friendly field for editable farm inputs.", "html": "<label class=\"ds-field\">সেচের পরিমাণ<input value=\"12 mm\" aria-label=\"সেচের পরিমাণ\" /></label>", "css": ".ds-field { display: grid; gap: 6px; color: #182014; font: 500 13px/1.2 'Overused Grotesk', Inter, Arial, sans-serif; } .ds-field input { border: 1px solid #CCD6C4; border-radius: 8px; padding: 10px 12px; background: #FFFFFF; color: #182014; font: 400 16px/1.25 'Overused Grotesk', Inter, Arial, sans-serif; } .ds-field input:hover { border-color: #6B8547; } .ds-field input:focus { border-color: #294719; outline: 2px solid rgba(107, 133, 71, 0.16); outline-offset: 1px; }"},
+    {"name": "Trace Row", "kind": "custom", "refersTo": "agent-trace", "description": "A named, expandable record of the operation behind a recommendation.", "html": "<details class=\"ds-trace\"><summary><i></i> আবহাওয়া তথ্য সংগ্রহ <em>সম্পন্ন</em></summary><p>Open-Meteo · 248ms · উৎস দেখুন</p></details>", "css": ".ds-trace { border: 1px solid #E4E9DF; border-radius: 8px; padding: 10px 12px; background: #FFFFFF; color: #182014; font: 500 13px/1.35 'Overused Grotesk', Inter, Arial, sans-serif; } .ds-trace summary { cursor: pointer; list-style: none; } .ds-trace summary::-webkit-details-marker { display: none; } .ds-trace i { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: #2F7BC4; } .ds-trace em { margin-left: 6px; color: #6B8547; font-style: normal; } .ds-trace p { margin: 8px 0 0 14px; color: #596452; font-weight: 400; } .ds-trace:focus-within { outline: 2px solid rgba(107, 133, 71, 0.16); outline-offset: 1px; }"}
+  ],
+  "narrative": {
+    "northStar": "The Grounded Field Notebook",
+    "overview": "AgriSense is a calm operational workspace, not a futuristic agriculture dashboard. It pairs paper-light surfaces and deep plant greens with a single vivid lime signal for AI assistance, so field decisions feel practical, traceable, and immediately actionable. The UI is Bengali-first, mobile-first, icon- and number-forward, and deliberately legible for low-literacy-tolerant use.",
+    "keyCharacteristics": ["Quiet agricultural utility", "Forest-green structure", "Lime AI signal", "Explainable operations"],
+    "rules": [
+      {"name": "Evidence-in-the-Interface Rule", "body": "Do not present a recommendation or a consequential number as an unexplained assertion. Make its source, method, or trace reachable in the same working context.", "section": "colors"},
+      {"name": "One Lime Rule", "body": "AI Lime is reserved for AI/highlight emphasis and the primary-gradient family.", "section": "colors"},
+      {"name": "Flat-by-Default Rule", "body": "Use surface contrast and borders to group information. Reserve elevation for floating, transient, or directly manipulated controls.", "section": "elevation"}
+    ],
+    "dos": ["Do use the AgriSense semantic tokens and light-dark() pairs rather than hard-coded per-screen colors.", "Do use Overused Grotesk throughout and preserve tabular figures for money, dates, and quantities.", "Do keep the AI Lime gradient for the primary CTA and AI/highlight family.", "Do make source, trace, and state visible near decisions that affect a field plan or money."],
+    "donts": ["Don't turn the interface into a generic analytics dashboard with decorative charts, excessive shadows, or a rainbow status palette.", "Don't use raw hex values or create a second visual token system in individual screens.", "Don't use lime as a general decoration or as a substitute for semantic status.", "Don't present model-invented figures or recommendations without their deterministic, live, or cited basis."]
+  }
+}

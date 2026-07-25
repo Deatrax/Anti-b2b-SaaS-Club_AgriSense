@@ -1,0 +1,11 @@
+{
+  "slug": "aez-overview",
+  "title": "Agro-Ecological Zones of Bangladesh",
+  "url": "https://www.bamis.gov.bd/en/page/aezs-maps/",
+  "category": "reference",
+  "source_org": "BAMIS / Dept. of Agricultural Extension",
+  "retrieved_at": "2026-07-24T00:00:00Z",
+  "word_count": 195,
+  "status": "ok",
+  "note": "Extracted by the AI architect's own web-fetch tool, not Claude Code's sandbox, because this specific path is not robots-disallowed. The page's numbered list of the 30 individual AEZ names (referenced at the end of this prose as 'given below') did not survive text extraction and is not in this file -- likely rendered as an image or a structured widget rather than plain HTML text. If the 30 individual zone names/boundaries are needed later, that's a separate, unresolved acquisition question, not covered by this file."
+}

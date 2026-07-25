@@ -1,0 +1,10 @@
+Croppin ttern Yield Nutrient Recommendation Manure
+opping patie weal (kg/ha) (t/ha)
+Season Crop (t/ha) N | P|K |S | Mg] Zn} B | Mo Cow ,, Poultry
+dung manure
+Rabi Panikachu 3043.0 90 36 54 #12 - - - - 5 3
+Kharif 1 Fallow - = = = = - - - - - -
+Kharif 2 T. Aman rice | 5.0+0.50 | 90 10 935 6 - 1.0 - - - -
+Rabi Fallow - = = = = - - - - - -
+Kharif 1 T. Aus rice 4.0+0.40 | 75 15 25 4 - 0.6 - - - -
+Kharif 2 T. Aman rice | 5.0+0.50 | 90 10 935 6 - 1.0 - - - -

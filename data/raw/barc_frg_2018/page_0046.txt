@@ -1,0 +1,37 @@
+The value of soil analysis in quantifying nutrient requirements depends on careful
+sampling and analysis, and using tests that are calibrated or correlated well with plant
+response.
+
+Soil sampling is very important since soil test values and its interpretation are based on
+this sample. Thus, the spots which do not represent the field should be avoided. A
+composite sample at 0-15 cm soil depth over 5-10 spots should be taken from each field.
+After collection, the unwanted materials, e.g. stones, gravels, pebbles, stubbles, plant roots
+etc. need to be removed and the sample be dried in a shade (up to 3% soil moisture) before
+it is stored into a polythene bag or plastic bottle. Every soil sample should be analyzed for
+some basic properties such as soil texture, pH and organic matter. For saline areas, soils
+should be analyzed also for total soluble salts (i.e. electrical conductivity). All nutrients
+except nitrogen are evaluated for their available status and for nitrogen total N content is
+evaluated.
+
+4.2 Critical Limit of Nutrients
+
+Critical limit (C.L.) of a nutrient refers to a value below which an economic crop response
+to the added nutrient is highly expected. It is the level of a nutrient below which the crop
+will suffer from its deficiency and thus, the crop will show economic response to the
+added fertilizer. The critical limit may be useful for delineating responsive sites from non-
+responsive sites but are not suited for making quantitative recommendations for a range of
+soil test values. The critical levels depend on soils, crops and extraction methods.
+
+Table 3. Interpretation of soil test values in relation to critical limit
+
+Soil test value % C.L. Expected crop response
+Very low <75 Very definite
+
+Low 75.1-150 Definite
+
+Medium 150.1-225 Likely/Probable
+Optimum 225.1-300 Less likely
+
+High 300.1-375 Unlikely
+
+Very high > 375 Very unlikely

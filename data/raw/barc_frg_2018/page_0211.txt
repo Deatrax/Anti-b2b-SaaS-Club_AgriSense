@@ -1,0 +1,39 @@
+AEZ 8: YOUNG-BRAHMAPUTRA AND JAMUNA FLOODPLAIN
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+Highland 18 Western parts of Shepur, Jamalpur and Tangail
+Medium Highland 42 Districts, parts of Manikganj, Dhaka, Munshiganj,
+: Narayanganj and Gazipur districts and a belt adjoing the
+Medium Lowland 19 old Brahmaputra channel through Mymensingh,
+Kishoreganj and Narshingdi districts.
+: . Nutrient Recommendation Manure
+Cropping pattern en (kg/ha) (t/ha)
+Season |Crop (t/ha) N/|P | K |S |Mg| Zn! B | Mo CDi Poultry
+dung manure
+Rabi Boro rice 7.540.75| 150 20 65 18 - 1.3 - - - -
+Kharif1 Fallow - - - = = 7 5 - - - -
+Kharif2 T. Aman rice 5.0+0.50} 90 10 35 12 - 1.0 - - - -
+Rabi Wheat 4540.45} 120 30 60 15 4 10 10 - - -
+Kharif1 Jute (O) 4540.45} 111 10 42 13 - - - - - -
+Kharif2 T.Aman rice 5.040.5 | 90 10 35 12 - 1.0 - - - -
+Rabi Mustard 1.840.18 | 90 27 32 15 25 10 10 - - -
+Boro 7.540.75 | 150 12 55 18 - 13 - - - -
+Kharif1 Fallow - - - - - - - - - - -
+Kharif2  T.Amanrice |5.0+0.5 90 10 35 = 12 - 1.0 - - - -
+Rabi Mustard 1.840.18} 90 27 32 15 25 10 10 - - -
+Kharif1 Jute (O) 4540.45} 111 10 42 13 - - - - - -
+Kharif2 Fallow - - - = = 7 5 - - - -
+Rabi Mustard 1.840.188} 90 27 32 15 25 10 10 - - -
+Kharif1 Jute (C) 3.540.35| 75 8 22 8 - - - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Potato 30.043.00/ 135 30 90 15 5 20 20 - | 5.0 3.0
+Kharif1 Jute (O) 4540.45} 111 10 32 13 - - - - -
+Kharif2  T.Aman rice 5.040.50 | 90 10 30 = 12 - 1.0 - - - -
+Rabi Potato 30.043.00) 135 30 90 15 5 20 10 - | 5.0 3.0
+Kharif1 Fallow - - - - - - - - - - -
+Kharif2 T.Aman rice 5.040.50 | 90 10 30 = 12 - 1.0 - - - -
+Rabi Potato 30.043.00/ 135 30 90 15 5 20 10 - | 5.0 3.0
+Kharif1 Jute (C) 3.540.35 | 75 8 18 8 - - - - - -
+Kharif2 Fallow - - - = = 7 5 - - - -
+Round the gugarcane 100+10 | 165 55 120 45 20 25 - - - -
+year

@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "purpose": "prev-crop → next-crop rotation modifier + reason (§C.9 ranking rotation_fit). Real agronomy: N depletion, pest carry-over.",
+    "source": "Agronomic rotation principles (BARC/DAE) — VERIFY.",
+    "status": "TEMPLATE.",
+    "retrieved_date": "2026-07-24"
+  },
+  "rules": [
+    { "prev": "boro_rice", "next": "aman_rice", "modifier": 0.0, "reason": "Rice-after-rice is standard in BD; no rotation bonus/penalty." },
+    { "prev": "jute", "next": "aman_rice", "modifier": 0.05, "reason": "Jute residue improves soil structure; slight bonus.", "_verify": true },
+    { "prev": "aman_rice", "next": "aman_rice", "modifier": -0.05, "reason": "Continuous same-crop raises pest/disease carry-over.", "_verify": true }
+  ]
+}

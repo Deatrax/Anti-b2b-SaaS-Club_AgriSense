@@ -1,0 +1,40 @@
+Nutrient Recommendation
+
+Manure
+
+Cropping pattern ve (kg/ha) (t/ha)
+
+Seasons {Crops (t/ha) N | P| K | S |Mg} Zn} B | Mo DG Poultry
+dung manure
+
+Rabi Mustard 1.840.18 | 90 27 40 15 20 10 10 - - -
+
+Boro rice 7.540.75 | 150 12 55 18 - 1.3 - - - -
+
+Kharif1 Fallow - - - - - - - - - - -
+
+Kharif2 T.Aman rice 5.0+0.5 90 10 35 12 - 1.0 - - - -
+
+Rabi Radish/ 6046.0 | 150 45 80 24 - 3.0 - - 5.0 3.0
+
+Cabbage/ 9049.0 | 180 66 50 24 - 30 10 - 5.0 3.0
+
+Cauliflower 30.043.0 | 120 60 76 21 - 30 10 - 5.0 3.0
+
+Kharif 1 Okra/ 16.041.6| 90 21 30 15 - 20 - - 5.0 3.0
+
+Brinjal 60.046.0| 120 25 40 15 - 2.0 - - 5.0 3.0
+
+Kharif2 Fallow - - - - - - - - - - -
+
+Rabi Cabbage/ 9049.0 | 180 66 50 24 - 30 10 - 5.0 3.0
+
+Cauliflower 30.043.0 | 120 60 76 21 - 30 10 - 5.0 3.0
+
+Kharif 1 Cucumber/ 16.041.6| 60 17 22 18 - 20 - - 5.0 3.0
+
+ar Ash gourd 40.0+4.0| 75 25 30 18 - 20 - - | 50 3.0
+
+Kharif 2 | T. Aman rice 5.0+0.5 | 90 10 30 12 - 1.0 - - - -
+
+7 OS rcemeeme 1o0t10 | 165 55 150 45 10 25 - - | - .

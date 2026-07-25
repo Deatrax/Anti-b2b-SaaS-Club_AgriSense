@@ -1,0 +1,32 @@
+AEZ 20: EASTERN SURMA-KUSHTYARA FLOODPLAIN
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+
+Medium Highland 25 Sylhet, Moulvibazar, Sunamganj and Habigany districts.
+
+Medium Lowland 20
+
+Lowland 36
+
+Chappns aati vi d Nutrient (eh “hay,
+
+Season Crop (t/ha) N/|P]|K | S | Mg} Zn | B | Mo dune se
+Rabi Boro rice 7.540.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50 | 90 10 35 8 - 10 - - - -
+Rabi Boro rice 7.540.75 | 150 20 65 12 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Mustard 1.840.18 | 90 27 32 10 15 410 05 - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50 | 90 10 35 8 - 10 - - - -
+Rabi Fallow - - - - - - - - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice | 5.040.50 | 90 15 40 8 - 10 - - - -
+Rabi Fallow - - - - - - - - - - -
+Kharif 1 T. Aus rice 4.040.40 | 75 15 30 6 - 0.6 - - - -
+Kharif 2 T. Aman rice | 5.040.50 | 90 10 35 8 - 1.0 - - - -
+Rabi Boro rice 7.5+0.75 | 150 20 65 12 - 1.3 - - - -
+Kharif B. Aman rice | 2.540.25 | 30 6 14 4 - 0.5 - - - -
+Rabi Fallow - - - - - - - - - - -
+Kharif B. Aman rice | 2.540.25 | 30 6 14 4 - 0.5 - - - -

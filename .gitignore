@@ -1,2 +1,36 @@
+# ── Internal working docs & AI constitution (kept out of the public repo) ──
 .claude/
 Docs/
+
+# ── Node / build ──
+node_modules/
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# ── Env & secrets ──
+.env
+.env.local
+.env.*.local
+
+# ── Logs & OS ──
+*.log
+npm-debug.log*
+coverage/
+.DS_Store
+
+# ── Runtime cache (Open-Meteo disk-cache fallback, §C.11) ──
+.cache/
+
+.codex/
+.playwright-mcp/
+
+
+# ── Stray tsc output from apps/api's rootDir/packages-shared path-mapping issue ──
+# (apps/api tsconfig pulls in packages/shared/src via path mapping outside its rootDir;
+#  tsc emits .js next to the .ts source there instead of failing clean — see repo notes)
+packages/shared/src/**/*.js
+packages/shared/src/**/*.js.map
+.env.old

@@ -1,0 +1,15 @@
+Cropping pattern Yield Nutrient Recommendation Manure
+pping p goal (kg/ha) (t/ha)
+t/ha
+Season Crop Cy N P K S | Mg] Zn | B | Mo eo r Poultry
+dung manure
+Rabi Cabbage/ 19049.0 | 180 66 50 16 - 15 10 - 5 3
+Tomato/ 8048.00 | 135 45 50 10 - 10 10 - 5 3
+Brinjal/ 60+6.0 | 120 36 60 10 - 10 10 - 5 3
+Sweet gourd 4044.0 | 75 36 40 14 - 10 14° - - -
+Kharif 1 Okra/ 16+1.60 | 90 21 30 = 10 - 10 - - 5 3
+Amaranth/ 30.043.0} 117. 19 30 4 - - - - 5 3
+Bitter gourd 2542.50 | 75 21 21 10 - - - - 5 3
+Kharif 2 Country bean | 2042.0 | 45 21 21 6 - 10. - - 5 3
+Round the — Sugarcane 100+10 | 165 55 120 30 20 25 - - 4] - -
+year

@@ -1,0 +1,60 @@
+Major Soil | Soil Nutrient status
+
+Land Type| pH |OM| N P kK S | Ca | Mg | Zn | B | Mo
+
+Highland
+
+(18%) 4.5-6.5 |L-M| VL-L| VL-L| L-M | VL-L| M M |L-M|VL-L| M
+0
+
+Medium
+Highland |4.5-7.2 |L-M| VL-L| VL-L| L-M | VL-L|} L-M | L-M | L-M | VL-L| M
+(42%)
+
+Medium
+Lowland |4.5-7.2 |L-M| VL-L| VL-L| L-M | VL-L| L-M | L-M | L-M | VL-L| M
+(19%)
+
+AEZ 9: Old Brahmaputra Floodplain
+
+This region occupies a large area of Brahmaputra sediments before the river was diverted
+to its present Jamuna channel about 200 years ago. The region has broad ridges and basins.
+
+Soils of the area are predominantly silt loams to silty clay loams on the ridges and clay in
+the basins. General Soil Type predominantly includes Dark Grey Floodplain soil. Organic
+matter content is low on the ridges and moderate in the basins, top soils are very strongly
+acidic to neutral and sub-soils are neutral in reaction. There is lowering of soil pH in high
+land. General fertility level including N, P, K, S and B is low. However, the status of CEC
+is medium.
+
+Major c Soil Nutrient status
+
+Land _ [Soil pH OM
+
+Type N P K S Ca Mg | Zn B_ | Mo
+
+Os 3.8-6.5 |L-M] VL-L] VL-L| L_ | VL-L |M-Opt|M-Opt| L-M | VL-L | Opt
+0
+
+Medium
+
+Highland |4.5-7.2 |L-M| VL-L | VL-L | L-M | VL-L |M-Opt|M-Opt|VL-L] VL-L | Opt
+
+(35%)
+
+Medium
+
+Lowland |4.5-7.2 |L-M| VL-L| VL-L| L_ | VL-L |M-Opt]M-Opt] L-M | VL-L | Opt
+
+(20%)
+
+AEZ 10: Active Ganges Floodplain
+
+This region occupies unstable alluvial land within and adjoining Ganges river. It has
+irregular relief of broad and narrow ridges and depressions.
+
+The area has complex mixtures of calcareous sandy, silty and clayey alluvium. The
+General Soil Types predominantly include Calcareous Alluvium and Calcareous Brown
+Floodplain soils. Soils are of low to medium in organic matter and neutral to slightly
+alkaline in reaction. General fertility level is medium with high CEC and deficient in N, P,
+B and Zn contents.

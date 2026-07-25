@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "purpose": "crop × stage × weather → forward-looking pest/disease risk (§A.1 T1 gap, risk.engine). Deterministic if-then from published thresholds.",
+    "source": "IRRI Rice Knowledge Bank favorable-conditions (data/raw/irri_rkb) + EPIRICE. VERIFY thresholds per sheet.",
+    "status": "TEMPLATE — 2 example rules; expand to ~20 (§A.1).",
+    "retrieved_date": "2026-07-24"
+  },
+  "rules": [
+    {
+      "pest": "sheath_blight",
+      "crop": "aman_rice",
+      "stages": ["tillering", "booting"],
+      "trigger": { "temp_c": [28, 32], "rh_min_pct": 85 },
+      "level": "high",
+      "prevention": "Avoid excess nitrogen; improve drainage; wider spacing.",
+      "treatment": "Recommended fungicide per DAE IPM (dose from crop_rules, not here).",
+      "est_cost_bdt_per_ha": 1200,
+      "_verify": true,
+      "sources": [{ "source": "IRRI RKB — Sheath blight", "reference": "favorable_conditions", "method": "rag" }]
+    },
+    {
+      "pest": "bacterial_leaf_blight",
+      "crop": "aman_rice",
+      "stages": ["tillering", "panicle_initiation"],
+      "trigger": { "temp_c": [25, 34], "rh_min_pct": 70, "after_heavy_rain": true },
+      "level": "elevated",
+      "prevention": "Use resistant varieties; avoid clipping seedling tips; balanced N.",
+      "treatment": "No effective chemical cure; manage nutrition + drainage.",
+      "est_cost_bdt_per_ha": 0,
+      "_verify": true,
+      "sources": [{ "source": "IRRI RKB — Bacterial leaf blight", "reference": "management", "method": "rag" }]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+Yield Goal: 2.0 + 0.20 t/ha
+
+CHICKPEA (Cicer arietinum)
+
+(Var. Hyposola, Binasola-2, Binasola-3, Binasola-4, Binasola-5 and Binasola-6 )
+
+Soil Analysis Nutrient Recommendation (kg/ha)
+
+Interpretation N P K S Zn B Mo
+Optimum 0-8 0-7 0-12 0-6 - = =
+Medium 9-16 8-14 13-24 7-12 | 0.0-1.0 | 0.0-0.5 | 0-0.2
+Low 17-24 | 15-21 | 25-36 | 13-18 | 1.1-2.0 | 0.6-1.0 | 0.3-0.4
+Very low 25-32 | 22-28 | 37-48 | 19-24 | 2.1-3.0 | 1.1-1.5 | 0.50.6
+Method of application:
+
+a) All fertilizers should be applied as basal during final land preparation.
+
+b) Rhizobium inoculum (at the rate of 40 g/kg seed or 2 kg/ha) must be used if available
+
+and in that case N fertilizer should not be used.
+
+MUNGBEAN (Vigna radiata)
+
+(Var. BARI mung-2, BARI mung-3, BARI mung-4, BARI mung-5,
+BARI mung-6, Binamoog-5, Binamoog-6, Binamoog-7, Binamoog-8,
+
+Yield Goal: 1.5 + 0.15 t/ha
+
+BAU Mung-1, BU Mung-1, BU Mung-2 and BU Mung-4)
+
+Soil Analysis Nutrient Recommendation (kg/ha)
+
+Interpretation N P K S mn B Mo
+Optimum 0-6 0-9 0-12 0-6 — — =
+Medium 7-12 10-18 | 13-24 7-12 | 0.0-1.0 | 0.0-0.5 | 0-0.2
+Low 13-18 | 19-27 | 25-36 | 13-18 | 1.1-2.0 | 0.6-1.0 | 0.3-0.4
+Very low 19-24 | 28-32 | 37-48 | 19-24 | 2.1-3.0 | 1.1-1.5 | 0.5-0.6
+Method of application:
+
+a) All fertilizers should be applied as basal during final land preparation.
+
+b) Rhizobium inoculum (at the rate of 50 g/kg seed or 1.5 kg/ha) must be used if
+
+available and in that case N fertilizer should not be used.

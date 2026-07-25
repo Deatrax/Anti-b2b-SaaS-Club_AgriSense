@@ -1,0 +1,34 @@
+{
+  "name": "antib2b-agrisense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AgriSense AI — agentic, weather-aware season-planning advisor for smallholder farmers (bdapps Agentic AI Hackathon, IUT 12th ICT Fest).",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:api & npm run dev:web",
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspace apps/api",
+    "migrate": "npm run migrate --workspace apps/api",
+    "ingest": "npm run ingest --workspace apps/api",
+    "astryx": "node node_modules/@astryxdesign/cli/bin/astryx.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@astryxdesign/core": "^0.1.8"
+  },
+  "allowScripts": {
+    "@astryxdesign/core@0.1.8": true,
+    "esbuild@0.28.1": true,
+    "esbuild@0.21.5": true
+  },
+  "devDependencies": {
+    "@astryxdesign/cli": "^0.1.8"
+  }
+}

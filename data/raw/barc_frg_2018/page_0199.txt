@@ -1,0 +1,55 @@
+9.2 Use of Upazila Nirdeshika for Making Location Specific Fertilizer
+Recommendation
+
+Location specific balanced dose of fertilizer recommendation for different crops using
+Upazila Nirdeshika can be made in two different ways. These are —
+
+=> Mapping unit wise average soil test value
+
+= Location specific soil test value
+
+Steps for Making Fertilizer Recommendations Using Upazila Nirdeshika
+
+Methodologies for calculation of balanced doses of fertilizers based on mapping unit or
+upazila wise average soil test value are:
+
+1. Identification of land type-wise soil groups
+
+Steps for identification of land type-wise soil groups using Upazila Nirdeshika are
+given below:
+
+Step i: Consult upazila soil and land type map.
+
+Step ii: Identify the Union following Union boundary provided in the Soil and
+Land Type Map.
+
+Step iii: Identify your plot(s) in the mapping unit(s) present in that particular
+union.
+
+Step iv: Note down soil group(s) in each mapping unit consulting upazila Soil
+and Land Type Map.
+
+Step v: Identify the land type consulting Annexure-8 of the Upazila Nirdeshika.
+
+Step vi: For confirmation with your identified soil group(s) you may dig out the
+soil with the help of a spade or an auger and note down the colour,
+texture, consistency, pH and drainage class of the soil.
+
+2. Collect land type and soil group wise average analytical soil test values (results) from
+Annexure-2 of the Nirdeshika.
+
+Select suitable crop and cropping pattern of your area/location
+
+4. Calculate appropriate doses of fertilizer for different crops on the basis of average soil
+test value and the procedure as described in the Appendix 10 of the FRG-2012.
+
+5. Calculate appropriate doses of fertilizers for different cropping patterns consulting
+rationales as described in the chapter 5.7 of the FRG-2012.
+
+6. Methods of fertilizer application for the desired crop are given in the chapter 9.1 of
+the FRG-2012.
+
+For example, land type and soil group are identified using Gazipur Sadar Upazila
+
+Nirdeshika. The land type is high land and the soil group is Chandra and the content of
+N=0.11%, P = 6.41 ug/g soil, K = 0.15 meq/100g soil, and S = 23.29 ug/g soil.

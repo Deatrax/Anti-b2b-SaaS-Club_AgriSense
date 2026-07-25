@@ -1,0 +1,19 @@
+Cropping pattern . Nutrient Recommendation Manure
+pping p vied (kg/ha) (t/ha)
+goa
+
+Season Crop (t/ha) N P K S | Mg] Zn Mo Cow Poultry
+dung manure
+
+Rabi Fallow - - 2 a a co - - - -
+
+Kharif1 Jute (O) 4540.45] 111 15 50 = 18 - 2.2 - - -
+
+Kharif2 Fallow - - 2 a a co - - - -
+
+Rabi Groundnut 2.6040.26] 54 45 50 24 - 1.0 0.5 - - -
+
+Kharif 1 —_B. Aus rice 2.5+0.25 | 30 6 14 4 - 0.5 - - - -
+
+(LIV)
+Kharif2 Fallow : : - - - - - - - -

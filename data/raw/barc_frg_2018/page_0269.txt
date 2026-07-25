@@ -1,0 +1,28 @@
+Appendix-14
+
+Class Organic Matter (%) Cc ane earl ay g)
+Very high >5.5 >30
+High 3.5-5.5 16-30
+Medium 1.8-3.4 7.6-15
+Low 1.0-1.7 3-7.5
+Very low <1.0 <3
+Appendix-15
+Soil reaction class pH
+Very strongly acidic <4.5
+Strongly acidic 4.6-5.5
+Slightly acid 5.6-6.5
+Neutral 6.6-7.3
+Slightly alkaline 7.4-8.4
+Strongly alkaline 8.5-9.0
+Very strongly alkaline >9.0
+Source: SRDI
+Appendix-16
+Soil salinity class Salinity range (dS/m)*
+So Non saline 0-—2.0
+S: Very slightly saline 2.1—4.0
+S. Slightly saline 4.1-8.0
+S3 Moderately saline 8.1 — 12.0
+S, Strongly saline 12.1 — 16.0
+Ss Very strongly saline > 16.0
+
+* 1 dS/m = 640 ppm (Approx.)

@@ -1,0 +1,28 @@
+Nutrient Recommendation
+
+Manure
+
+Cropping pattern ia (kg/ha) (t/ha)
+Season Crop (t/ha) N | P| K | S |Mg]| Zn | B | Mo dune eer
+Rabi Mustard 1840.18 | 90 27 16 15 15 10 10 - - -
+
+Boro rice 7.540.75 | 150 12 30 = 18 - 1.3 - - - -
+Kharif 1 Fallow - - - - = = = = - - -
+Kharif 2 T.Aman rice 5.0+0.5 90 10 = 18 8 - 10 - - - -
+Rabi Lentil 1.840.18} 20 30 20 18 - 10 10 - - -
+Kharif 1 Jute (O) 4540.45} 111 10 42 13 - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Onion/ 16.0416} 90 45 40 20 - 15 O07 - 5.0 3.0
+Garlic 15.0415} 114 48 30 30 - 20 20 - 5.0 3.0
+Kharif 1 Jute (O) 4540.45} 111 10 32 13 - - - - - -
+Kharif 2 Fallow - - - - - - - - - - -
+Rabi Brinjal/ 60.0+6.0 | 120 36 30 15 - 10 10 - 5.0 3.0
+Cabbage/ 90.049 | 180 66 25 24 - 30 10 - 5.0 3.0
+Cauliflower/ 30.043.0} 120 60 38 21 - 30 06 - 5.0 3.0
+Tomato 80.048.0] 135 45 25 15 - 10 10 - 5.0 3.0
+Kharif 1 Jute (O) 4540.45} 111 10 32 13 - - - - - -
+Kharif 2 Fallow - - - - - - - - - -
+Rabi Chickpea 2.540.25 | 33 24 25 18 - 10 10 - - -
+Kharif 1 Jute (O) 4540.45} 111 10 42 13 - - - - - -
+Kharif 2 T. Aman rice 5.040.5 | 90 10 18 8 - 10 - - - -
+vot the Sugarcane 100+10 [165 55 60 45 10 25 -~ - - -

@@ -1,0 +1,29 @@
+WHEAT (Triticum aestivum)
+(Irrigated)
+
+[Var. Sourav (BARI Gom-19), Gourab (BARI Gom-20), Shatabdi (BARI Gom-21),
+Bijoy (BARI Gom-23), Prodip (BARI Gom-24), BARI Gom-25 and BARI Gom-26]
+
+Yield Goal: 4.5 + 0.45 t/ha
+
+Soil Analysis Nutrient Recommendation (kg/ha)
+
+Interpretation N P K S Mg In B
+Optimum 0-40 0-10 0-30 0-5 = = =
+Medium 41-80 | 11-20 | 31-60 6-10 0-3 0.0-1.3 | 0.0-0.5
+Low 81-120 | 21-30 | 61-90 | 11-15 4-6 1.42.6 | 0.6-1.0
+Very low 121-160) 31-40 | 91-120 | 16-20 7-9 2.7-3.9 | 1.1-1.5
+
+Method of application:
+
+a) Two-third of the nitrogen and all of phosphorus, potassium, sulphur, magnesium, zinc,
+boron and organic manure (if used) should be applied as basal during final land
+
+preparation.
+
+b) Remaining one-third of nitrogen should be applied at 17-21 days after sowing (DAS)
+after first irrigation.
+
+c) Application of organic manure at the rate of 5 ton cowdung or 3 ton poultry manure
+per hectare is recommended. In that case the dose of N, P, K and S should be reduced
+based on the rate of application of organic manure as per Appendix-7.

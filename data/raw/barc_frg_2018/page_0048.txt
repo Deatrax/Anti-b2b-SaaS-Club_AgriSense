@@ -1,0 +1,45 @@
+4.3 Crop Response to Added Fertilizers
+
+Based on soil test result, nutrient contents can be classified into five categories- very low,
+low, medium, high and very high. The probability of crop response to applied nutrients
+increases with decreasing soil test value. There is a good possibility of obtaining profitable
+crop response from the use of fertilizers on soils showing “low to medium” status of a
+nutrient. There is a greater possibility of obtaining a response from a given nutrient with a
+low soil test result.
+
+Soil test values would be of no value unless they are positively correlated with crop
+response. Yield responses from applied nutrients can be more closely related to the
+quantity of available nutrients in the soil as found by soil analysis. A soil test measures
+part of the total nutrient supply in the soil and represent only an index of nutrient
+availability. Soil tests do not measure the exact quantity of a nutrient potentially taken up
+by a crop. To predict the nutrient needs of crops, the soil test values must be calibrated
+against nutrient rate used in the field experiments.
+
+The response of a crop to added nutrients shows a well-defined pattern. When any growth
+parameter or yield of a crop is plotted as a function of increasing amounts of applied
+nutrients, successive increments of nutrients give successively smaller increases in crop
+growth or yield. Such curve is known as growth response curve. From the response
+function equation the value of an added nutrient that maximizes yield is estimated as
+follows:
+
+Y=a+bx+t+cx’
+
+Where,
+Y is the maximum crop growth or yield
+a, b and c are coefficients
+x 1s the added nutrient
+
+The optimum nutrient rate (Ny) can be computed from the above equation as
+
+—b
+N =- —
+y 2c
+
+Now, the nutrient rate that maximizes profit:
+
+1 Pf
+Np = — (— -b
+e 2c ~ Py )
+Where,
+Pf = Price of nutrient
+Py = price of crop product

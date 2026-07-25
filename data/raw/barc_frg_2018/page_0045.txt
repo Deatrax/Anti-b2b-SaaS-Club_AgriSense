@@ -1,0 +1,47 @@
+4. SOIL FERTILITY EVALUATION
+
+When soil does not supply sufficient nutrients for optimum crop productivity, nutrients
+must be applied as fertilizer or manure. The proper nutrient rate is determined by knowing
+nutrient requirement of the crop and potential nutrient supply of soil. The quantity of
+nutrients required by plants depends on many factors like (1) Crops and crop varieties, (ii)
+Yield level, (iii) Soil properties, (iv) Environment, and (v) Management. The following
+three techniques are commonly used to assess nutrient status of a soil.
+
+e Soil analysis
+e Plant analysis
+e Diagnosis of nutrient deficiency symptoms
+
+4.1 Soil Analysis
+
+Soil analysis is done to determine the status of total and available forms of a nutrient. For
+fertilizer recommendation, soil test is usually carried out to know the status of available
+forms for all nutrients, except nitrogen. For nitrogen, total status is important for fertilizer
+scheduling. Compared with plant analysis, soil tests determine relative nutrient status
+before planting of a crop.
+
+e To provide an index of nutrient availability in soil
+e To predict the probability of obtaining a profitable response to fertilizer application
+e To provide a basis for development of fertilizer recommendation
+
+e Soil analysis provides a good basis for fertilizer recommendation.
+
+e It indicates fertility condition of a field (low, medium, optimum and high) as to
+determine different fertilizers requirement of crops and cropping patterns.
+
+e Soil testing is an advantage over biological methods which are relatively elaborate
+and time consuming.
+
+e It is better than nutrient deficiency diagnosis and plant tissue analysis since the
+nutrient need can be ascertained before the crop is grown. If nutrient deficiency
+appears in plant, sometimes it becomes difficult to correct this deficiency through
+fertilizer application.
+
+e Collection of soil samples
+
+e Preparation of soil samples
+
+e Analysis of soil samples
+
+e Interpretation of soil test results
+
+e Recommendation of nutrient rate based on soil test and crop response correlation.

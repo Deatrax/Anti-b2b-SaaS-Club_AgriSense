@@ -1,0 +1,29 @@
+9. FERTILIZER RECOMMENDATION FOR CROPS AND CROPPING
+PATTERNS
+
+9.1 Fertilizer Recommendation for Different Crops
+
+Soil analysis, if properly done and rightly interpreted in relation to crop response, can be
+used as an effective tool for location specific and yield goal basis fertilizer
+recommendation. Like previous two guides, the soil test values are also interpreted into 6
+categories in this guide based on critical limit (C. L.) along with their corresponding
+expected crop yield response for making more realistic fertilizer recommendation (Table 3
+& Fig. 7). In this guide, fertilizer recommendations are suggested for the high yield goal of
+a crop from very low to optimum level of soil test values. Fertilizer recommendation is not
+suggested when soil test value goes beyond optimum level i.e. ranges between high and
+very high categories. Example of making location specific fertilizer recommendation for
+crops (e.g. wheat) and cropping patterns on the basis of soil test value, yield goal and
+rationales are given in Appendices 10 and 11, respectively.
+
+In compliance with the Govt. policy of achieving self sufficiency in food, fertilizer
+recommendations have been provided in this guide targeting high yield goal. However, if a
+farmer is unable to afford the cost of fertilizers required for achieving high yield, he can be
+advised to reduce the rate of each required fertilizer by 30% so that balanced fertilization
+is made to achieve a moderate yield, which is assumed to be around 80% of the high yield
+goal.
+
+This section of Fertilizer Recommendation Guide provides guidelines for achieving high
+yield goal based fertilizer recommendation for different crops like cereals, fibres, pulses,
+oil seeds, roots and tubers, vegetables, spices, fruits, flowers and plantation crops. If soil
+test values of a field are available, specific fertilizer dose for that particular field can be
+calculated using the formula and procedures described in Appendix 10.

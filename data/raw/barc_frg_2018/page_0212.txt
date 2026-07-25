@@ -1,0 +1,40 @@
+AEZ 9: OLD BRAHMAPUTRA FLOODPLAIN
+
+MAJOR LAND TYPE PERCENT LOCATION AND EXTENT
+
+Highland 28 Large areas in  Sherpur, Jamalpur, Tangail,
+
+Medium Highland 35 Mymensingh, Netrokona, Kishoreganj, Narsingdi and
+
+Mist anita Lapmieing. 20 Narayanganj districts and small areas in the east of
+Dhaka and Gazipur districts.
+
+Cropping pattern td d Nutrient (SL “hay,
+Seasons [Crops (wha) | N | P | K | S | Mg} Zn} B | Mo dune soa
+Rabi Boro rice 7.540.75 | 150 20 65 18 - 1.3 - - - -
+Kharif 1 T. Aus rice 4.040.40 | 75 10 25 9 - 06 - - - -
+Kharif2 T. Aman rice 5.040.50 | 90 10 35 12 - 10 - - - -
+Rabi Boro rice 7.540.75 | 150 20 65 18 - 1.3 - - - -
+Kharif 1 Fallow - - - - - - - - - - -
+Kharif 2 T. Aman rice 5.0+0.50} 90 10 35 12 - 10 - - - -
+Rabi Boro rice 7.540.75 | 150 20 65 18 - 1.3 - - - -
+Kharif 1 Jute (O) 4.540.45 |} 111 10 42 13 - - - - - -
+Kharif2 — T. Aman rice 5.040.500} 90 10 35 12 - 10 - - - -
+Rabi Wheat 4.5+0.45| 120 30 60 15 4 410 10 - - -
+Kharif 1 Jute (O) 4.540.45 |} 111 10 42 13 - - - - - -
+Kharif2 —_T. Aman rice 5.040.5 | 90 10 35 12 - 10 - - - -
+Rabi Wheat 4.540.45| 120 30 60 15 4 410 10 - - -
+Kharif1 Jute (C) 3.540.35| 75 8 28 8 - - - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Potato 30.043.00} 135 30 90 15 5 20 10 - 5.0 3.0
+Kharif 1 Jute (O) 4.5+0.45} 111 10 32 13 - - - - -
+Kharif2 — T. Aman rice 5.040.550 | 90 10 30 = 12 - 10 - - - -
+Rabi Potato 30.043.00} 135 30 90 15 5 20 10 - 5.0 3.0
+Kharif1 Fallow - - - - - - - - - -
+Kharif2 — T. Aman rice 5.040.50 | 90 10 30 = 12 - 10 - - - -
+Rabi Potato 30.043.00} 135 30 90 15 5 20 10 - 5.0 3.0
+Kharif 1 Jute (C) 3.540.35| 75 8 23 8 - - - - -
+Kharif2 Fallow - - - - - - - - - - -
+Rabi Mustard 1.840.18 | 90 27 40 15 20 10 10 - - -
+Kharif1 Boro rice 7.540.75 | 150 12 55 18 - 1.3 - - - -
+Kharif2 Fallow - - - - - - - - - - -

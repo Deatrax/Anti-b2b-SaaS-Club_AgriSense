@@ -1,0 +1,45 @@
+2.4 Nutrient Uptake by Crops
+
+Nutrient uptake by a crop is the resultant product of crop nutrient concentration and crop
+yield including the crop residues. In general, higher the yield, higher is the removal of
+nutrients. Modern crop varieties absorb relatively higher amount of nutrients than the
+traditional varieties. Nutrient uptake by various crops is given in Table 1.
+
+Yield Total uptake (kg/ha)*
+Crop
+Rice (MV) 7.0 116 20 103 11
+Wheat 4.5 123 23 99 12
+Maize 9.0 169 31 133 32
+Millet 0.7 30 7 53 4
+Potato 30 131 20 193 14
+Jute 3.0 98 20 200 35
+Cotton 10 26 9 70 NA
+Tobacco 2.0 130 18 199 10
+Sugarcane 100 140 25 325 51
+Mustard 1.5 82 15 92 33
+Groundnut 2.5 189 15 91 17
+Soybean 3.5 237 19 140 22
+Sesame 1.5 72 12 53 12
+Sunflower 3.5 140 30 200 12
+Chickpea 1.5 91 6 47 9
+Lentil 1.0 57 7 18 NA
+Blackgram 1.5 118 10 82 NA
+Mungbean 1.0 106 21 59 NA
+Pigeonpea 1.2 85 8 16 9
+Cabbage 70 110 11 120 24
+Cauliflower 50 100 18 116 20
+Tomato 50 140 29 158 30
+Carrot 30 125 24 167 NA
+Cucumber 40 70 22 100 NA
+Brinjal 60 175 17 250 NA
+Pumpkin 50 90 31 133 NA
+Radish 20 120 26 100 NA
+Sweetpotato 40 190 33 283 NA
+Spinach 25 120 20 166 NA
+Onion 35 120 22 133 26
+Banana 40 250 26 350 15
+Pineapple 50 185 24 290 2
+Tea 2.0 128 17 60 NA
+
+* Total uptake (kg/ha) includes nutrient uptake by main product and crop residues.
+NA: Not available

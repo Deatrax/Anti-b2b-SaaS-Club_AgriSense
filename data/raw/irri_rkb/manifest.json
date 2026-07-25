@@ -1,0 +1,250 @@
+[
+  {
+    "slug": "bacterial-blight",
+    "title": "Bacterial blight",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight",
+    "category": "diseases",
+    "word_count": 542,
+    "status": "ok"
+  },
+  {
+    "slug": "bacterial-leaf-streak",
+    "title": "Bacterial leaf streak",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak",
+    "category": "diseases",
+    "word_count": 492,
+    "status": "ok"
+  },
+  {
+    "slug": "bacterial-sheath-brown-rot",
+    "title": "Bacterial sheath brown rot",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-sheath-brown-rot",
+    "category": "diseases",
+    "word_count": 371,
+    "status": "ok"
+  },
+  {
+    "slug": "bakanae",
+    "title": "Bakanae",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bakanae",
+    "category": "diseases",
+    "word_count": 432,
+    "status": "ok"
+  },
+  {
+    "slug": "blast-leaf-collar",
+    "title": "Blast (leaf and collar)",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar",
+    "category": "diseases",
+    "word_count": 490,
+    "status": "ok"
+  },
+  {
+    "slug": "blast-node-neck",
+    "title": "Blast (node and neck)",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck",
+    "category": "diseases",
+    "word_count": 530,
+    "status": "ok"
+  },
+  {
+    "slug": "brown-spot",
+    "title": "Brown spot",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot",
+    "category": "diseases",
+    "word_count": 613,
+    "status": "ok"
+  },
+  {
+    "slug": "false-smut",
+    "title": "False smut",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/false-smut",
+    "category": "diseases",
+    "word_count": 382,
+    "status": "ok"
+  },
+  {
+    "slug": "leaf-scald",
+    "title": "Leaf Scald",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/leaf-scald",
+    "category": "diseases",
+    "word_count": 415,
+    "status": "ok"
+  },
+  {
+    "slug": "narrow-brown-spot",
+    "title": "Narrow brown spot",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/narrow-brown-spot",
+    "category": "diseases",
+    "word_count": 392,
+    "status": "ok"
+  },
+  {
+    "slug": "red-stripe",
+    "title": "Red stripe",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/red-stripe",
+    "category": "diseases",
+    "word_count": 267,
+    "status": "ok"
+  },
+  {
+    "slug": "rice-grassy-stunt",
+    "title": "Rice grassy stunt",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-grassy-stunt",
+    "category": "diseases",
+    "word_count": 337,
+    "status": "ok"
+  },
+  {
+    "slug": "rice-ragged-stunt",
+    "title": "Rice ragged stunt",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-ragged-stunt",
+    "category": "diseases",
+    "word_count": 504,
+    "status": "ok"
+  },
+  {
+    "slug": "rice-stripe",
+    "title": "Rice stripe virus disease",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-stripe",
+    "category": "diseases",
+    "word_count": 389,
+    "status": "ok"
+  },
+  {
+    "slug": "rice-yellow-mottle-virus-fact-sheet",
+    "title": "Rice Yellow Mottle Virus",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-yellow-mottle-virus-fact-sheet",
+    "category": "diseases",
+    "word_count": 584,
+    "status": "ok"
+  },
+  {
+    "slug": "sheath-blight",
+    "title": "Sheath blight",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight",
+    "category": "diseases",
+    "word_count": 540,
+    "status": "ok"
+  },
+  {
+    "slug": "sheath-rot",
+    "title": "Sheath rot",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-rot",
+    "category": "diseases",
+    "word_count": 601,
+    "status": "ok"
+  },
+  {
+    "slug": "stem-rot",
+    "title": "Stem rot",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/stem-rot",
+    "category": "diseases",
+    "word_count": 339,
+    "status": "ok"
+  },
+  {
+    "slug": "tungro",
+    "title": "Tungro",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro",
+    "category": "diseases",
+    "word_count": 797,
+    "status": "ok"
+  },
+  {
+    "slug": "planthopper",
+    "title": "Planthopper",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper",
+    "category": "insects",
+    "word_count": 781,
+    "status": "ok"
+  },
+  {
+    "slug": "green-leafhopper",
+    "title": "Green leafhopper",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/green-leafhopper",
+    "category": "insects",
+    "word_count": 528,
+    "status": "ok"
+  },
+  {
+    "slug": "black-bug",
+    "title": "Black bug",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug",
+    "category": "insects",
+    "word_count": 463,
+    "status": "ok"
+  },
+  {
+    "slug": "armyworms",
+    "title": "Armyworm",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/armyworms",
+    "category": "insects",
+    "word_count": 419,
+    "status": "ok"
+  },
+  {
+    "slug": "green-semiloopers",
+    "title": "Green semilooper",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/green-semiloopers",
+    "category": "insects",
+    "word_count": 218,
+    "status": "ok"
+  },
+  {
+    "slug": "ants",
+    "title": "Ants",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/ants",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "cutworms",
+    "title": "Cutworms",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/cutworms",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "field-crickets",
+    "title": "Field crickets",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/field-crickets",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "greenhorned-caterpillar",
+    "title": "Greenhorned caterpillar",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/greenhorned-caterpillar",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "mealy-bugs",
+    "title": "Mealy bugs",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/mealy-bugs",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "mole-cricket",
+    "title": "Mole cricket",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/mole-cricket",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  },
+  {
+    "slug": "short-horned-grasshopper",
+    "title": "Short horned grasshopper",
+    "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/short-horned-grasshopper",
+    "category": "insects",
+    "word_count": 0,
+    "status": "skipped"
+  }
+]

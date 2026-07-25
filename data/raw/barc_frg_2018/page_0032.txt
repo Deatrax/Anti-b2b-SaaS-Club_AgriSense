@@ -1,0 +1,50 @@
+Major Soil | Soil Nutrient status
+
+Land
+Type | PH |OM| N | P | K | S | Ca | Mg | Zn| B | Mo
+
+Highland
+
+(12%) 6.7-8.1 |L-M| VL-L| VL-L| L-M) L-M |M-Opt) M-Opt] L |VL-L} M
+v)
+
+Medium
+Highland |6.7-8.4 |L-M| VL-L| VL-L| L-M | L-M |M-Opt| M-Opt} L |VL-L| M
+(33%)
+
+Medium
+Lowland |6.6-8.0 |L-M| VL-L| VL-L| L-M | L-M |M-Opt| M-Opt | L-M|VL-L| M
+(18%)
+
+AEZ 11: High Ganges River Floodplain
+
+This region includes the western part of the Ganges River Floodplain which is
+predominantly high land and medium highland. Most areas have a complex relief of broad
+and narrow ridges and basins.
+
+There is an overall pattern of olive-brown silt loams and silty clay loams on the upper
+parts of floodplain ridges and dark grey mottled brown, mainly clay soils on ridge sites
+and in basins. Most ridge soils are calcareous throughout the profile. General Soil Types
+predominantly include Calcareous Dark Grey Floodplain soils and Calcareous Brown
+Floodplain soils. Organic matter content in the brown ridge soils is low, but higher in the
+dark grey soils. In general top-soils are slightly acidic to slightly alkaline in reaction, but
+there is a significant lowering of soil pH in high land in the recent years and in some
+places top soils become strongly acidic. Sub-soils are slightly alkaline in reaction. General
+fertility level is low including N, P, S and B although CEC is medium. The K-bearing
+minerals are medium to high, but the Zn status is low to medium.
+
+Major Soil | Soil Nutrient status
+
+Land H [OM
+
+Type Pp N P K S Ca | Mg | Zn B | Mo
+a) 4.5-7.9 |L-M| VL-L| VL-L] L-M | VL-L | M-H | M-H | L-M|VL-L| M
+
+vy)
+
+Medium
+Highland |5.6-8.1 |L-M| VL-L| VL-L | L-M | VL-L | M-H | M-H | L-M|VL-L] M
+(32%)
+Medium
+Lowland |6.5-8.3 |L-M| VL-L| VL-L| L-M | VL-L | M-H | M-H |L-M|VL-L| M
+(12%)

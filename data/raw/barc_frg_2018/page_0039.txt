@@ -1,0 +1,48 @@
+Major Soil | Soil Nutrient status
+
+Land
+Type | PH |OM| N | P| K | S_| Ca | Mg | Zn | B | Mo
+
+Highland
+
+(17%) 4.3-6.0 |L-M| L_ | VL-L| L-Opt | L-Opt }M-Opt) M-Opt | L-M | L-M | M
+
+Medium
+Highland | 4.4-6.2 | L-M | VL-L | VL-L| L-Opt | L-Opt | M-Opt} M-Opt | L-M | L-M | M
+(43%)
+
+Medium
+Lowland |4.5-6.2 | L-M| VL-L| VL-L) L-M | L-Opt} L-M L-M | L-M|L-M| M
+(13%)
+
+AEZ 24: St. Martin’s Coral Island
+
+This small but distinctive region occupies the whole of St. Martin’s Island in the extreme
+south of the country. The area has very gently undulating old beach ridges and inter-ridge
+depressions, surrounded by sandy beaches.
+
+The soils are developed entirely on old and young coral beach sands. Calcareous Alluvium
+is the only General Soil Types of the area. General fertility level is low with poor moisture
+holding capacity but rich in S, Ca, Mg and B contents.
+
+Major Soil | Soil Nutrient status
+
+Land H OM
+
+Type p N P kK S Ca Meg | Zn} B | Mo
+(5%) 46-78] VE-L| VL+L |/VL-L] L-M JOptH] Op-H] Op-H L | H | M
+Medium
+
+Highland | 4.6-7.8 | VL-L | VL-L | VL-L| L-M | Opt-H| Opt-H| Opt-H | L | H | M
+(63%)
+
+AEZ 25: Level Barind Tract
+
+This region is developed over Madhupur Clay. The landscape is almost level, locally
+irregular along river channels. The predominant soils have a grey, silty, puddled topsoil
+with ploughpan, which either directly overlies grey, heavy, little weathered Madhupur
+Clay or merges with the porous, silt loam or silty clay loam subsoils which overlies
+strongly acid clay at greater depth. Shallow Grey Terrace soils and Deep Grey Terrace
+soils are the major components of General Soil Types of the area. The soils are low in
+available moisture holding capacity and top soils are very strongly acidic to neutral in
+reaction. Organic matter status is mainly low and most of the nutrients are limiting.
