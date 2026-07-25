@@ -70,7 +70,10 @@ export default function FieldChatPage({ params }: { params: Promise<{ id: string
   useEffect(() => {
     if (wasStreaming.current && !isStreaming) {
       getField(id).then(setField).catch(() => {});
-      if (session?.farmId) listRecentChats(session.farmId).then((res) => setRecentChats(res.chats)).catch(() => {});
+      if (session?.farmId) {
+        listRecentChats(session.farmId).then((res) => setRecentChats(res.chats)).catch(() => {});
+        listFields(session.farmId).then((res) => setSiblingFields(res.fields)).catch(() => {});
+      }
     }
     wasStreaming.current = isStreaming;
   }, [isStreaming, id, session]);

@@ -27,8 +27,8 @@ export interface AgentContext extends ToolCtx {
 const MAX_STEPS = 10;
 
 export async function runAgent(ctx: AgentContext, userMessage: string): Promise<void> {
-  const field = await FieldModel.getState(ctx.fieldId);
-  const phase = derivePhase(field); // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
+  let field = await FieldModel.getState(ctx.fieldId);
+  let phase = derivePhase(field); // TRANSACTING wiring lands in Phase 7 — no proposals exist yet
 
   await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
   const [history, priorMessages] = await Promise.all([
@@ -42,8 +42,8 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
     { role: 'user', content: userMessage },
   ];
 
-  const system = buildSystemPrompt(field, phase, priorMessages);
-  const tools = buildToolSet(toolsForPhase(phase));
+  let system = buildSystemPrompt(field, phase, priorMessages);
+  let tools = buildToolSet(toolsForPhase(phase));
   const textParts: string[] = [];
   const toolCallLog: Array<{ name: string; args: unknown }> = [];
 
@@ -121,6 +121,16 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
           },
         ],
       });
+    }
+
+    // Dynamic phase transition (e.g. GATHERING -> PLANNING) mid-turn if tools updated the field state.
+    const nextField = await FieldModel.getState(ctx.fieldId);
+    const nextPhase = derivePhase(nextField);
+    if (nextPhase !== phase) {
+      field = nextField;
+      phase = nextPhase;
+      system = buildSystemPrompt(field, phase, priorMessages);
+      tools = buildToolSet(toolsForPhase(phase));
     }
   }
 
