@@ -20,6 +20,7 @@ interface FieldRow {
   lat: number | null;
   lon: number | null;
   budget_bdt: number | null;
+  live_update?: string | null;
 }
 
 /** Raw shape as `pg` actually returns it: `numeric` columns come back as strings, not numbers. */
@@ -70,6 +71,7 @@ async function stateForField(field: FieldRow): Promise<FieldState> {
     activeCycle: activeCycle ? toCycle(activeCycle) : null,
     targetSeason: targetSeason as Season | null,
     missingFields: computeMissing(field, targetSeason),
+    liveUpdate: field.live_update ? JSON.parse(field.live_update) : null,
   };
 }
 

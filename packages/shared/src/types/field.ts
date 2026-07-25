@@ -55,4 +55,11 @@ export interface FieldState {
    * when activeCycle is still null. */
   targetSeason: Season | null;
   missingFields: IntakeField[];
+  liveUpdate?: LiveUpdate | null;
+}
+
+export interface LiveUpdate {
+  timestamp: string;
+  status: 'ok' | 'warning';
+  summary: string;
 }

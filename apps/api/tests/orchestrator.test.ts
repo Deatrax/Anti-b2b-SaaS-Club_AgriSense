@@ -48,6 +48,7 @@ function makeCtx() {
     conversationId: 'conv-1',
     messageId: null,
     fieldId: 'f1',
+    farmId: 'test-farm-1',
     model: {} as never,
     stream: { text: vi.fn(), toolStart: vi.fn(), toolEnd: vi.fn(), notice: vi.fn(), done: vi.fn() },
   };

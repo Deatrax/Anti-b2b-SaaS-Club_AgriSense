@@ -35,7 +35,9 @@ export async function runAgent(ctx: AgentContext, userMessage: string): Promise<
   await ConversationModel.addMessage(ctx.conversationId, 'user', userMessage);
   const [history, priorMessages] = await Promise.all([
     ConversationModel.recentMessages(ctx.conversationId, 20),
-    ctx.fieldId ? ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10) : Promise.resolve([]),
+    ctx.fieldId
+      ? ConversationModel.recentMessagesForFieldExcluding(ctx.fieldId, ctx.conversationId, 10)
+      : ConversationModel.recentMessagesForFarmExcluding(ctx.farmId, ctx.conversationId, 10),
   ]);
   const messages: ModelMessage[] = [
     ...history

@@ -40,6 +40,7 @@ import {
   listFields,
   listRecentChats,
   getFieldPlan,
+  getFieldLiveUpdate,
   postFieldLog,
   type ApiField,
   type ApiFieldPlanResponse,
@@ -49,6 +50,7 @@ import {
   type ApiRecentChat,
 } from '../../../../lib/api';
 import type { FeedItem } from '../../../../lib/feed';
+import type { LiveUpdate } from '@agrisense/shared';
 
 export default function FieldOverviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -60,6 +62,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
   const [siblingFields, setSiblingFields] = useState<ApiField[]>([]);
   const [recentChats, setRecentChats] = useState<ApiRecentChat[]>([]);
   const [planData, setPlanData] = useState<ApiFieldPlanResponse | null>(null);
+  const [liveUpdate, setLiveUpdate] = useState<LiveUpdate | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [composerValue, setComposerValue] = useState('');
   const [logKind, setLogKind] = useState<'irrigation' | 'fertilizer' | 'observation'>('irrigation');
@@ -77,6 +80,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
     }
     getField(id).then(setField).catch((err) => setError(String(err)));
     getFieldPlan(id).then(setPlanData).catch((err) => setError(String(err)));
+    getFieldLiveUpdate(id).then(setLiveUpdate).catch(() => {});
     if (session.farmId) {
       listFields(session.farmId)
         .then((res) => setSiblingFields(res.fields))
@@ -145,6 +149,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
         <OverviewBody
           id={id}
           field={field}
+          liveUpdate={liveUpdate}
           upcoming={upcoming}
           nextFertilizer={nextFertilizer}
           financial={financial}
@@ -173,6 +178,7 @@ export default function FieldOverviewPage({ params }: { params: Promise<{ id: st
 function OverviewBody({
   id,
   field,
+  liveUpdate,
   upcoming,
   nextFertilizer,
   financial,
@@ -195,6 +201,7 @@ function OverviewBody({
 }: {
   id: string;
   field: ApiField;
+  liveUpdate: LiveUpdate | null;
   upcoming: ApiPlanTimelineEntry[];
   nextFertilizer: ApiPlanTimelineEntry | null;
   financial: ApiFieldPlanResponse['financial'] | undefined;
@@ -233,6 +240,21 @@ function OverviewBody({
       <HStack gap={4} vAlign="start" wrap="wrap">
         <StackItem size="fill">
           <Grid columns={{ minWidth: 260 }} gap={3}>
+            {liveUpdate ? (
+              <Card>
+                <VStack gap={2}>
+                  <HStack gap={1.5} vAlign="center">
+                    <Icon icon={liveUpdate.status === 'warning' ? 'warning' : 'info'} color={liveUpdate.status === 'warning' ? 'error' : 'accent'} />
+                    <Text type="label" weight="semibold" color="primary">
+                      Live Update
+                    </Text>
+                  </HStack>
+                  <Text type="supporting" color="secondary">
+                    {liveUpdate.summary}
+                  </Text>
+                </VStack>
+              </Card>
+            ) : null}
             <Card>
               <VStack gap={2}>
                 <HStack gap={1.5} vAlign="center">

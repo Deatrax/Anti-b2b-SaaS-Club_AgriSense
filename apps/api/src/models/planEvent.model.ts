@@ -45,6 +45,31 @@ export const PlanEventModel = {
     return rows.map(toPlanEvent);
   },
 
+  async create(cropCycleId: string, event: Omit<PlanEvent, 'id' | 'cropCycleId'>): Promise<PlanEvent> {
+    const [row] = await query<PlanEventRow>(
+      `insert into plan_events
+         (crop_cycle_id, stage_key, title, action, quantity, unit, planned_date, actual_date,
+          status, shift_reason, sources, sort_order)
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12)
+       returning *`,
+      [
+        cropCycleId,
+        event.stageKey,
+        event.title,
+        event.action,
+        event.quantity,
+        event.unit,
+        event.plannedDate,
+        event.actualDate,
+        event.status,
+        event.shiftReason,
+        JSON.stringify(event.sources),
+        event.sortOrder,
+      ],
+    );
+    return toPlanEvent(row!);
+  },
+
   /** Used by build_season_plan — a full replan replaces the whole calendar atomically. */
   async replaceForCycle(cropCycleId: string, events: PlanEvent[]): Promise<void> {
     await withTransaction(async (client) => {

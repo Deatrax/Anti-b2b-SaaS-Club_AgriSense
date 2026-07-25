@@ -90,6 +90,18 @@ export const ConversationModel = {
     return rows.reverse().map(toMessage);
   },
 
+  async recentMessagesForFarmExcluding(farmId: string, excludeConversationId: string, limit = 20): Promise<Message[]> {
+    const rows = await query<MessageRow>(
+      `select m.* from messages m
+       join conversations c on c.id = m.conversation_id
+       where c.farm_id = $1 and c.id != $2
+       order by m.created_at desc
+       limit $3`,
+      [farmId, excludeConversationId, limit],
+    );
+    return rows.reverse().map(toMessage);
+  },
+
   async addMessage(
     conversationId: string,
     role: string,

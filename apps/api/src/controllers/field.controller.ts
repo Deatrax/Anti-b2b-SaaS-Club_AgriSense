@@ -11,6 +11,9 @@ import { TraceModel } from '../models/trace.model';
 import { serializeField } from '../views/field.view';
 import { serializePlan } from '../views/plan.view';
 import { serializeFinancial } from '../views/financial.view';
+import { primaryModel } from '../config/llm';
+import { generateObject } from 'ai';
+import { getForecast } from '../services/external/openmeteo.client';
 
 function isNotFound(err: unknown): err is Error {
   return err instanceof Error && err.message.includes('not found');
@@ -97,6 +100,56 @@ export async function createFieldConversation(req: Request, res: Response, next:
   try {
     const conversation = await ConversationModel.create(fieldId);
     res.status(201).json({ conversation });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getFieldLiveUpdate(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).json({ error: 'field id is required' });
+    return;
+  }
+  try {
+    const state = await FieldModel.getState(id);
+    const now = Date.now();
+    if (state.liveUpdate && (now - new Date(state.liveUpdate.timestamp).getTime()) < 30 * 60 * 1000) {
+      res.json(state.liveUpdate);
+      return;
+    }
+
+    // Need weather to generate update
+    const lat = state.identity.lat ?? 23.8103;
+    const lon = state.identity.lon ?? 90.4125;
+    const forecast = await getForecast(lat, lon, 7);
+
+    const timeline = state.activeCycle ? await PlanEventModel.listByCycle(state.activeCycle.id) : [];
+    const upcoming = timeline.filter((e) => e.status === 'pending').slice(0, 3);
+
+    const prompt = `Analyze this field state, weather, and upcoming tasks. Give a short 1-3 sentence summary (in English) of the current situation. Set status to 'warning' if bad weather is coming or urgent tasks are overdue, else 'ok'.
+    Field: ${state.identity.name}, Crop: ${state.activeCycle?.crop ?? 'none'}, Stage: ${state.activeCycle?.stage ?? 'none'}
+    Weather (7 days): ${JSON.stringify(forecast.daily.slice(0, 7))}
+    Upcoming Tasks: ${JSON.stringify(upcoming.map(t => ({ title: t.title, date: t.plannedDate })))}`;
+
+    const { object } = await generateObject({
+      model: primaryModel(),
+      schema: z.object({
+        status: z.enum(['ok', 'warning']),
+        summary: z.string()
+      }),
+      prompt,
+    });
+
+    const liveUpdate = {
+      timestamp: new Date().toISOString(),
+      status: object.status,
+      summary: object.summary,
+    };
+
+    await FieldModel.update(id, { live_update: JSON.stringify(liveUpdate) });
+
+    res.json(liveUpdate);
   } catch (err) {
     next(err);
   }

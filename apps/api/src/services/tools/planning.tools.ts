@@ -291,6 +291,49 @@ export function registerPlanningTools(): void {
       };
     },
   });
+
+  // ─── schedule_event ─────────────────────────────────────────────────────────────────
+  const scheduleEventSchema = z.object({
+    type: z.enum(['irrigation', 'fertilizer']),
+    title: z.string(),
+    plannedDate: z.string().describe('ISO YYYY-MM-DD'),
+    quantity: z.number().optional(),
+    unit: z.string().optional(),
+  });
+
+  register({
+    name: 'schedule_event',
+    description: "Schedules a new future event (e.g. fertilizer or irrigation) in the active crop cycle's timeline.",
+    schema: scheduleEventSchema,
+    toolClass: 'deterministic',
+    phases: ['MAINTAINING', 'PLANNING'],
+    handler: async (args, ctx) => {
+      const field = await FieldModel.getState(ctx.fieldId);
+      if (!field.activeCycle) {
+        throw new Error('Cannot schedule an event because there is no active crop cycle on this field.');
+      }
+      
+      const newEvent = await PlanEventModel.create(field.activeCycle.id, {
+        stageKey: field.activeCycle.stage ?? 'unknown',
+        title: args.title,
+        action: args.type,
+        quantity: args.quantity ?? null,
+        unit: args.unit ?? null,
+        plannedDate: args.plannedDate,
+        actualDate: null,
+        status: 'pending',
+        shiftReason: null,
+        sources: [{ source: 'AI Scheduler', method: 'agent', retrievedAt: new Date().toISOString() }],
+        sortOrder: 1000, // appends to the end of the day or timeline roughly
+      });
+
+      return {
+        data: { success: true, event: newEvent },
+        provenance: [{ source: 'AI Scheduler', method: 'agent', retrievedAt: new Date().toISOString() }],
+        assumptions: [],
+      };
+    },
+  });
 }
 
 function average(values: number[]): number {
