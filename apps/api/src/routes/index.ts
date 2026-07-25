@@ -11,6 +11,7 @@ import { postChat, postChatSchema } from '../controllers/chat.controller';
 import { postLog, postLogSchema } from '../controllers/log.controller';
 import { postScenario, postScenarioSchema } from '../controllers/scenario.controller';
 import { proposeBasket, proposeBasketSchema, approveAndDebit, approveAndDebitSchema } from '../controllers/payment.controller';
+import { getMarketplaceMatches, postSelectSupplier, selectSupplierSchema } from '../controllers/marketplace.controller';
 
 export const router = Router();
 
@@ -41,3 +42,6 @@ router.post('/chat', validate(postChatSchema), postChat);
 
 router.post('/payment/propose', validate(proposeBasketSchema), proposeBasket);
 router.post('/payment/approve', validate(approveAndDebitSchema), approveAndDebit);
+
+router.get('/fields/:id/marketplace', getMarketplaceMatches);
+router.post('/fields/:id/marketplace/select', validate(selectSupplierSchema), postSelectSupplier);
