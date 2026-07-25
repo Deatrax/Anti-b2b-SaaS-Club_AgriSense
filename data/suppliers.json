@@ -1,0 +1,163 @@
+{
+  "_meta": {
+    "purpose": "Seeded/mock supplier catalog for the marketplace & supplier comparison demo.",
+    "note": "Prices, delivery days, and ratings are plausible but SYNTHETIC — unlike costs_bd.json/crop_rules.json, nothing here is cited to a real source. Do not treat as real market data."
+  },
+  "suppliers": [
+    {
+      "id": "sup_dhaka_agrimart",
+      "name": "Dhaka Agri Mart",
+      "district": "Dhaka",
+      "rating": 4.5,
+      "items": {
+        "urea": { "price_bdt_per_kg": 29, "delivery_days": 1, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 30, "delivery_days": 1, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 23, "delivery_days": 1, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 14, "delivery_days": 1, "in_stock": true },
+        "seed_aman_rice": { "price_bdt_per_kg": 65, "delivery_days": 2, "in_stock": true },
+        "seed_boro_rice": { "price_bdt_per_kg": 65, "delivery_days": 2, "in_stock": true },
+        "seed_potato": { "price_bdt_per_kg": 60, "delivery_days": 2, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 420, "delivery_days": 2, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_gazipur_farmsupply",
+      "name": "Gazipur Farm Supply",
+      "district": "Gazipur",
+      "rating": 4.0,
+      "items": {
+        "urea": { "price_bdt_per_kg": 28, "delivery_days": 1, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 29, "delivery_days": 1, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 22, "delivery_days": 1, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 410, "delivery_days": 1, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_rangpur_agro",
+      "name": "Rangpur Agro Traders",
+      "district": "Rangpur",
+      "rating": 4.2,
+      "items": {
+        "urea": { "price_bdt_per_kg": 26, "delivery_days": 2, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 28, "delivery_days": 2, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 21, "delivery_days": 2, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 13, "delivery_days": 2, "in_stock": true },
+        "seed_potato": { "price_bdt_per_kg": 55, "delivery_days": 3, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 395, "delivery_days": 3, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_bogura_krishi",
+      "name": "Bogura Krishi Bhandar",
+      "district": "Bogura",
+      "rating": 3.8,
+      "items": {
+        "urea": { "price_bdt_per_kg": 27, "delivery_days": 2, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 27, "delivery_days": 2, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 20, "delivery_days": 2, "in_stock": true },
+        "seed_boro_rice": { "price_bdt_per_kg": 58, "delivery_days": 3, "in_stock": true },
+        "seed_aus_rice": { "price_bdt_per_kg": 58, "delivery_days": 3, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 400, "delivery_days": 3, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_rajshahi_traders",
+      "name": "Rajshahi Fertilizer Traders",
+      "district": "Rajshahi",
+      "rating": 4.1,
+      "items": {
+        "urea": { "price_bdt_per_kg": 27.5, "delivery_days": 3, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 28.5, "delivery_days": 3, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 12.5, "delivery_days": 3, "in_stock": true },
+        "seed_aman_rice": { "price_bdt_per_kg": 62, "delivery_days": 3, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_khulna_agroline",
+      "name": "Khulna Agro Line",
+      "district": "Khulna",
+      "rating": 3.6,
+      "items": {
+        "urea": { "price_bdt_per_kg": 30, "delivery_days": 4, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 24, "delivery_days": 4, "in_stock": false },
+        "gypsum": { "price_bdt_per_kg": 15, "delivery_days": 4, "in_stock": true },
+        "seed_boro_rice": { "price_bdt_per_kg": 63, "delivery_days": 4, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_jashore_seedhouse",
+      "name": "Jashore Seed House",
+      "district": "Jashore",
+      "rating": 4.6,
+      "items": {
+        "seed_aman_rice": { "price_bdt_per_kg": 58, "delivery_days": 3, "in_stock": true },
+        "seed_boro_rice": { "price_bdt_per_kg": 58, "delivery_days": 3, "in_stock": true },
+        "seed_aus_rice": { "price_bdt_per_kg": 58, "delivery_days": 3, "in_stock": true },
+        "seed_potato": { "price_bdt_per_kg": 52, "delivery_days": 3, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_cumilla_farmcorner",
+      "name": "Cumilla Farm Corner",
+      "district": "Cumilla",
+      "rating": 3.9,
+      "items": {
+        "urea": { "price_bdt_per_kg": 28, "delivery_days": 2, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 29, "delivery_days": 2, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 21, "delivery_days": 2, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 13, "delivery_days": 2, "in_stock": true },
+        "seed_aman_rice": { "price_bdt_per_kg": 64, "delivery_days": 2, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_mymensingh_agrostore",
+      "name": "Mymensingh Agro Store",
+      "district": "Mymensingh",
+      "rating": 4.3,
+      "items": {
+        "urea": { "price_bdt_per_kg": 27, "delivery_days": 2, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 27.5, "delivery_days": 2, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 20.5, "delivery_days": 2, "in_stock": true },
+        "seed_boro_rice": { "price_bdt_per_kg": 60, "delivery_days": 2, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 405, "delivery_days": 2, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_sylhet_hillagro",
+      "name": "Sylhet Hill Agro",
+      "district": "Sylhet",
+      "rating": 3.5,
+      "items": {
+        "urea": { "price_bdt_per_kg": 32, "delivery_days": 5, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 33, "delivery_days": 5, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 26, "delivery_days": 5, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 16, "delivery_days": 5, "in_stock": false }
+      }
+    },
+    {
+      "id": "sup_barishal_deltaagro",
+      "name": "Barishal Delta Agro",
+      "district": "Barishal",
+      "rating": 4.0,
+      "items": {
+        "urea": { "price_bdt_per_kg": 29, "delivery_days": 4, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 30, "delivery_days": 4, "in_stock": true },
+        "gypsum": { "price_bdt_per_kg": 14, "delivery_days": 4, "in_stock": true },
+        "seed_aus_rice": { "price_bdt_per_kg": 61, "delivery_days": 4, "in_stock": true }
+      }
+    },
+    {
+      "id": "sup_dinajpur_northagro",
+      "name": "Dinajpur North Agro",
+      "district": "Dinajpur",
+      "rating": 4.4,
+      "items": {
+        "urea": { "price_bdt_per_kg": 26.5, "delivery_days": 3, "in_stock": true },
+        "tsp": { "price_bdt_per_kg": 27, "delivery_days": 3, "in_stock": true },
+        "mop": { "price_bdt_per_kg": 20, "delivery_days": 3, "in_stock": true },
+        "seed_potato": { "price_bdt_per_kg": 54, "delivery_days": 3, "in_stock": true },
+        "seed_maize": { "price_bdt_per_kg": 390, "delivery_days": 3, "in_stock": true }
+      }
+    }
+  ]
+}
